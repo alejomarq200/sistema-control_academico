@@ -528,45 +528,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ];
     }
 
-    $resultadoEstudiante = validarCamposEstudiante($variablesInscripcionEst);
-    $resultadoMadre = validarCamposMadre($variablesInscripcionRepr);
-    $resultadoPadre = validarCamposPadre($variablesInscripcionReprP);
-    $resultadoContacto = validarCamposContacto($variablesInscripcionContacto);
-
-    if ($resultadoEstudiante['valido'] && $resultadoMadre['valido'] && $resultadoPadre['valido'] && $resultadoContacto['valido']) {
-        // ✅ Todo válido
-        echo "Formulario válido. Puedes continuar con el registro.";
-    } else {
-        // ❌ Mostrar errores por separado
-        if (!$resultadoEstudiante['valido']) {
-            echo "Errores en los datos del estudiante:<br>";
-            foreach ($resultadoEstudiante['errores'] as $error) {
-                echo "- " . $error . "<br>";
-            }
-        }
-
-        if (!$resultadoMadre['valido']) {
-            echo "<br>Errores en los datos de la madre:<br>";
-            foreach ($resultadoMadre['errores'] as $error) {
-                echo "- " . $error . "<br>";
-            }
-        }
-
-        if (!$resultadoPadre['valido']) {
-            echo "<br>Errores en los datos de la padre:<br>";
-            foreach ($resultadoPadre['errores'] as $error) {
-                echo "- " . $error . "<br>";
-            }
-        }
-
-        if (!$resultadoContacto['valido']) {
-            echo "<br>Errores en los datos del contacto:<br>";
-            foreach ($resultadoContacto['errores'] as $error) {
-                echo "- " . $error . "<br>";
-            }
-        }
-    }
-
     // VALIDACIÓN DE QUÉ PADRES SE VAN A REGISTRAR
     function retornarCampos($pdo, array $estData, array $madreData, array $padreData, array $contactoData)
     {
