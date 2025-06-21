@@ -1,0 +1,128 @@
+/* Estilos generales para la modal */
+#ModalForm3 .modal-content {
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  background: #f8f9fa; /* Fondo claro */
+}
+
+/* Estilos para el botón de cerrar */
+#ModalForm3 .btn-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.2rem;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+#ModalForm3 .btn-close:hover {
+  opacity: 1;
+}
+
+/* Estilos para el área del formulario */
+#ModalForm3 .form-area {
+  padding: 1.5rem; /* Reducir el padding */
+}
+
+#ModalForm3 .form-area h1 {
+  font-size: 1.5rem; /* Tamaño de fuente un poco más pequeño */
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 1rem; /* Reducir el margen inferior */
+}
+
+/* Estilos para las etiquetas */
+#ModalForm3 .form-label {
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.25rem; /* Reducir el margen inferior */
+  font-size: 0.9rem; /* Tamaño de fuente más pequeño */
+  text-align: left; /* Alinear el texto a la izquierda */
+  display: block; /* Asegurar que el label ocupe toda la línea */
+  width: 100%; /* Ocupar el ancho completo */
+}
+
+/* Estilos para los inputs */
+#ModalForm3 .form-control {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.5rem; /* Reducir el padding */
+  font-size: 0.9rem; /* Tamaño de fuente más pequeño */
+  color: #000000;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 0.5rem; /* Reducir el margen inferior */
+}
+
+#ModalForm3 .form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+/* Estilos para los mensajes de error */
+#ModalForm3 .error {
+  text-align: left; /* Alinear el texto a la izquierda */
+  padding-left: 0; /* Asegurar que no haya padding a la izquierda */
+  color: red;
+  font-size: 0.85rem; /* Tamaño de fuente más pequeño */
+  margin-top: 0.1rem; /* Reducir el margen superior */
+  margin-bottom: 0.5rem; /* Reducir el margen inferior */
+  display: none; /* Ocultar inicialmente */
+}
+
+/* Estilos para el botón de enviar */
+#ModalForm3 .btn-light {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem; /* Reducir el padding */
+  font-size: 0.9rem; /* Tamaño de fuente más pequeño */
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  margin-top: 0.5rem; /* Reducir el margen superior */
+}
+
+#ModalForm3 .btn-light:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para el modal-body */
+#ModalForm3 .modal-body {
+  padding: 0; /* Eliminar el padding predeterminado */
+}
+
+/* Estilos para el modal-dialog */
+#ModalForm3 .modal-dialog {
+  max-width: 500px; /* Ancho máximo de la modal */
+}
+
+/* Estilos para el fondo de la modal */
+#ModalForm3 .modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.input {
+  border: none;
+  border-color: white;
+  color: white;
+  background-color: white;
+}
+.input:focus {
+  outline: none;
+}
+
+.input::selection {
+  background-color: white;
+}
+
+@media (max-width: 600px) {
+  .form-area {
+    padding: 1.5em;
+  }
+  .form-area h1 {
+    font-size: 18px;
+  }
+}

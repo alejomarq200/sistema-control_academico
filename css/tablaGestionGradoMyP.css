@@ -1,0 +1,661 @@
+ /*TABLA*/
+
+ .filtro-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+.filtro-input {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.filtro-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.lupa-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+    pointer-events: none;
+}
+
+.custom-table {
+    width: 50%;
+    background-color: #fff;
+border-radius: 10px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+border: 1px solid #dee2e6;
+width: 100%;
+min-width: 600px; /* Ancho mínimo */
+max-width: 900px; /* Ancho máximo */
+margin: 0 auto; /* Centrado */
+}
+
+.custom-table thead {
+background-color: rgb(37, 64, 90);
+color: #fff;
+}
+
+.custom-table th,
+.custom-table td {
+padding: 2rem;
+vertical-align: middle;
+border-color: #dee2e6;
+}
+
+.custom-table tbody tr {
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-table tbody tr:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+background-color: #f8f9fa;
+}
+
+.table-title {
+font-size: 2rem;
+font-weight: 800;
+color: #343a40;
+margin-bottom: 1.5rem;
+}
+
+/* MODAL Y MULTISTEP  FORM */
+
+/* Ventana Modal */
+/*:::Boton-Modal:::*/
+.boton-modal {
+    background-color: #fff;
+    margin-left: 560px;
+}
+
+.boton-modal label {
+    padding: 8px 10px;
+    background-color: #5488a3;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+
+.boton-modal label:hover {
+    background-color: #185e83;
+}
+
+#btn-modal {
+    display: none;
+}
+
+.container-modal {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(144, 148, 150, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+#btn-modal:checked~.container-modal {
+    display: flex;
+}
+
+.content-modal {
+    width: 100%;
+    max-width: 900px;
+    height: 650px;
+    padding: 20px;
+    background: rgb(255, 255, 255);
+    border-radius: 15px;
+    position: relative;
+}
+
+.content-modal h2 {
+    margin-bottom: 5px;
+}
+
+.content-modal .btn-cerrar {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.content-modal .btn-cerrar label {
+    padding: 7px 10px;
+    background-color: #5488a3;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+
+.content-modal .btn-cerrar label:hover {
+    background-color: #185e83;
+}
+
+.cerrar-modal {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* Contenedor del formulario */
+.container {
+    width: 80%;
+    height: 85%;
+    background: #e9e6e6;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.container h3 {
+    text-align: left;
+    color: rgb(48, 48, 48);
+}
+
+.container form {
+    width: 90%;
+    position: absolute;
+    top: 100px;
+    left: 40px;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.container form.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.container form input {
+    width: 100%;
+    padding: 10px 5px;
+    margin: 15px 0;
+    border: 1px solid black;
+    outline: none;
+    border-radius: 7px;
+}
+
+.container form input::placeholder {
+    color: rgb(0, 0, 0);
+}
+
+.btn-box {
+    width: 100%;
+    margin: 30px auto;
+    text-align: center;
+}
+
+.container form button {
+    width: 100px;
+    height: 30px;
+    margin: 0 10px;
+    background: rgb(37, 64, 90);
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.errorFormMultiPr {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    text-align: left;
+    display: block;
+    font-weight: 500;
+}
+
+/* Barra de progreso */
+.step-row {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: #ccced6;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.step-col {
+    flex: 1;
+    text-align: center;
+    color: rgb(37, 64, 90);
+    position: relative;
+    z-index: 2;
+    font-weight: 600;
+}
+
+#progress {
+    position: absolute;
+    height: 100%;
+    width: 33.33%;
+    background: rgb(37, 64, 90);
+    transition: width 0.5s;
+    z-index: 1;
+}
+
+.step-col small {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* Estilos generales para la tabla */
+#tabla-general {
+    width: 100%;
+    max-width: 950px;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+/* Estilo para el caption */
+#tabla-general caption {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Estilo para las celdas del encabezado */
+#tabla-general thead th {
+    background-color: rgb(37, 64, 90);
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Estilo para las celdas del cuerpo */
+#tabla-general tbody td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+    color: black;
+}
+
+/* Estilo para las celdas con data-label (responsive) */
+#tabla-general tbody td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: none;
+}
+
+.container {
+    overflow-y: auto;
+    clip-path: inset(0% 0% round 20px);
+}
+
+.selectProfesorG {
+    width: 100%;
+    border-radius: 7px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.contenedor-select {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.selectMateria {
+    width: 100%;
+    border-radius: 7px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.labelSelect {
+    color: rgb(48, 48, 48);
+    float: left;
+}
+
+#form2 input {
+    margin-bottom: 0;
+    /* Asegúrate de que los inputs no tengan margen inferior */
+}
+
+    /* Estilos para el botón que abre la modal */
+    .boton-modal-custom {
+        display: inline-block;
+        margin: 20px;
+    }
+
+    .boton-modal-custom label {
+        padding: 10px 15px;
+        background-color: #5488a3;
+        color: #fff;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 300ms ease;
+    }
+
+    .boton-modal-custom label:hover {
+        background-color: #185e83;
+    }
+
+    /* Estilos para la modal */
+    #btn-modal-custom {
+        display: none;
+    }
+
+    .container-modal-custom {
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgba(144, 148, 150, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: flex-start;
+        z-index: 100;
+        padding: 20px 0;
+        overflow-y: auto;
+    }
+
+    #btn-modal-custom:checked~.container-modal-custom {
+        display: flex;
+    }
+
+    .content-modal-custom {
+        width: auto;
+        min-width: 900px;
+        max-width: 95%;
+        padding: 20px;
+        background: rgb(255, 255, 255);
+        border-radius: 15px;
+        position: relative;
+        margin: 20px 0;
+    }
+
+    .content-modal-custom h2 {
+        margin-bottom: 20px;
+        text-align: center;
+        color: #253e5a;
+    }
+
+    .btn-cerrar-custom {
+        width: 100%;
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .btn-cerrar-custom label {
+        padding: 7px 10px;
+        background-color: #5488a3;
+        color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 300ms ease;
+    }
+
+    .btn-cerrar-custom label:hover {
+        background-color: #185e83;
+    }
+
+    .cerrar-modal-custom {
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    /* Contenedor del formulario */
+    .container-form-custom {
+        width: 100%;
+        background: #e9e6e6;
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    /* Barra de progreso - AHORA EN LA PARTE SUPERIOR */
+    .step-row-custom {
+        width: 100%;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        background: #ccced6;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 30px;
+        /* Más espacio debajo de la barra */
+    }
+
+    .step-col-custom {
+        flex: 1;
+        text-align: center;
+        color: rgb(37, 64, 90);
+        position: relative;
+        z-index: 2;
+        font-weight: 600;
+    }
+
+    #progress-custom {
+        position: absolute;
+        height: 100%;
+        width: 33.33%;
+        background: rgb(37, 64, 90);
+        transition: width 0.5s;
+        z-index: 1;
+    }
+
+    .step-col-custom small {
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .container-form-custom h3 {
+        text-align: left;
+        color: rgb(48, 48, 48);
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+    }
+
+    .container-form-custom form {
+        width: 100%;
+        transition: opacity 0.5s ease-in-out;
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        top: 80px;
+        /* Ajuste por la barra de progreso */
+        left: 0;
+        padding: 0 20px 20px;
+    }
+
+    .container-form-custom form.active {
+        opacity: 1;
+        visibility: visible;
+        position: relative;
+        top: 0;
+    }
+
+    .container-form-custom form input,
+    .container-form-custom form select {
+        width: 100%;
+        padding: 10px 12px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        outline: none;
+        border-radius: 7px;
+        font-size: 1rem;
+        transition: border 0.3s ease;
+    }
+
+    .container-form-custom form input:focus,
+    .container-form-custom form select:focus {
+        border-color: #5488a3;
+    }
+
+    .container-form-custom form input::placeholder {
+        color: #999;
+    }
+
+    .btn-box-custom {
+        width: 100%;
+        margin: 25px auto 10px;
+        text-align: center;
+    }
+
+    .container-form-custom form button {
+        width: 120px;
+        height: 38px;
+        margin: 0 10px;
+        background: rgb(37, 64, 90);
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        color: #fff;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .container-form-custom form button:hover {
+        background: #2a4b6d;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Estilos para la tabla */
+    #tabla-general-custom {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 10px;
+    }
+
+    #tabla-general-custom thead th {
+        background-color: rgb(37, 64, 90);
+        color: #fff;
+        padding: 15px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    #tabla-general-custom tbody td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        background-color: #fff;
+        color: #333;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    #tabla-general-custom tbody tr:hover td {
+        background-color: #f5f5f5;
+    }
+
+    #tabla-general-custom tbody button {
+        background: transparent;
+        border: none;
+        color: #5488a3;
+        font-size: 1.3rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 5px;
+    }
+
+    #tabla-general-custom tbody button:hover {
+        color: #185e83;
+        transform: scale(1.1);
+    }
+
+    .labelSelect-custom {
+        color: rgb(48, 48, 48);
+        display: block;
+        text-align: left;
+        margin-top: 15px;
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+
+    .contenedor-select-custom {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .error-custom {
+        color: #e74c3c;
+        font-size: 0.85rem;
+        margin-top: 5px;
+        text-align: left;
+        display: block;
+        font-weight: 500;
+    }
+    
+/* Estilos responsivos para pantallas pequeñas */
+@media (max-width: 600px) {
+    #tabla-general thead {
+        display: none;
+    }
+
+    #tabla-general tbody tr {
+        display: block;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    #tabla-general tbody td {
+        display: block;
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    #tabla-general tbody td::before {
+        display: inline-block;
+        content: attr(data-label);
+        font-weight: bold;
+        position: absolute;
+        left: 10px;
+        width: 50%;
+        text-align: left;
+    }
+}

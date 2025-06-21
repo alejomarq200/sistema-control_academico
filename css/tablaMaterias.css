@@ -1,0 +1,405 @@
+.boton-modal {
+            background-color: #fff;
+            margin-left: 500px;
+        }
+
+        .boton-modal label {
+            padding: 8px 10px;
+            background-color: #5488a3;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 300ms ease;
+        }
+
+        .boton-modal label:hover {
+            background-color: #185e83;
+        }
+
+        #btn-modal {
+            display: none;
+        }
+
+        .filtro-container {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 20px;
+            margin-left: 55px;
+        }
+
+        .filtro-input {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 40px;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .filtro-input:focus {
+            border-color: #007bff;
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+        }
+
+        .lupa-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+            pointer-events: none;
+        }
+
+        .custom-table {
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+            width: 1100px;
+        }
+
+        .custom-table thead {
+            background-color: rgb(37, 64, 90);
+            color: #fff;
+        }
+
+        .custom-table th,
+        .custom-table td {
+            padding: 2rem;
+            vertical-align: middle;
+            border-color: #dee2e6;
+        }
+
+        .custom-table tbody tr {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .custom-table tbody tr:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f8f9fa;
+        }
+
+        .btn-custom {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-custom.btn-edit {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-custom.btn-edit:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .container-modal {
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(144, 148, 150, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        #btn-modal:checked~.container-modal {
+            display: flex;
+        }
+
+        .content-modal {
+            width: 100%;
+            max-width: 900px;
+            height: 650px;
+            padding: 20px;
+            background: rgb(255, 255, 255);
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .content-modal h2 {
+            margin-bottom: 5px;
+        }
+
+        .content-modal .btn-cerrar {
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .content-modal .btn-cerrar label {
+            padding: 7px 10px;
+            background-color: #5488a3;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 300ms ease;
+        }
+
+        .content-modal .btn-cerrar label:hover {
+            background-color: #185e83;
+        }
+
+        .cerrar-modal {
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* Contenedor del formulario */
+        .container {
+            width: 80%;
+            height: 85%;
+            background: #e9e6e6;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h3 {
+            text-align: left;
+            color: rgb(48, 48, 48);
+        }
+
+        .container form {
+            width: 90%;
+            position: absolute;
+            top: 100px;
+            left: 40px;
+            transition: opacity 0.5s ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .container form.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .container form input {
+            width: 100%;
+            padding: 10px 5px;
+            margin: 15px 0;
+            border: 1px solid black;
+            outline: none;
+            border-radius: 7px;
+        }
+
+        .container form input::placeholder {
+            color: rgb(0, 0, 0);
+        }
+
+        .btn-box {
+            width: 100%;
+            margin: 30px auto;
+            text-align: center;
+        }
+
+        .container form button {
+            width: 100px;
+            height: 30px;
+            margin: 0 10px;
+            background: rgb(37, 64, 90);
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Barra de progreso */
+        .step-row {
+            width: 100%;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: #ccced6;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .step-col {
+            flex: 1;
+            text-align: center;
+            color: rgb(37, 64, 90);
+            position: relative;
+            z-index: 2;
+            font-weight: 600;
+        }
+
+        #progress {
+            position: absolute;
+            height: 100%;
+            width: 33.33%;
+            background: rgb(37, 64, 90);
+            transition: width 0.5s;
+            z-index: 1;
+        }
+
+        .step-col small {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        /* Estilos generales para la tabla */
+        #tabla-materias {
+            width: 100%;
+            max-width: 950px;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+        }
+
+        /* Estilo para el caption */
+        #tabla-materias caption {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* Estilo para las celdas del encabezado */
+        #tabla-materias thead th {
+            background-color: rgb(37, 64, 90);
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Estilo para las celdas del cuerpo */
+        #tabla-materias tbody td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            background-color: #fff;
+            color: black;
+        }
+
+        /* Estilo para las celdas con data-label (responsive) */
+        #tabla-materias tbody td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            display: none;
+        }
+
+        .container {
+            overflow-y: auto;
+            clip-path: inset(0% 0% round 20px);
+        }
+
+        .selectProfesorG {
+            width: 100%;
+            border-radius: 7px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .contenedor-select {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .labelSelect {
+            color: rgb(48, 48, 48);
+            float: left;
+        }
+
+        #form2 .error {
+            text-align: left;
+            padding-left: 0;
+            color: red;
+            font-size: 0.85rem;
+            display: none;
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+        }
+
+        #form2 input {
+            margin-bottom: 0;
+            /* Asegúrate de que los inputs no tengan margen inferior */
+        }
+
+        #form2 .error {
+            margin-top: 2px;
+            /* Añade un pequeño margen superior si es necesario */
+        }
+
+        #form2 .error1 {
+            text-align: left;
+            padding-left: 0;
+            color: red;
+            font-size: 0.85rem;
+            display: none;
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+        }
+
+        #form2 input {
+            margin-bottom: 0;
+            /* Asegúrate de que los inputs no tengan margen inferior */
+        }
+
+        #form2 .error1 {
+            margin-top: 2px;
+            /* Añade un pequeño margen superior si es necesario */
+        }
+
+        /* Estilos responsivos para pantallas pequeñas */
+        @media (max-width: 600px) {
+            #tabla-materias thead {
+                display: none;
+            }
+
+            #tabla-materias tbody tr {
+                display: block;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+
+            #tabla-materias tbody td {
+                display: block;
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+
+            #tabla-materias tbody td::before {
+                display: inline-block;
+                content: attr(data-label);
+                font-weight: bold;
+                position: absolute;
+                left: 10px;
+                width: 50%;
+                text-align: left;
+            }
+        }

@@ -1,0 +1,105 @@
+.filtro-container {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+.filtro-input {
+  width: 100%;
+  padding: 10px 40px 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 40px;
+  font-size: 16px;
+  outline: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.filtro-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.lupa-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+  pointer-events: none;
+}
+
+.custom-table {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #dee2e6;
+}
+
+.custom-table thead {
+  background-color: rgb(37, 64, 90);
+  color: #fff;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 2rem;
+  vertical-align: middle;
+  border-color: #dee2e6;
+}
+
+.custom-table tbody tr {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-table tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
+}
+
+.btn-custom {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-custom.btn-edit {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+.btn-custom.btn-edit:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.btn-custom.btn-delete {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+}
+
+.btn-custom.btn-delete:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+}
+
+.btn-custom i {
+  font-size: 2rem;
+}
+
+.table-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #343a40;
+  margin-bottom: 1.5rem;
+}
+
+/* MODAL Y MULTISTEP  FORM */
