@@ -110,176 +110,128 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         trim($_POST['direccionEmpresaC']),
     );
 
-
-    /* VALIDACIÓN DE CAMPOS ESTUDIANTES */
+    /* VALIDACIÓN ESTUDIANTE */
     function validarCamposEstudiante($variablesInscripcionEst)
     {
-        /* Bandera para validar si hay errores  */
-        $validar = true;
+        $mensajes = [];
+        $valido = true;
 
-        /* PATRONES BACKEND */
+        // Patrones
         $patronCedula = "/^[V|E|J|P][0-9]{7,9}$/";
         $patronNombre = "/^[A-Za-zÑñÁÉÍÓÚáéíóú\s'-]+$/";
-        $patronEmail = "/^[^\s@]+@[^\s@]+\.[^\s@]+$/";
-        $patronFecha = "/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/";
-        $patronTelefono = "/^(0414|0424|0412|0416|0426)[0-9]{7}$/";
+        $patronFecha = "/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/"; // o usa el que prefieras
         $patronEdad = "/^[0-9]{1,2}$/";
         $patronGenero = "/^(M|F)$/i";
         $turno = "/^(Mañana)$/i";
-        $trabaja = "/^(Sí|No)$/i";
-        $patronTexto = "/^.{10,}$/";
+        $patronTexto = "/^.{10,}$/"; // mínimo 10 caracteres
 
+        // Validaciones
         if (!empty($_POST['checkDniEst'])) {
-
-            if (empty($variablesInscripcionEst[0])) {
-                $mensajes[] = "El campo de cedulaEst es obligatorio";
-                $validar = false;
-            } else if (!preg_match($patronCedula, $variablesInscripcionEst[0])) {
-                $mensajes[] = "Formato inválido cedulaEst";
-                $validar = false;
+            if (empty($variablesInscripcionEst[0]) || !preg_match($patronCedula, $variablesInscripcionEst[0])) {
+                $mensajes[] = "Cédula inválida o vacía.";
+                $valido = false;
             }
-        } else {
-            $variablesInscripcionEst[0] = null;
         }
 
-        if (empty($variablesInscripcionEst[1])) {
-            $mensajes[] = "El campo de nombresEst es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronNombre, $variablesInscripcionEst[1])) {
-            $mensajes[] = "Formato inválido Nombres Est";
-            $validar = false;
+        if (empty($variablesInscripcionEst[1]) || !preg_match($patronNombre, $variablesInscripcionEst[1])) {
+            $mensajes[] = "Nombre inválido o vacío.";
+            $valido = false;
         }
 
-        if (empty($variablesInscripcionEst[2])) {
-            $mensajes[] = "El campo de apellidosEst es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronNombre, $variablesInscripcionEst[2])) {
-            $mensajes[] = "Formato inválido Apellidos Est";
-            $validar = false;
+        if (empty($variablesInscripcionEst[2]) || !preg_match($patronNombre, $variablesInscripcionEst[2])) {
+            $mensajes[] = "Apellido inválido o vacío.";
+            $valido = false;
         }
 
-        if (empty($variablesInscripcionEst[3])) {
-            $mensajes[] = "El campo de f_nacimientoEst es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronFecha, $variablesInscripcionEst[3])) {
-            $mensajes[] = "Formato inválido fecha de nacimientoEst";
-            $validar = false;
+        if (empty($variablesInscripcionEst[3]) || !preg_match($patronFecha, $variablesInscripcionEst[3])) {
+            $mensajes[] = "Fecha de nacimiento inválida o vacía.";
+            $valido = false;
         }
-        if (empty($variablesInscripcionEst[4])) {
-            $mensajes[] = "El campo de edadEst es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronEdad, $variablesInscripcionEst[4])) {
-            $mensajes[] = "Formato inválido edad Est";
-            $validar = false;
+
+        if (empty($variablesInscripcionEst[4]) || !preg_match($patronEdad, $variablesInscripcionEst[4])) {
+            $mensajes[] = "Edad inválida o vacía.";
+            $valido = false;
         }
-        if (empty($variablesInscripcionEst[5])) {
-            $mensajes[] = "El campo de sexo Est es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronGenero, $variablesInscripcionEst[5])) {
-            $mensajes[] = "Formato inválido sexo Est";
-            $validar = false;
+
+        if (empty($variablesInscripcionEst[5]) || !preg_match($patronGenero, $variablesInscripcionEst[5])) {
+            $mensajes[] = "Sexo inválido o vacío.";
+            $valido = false;
         }
-        if (empty($variablesInscripcionEst[6])) {
+
+        if (empty($variablesInscripcionEst[6]) || !preg_match($patronTexto, $variablesInscripcionEst[6])) {
             $mensajes[] = "El campo de direccionEst es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionEst[6])) {
-            $mensajes[] = "Formato inválido dirección Est";
-            $validar = false;
-        }
-        if (empty($variablesInscripcionEst[7])) {
-            $mensajes[] = "El campo de lugarNacEst es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionEst[7])) {
-            $mensajes[] = "Formato inválido lugar nacimiento Est";
-            $validar = false;
-        }
-        if (empty($variablesInscripcionEst[8])) {
-            $mensajes[] = "El campo de colegioAntEst es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionEst[8])) {
-            $mensajes[] = "Formato inválido colegio antrior Est";
-            $validar = false;
-        }
-        if (empty($variablesInscripcionEst[9])) {
-            $mensajes[] = "El campo de nivelacionEst es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionEst[9])) {
-            $mensajes[] = "Formato inválido nivelación Est";
-            $validar = false;
-        }
-        if (empty($variablesInscripcionEst[10])) {
-            $mensajes[] = "El campo de explicacionEst es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionEst[10])) {
-            $mensajes[] = "Formato inválido explicacion Est";
-            $validar = false;
-        }
-        if (empty($variablesInscripcionEst[11])) {
-            $mensajes[] = "El campo de motivoREst es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionEst[11])) {
-            $mensajes[] = "Formato inválido motivo retiro Est";
-            $validar = false;
+            $valido = false;
         }
 
-        if (empty($variablesInscripcionEst[12])) {
+        if (empty($variablesInscripcionEst[7]) || !preg_match($patronTexto, $variablesInscripcionEst[7])) {
+            $mensajes[] = "El campo de lugarNacEst es obligatorio";
+            $valido = false;
+        }
+
+        if (empty($variablesInscripcionEst[8]) || !preg_match($patronTexto, $variablesInscripcionEst[8])) {
+            $mensajes[] = "El campo de colegioAntEst es obligatorio";
+            $valido = false;
+        }
+
+        if (empty($variablesInscripcionEst[9]) || !preg_match($patronTexto, $variablesInscripcionEst[9])) {
+            $mensajes[] = "El campo de nivelacionEst es obligatorio";
+            $valido = false;
+        }
+
+        if (empty($variablesInscripcionEst[10]) || !preg_match($patronTexto, $variablesInscripcionEst[10])) {
+            $mensajes[] = "El campo de explicacionEst es obligatorio";
+            $valido = false;
+        }
+
+        if (empty($variablesInscripcionEst[11]) || !preg_match($patronTexto, $variablesInscripcionEst[11])) {
+            $mensajes[] = "El campo de motivoREst es obligatorio";
+            $valido = false;
+        }
+
+        if (empty($variablesInscripcionEst[12]) || !preg_match($turno, $variablesInscripcionEst[12])) {
             $mensajes[] = "El campo de turnoEst es obligatorio";
-            $validar = false;
-        } else if (!preg_match($turno, $variablesInscripcionEst[12])) {
-            $mensajes[] = "Formato inválido turno Est";
-            $validar = false;
+            $valido = false;
         }
 
         if (empty($variablesInscripcionEst[13])) {
             $mensajes[] = "El campo de gradoEst es obligatorio";
-            $validar = false;
+            $valido = false;
         }
 
-        if (empty($variablesInscripcionEst[14])) {
+        if (empty($variablesInscripcionEst[14]) || !preg_match($patronTexto, $variablesInscripcionEst[14])) {
             $mensajes[] = "El campo de vacunasEst es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionEst[14])) {
-            $mensajes[] = "Formato inválido vacuna Est";
-            $validar = false;
-        }
-        if (empty($variablesInscripcionEst[15])) {
-            $mensajes[] = "El campo de enfermedadEst es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionEst[15])) {
-            $mensajes[] = "Formato inválido enfermedad Est";
-            $validar = false;
+            $valido = false;
         }
 
+        if (empty($variablesInscripcionEst[15]) || !preg_match($patronTexto, $variablesInscripcionEst[15])) {
+            $mensajes[] = "El campo de enfermedadEst es obligatorio";
+            $valido = false;
+        }
+
+        // Validación de campos condicionales
         if (!empty($_POST['check'])) {
-            if (empty($variablesInscripcionEst[16])) {
-                $mensajes[] = "El campo de problemasRespEst es obligatorio";
-                $validar = false;
-            } else if (!preg_match($patronTexto, $variablesInscripcionEst[16])) {
-                $mensajes[] = "Formato inválido problema respiratorio Est";
-                $validar = false;
+            if (empty($variablesInscripcionEst[16]) || !preg_match($patronTexto, $variablesInscripcionEst[16])) {
+                $mensajes[] = "Problema respiratorio inválido o vacío.";
+                $valido = false;
             }
-        } else {
-            $variablesInscripcionEst[16] = null;
         }
 
         if (!empty($_POST["check1"])) {
-            if (empty($variablesInscripcionEst[17])) {
-                $mensajes[] = "El campo de alergiasEst es obligatorio";
-                $validar = false;
-            } else if (!preg_match($patronTexto, $variablesInscripcionEst[17])) {
-                $mensajes[] = "Formato inválido alergia Est";
-                $validar = false;
+            if (empty($variablesInscripcionEst[17]) || !preg_match($patronTexto, $variablesInscripcionEst[17])) {
+                $mensajes[] = "Alergia inválida o vacía.";
+                $valido = false;
             }
-        } else {
-            $variablesInscripcionEst[17] = null;
         }
-        return $validar;
-    }
 
+        return [
+            'valido' => $valido,
+            'errores' => $mensajes
+        ];
+    }
     /* FINALIZA VALIDACIÓN DE CAMPOS ESTUDIANTES */
 
-    /* VALIDACIÓN DE CAMPOS REPRESENTANTE MADRE */
 
+    /* VALIDACIÓN DE CAMPOS REPRESENTANTE MADRE */
     function validarCamposMadre(array $variablesInscripcionRepr)
     {
         /* PATRONES BACKEND */
@@ -291,125 +243,105 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $trabaja = "/^(Sí|No)$/i";
         $patronTexto = "/^.{10,}$/";
 
-        // Procesar los erroes del formulario
         $mensajes = [];
-
-        /* Bandera para validar si hay errores  */
         $validar = true;
 
-        if (empty($variablesInscripcionRepr[0])) {
-            $mensajes[] = "El campo de cedulaM es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronCedula, $variablesInscripcionRepr[0])) {
-            $mensajes[] = "Formato inválido cedulaM";
+        // Cedula
+        if (empty($variablesInscripcionRepr[0]) || !preg_match($patronCedula, $variablesInscripcionRepr[0])) {
+            $mensajes[] = "Campo cédula madre vacio o formato inválido.";
             $validar = false;
         }
 
-        if (empty($variablesInscripcionRepr[1])) {
-            $mensajes[] = "El campo de nombresM es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronNombre, $variablesInscripcionRepr[1])) {
-            $mensajes[] = "Formato inválido nombresM";
+        // Nombres
+        if (empty($variablesInscripcionRepr[1]) || !preg_match($patronNombre, $variablesInscripcionRepr[1])) {
+            $mensajes[] = "El campo de nombres madre vacio o formato inválido.";
             $validar = false;
         }
 
-        if (empty($variablesInscripcionRepr[2])) {
-            $mensajes[] = "El campo de apellidosM es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronNombre, $variablesInscripcionRepr[2])) {
-            $mensajes[] = "Formato inválido apellidosM";
+        // Apellidos
+        if (empty($variablesInscripcionRepr[2]) || !preg_match($patronNombre, $variablesInscripcionRepr[2])) {
+            $mensajes[] = "El campo de apellidos madre vacio o formato inválido.";
             $validar = false;
         }
 
-        if (empty($variablesInscripcionRepr[3])) {
-            $mensajes[] = "El campo de f_nacimientoM es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronFecha, $variablesInscripcionRepr[3])) {
-            $mensajes[] = "Formato inválido f_nacimientoM";
-            $validar = false;
-        }
-        if (empty($variablesInscripcionRepr[4])) {
-            $mensajes[] = "El campo de emailM es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronEmail, $variablesInscripcionRepr[4])) {
-            $mensajes[] = "Formato inválido emailM";
-            $validar = false;
-        }
-        if (empty($variablesInscripcionRepr[5])) {
-            $mensajes[] = "El campo de direccionM Est es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionRepr[5])) {
-            $mensajes[] = "Formato inválido direccionM";
-            $validar = false;
-        }
-        if (empty($variablesInscripcionRepr[6])) {
-            $mensajes[] = "El campo de n_telefonoM es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTelefono, $variablesInscripcionRepr[6])) {
-            $mensajes[] = "Formato inválido n_telefonoM";
-            $validar = false;
-        }
-        if (empty($variablesInscripcionRepr[7])) {
-            $mensajes[] = "El campo de graoInstM es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionRepr[7])) {
-            $mensajes[] = "Formato inválido graoInstM";
-            $validar = false;
-        }
-        if (empty($variablesInscripcionRepr[8])) {
-            $mensajes[] = "El campo de profesionM es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionRepr[8])) {
-            $mensajes[] = "Formato inválido profesionM";
+        // Fecha de nacimiento
+        if (empty($variablesInscripcionRepr[3]) || !preg_match($patronFecha, $variablesInscripcionRepr[3])) {
+            $mensajes[] = "El campo de fecha de nacimiento madre vacio o formato inválido.";
             $validar = false;
         }
 
-        if ($variablesInscripcionRepr[9] === "No") {
+        // Email
+        if (empty($variablesInscripcionRepr[4]) || !preg_match($patronEmail, $variablesInscripcionRepr[4])) {
+            $mensajes[] = "El campo de correo electrónico madre vacio o formato inválido.";
+            $validar = false;
+        }
+
+        // Dirección
+        if (empty($variablesInscripcionRepr[5]) || !preg_match($patronTexto, $variablesInscripcionRepr[5])) {
+            $mensajes[] = "El campo de dirección madre vacio o formato inválido.";
+            $validar = false;
+        }
+
+        // Teléfono
+        if (empty($variablesInscripcionRepr[6]) || !preg_match($patronTelefono, $variablesInscripcionRepr[6])) {
+            $mensajes[] = "El campo de teléfono madre vacio o formato inválido.";
+            $validar = false;
+        }
+
+        // Grado de instrucción
+        if (empty($variablesInscripcionRepr[7]) || !preg_match($patronTexto, $variablesInscripcionRepr[7])) {
+            $mensajes[] = "El campo de grado de instrucción madre vacio o formato inválido.";
+            $validar = false;
+        }
+
+        // Profesión
+        if (empty($variablesInscripcionRepr[8]) || !preg_match($patronTexto, $variablesInscripcionRepr[8])) {
+            $mensajes[] = "El campo de profesión madre o formato inválido.";
+            $validar = false;
+        }
+        // Trabaja
+        if (empty($variablesInscripcionRepr[9]) || !preg_match($trabaja, $variablesInscripcionRepr[9])) {
+            $mensajes[] = "El campo de si trabaja la madre vacio o formato inválido.";
+            $validar = false;
+        }
+
+        // Si trabaja, validar datos laborales
+        if ($variablesInscripcionRepr[9] === "Sí") {
+
+            // Nombre de empresa
+            if (empty($variablesInscripcionRepr[10]) || !preg_match($patronTexto, $variablesInscripcionRepr[10])) {
+                $mensajes[] = "El campo de nombre de empresa vaco o formato inválido.";
+                $validar = false;
+            }
+
+            // Teléfono empresa
+            if (empty($variablesInscripcionRepr[11]) || !preg_match($patronTelefono, $variablesInscripcionRepr[11])) {
+                $mensajes[] = "El campo de teléfono madre vacio o formato inválido.";
+                $validar = false;
+            }
+            // Dirección empresa
+            if (empty($variablesInscripcionRepr[12]) || !preg_match($patronTexto, $variablesInscripcionRepr[12])) {
+                $mensajes[] = "El campo de dirección madre vacio o formato inválido.";
+                $validar = false;
+            }
+        } else {
+            // Si no trabaja, vaciar campos de empresa
             $variablesInscripcionRepr[10] = null;
             $variablesInscripcionRepr[11] = null;
             $variablesInscripcionRepr[12] = null;
-
-        } else {
-            if (empty($variablesInscripcionRepr[9])) {
-                $mensajes[] = "El campo de trabajaM es obligatorio";
-                $validar = false;
-            } else if (!preg_match($trabaja, $variablesInscripcionRepr[9])) {
-                $mensajes[] = "Formato inválido trabajaM";
-                $validar = false;
-            }
-            if (empty($variablesInscripcionRepr[10])) {
-                $mensajes[] = "El campo de nombreEmpresaM es obligatorio";
-                $validar = false;
-            } else if (!preg_match($patronTexto, $variablesInscripcionRepr[10])) {
-                $mensajes[] = "Formato inválido nombreEmpresaM";
-                $validar = false;
-            }
-            if (empty($variablesInscripcionRepr[11])) {
-                $mensajes[] = "El campo de tlfnEmepresaM es obligatorio";
-                $validar = false;
-            } else if (!preg_match($patronTelefono, $variablesInscripcionRepr[11])) {
-                $mensajes[] = "Formato inválido tlfnEmepresaM";
-                $validar = false;
-            }
-
-            if (empty($variablesInscripcionRepr[12])) {
-                $mensajes[] = "El campo de direccionEmpresaM es obligatorio";
-                $validar = false;
-            } else if (!preg_match($patronTexto, $variablesInscripcionRepr[12])) {
-                $mensajes[] = "Formato inválido direccionEmpresaM";
-                $validar = false;
-            }
         }
 
-        return $validar;
+        return [
+            'valido' => $validar,
+            'errores' => $mensajes
+        ];
     }
-
     /* FINALIZA VALIDACIÓN DE CAMPOS MADRE */
 
-    /* VALIDACIÓN DE CAMPOS REPRESENTANTE PADRE */
+    // VALIDACIÓN DE CAMPOS REPRESENTANTE PADRE 
     function validarCamposPadre(array $variablesInscripcionReprP)
     {
-        /* PATRONES BACKEND */
+        // PATRONES BACKEND
         $patronCedula = "/^[V|E|J|P][0-9]{7,9}$/";
         $patronNombre = "/^[A-Za-zÑñÁÉÍÓÚáéíóú\s'-]+$/";
         $patronEmail = "/^[^\s@]+@[^\s@]+\.[^\s@]+$/";
@@ -421,73 +353,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Procesar los erroes del formulario
         $mensajes = [];
 
-        /* Bandera para validar si hay errores  */
+        // Bandera para validar si hay errores
         $validar = true;
 
-        if (empty($variablesInscripcionReprP[0])) {
-            $mensajes[] = "El campo de cedulaP es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronCedula, $variablesInscripcionReprP[0])) {
-            $mensajes[] = "Formato inválido cedulaP";
+        if (empty($variablesInscripcionReprP[0]) || !preg_match($patronCedula, $variablesInscripcionReprP[0])) {
+            $mensajes[] = "El campo de cedula padre vacio o formato inválido";
             $validar = false;
         }
 
-        if (empty($variablesInscripcionReprP[1])) {
-            $mensajes[] = "El campo de nombresP es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronNombre, $variablesInscripcionReprP[1])) {
-            $mensajes[] = "Formato inválido nombresP";
+        if (empty($variablesInscripcionReprP[1]) || !preg_match($patronNombre, $variablesInscripcionReprP[1])) {
+            $mensajes[] = "El campo de nombres padre vacio o formato inválido";
             $validar = false;
         }
 
-        if (empty($variablesInscripcionReprP[2])) {
-            $mensajes[] = "El campo de apellidosP es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronNombre, $variablesInscripcionReprP[2])) {
-            $mensajes[] = "Formato inválido apellidosP";
+        if (empty($variablesInscripcionReprP[2]) || !preg_match($patronNombre, $variablesInscripcionReprP[2])) {
+            $mensajes[] = "El campo de apellidos padre vacio o formato inválido";
             $validar = false;
         }
 
-        if (empty($variablesInscripcionReprP[3])) {
-            $mensajes[] = "El campo de f_nacimientoP es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronFecha, $variablesInscripcionReprP[3])) {
-            $mensajes[] = "Formato inválido f_nacimientoP";
+        if (empty($variablesInscripcionReprP[3]) || !preg_match($patronFecha, $variablesInscripcionReprP[3])) {
+            $mensajes[] = "El campo de f_nacimiento padre vacio o formato inválido";
             $validar = false;
         }
-        if (empty($variablesInscripcionReprP[4])) {
-            $mensajes[] = "El campo de emailP es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronEmail, $variablesInscripcionReprP[4])) {
-            $mensajes[] = "Formato inválido emailP";
+
+        if (empty($variablesInscripcionReprP[4]) || !preg_match($patronEmail, $variablesInscripcionReprP[4])) {
+            $mensajes[] = "El campo de email padre vacio o formato inválido";
             $validar = false;
         }
-        if (empty($variablesInscripcionReprP[5])) {
-            $mensajes[] = "El campo de direccionP Est es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionReprP[5])) {
-            $mensajes[] = "Formato inválido direccionP";
+
+        if (empty($variablesInscripcionReprP[5]) || !preg_match($patronTexto, $variablesInscripcionReprP[5])) {
+            $mensajes[] = "El campo de direccion padre vacio o formato inválido";
             $validar = false;
         }
-        if (empty($variablesInscripcionReprP[6])) {
-            $mensajes[] = "El campo de n_telefonoP es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTelefono, $variablesInscripcionReprP[6])) {
-            $mensajes[] = "Formato inválido n_telefonoP";
+
+        if (empty($variablesInscripcionReprP[6]) || !preg_match($patronTelefono, $variablesInscripcionReprP[6])) {
+            $mensajes[] = "El campo de n_telefono padre vacio o formato inválido";
             $validar = false;
         }
-        if (empty($variablesInscripcionReprP[7])) {
-            $mensajes[] = "El campo de graoInstP es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionReprP[7])) {
-            $mensajes[] = "Formato inválido graoInstP";
+
+        if (empty($variablesInscripcionReprP[7]) || !preg_match($patronTexto, $variablesInscripcionReprP[7])) {
+            $mensajes[] = "El campo de graoInst padre vacio o formato inválido";
             $validar = false;
         }
-        if (empty($variablesInscripcionReprP[8])) {
-            $mensajes[] = "El campo de profesionP es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionReprP[8])) {
-            $mensajes[] = "Formato inválido profesionP";
+
+        if (empty($variablesInscripcionReprP[8]) || !preg_match($patronTexto, $variablesInscripcionReprP[8])) {
+            $mensajes[] = "El campo de profesion padre vacio o formato inválido";
             $validar = false;
         }
 
@@ -496,44 +406,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $variablesInscripcionReprP[11] = null;
             $variablesInscripcionReprP[12] = null;
         } else {
-            if (empty($variablesInscripcionReprP[9])) {
-                $mensajes[] = "El campo de trabajaP es obligatorio";
-                $validar = false;
-            } else if (!preg_match($trabaja, $variablesInscripcionReprP[9])) {
-                $mensajes[] = "Formato inválido trabajaP";
-                $validar = false;
-            }
-            if (empty($variablesInscripcionReprP[10])) {
-                $mensajes[] = "El campo de nombreEmpresaP es obligatorio";
-                $validar = false;
-            } else if (!preg_match($patronTexto, $variablesInscripcionReprP[10])) {
-                $mensajes[] = "Formato inválido nombreEmpresaP";
-                $validar = false;
-            }
-            if (empty($variablesInscripcionReprP[11])) {
-                $mensajes[] = "El campo de tlfnEmepresaP es obligatorio";
-                $validar = false;
-            } else if (!preg_match($patronTelefono, $variablesInscripcionReprP[11])) {
-                $mensajes[] = "Formato inválido tlfnEmepresaP";
+            if (empty($variablesInscripcionReprP[9]) || !preg_match($trabaja, $variablesInscripcionReprP[9])) {
+                $mensajes[] = "El campo de trabaja padre vacio o formato inválido";
                 $validar = false;
             }
 
-            if (empty($variablesInscripcionReprP[12])) {
-                $mensajes[] = "El campo de direccionEmpresaP es obligatorio";
+            if (empty($variablesInscripcionReprP[10]) || !preg_match($patronTexto, $variablesInscripcionReprP[10])) {
+                $mensajes[] = "El campo de nombreEmpresa padre vacio o formato inválido";
                 $validar = false;
-            } else if (!preg_match($patronTexto, $variablesInscripcionReprP[12])) {
-                $mensajes[] = "Formato inválido direccionEmpresaP";
+            }
+
+            if (empty($variablesInscripcionReprP[11]) || !preg_match($patronTelefono, $variablesInscripcionReprP[11])) {
+                $mensajes[] = "El campo de tlfnEmepresa padre vacio o formato inválido";
+                $validar = false;
+            }
+
+
+            if (empty($variablesInscripcionReprP[12]) || !preg_match($patronTexto, $variablesInscripcionReprP[12])) {
+                $mensajes[] = "El campo de direccionEmpresa padre vacio o formato inválido";
                 $validar = false;
             }
         }
-
-        return $validar;
+        return [
+            'valido' => $validar,
+            'errores' => $mensajes
+        ];
     }
-    /* FINALIZA VALIDACIÓN DE CAMPOS REPRESENTANTE PADRE */
+
+    //FINALIZA VALIDACIÓN DE CAMPOS REPRESENTANTE PADRE
 
     function validarCamposContacto(array $variablesInscripcionContacto)
     {
-        /* PATRONES BACKEND */
+        // PATRONES BACKEND 
         $patronCedula = "/^[V|E|J|P][0-9]{7,9}$/";
         $patronNombre = "/^[A-Za-zÑñÁÉÍÓÚáéíóú\s'-]+$/";
         $patronEmail = "/^[^\s@]+@[^\s@]+\.[^\s@]+$/";
@@ -544,73 +448,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Procesar los erroes del formulario
         $mensajes = [];
 
-        /* Bandera para validar si hay errores  */
+        // Bandera para validar si hay errores 
         $validar = true;
 
-        if (empty($variablesInscripcionContacto[0])) {
-            $mensajes[] = "El campo de cedulaC es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronCedula, $variablesInscripcionContacto[0])) {
-            $mensajes[] = "Formato inválido cedulaC";
+        if (empty($variablesInscripcionContacto[0]) || !preg_match($patronCedula, $variablesInscripcionContacto[0])) {
+            $mensajes[] = "El campo de cedula contacto vacio o formato inválido";
             $validar = false;
         }
 
-        if (empty($variablesInscripcionContacto[1])) {
-            $mensajes[] = "El campo de nombresC es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronNombre, $variablesInscripcionContacto[1])) {
-            $mensajes[] = "Formato inválido nombresC";
+        if (empty($variablesInscripcionContacto[1]) || !preg_match($patronNombre, $variablesInscripcionContacto[1])) {
+            $mensajes[] = "El campo de nombres contacto vacio o formato inválido";
             $validar = false;
         }
 
-        if (empty($variablesInscripcionContacto[2])) {
-            $mensajes[] = "El campo de apellidosC es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronNombre, $variablesInscripcionContacto[2])) {
-            $mensajes[] = "Formato inválido apellidosC";
+        if (empty($variablesInscripcionContacto[2]) || !preg_match($patronNombre, $variablesInscripcionContacto[2])) {
+            $mensajes[] = "El campo de apellidos contacto vacio o formato inválido";
             $validar = false;
         }
 
-        if (empty($variablesInscripcionContacto[3])) {
-            $mensajes[] = "El campo de direccionC es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionContacto[3])) {
-            $mensajes[] = "Formato inválido direccionC";
+        if (empty($variablesInscripcionContacto[3]) || !preg_match($patronTexto, $variablesInscripcionContacto[3])) {
+            $mensajes[] = "El campo de direccion contacto vacio o formato inválido";
             $validar = false;
         }
-        if (empty($variablesInscripcionContacto[4])) {
-            $mensajes[] = "El campo de telefonoC es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTelefono, $variablesInscripcionContacto[4])) {
-            $mensajes[] = "Formato inválido telefonoC";
+        if (empty($variablesInscripcionContacto[4]) || !preg_match($patronTelefono, $variablesInscripcionContacto[4])) {
+            $mensajes[] = "El campo de telefono contacto vacio o formato inválido";
             $validar = false;
         }
-        if (empty($variablesInscripcionContacto[5])) {
-            $mensajes[] = "El campo de correoC es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronEmail, $variablesInscripcionContacto[5])) {
-            $mensajes[] = "Formato inválido correoC";
+
+        if (empty($variablesInscripcionContacto[5]) || !preg_match($patronEmail, $variablesInscripcionContacto[5])) {
+            $mensajes[] = "El campo de correo contacto o formato inválido";
             $validar = false;
         }
-        if (empty($variablesInscripcionContacto[6])) {
-            $mensajes[] = "El campo de graoInstC es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionContacto[6])) {
-            $mensajes[] = "Formato inválido graoInstC";
+
+        if (empty($variablesInscripcionContacto[6]) || !preg_match($patronTexto, $variablesInscripcionContacto[6])) {
+            $mensajes[] = "El campo de graoInst contacto o formato inválido";
             $validar = false;
         }
-        if (empty($variablesInscripcionContacto[7])) {
-            $mensajes[] = "El campo de profesionC es obligatorio";
-            $validar = false;
-        } else if (!preg_match($patronTexto, $variablesInscripcionContacto[7])) {
-            $mensajes[] = "Formato inválido profesionC";
+
+        if (empty($variablesInscripcionContacto[7]) || !preg_match($patronTexto, $variablesInscripcionContacto[7])) {
+            $mensajes[] = "El campo de profesion contacto o formato inválido";
             $validar = false;
         }
-        if (empty($variablesInscripcionContacto[8])) {
-            $mensajes[] = "El campo de trabajaC es obligatorio";
-            $validar = false;
-        } else if (!preg_match($trabaja, $variablesInscripcionContacto[8])) {
-            $mensajes[] = "Formato inválido trabajaC";
+
+        if (empty($variablesInscripcionContacto[8]) || !preg_match($trabaja, $variablesInscripcionContacto[8])) {
+            $mensajes[] = "El campo de trabaja contacto o formato inválido";
             $validar = false;
         }
 
@@ -618,135 +499,194 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $variablesInscripcionContacto[9] = null;
             $variablesInscripcionContacto[10] = null;
             $variablesInscripcionContacto[11] = null;
-
-
         } else {
-            if (empty($variablesInscripcionContacto[8])) {
-                $mensajes[] = "El campo de trabajaP es obligatorio";
-                $validar = false;
-            } else if (!preg_match($trabaja, $variablesInscripcionContacto[8])) {
-                $mensajes[] = "Formato inválido trabajaP";
-                $validar = false;
-            }
-            if (empty($variablesInscripcionContacto[9])) {
-                $mensajes[] = "El campo de nombreEmpresaC es obligatorio";
-                $validar = false;
-            } else if (!preg_match($patronTexto, $variablesInscripcionContacto[9])) {
-                $mensajes[] = "Formato inválido nombreEmpresaC";
+            if (empty($variablesInscripcionContacto[8]) || !preg_match($trabaja, $variablesInscripcionContacto[8])) {
+                $mensajes[] = "El campo de trabaja contacto o formato inválido";
                 $validar = false;
             }
 
-            if (empty($variablesInscripcionContacto[10])) {
-                $mensajes[] = "El campo de tlfnEmepresaC es obligatorio";
-                $validar = false;
-            } else if (!preg_match($patronTelefono, $variablesInscripcionContacto[10])) {
-                $mensajes[] = "Formato inválido tlfnEmepresaC";
+            if (empty($variablesInscripcionContacto[9]) || !preg_match($patronTexto, $variablesInscripcionContacto[9])) {
+                $mensajes[] = "El campo de nombreEmpresa contacto o formato inválido";
                 $validar = false;
             }
 
-            if (empty($variablesInscripcionContacto[11])) {
-                $mensajes[] = "El campo de direccionEmpresaC es obligatorio";
+
+            if (empty($variablesInscripcionContacto[10]) || !preg_match($patronTelefono, $variablesInscripcionContacto[10])) {
+                $mensajes[] = "El campo de tlfnEmepresa contacto o formato inválido";
                 $validar = false;
-            } else if (!preg_match($patronTexto, $variablesInscripcionContacto[11])) {
-                $mensajes[] = "Formato inválido direccionEmpresaC";
+            }
+
+
+            if (empty($variablesInscripcionContacto[11]) || !preg_match($patronTexto, $variablesInscripcionContacto[11])) {
+                $mensajes[] = "El campo de direccionEmpresa contacto o formato inválido";
                 $validar = false;
             }
         }
-
-
-        return $validar;
+        return [
+            'valido' => $validar,
+            'errores' => $mensajes
+        ];
     }
 
-    /* VALIDACIÓN DE QUÉ PADRES SE VAN A REGISTRAR */
-    function retornarCampos($pdo, array $variablesInscripcionEst, array $variablesInscripcionRepr, array $variablesInscripcionReprP, array $variablesInscripcionContacto)
+    $resultadoEstudiante = validarCamposEstudiante($variablesInscripcionEst);
+    $resultadoMadre = validarCamposMadre($variablesInscripcionRepr);
+    $resultadoPadre = validarCamposPadre($variablesInscripcionReprP);
+    $resultadoContacto = validarCamposContacto($variablesInscripcionContacto);
+
+    if ($resultadoEstudiante['valido'] && $resultadoMadre['valido'] && $resultadoPadre['valido'] && $resultadoContacto['valido']) {
+        // ✅ Todo válido
+        echo "Formulario válido. Puedes continuar con el registro.";
+    } else {
+        // ❌ Mostrar errores por separado
+        if (!$resultadoEstudiante['valido']) {
+            echo "Errores en los datos del estudiante:<br>";
+            foreach ($resultadoEstudiante['errores'] as $error) {
+                echo "- " . $error . "<br>";
+            }
+        }
+
+        if (!$resultadoMadre['valido']) {
+            echo "<br>Errores en los datos de la madre:<br>";
+            foreach ($resultadoMadre['errores'] as $error) {
+                echo "- " . $error . "<br>";
+            }
+        }
+
+        if (!$resultadoPadre['valido']) {
+            echo "<br>Errores en los datos de la padre:<br>";
+            foreach ($resultadoPadre['errores'] as $error) {
+                echo "- " . $error . "<br>";
+            }
+        }
+
+        if (!$resultadoContacto['valido']) {
+            echo "<br>Errores en los datos del contacto:<br>";
+            foreach ($resultadoContacto['errores'] as $error) {
+                echo "- " . $error . "<br>";
+            }
+        }
+    }
+
+    // VALIDACIÓN DE QUÉ PADRES SE VAN A REGISTRAR
+    function retornarCampos($pdo, array $estData, array $madreData, array $padreData, array $contactoData)
     {
-        $retornar = false;
-        // Caso 1: Ambos padres
-        if (!empty($_POST['madreSi']) && !empty($_POST['padreSi']) && !empty($_POST['representante'])) {
-            if (
-                validarCamposEstudiante($variablesInscripcionEst) && validarCamposMadre($variablesInscripcionRepr)
-                && validarCamposPadre($variablesInscripcionReprP) && validarCamposContacto($variablesInscripcionContacto)
-            ) {
+        // Validación
+        $valEst = validarCamposEstudiante($estData);
+        $valMadre = validarCamposMadre($madreData);
+        $valPadre = validarCamposPadre($padreData);
+        $valContacto = validarCamposContacto($contactoData);
+
+        // Fecha y año escolar
+        $fecha = date("Y-m-d");
+        $añoEscolar = $_POST['anioEscolar'];
+
+        // Inserta o retorna ID del estudiante
+        $idEst = retornarIdEstudiante($pdo, $estData);
+        if (!$idEst && $valEst['valido']) {
+            $idEst = insertarEstudiantes($pdo, $estData);
+        }
+
+        // Inserta o retorna ID del contacto
+        $idContacto = retornarIdContacto($pdo, $contactoData);
+        if (!$idContacto && $valContacto['valido']) {
+            $idContacto = insertarConctactoPago($pdo, $contactoData);
+        }
+
+        // Casos:
+        $tieneMadre = !empty($_POST['madreSi']);
+        $tienePadre = !empty($_POST['padreSi']);
+        $hayRepresentante = !empty($_POST['representante']);
+
+        // === CASO MADRE Y PADRE ===
+        if ($tieneMadre && $tienePadre && $hayRepresentante) {
+            $idMadre = retornarIdRepresentante($pdo, $madreData);
+            if (!$idMadre && $valMadre['valido']) {
+                $idMadre = insertarRepresentante($pdo, $madreData);
+            }
+
+            $idPadre = retornarIdRepresentante($pdo, $padreData);
+            if (!$idPadre && $valPadre['valido']) {
+                $idPadre = insertarRepresentante($pdo, $padreData);
+            }
+
+            if ($idEst && $idMadre && $idPadre && $idContacto) {
+                $dataInscripcionMadre = [$idEst, $idMadre, $añoEscolar, $fecha, $idContacto];
+                $dataInscripcionPadre = [$idEst, $idPadre, $añoEscolar, $fecha, $idContacto];
+
                 if (
-                    insertarEstudiantes($pdo, $variablesInscripcionEst) && insertarRepresentante($pdo, $variablesInscripcionRepr)
-                    && insertarRepresentante($pdo, $variablesInscripcionReprP) && insertarConctactoPago($pdo, $variablesInscripcionContacto)
+                    insertarInscripcion($pdo, $dataInscripcionMadre, $estData) &&
+                    insertarInscripcion($pdo, $dataInscripcionPadre, $estData)
                 ) {
-                    $retornar = true;
+                    $_SESSION['mensaje'] = 'Inscripción del estudiante exitosa';
+                    header("Location: ../Desarrollo/inscripcion.php");
+                    exit();
                 }
-            } else {
-                $retornar = false;
-            }
-            //Caso 2: Madre
-        } else if (!empty($_POST['madreSi']) && empty($_POST['padreSi']) && !empty($_POST['representante'])) {
-            if (validarCamposEstudiante($variablesInscripcionEst) && validarCamposMadre($variablesInscripcionRepr) && validarCamposContacto($variablesInscripcionContacto)) {
-                if (insertarEstudiantes($pdo, $variablesInscripcionEst) && insertarRepresentante($pdo, $variablesInscripcionRepr) && insertarConctactoPago($pdo, $variablesInscripcionContacto)) {
-                    $retornar = true;
-                }
-            } else {
-                $retornar = false;
-            }
-            //Caso3: Padre
-        } else if (empty($_POST['madreSi']) && !empty($_POST['padreSi']) && !empty($_POST['representante'])) {
-            if (validarCamposEstudiante($variablesInscripcionEst) && validarCamposPadre($variablesInscripcionReprP) && validarCamposContacto($variablesInscripcionContacto)) {
-                if (insertarEstudiantes($pdo, $variablesInscripcionEst) && insertarRepresentante($pdo, $variablesInscripcionReprP) && insertarConctactoPago($pdo, $variablesInscripcionContacto)) {
-                    $retornar = true;
-                }
-            } else {
-                $retornar = false;
-            }
-        } else {
-            $retornar = false;
-        }
-        return $retornar;
-    }
-
-    $fecha = date("d-m-Y"); // Crea la fecha en un formato específico
-    $añoEscolar = $_POST['anioEscolar'];
-
-    
-    function insertarPlanilla($pdo, $dataInscripcion, $dataInscripcionP, $variablesInscripcionEst)
-    {
-        $retornar = false;
-        // Caso 1: Ambos padres
-        if (!empty($_POST['madreSi']) && !empty($_POST['padreSi']) && !empty($_POST['representante'])) {
-            if (insertarInscripcion($pdo, $dataInscripcion, $variablesInscripcionEst) && insertarInscripcion($pdo, $dataInscripcionP, $variablesInscripcionEst)) {
-                $retornar = true;
-            } else {
-                $retornar = false;
-            }
-            //Caso 2: Madre
-        } else if (!empty($_POST['madreSi']) && empty($_POST['padreSi']) && !empty($_POST['representante'])) {
-            if (insertarInscripcion($pdo, $dataInscripcion, $variablesInscripcionEst)) {
-                $retornar = true;
-            } else {
-                $retornar = false;
-            }
-            //Caso3: Padre
-        } else if (empty($_POST['madreSi']) && !empty($_POST['padreSi']) && !empty($_POST['representante'])) {
-            if (insertarInscripcion($pdo, $dataInscripcionP, $variablesInscripcionEst)) {
-                $retornar = true;
-            } else {
-                $retornar = false;
             }
         }
-        return $retornar;
-    }
 
-    if (retornarCampos($pdo, $variablesInscripcionEst, $variablesInscripcionRepr, $variablesInscripcionReprP, $variablesInscripcionContacto)) {
-        // Solo después de insertar los datos, recuperamos los IDs.
-        $idReprM = retornarIdRepresentante($pdo, $variablesInscripcionRepr);
-        $idReprP = retornarIdRepresentante($pdo, $variablesInscripcionReprP);
-        $idEst = retornarIdEstudiante($pdo, $variablesInscripcionEst);
-        $idContacto = retornarIdContacto($pdo, $variablesInscripcionContacto);
+        // === CASO SOLO MADRE ===
+        elseif ($tieneMadre && !$tienePadre && $hayRepresentante) {
+            $idMadre = retornarIdRepresentante($pdo, $madreData);
+            if (!$idMadre && $valMadre['valido']) {
+                $idMadre = insertarRepresentante($pdo, $madreData);
+            }
 
-        $dataInscripcion = array($idEst, $idReprM, $añoEscolar, $fecha, $idContacto);
-        $dataInscripcionP = array($idEst, $idReprP, $añoEscolar, $fecha, $idContacto);
+            if ($idEst && $idMadre && $idContacto) {
+                $dataInscripcion = [$idEst, $idMadre, $añoEscolar, $fecha, $idContacto];
 
-        if (insertarPlanilla($pdo, $dataInscripcion, $dataInscripcionP, $variablesInscripcionEst)) {
-            $_SESSION['mensaje'] = 'Inscripción del estudiante exitosa';
-            header("Location: ../Desarrollo/inscripcion.php");
-            exit();
+                if (insertarInscripcion($pdo, $dataInscripcion, $estData)) {
+                    $_SESSION['mensaje'] = 'Inscripción del estudiante exitosa';
+                    header("Location: ../Desarrollo/inscripcion.php");
+                    exit();
+                }
+            }
+        }
+
+        // === CASO SOLO PADRE ===
+        elseif (!$tieneMadre && $tienePadre && $hayRepresentante) {
+            $idPadre = retornarIdRepresentante($pdo, $padreData);
+            if (!$idPadre && $valPadre['valido']) {
+                $idPadre = insertarRepresentante($pdo, $padreData);
+            }
+
+            if ($idEst && $idPadre && $idContacto) {
+                $dataInscripcion = [$idEst, $idPadre, $añoEscolar, $fecha, $idContacto];
+
+                if (insertarInscripcion($pdo, $dataInscripcion, $estData)) {
+                    $_SESSION['mensaje'] = 'Inscripción del estudiante exitosa';
+                    header("Location: ../Desarrollo/inscripcion.php");
+                    exit();
+                }
+            }
+        }
+
+        // === ERRORES DE VALIDACIÓN ===
+        echo "<strong>Se encontraron errores en el formulario:</strong><br>";
+
+        if (!$valEst['valido']) {
+            echo "Estudiante:<br>";
+            foreach ($valEst['errores'] as $err)
+                echo "- $err<br>";
+        }
+
+        if ($tieneMadre && !$valMadre['valido']) {
+            echo "Madre:<br>";
+            foreach ($valMadre['errores'] as $err)
+                echo "- $err<br>";
+        }
+
+        if ($tienePadre && !$valPadre['valido']) {
+            echo "Padre:<br>";
+            foreach ($valPadre['errores'] as $err)
+                echo "- $err<br>";
+        }
+
+        if (!$valContacto['valido']) {
+            echo "Contacto de Pago:<br>";
+            foreach ($valContacto['errores'] as $err)
+                echo "- $err<br>";
         }
     }
 
+    retornarCampos($pdo, $variablesInscripcionEst, $variablesInscripcionRepr, $variablesInscripcionReprP, $variablesInscripcionContacto);
 }

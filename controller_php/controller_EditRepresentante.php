@@ -35,11 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($regla === 'fecha' && !DateTime::createFromFormat('Y-m-d', $valor)) {
                     $errores[$campo] = 'Formato de fecha inválido. (Ej: 2024-06-12)';
                 }
-
-                if ($regla === 'sexo' && !in_array(strtoupper($valor), ['M', 'F'])) {
-                    $errores[$campo] = 'Debe ser "M" o "F".';
-                }
-
+                
                 if ($regla === 'regexCedula' && !preg_match('/^[V|E][0-9]{7,9}$/', $valor)) {
                     $errores[$campo] = 'Error en el formato de la cédula. Ej: (V o E V12345678)';
                 }

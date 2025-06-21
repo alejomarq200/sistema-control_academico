@@ -41,6 +41,46 @@ function consultarContactoPago($pdo)
     }
 }
 
+
+function editarContacto($pdo, array $data)
+{
+    try {
+        $stmt = $pdo->prepare(
+       "UPDATE contacto_pago SET cedula =:cedula, 
+        nombres = :nombres, apellidos = :apellidos, direccion = :direccion,
+        telefono = :telefono, correo = :correo, grado_inst = :grado_inst,
+        profesion = :profesion, trabaja = :trabaja,
+        nombre_empresa = :nombre_empresa,telefono_empresa = :telefono_empresa,
+        direccion_empresa = :direccion_empresa WHERE id = :id");
+
+        $stmt->bindValue(':cedula', $data[1]);
+        $stmt->bindValue(':nombres', $data[2]);
+        $stmt->bindValue(':apellidos', $data[3]);
+        $stmt->bindValue(':direccion', $data[4]);
+        $stmt->bindValue(':telefono', $data[5]);
+        $stmt->bindValue(':correo', $data[6]);
+        $stmt->bindValue(':grado_inst', $data[7]);
+        $stmt->bindValue(':profesion', $data[8]);
+        $stmt->bindValue(':trabaja', $data[9]);
+        $stmt->bindValue(':nombre_empresa', $data[10]);
+        $stmt->bindValue(':telefono_empresa', $data[11]);
+        $stmt->bindValue(':direccion_empresa', $data[12]);
+        $stmt->bindValue(':id', $data[0]);
+
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return true;
+        } else {
+            return false; // Si no se modificó ninguna fila
+        }
+
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+
 function editarRepresentante($pdo, array $data)
 {
     try {

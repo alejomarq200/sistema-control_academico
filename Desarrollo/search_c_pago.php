@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,9 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <title>Consultar Contacto de Pago</title>
-
 </head>
-
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
@@ -49,8 +46,8 @@
                                 <th scope="col">Cédula</th>
                                 <th scope="col">Nombres</th>
                                 <th scope="col">Apellidos</th>
-                                <th scope="col">Teléfono</th>
                                 <th scope="col">Número de Teléfono</th>
+                                <th scope="col">Correo</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -79,9 +76,9 @@
                                                 data-cedula="<?php echo $cPago['cedula']; ?>"
                                                 data-nombres="<?php echo $cPago['nombres']; ?>"
                                                 data-apellidos="<?php echo $cPago['apellidos']; ?>"
+                                                data-correo="<?php echo $cPago['correo'] ?>"
                                                 data-direccion="<?php echo $cPago['direccion'] ?>"
                                                 data-telefono="<?php echo $cPago['telefono'] ?>"
-                                                data-correo="<?php echo $cPago['correo'] ?>"
                                                 data-grado_inst="<?php echo $cPago['grado_inst'] ?>"
                                                 data-profesion="<?php echo $cPago['profesion'] ?>"
                                                 data-trabaja="<?php echo $cPago['trabaja'] ?>"

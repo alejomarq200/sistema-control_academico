@@ -17,43 +17,44 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="../controller_php/controller_EditRepresentante" method="POST" id="formEditRepresentante">
+                <form action="../controller_php/controller_EditContactoP.php" method="POST" id="formEditContacto">
                     <div class="row">
                         <div class="mb-3">
                             <input type="text" class="form-control" id="idContacto" name="idContacto" hidden>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="campo1" class="form-label">Cédula</label>
+                                <label for="cedulaContacto" class="form-label">Cédula</label>
                                 <input type="text" class="form-control" id="cedulaContacto" name="cedulaContacto">
                                 <p class="error" id="cedulaContacto_RprError"></p>
                             </div>
                             <div class="mb-3">
-                                <label for="campo3" class="form-label">Apellidos</label>
+                                <label for="apellidosContacto" class="form-label">Apellidos</label>
                                 <input type="text" class="form-control" id="apellidosContacto" name="apellidosContacto">
                                 <p class="error" id="apellidosContacto_RprError"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="campo2" class="form-label">Nombres</label>
+                                <label for="nombresContacto" class="form-label">Nombres</label>
                                 <input type="text" class="form-control" id="nombresContacto" name="nombresContacto">
                                 <p class="error" id="nombresContacto_RprError"></p>
                             </div>
                             <div class="mb-3">
-                                <label for="campo1" class="form-label">Correo</label>
-                                <input type="text" class="form-control" id="correoContacto" name="correoContacto">
-                                <p class="error" id="correoContacto_RprError"></p>
+                                <label for="direccionContacto" class="form-label">Dirección</label>
+                                <input type="text" class="form-control" id="direccionContacto" name="direccionContacto">
+                                <p class="error" id="direccionContacto_RprError"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="campo2" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="direccionContacto" name="direccionContacto">
-                                <p class="error" id="direccionContacto_RprError"></p>
+                                <label for="correoContacto" class="form-label">Correo</label>
+                                <input type="text" class="form-control" id="correoContacto" name="correoContacto">
+                                <p class="error" id="correoContacto_RprError"></p>
+
                             </div>
                             <div class="mb-3">
-                                <label for="campo1" class="form-label">Número telefónico</label>
+                                <label for="nro_telefonoContacto" class="form-label">Número telefónico</label>
                                 <input type="text" class="form-control" id="nro_telefonoContacto"
                                     name="nro_telefonoContacto">
                                 <p class="error" id="nro_telefonoContacto_RprError"></p>
@@ -61,25 +62,25 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="campo2" class="form-label">Grado Instrucción</label>
+                                <label for="grado_instContacto" class="form-label">Grado Instrucción</label>
                                 <input type="text" class="form-control" id="grado_instContacto"
                                     name="grado_instContacto">
                                 <p class="error" id="grado_instContacto_RprError"></p>
                             </div>
                             <div class="mb-3">
-                                <label for="campo1" class="form-label">Profesión</label>
+                                <label for="profesionContacto" class="form-label">Profesión</label>
                                 <input type="text" class="form-control" id="profesionContacto" name="profesionContacto">
                                 <p class="error" id="profesionContacto_RprError"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="campo2" class="form-label">Trabaja</label>
+                                <label for="trabajaContacto" class="form-label">Trabaja</label>
                                 <input type="text" class="form-control" id="trabajaContacto" name="trabajaContacto">
                                 <p class="error" id="trabajaContacto_RprError"></p>
                             </div>
                             <div class="mb-3">
-                                <label for="campo2" class="form-label">Dirección Empresa</label>
+                                <label for="direccion_emprContacto" class="form-label">Dirección Empresa</label>
                                 <input type="text" class="form-control" id="direccion_emprContacto"
                                     name="direccion_emprContacto">
                                 <p class="error" id="direccion_emprContacto_RprError"></p>
@@ -87,13 +88,13 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="campo1" class="form-label">Nombre Empresa</label>
+                                <label for="nombre_emprContacto" class="form-label">Nombre Empresa</label>
                                 <input type="text" class="form-control" id="nombre_emprContacto"
                                     name="nombre_emprContacto">
                                 <p class="error" id="nombre_emprContacto_RprError"></p>
                             </div>
                             <div class="mb-3">
-                                <label for="campo2" class="form-label">Telefono Empresa</label>
+                                <label for="telefono_emprContacto" class="form-label">Telefono Empresa</label>
                                 <input type="text" class="form-control" id="telefono_emprContacto"
                                     name="telefono_emprContacto">
                                 <p class="error" id="telefono_emprContacto_RprError"></p>
@@ -112,175 +113,188 @@
         var originalValues = {};
         var isSubmitting = false;
 
-        // Configuración de validación para cada campo
+        // Corrige el objeto validationRules para que coincida con los IDs del HTML
         const validationRules = {
-            id: {
+            idContacto: {
                 required: true,
                 regex: /^[0-9]{1,9}$/,
                 errorMsg: "ID inválido"
             },
-            cedula: {
+            cedulaContacto: {
                 required: true,
                 regex: /^[V|E|J|P][0-9]{7,9}$/i,
                 errorMsg: "Formato cédula inválido (Ej: V12345678)"
             },
-            nombres: {
+            nombresContacto: {
                 required: true,
                 regex: /^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,}$/,
                 errorMsg: "Mínimo 3 letras, solo caracteres alfabéticos"
             },
-            apellidos: {
+            apellidosContacto: {
                 required: true,
                 regex: /^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,}$/,
                 errorMsg: "Mínimo 3 letras, solo caracteres alfabéticos"
             },
-            fecha_nac: {
-                required: true,
-                regex: /^\d{4}-\d{2}-\d{2}$/,
-                errorMsg: "Formato fecha inválido (AAAA-MM-DD)"
-            },
-            correo: {
+            correoContacto: {
                 required: true,
                 regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                 errorMsg: "Formato de correo inválido"
             },
-            direccion: {
+            direccionContacto: {
                 required: true,
                 regex: /^.{10,}$/,
                 errorMsg: "Mínimo 10 caracteres"
             },
-            nro_telefono: {
+            nro_telefonoContacto: {
                 required: true,
                 regex: /^(0414|0424|0412|0416|0426)[0-9]{7}$/,
                 errorMsg: "Número telefónico inválido (11 dígitos)"
             },
-            grado_inst: {
+            grado_instContacto: {
                 required: true,
                 regex: /^.{3,}$/,
                 errorMsg: "Mínimo 3 caracteres"
             },
-            profesion: {
+            profesionContacto: {
                 required: true,
                 regex: /^.{3,}$/,
                 errorMsg: "Mínimo 3 caracteres"
             },
-            trabaja: {
+            trabajaContacto: {
                 required: true,
                 regex: /^(Si|No)$/i,
                 errorMsg: "Seleccione Si o No"
             },
-            nombre_empr: {
-                required: false,
-                regex: /^.{0,50}$/,
-                errorMsg: "Máximo 50 caracteres"
+            nombre_emprContacto: {
+                required: function () {
+                    return document.getElementById('trabajaContacto').value.trim().toLowerCase() === 'si';
+                },
+                regex: /^.{3,50}$/,
+                errorMsg: "Mínimo 3, máximo 50 caracteres"
             },
-            telefono_empr: {
-                required: false,
+            telefono_emprContacto: {
+                required: function () {
+                    return document.getElementById('trabajaContacto').value.trim().toLowerCase() === 'si';
+                },
                 regex: /^(0414|0424|0412|0416|0426)[0-9]{7}$/,
                 errorMsg: "Número telefónico inválido (11 dígitos)"
             },
-            direccion_empr: {
-                required: false,
-                regex: /^.{0,50}$/,
-                errorMsg: "Máximo 50 caracteres"
+            direccion_emprContacto: {
+                required: function () {
+                    return document.getElementById('trabajaContacto').value.trim().toLowerCase() === 'si';
+                },
+                regex: /^.{3,50}$/,
+                errorMsg: "Mínimo 3, máximo 50 caracteres"
             }
         };
 
         // Cargar datos originales al abrir el modal
-        modal.addEventListener("show.bs.modal", function (event) {
-            var button = event.relatedTarget;
 
-            originalValues = {
-                id: button.getAttribute('data-id'),
-                cedula: button.getAttribute('data-cedula'),
-                nombres: button.getAttribute('data-nombres'),
-                apellidos: button.getAttribute('data-apellidos'),
-                direccion: button.getAttribute('data-direccion'),
-                telefono: button.getAttribute('data-telefono'),
-                correo: button.getAttribute('data-correo'),
-                grado_inst: button.getAttribute('data-grado_inst'),
-                profesion: button.getAttribute('data-profesion'),
-                trabaja: button.getAttribute('data-trabaja'),
-                nombre_empresa: button.getAttribute('data-nombre_empresa'),
-                telefono_empresa: button.getAttribute('data-telefono_empresa'),
-                direccion_empresa: button.getAttribute('data-direccion_empresa')
+            modal.addEventListener("show.bs.modal", function (event) {
+                var button = event.relatedTarget;
 
-            };
+                // Asignar valores directamente a los IDs correctos del formulario
+                document.getElementById("idContacto").value = button.getAttribute('data-id');
+                document.getElementById("cedulaContacto").value = button.getAttribute('data-cedula');
+                document.getElementById("apellidosContacto").value = button.getAttribute('data-apellidos') || '';
+                document.getElementById("nombresContacto").value = button.getAttribute('data-nombres') || '';
+                document.getElementById("direccionContacto").value = button.getAttribute('data-direccion') || '';
+                document.getElementById("correoContacto").value = button.getAttribute('data-correo') || '';
+                document.getElementById("nro_telefonoContacto").value = button.getAttribute('data-telefono') || '';
+                document.getElementById("grado_instContacto").value = button.getAttribute('data-grado_inst') || '';
+                document.getElementById("profesionContacto").value = button.getAttribute('data-profesion') || '';
+                document.getElementById("nombre_emprContacto").value = button.getAttribute('data-nombre_empresa') || '';
+                document.getElementById("trabajaContacto").value = button.getAttribute('data-trabaja') || '';
+                document.getElementById("direccion_emprContacto").value = button.getAttribute('data-direccion_empresa') || '';
+                document.getElementById("telefono_emprContacto").value = button.getAttribute('data-telefono_empresa') || '';
+            });
 
-            // Asignar valores a los campos del formulario
-            document.getElementById("idContacto").value = originalValues.id;
-            document.getElementById("cedulaContacto").value = originalValues.cedula;
-            document.getElementById("apellidosContacto").value = originalValues.apellidos;
-            document.getElementById("nombresContacto").value = originalValues.nombres;
-            document.getElementById("correoContacto").value = originalValues.correo;
-            document.getElementById("direccionContacto").value = originalValues.direccion;
-            document.getElementById("nro_telefonoContacto").value = originalValues.telefono;
-            document.getElementById("grado_instContacto").value = originalValues.grado_inst;
-            document.getElementById("profesionContacto").value = originalValues.profesion;
-            document.getElementById("nombre_emprContacto").value = originalValues.nombre_empresa;
-            document.getElementById("trabajaContacto").value = originalValues.trabaja;
-            document.getElementById("direccion_emprContacto").value = originalValues.direccion_empresa;
-            document.getElementById("telefono_emprContacto").value = originalValues.telefono_empresa;
-
-        });
 
         // Limpiar mensajes de error
-        /*    function limpiarErrores() {
-                document.querySelectorAll(".error").forEach(el => el.textContent = "");
+        function limpiarErrores() {
+            document.querySelectorAll(".error").forEach(el => el.textContent = "");
+        }
+
+        // Validar un campo individual
+        function validarCampo(fieldId) {
+            const rule = validationRules[fieldId];
+            if (!rule) return true; // Si no hay regla, se considera válido
+
+            const field = document.getElementById(fieldId);
+            if (!field) return true; // Si no existe el campo, se considera válido
+
+            const value = field.value.trim();
+            const errorElement = document.getElementById(`${fieldId}_RprError`);
+
+            // Validar campo requerido
+            const isRequired = typeof rule.required === 'function' ? rule.required() : rule.required;
+            if (isRequired && !value) {
+                if (errorElement) errorElement.textContent = "Este campo es requerido";
+                return false;
             }
-    
-            // Validar un campo individual
-            function validarCampo(fieldId) {
+
+            // Si no es requerido y está vacío, es válido
+            if (!isRequired && !value) return true;
+
+            // Validar con regex si existe
+            if (rule.regex && !rule.regex.test(value)) {
+                if (errorElement) errorElement.textContent = rule.errorMsg;
+                return false;
+            }
+
+            // Si pasa todas las validaciones
+            if (errorElement) errorElement.textContent = "";
+            return true;
+        }
+
+        var form = document.querySelector("#formEditContacto");
+
+
+        // Agrega validación en tiempo real
+        document.querySelectorAll('#formEditContacto input').forEach(input => {
+            input.addEventListener('blur', function () {
+                const fieldId = this.id;
+                validarCampo(fieldId);
+            });
+        });
+
+        // Modifica la función validarFormulario para manejar campos condicionales
+        function validarFormulario() {
+            limpiarErrores();
+            let isValid = true;
+
+            Object.keys(validationRules).forEach(fieldId => {
                 const rule = validationRules[fieldId];
-                if (!rule) return true; // Si no hay regla, se considera válido
-    
-                const field = document.getElementById(fieldId);
-                if (!field) return true; // Si no existe el campo, se considera válido
-    
-                const value = field.value.trim();
-                const errorElement = document.getElementById(`${fieldId}_RprError`);
-    
-                // Validar campo requerido
                 const isRequired = typeof rule.required === 'function' ? rule.required() : rule.required;
-                if (isRequired && !value) {
-                    if (errorElement) errorElement.textContent = "Este campo es requerido";
-                    return false;
-                }
-    
-                // Si no es requerido y está vacío, es válido
-                if (!isRequired && !value) return true;
-    
-                // Validar con regex si existe
-                if (rule.regex && !rule.regex.test(value)) {
-                    if (errorElement) errorElement.textContent = rule.errorMsg;
-                    return false;
-                }
-    
-                // Si pasa todas las validaciones
-                if (errorElement) errorElement.textContent = "";
-                return true;
-            }
-    
-            // Validar todo el formulario
-            function validarFormulario() {
-                limpiarErrores();
-                let isValid = true;
-    
-                Object.keys(validationRules).forEach(fieldId => {
+
+                // Solo validar si es requerido o si tiene valor
+                const fieldValue = document.getElementById(fieldId)?.value.trim();
+                if (isRequired || fieldValue) {
                     if (!validarCampo(fieldId)) {
                         isValid = false;
                     }
-                });
-    
-                if (!isValid) {
-                    isSubmitting = false; // Restablecer si hay errores
                 }
-    
-                return isValid;
+            });
+
+            return isValid;
+        }
+
+        // Actualiza el evento submit
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            if (isSubmitting) return;
+
+            isSubmitting = true;
+
+            if (!validarFormulario()) {
+                isSubmitting = false;
+                return;
             }
-    
-            // Manejar envío del formulario
-            var form = document.querySelector("#formEditRepresentante");
+
+            this.submit();
+        });
+        // Manejar envío del formulario
+        /*    var form = document.querySelector("#formEditContacto");
             // Función para verificar cambios en campos críticos
             function hayCambiosEnCamposCriticos() {
                 // Obtener valores actuales del formulario

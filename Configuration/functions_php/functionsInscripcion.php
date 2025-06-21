@@ -3,13 +3,14 @@ include("../Configuration/Configuration.php");
 function insertarEstudiantes($pdo, array $data)
 {
     try {
-        $stmt = $pdo->prepare
-        ("INSERT INTO estudiantes (cedula_est, nombres_est, apellidos_est, sexo, f_nacimiento_est, edad_est, 
-        direccion_est, lugar_nac_est, colegio_ant_est, motivo_ret_est, nivelacion_est, explicacion_est, grado_est,
-        turno_est, problem_resp_est, alergias_est, vacunas_est, enfermedad_est) 
-        VALUES (:cedula_est, :nombres_est, :apellidos_est, :sexo, :f_nacimiento_est, :edad_est, 
-        :direccion_est, :lugar_nac_est, :colegio_ant_est, :motivo_ret_est, :nivelacion_est, :explicacion_est, :grado_est,
-        :turno_est, :problem_resp_est, :alergias_est, :vacunas_est, :enfermedad_est)");
+        $stmt = $pdo->prepare(
+            "INSERT INTO estudiantes (cedula_est, nombres_est, apellidos_est, sexo, f_nacimiento_est, edad_est, 
+            direccion_est, lugar_nac_est, colegio_ant_est, motivo_ret_est, nivelacion_est, explicacion_est, grado_est,
+            turno_est, problem_resp_est, alergias_est, vacunas_est, enfermedad_est) 
+            VALUES (:cedula_est, :nombres_est, :apellidos_est, :sexo, :f_nacimiento_est, :edad_est, 
+            :direccion_est, :lugar_nac_est, :colegio_ant_est, :motivo_ret_est, :nivelacion_est, :explicacion_est, :grado_est,
+            :turno_est, :problem_resp_est, :alergias_est, :vacunas_est, :enfermedad_est)"
+        );
 
         $stmt->bindValue(':cedula_est', $data[0]);
         $stmt->bindValue(':nombres_est', $data[1]);
@@ -30,25 +31,26 @@ function insertarEstudiantes($pdo, array $data)
         $stmt->bindValue(':vacunas_est', $data[14]);
         $stmt->bindValue(':enfermedad_est', $data[15]);
 
-        $stmt->execute();
-
-        // Verificar si se encontró algún registro
-        if ($stmt->rowCount() > 0) {
-            return true;
+        if ($stmt->execute()) {
+            return $pdo->lastInsertId();
         }
     } catch (PDOException $e) {
-        echo $e->getmessage();
+        echo "Error insertarEstudiantes: " . $e->getMessage();
     }
+
+    return false;
 }
+
 
 function insertarRepresentante($pdo, array $dataRepr)
 {
     try {
-        $stmt = $pdo->prepare
-        ("INSERT INTO representantes (cedula, nombres, apellidos, fecha_nac, correo, direccion,
-        nro_telefono, grado_inst, profesion, trabaja, nombre_empr, telefono_empr, direccion_empr) 
-        VALUES (:cedula, :nombres, :apellidos, :fecha_nac, :correo, :direccion, :nro_telefono, 
-        :grado_inst, :profesion, :trabaja, :nombre_empr, :telefono_empr, :direccion_empr)");
+        $stmt = $pdo->prepare(
+            "INSERT INTO representantes (cedula, nombres, apellidos, fecha_nac, correo, direccion,
+            nro_telefono, grado_inst, profesion, trabaja, nombre_empr, telefono_empr, direccion_empr) 
+            VALUES (:cedula, :nombres, :apellidos, :fecha_nac, :correo, :direccion, :nro_telefono, 
+            :grado_inst, :profesion, :trabaja, :nombre_empr, :telefono_empr, :direccion_empr)"
+        );
 
         $stmt->bindValue(':cedula', $dataRepr[0]);
         $stmt->bindValue(':nombres', $dataRepr[1]);
@@ -64,27 +66,27 @@ function insertarRepresentante($pdo, array $dataRepr)
         $stmt->bindValue(':telefono_empr', $dataRepr[11]);
         $stmt->bindValue(':direccion_empr', $dataRepr[12]);
 
-        $stmt->execute();
-
-        // Verificar si se encontró algún registro
-        if ($stmt->rowCount() > 0) {
-            return true;
+        if ($stmt->execute()) {
+            return $pdo->lastInsertId();
         }
     } catch (PDOException $e) {
-        echo $e->getmessage();
+        echo "Error insertarRepresentante: " . $e->getMessage();
     }
+
+    return false;
 }
 
-function insertarConctactoPago($pdo, array $dataContacto) {
-    try { 
-        
-    $stmt = $pdo->prepare
-        ("INSERT INTO contacto_pago 
-        (cedula, nombres, apellidos, direccion, telefono,
-        correo, grado_inst, profesion, trabaja, nombre_empresa,
-        telefono_empresa, direccion_empresa) 
-        VALUES (:cedula, :nombres, :apellidos, :direccion, :telefono, :correo, :grado_inst, 
-        :profesion, :trabaja, :nombre_empresa, :telefono_empresa, :direccion_empresa)");
+function insertarConctactoPago($pdo, array $dataContacto)
+{
+    try {
+        $stmt = $pdo->prepare(
+            "INSERT INTO contacto_pago 
+            (cedula, nombres, apellidos, direccion, telefono,
+            correo, grado_inst, profesion, trabaja, nombre_empresa,
+            telefono_empresa, direccion_empresa) 
+            VALUES (:cedula, :nombres, :apellidos, :direccion, :telefono, :correo, :grado_inst, 
+            :profesion, :trabaja, :nombre_empresa, :telefono_empresa, :direccion_empresa)"
+        );
 
         $stmt->bindValue(':cedula', $dataContacto[0]);
         $stmt->bindValue(':nombres', $dataContacto[1]);
@@ -99,17 +101,16 @@ function insertarConctactoPago($pdo, array $dataContacto) {
         $stmt->bindValue(':telefono_empresa', $dataContacto[10]);
         $stmt->bindValue(':direccion_empresa', $dataContacto[11]);
 
-        $stmt->execute();
-
-        // Verificar si se encontró algún registro
-        if ($stmt->rowCount() > 0) {
-            return true;
+        if ($stmt->execute()) {
+            return $pdo->lastInsertId();
         }
     } catch (PDOException $e) {
-        echo $e->getmessage();
-
+        echo "Error insertarConctactoPago: " . $e->getMessage();
     }
+
+    return false;
 }
+
 
 function insertarInscripcion($pdo, array $dataInscripcion, array $variablesInscripcionEst) {
     try {

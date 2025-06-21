@@ -1077,7 +1077,7 @@
             data: $("#form").serialize(),
             success: function (resultado) {
                 $("#cedulaEstFeedback").html(resultado);
-                
+
                 const error = document.getElementById('cedulaEstFeedback').textContent;
 
                 if (error.trim() === "") {
@@ -1137,7 +1137,7 @@
 
             if (!validateStep(3)) {
                 alert('Por favor, corrige los errores en los campos del reponsable del pago antes de continuar.');
-                return;
+                //return;
             } else {
                 document.querySelector('form').submit();
             }
