@@ -168,8 +168,8 @@
             },
             trabaja: {
                 required: true,
-                regex: /^(Si|No)$/i,
-                errorMsg: "Seleccione Si o No"
+                regex: /^(Sí|No)$/i,
+                errorMsg: "Seleccione Sí o No"
             },
             nombre_empr: {
                 required: false,

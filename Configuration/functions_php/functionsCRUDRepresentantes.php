@@ -71,11 +71,8 @@ function editarContacto($pdo, array $data)
 
         if ($stmt->rowCount() > 0) {
             return true;
-        } else {
-            return false; // Si no se modificó ninguna fila
-        }
-
-    } catch (PDOException $e) {
+        } 
+        } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
 }

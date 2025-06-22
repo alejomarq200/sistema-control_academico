@@ -86,26 +86,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_POST['grado_instContacto'],
         $_POST['profesionContacto'],
         $_POST['trabajaContacto'],
-        $_POST['direccion_emprContacto'],
         $_POST['nombre_emprContacto'],
-        $_POST['telefono_emprContacto']
+        $_POST['telefono_emprContacto'],
+        $_POST['direccion_emprContacto']
     );
 
     if(editarContacto($pdo , $array)) {
         header("Location: ../Desarrollo/search_c_pago.php");
         exit();
-    }
-   /* if (editarEstudiante($pdo, $array)) {
-        $_SESSION['mensaje'] = 'La información del estudiante se modificó correctamente.';
-        $_SESSION['icono'] = 'success';
-        $_SESSION['titulo'] = 'Success';
-        header("Location: ../Desarrollo/search_estudiantes.php");
-        exit();
-    } else {
-        $_SESSION['mensaje'] = 'La información del estudiante no se modificó.';
-        $_SESSION['icono'] = 'error';
-        $_SESSION['titulo'] = 'Error';
-        header("Location: ../Desarrollo/search_estudiantes.php");
-        exit();
-    }*/
+    } 
 }

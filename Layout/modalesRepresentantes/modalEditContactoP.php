@@ -162,8 +162,8 @@
             },
             trabajaContacto: {
                 required: true,
-                regex: /^(Si|No)$/i,
-                errorMsg: "Seleccione Si o No"
+                regex: /^(Sí|No)$/i,
+                errorMsg: "Seleccione Sí o No"
             },
             nombre_emprContacto: {
                 required: function () {
@@ -190,24 +190,35 @@
 
         // Cargar datos originales al abrir el modal
 
-            modal.addEventListener("show.bs.modal", function (event) {
-                var button = event.relatedTarget;
+        modal.addEventListener("show.bs.modal", function (event) {
+            const button = event.relatedTarget;
 
-                // Asignar valores directamente a los IDs correctos del formulario
-                document.getElementById("idContacto").value = button.getAttribute('data-id');
-                document.getElementById("cedulaContacto").value = button.getAttribute('data-cedula');
-                document.getElementById("apellidosContacto").value = button.getAttribute('data-apellidos') || '';
-                document.getElementById("nombresContacto").value = button.getAttribute('data-nombres') || '';
-                document.getElementById("direccionContacto").value = button.getAttribute('data-direccion') || '';
-                document.getElementById("correoContacto").value = button.getAttribute('data-correo') || '';
-                document.getElementById("nro_telefonoContacto").value = button.getAttribute('data-telefono') || '';
-                document.getElementById("grado_instContacto").value = button.getAttribute('data-grado_inst') || '';
-                document.getElementById("profesionContacto").value = button.getAttribute('data-profesion') || '';
-                document.getElementById("nombre_emprContacto").value = button.getAttribute('data-nombre_empresa') || '';
-                document.getElementById("trabajaContacto").value = button.getAttribute('data-trabaja') || '';
-                document.getElementById("direccion_emprContacto").value = button.getAttribute('data-direccion_empresa') || '';
-                document.getElementById("telefono_emprContacto").value = button.getAttribute('data-telefono_empresa') || '';
-            });
+            // Obtener valores desde data-attributes
+            const cedula = button.getAttribute('data-cedula') || '';
+            const telefono = button.getAttribute('data-telefono') || '';
+
+            // Guardar los valores originales en la variable global
+            originalValues = {
+                cedula: cedula.trim(),
+                nro_telefono: telefono.trim()
+            };
+
+            // Asignar a los campos del formulario
+            document.getElementById("idContacto").value = button.getAttribute('data-id');
+            document.getElementById("cedulaContacto").value = cedula;
+            document.getElementById("apellidosContacto").value = button.getAttribute('data-apellidos') || '';
+            document.getElementById("nombresContacto").value = button.getAttribute('data-nombres') || '';
+            document.getElementById("direccionContacto").value = button.getAttribute('data-direccion') || '';
+            document.getElementById("correoContacto").value = button.getAttribute('data-correo') || '';
+            document.getElementById("nro_telefonoContacto").value = telefono;
+            document.getElementById("grado_instContacto").value = button.getAttribute('data-grado_inst') || '';
+            document.getElementById("profesionContacto").value = button.getAttribute('data-profesion') || '';
+            document.getElementById("nombre_emprContacto").value = button.getAttribute('data-nombre_empresa') || '';
+            document.getElementById("trabajaContacto").value = button.getAttribute('data-trabaja') || '';
+            document.getElementById("direccion_emprContacto").value = button.getAttribute('data-direccion_empresa') || '';
+            document.getElementById("telefono_emprContacto").value = button.getAttribute('data-telefono_empresa') || '';
+        });
+
 
 
         // Limpiar mensajes de error
@@ -249,15 +260,6 @@
 
         var form = document.querySelector("#formEditContacto");
 
-
-        // Agrega validación en tiempo real
-        document.querySelectorAll('#formEditContacto input').forEach(input => {
-            input.addEventListener('blur', function () {
-                const fieldId = this.id;
-                validarCampo(fieldId);
-            });
-        });
-
         // Modifica la función validarFormulario para manejar campos condicionales
         function validarFormulario() {
             limpiarErrores();
@@ -279,6 +281,20 @@
             return isValid;
         }
 
+        // Función para verificar cambios en campos críticos
+        function hayCambiosEnCamposCriticos() {
+            const cedulaActual = document.getElementById("cedulaContacto").value.trim();
+            const telefonoActual = document.getElementById("nro_telefonoContacto").value.trim();
+
+            const cambios = {
+                cedula: cedulaActual !== originalValues.cedula,
+                telefono: telefonoActual !== originalValues.nro_telefono
+            };
+
+            return cambios;
+        }
+
+
         // Actualiza el evento submit
         form.addEventListener("submit", function (e) {
             e.preventDefault();
@@ -290,26 +306,50 @@
                 isSubmitting = false;
                 return;
             }
+            // Verificar si hay cambios en campos críticos
+            const cambios = hayCambiosEnCamposCriticos();
+            const hayCambiosCriticos = cambios.cedula || cambios.telefono;
 
-            this.submit();
+            if (!hayCambiosCriticos) {
+                // No hay cambios en campos críticos - enviar directamente
+                mostrarConfirmacion();
+            } else {
+                // Hay cambios en campos críticos - validar con AJAX
+                isSubmitting = true;
+
+                $.ajax({
+                    url: "../AJAX/AJAX_Representantes/searchInfoContactoPago.php",
+                    type: "POST",
+                    data: $(form).serialize(),
+                    success: function (resultado) {
+                        const errores = resultado.split('|||');
+
+                        // Mostrar errores solo para los campos que cambiaron
+                        if (cambios.cedula) $("#cedulaContacto_RprError").html(errores[0]);
+                        if (cambios.telefono) $("#nro_telefonoContacto_RprError").html(errores[2]);
+
+                        // Verificar si no hay errores en los campos que cambiaron
+                        const sinErrores =
+                            (!cambios.cedula || $("#cedulaContacto_RprError").text().trim() === "") &&
+                            (!cambios.telefono || $("#nro_telefonoContacto_RprError").text().trim() === "");
+
+                        if (sinErrores) {
+                            mostrarConfirmacion();
+                        } else {
+                            isSubmitting = false;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error en la solicitud AJAX:", error);
+                        isSubmitting = false;
+                    }
+                });
+            }
+
         });
         // Manejar envío del formulario
         /*    var form = document.querySelector("#formEditContacto");
-            // Función para verificar cambios en campos críticos
-            function hayCambiosEnCamposCriticos() {
-                // Obtener valores actuales del formulario
-                const cedulaActual = document.getElementById("cedula").value.trim();
-                const correoActual = document.getElementById("correo").value.trim();
-                const telefonoActual = document.getElementById("nro_telefono").value.trim();
-    
-                // Comparar con los valores originales
-                const cambios = {
-                    cedula: cedulaActual !== originalValues.cedula,
-                    correo: correoActual !== originalValues.correo,
-                    telefono:telefonoActual !== originalValues.nro_telefono
-                };
-                return cambios;
-            }
+            
     
             // Manejar envío del formulario
             if (form) {
