@@ -13,36 +13,49 @@
     <title>Consultar Estudiantes</title>
     <style>
         .filtro-container {
-            position: relative;
-            width: 100%;
-            max-width: 300px;
-            margin-bottom: 20px;
-            margin-left: 55px;
+            background-color: #fff;
+            border-radius: 6px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            transition: all 0.3s;
+        }
+
+        .filtro-container:hover {
+            border-color: #aaa;
         }
 
         .filtro-input {
-            width: 100%;
-            padding: 10px 40px 10px 15px;
-            border: 1px solid #ccc;
-            border-radius: 40px;
-            font-size: 16px;
-            outline: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            box-shadow: none;
+            padding: 5px;
         }
 
         .filtro-input:focus {
-            border-color: #007bff;
-            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+            outline: none;
         }
 
         .lupa-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #777;
-            pointer-events: none;
+            cursor: pointer;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .filter-group {
+            margin-bottom: 0;
+            /* Elimina el margen inferior para alinear mejor */
+        }
+
+        .filter-label {
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 3px;
+            display: block;
+        }
+
+        .filter-select {
+            border-radius: 6px;
+            padding: 6px 12px;
+            border: 1px solid #ddd;
         }
 
         .custom-table-Estudiantes {
@@ -164,17 +177,14 @@
             ?>
             <h1 class="my-3" id="titulo">Módulo de Estudiantes</h1>
 
-            <div class="d-flex justify-content-between align-items-center">
-                <!-- Filtro con lupa (a la derecha) -->
-                <div class="filtro-container d-flex align-items-center">
-                    <input type="text" id="txtFiltarr" class="filtro-input form-control" placeholder="Buscar...">
-                    <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
-                </div>
-            </div>
             <!-- CONTENEDOR CENTRADO CON ESTILOS MEJORADOS -->
             <div class="filters-container">
                 <!-- FILTROS CON DISEÑO MODERNO -->
                 <div class="filters-wrapper">
+                     <div class="filtro-container d-flex align-items-center">
+                    <input type="text" id="txtFiltarr" class="filtro-input form-control" placeholder="Buscar...">
+                    <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
+                </div>
                     <!-- Filtro de Grado con estilo mejorado -->
                     <div class="filter-group">
                         <label for="filtroGrado" class="filter-label">
@@ -323,6 +333,20 @@
                 fila.style.display = (coincideGrado && coincideGenero) ? '' : 'none';
             });
         }
+
+        document.getElementById('txtFiltarr').addEventListener('input', function () {
+            const filtro = this.value.toLowerCase(); // Texto del filtro en minúsculas
+            const filas = document.querySelectorAll('tbody tr'); // Todas las filas de la tabla
+
+            filas.forEach(fila => {
+                const textoFila = fila.textContent.toLowerCase(); // Texto de la fila en minúsculas
+                if (textoFila.includes(filtro)) {
+                    fila.style.display = ''; // Muestra la fila si coincide
+                } else {
+                    fila.style.display = 'none'; // Oculta la fila si no coincide
+                }
+            });
+        });
     </script>
 
 </html>

@@ -75,3 +75,55 @@ function editarEstudiante($pdo, array $data)
         echo "Error: " . $e->getMessage();
     }
 }
+function obtenerCalificacionesAgrupadas($pdo) {
+    try {
+        $stmt = $pdo->prepare("
+            SELECT 
+                año_escolar,
+                id_grado,
+                lapso_academico,
+                id_profesor,
+                id_materia,
+                id_estudiante,
+                calificacion,
+                total_calificacion
+            FROM calificaciones
+            ORDER BY id_estudiante, id_materia, id
+        ");
+        $stmt->execute();
+        $calificaciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Agrupar por estudiante y materia
+        $agrupadas = [];
+        $maxCalifs = 0;
+        
+        foreach ($calificaciones as $calif) {
+            $key = $calif['id_estudiante'].'_'.$calif['id_materia'];
+            
+            if (!isset($agrupadas[$key])) {
+                $agrupadas[$key] = [
+                    'año_escolar' => $calif['año_escolar'],
+                    'id_grado' => $calif['id_grado'],
+                    'lapso_academico' => $calif['lapso_academico'],
+                    'id_profesor' => $calif['id_profesor'],
+                    'id_materia' => $calif['id_materia'],
+                    'id_estudiante' => $calif['id_estudiante'],
+                    'calificaciones' => [],
+                    'total_calificacion' => $calif['total_calificacion']
+                ];
+            }
+            
+            $agrupadas[$key]['calificaciones'][] = $calif['calificacion'];
+            $maxCalifs = max($maxCalifs, count($agrupadas[$key]['calificaciones']));
+        }
+        
+        return [
+            'calificaciones' => array_values($agrupadas),
+            'max_califs' => $maxCalifs
+        ];
+        
+    } catch (PDOException $e) {
+        error_log("Error al obtener calificaciones: " . $e->getMessage());
+        return ['calificaciones' => [], 'max_califs' => 0];
+    }
+}

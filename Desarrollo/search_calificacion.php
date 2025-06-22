@@ -83,5 +83,5 @@
             </div>
             </main>
             </main>
-
+        <script src="../js/filtrarLupa.js"></script>
 </html>

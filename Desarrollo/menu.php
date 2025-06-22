@@ -247,7 +247,7 @@
                     </a>
                     <ul id="calificaciones" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="calificacion.php" class="sidebar-link">
                                 <i class="bi bi-search"></i>
                                 <span>Consultar</span>
                             </a>

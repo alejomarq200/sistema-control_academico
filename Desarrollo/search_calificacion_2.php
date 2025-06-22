@@ -36,6 +36,21 @@
             box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
         }
 
+        .input-anioEscolar {
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 200px;
+            transition: border-color 0.15s ease-in-out;
+        }
+
+        .input-anioEscolar:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
         /* Estilo para el botón */
         .btn-agregar {
             padding: 8px 16px;
@@ -103,6 +118,36 @@
                 width: 100%;
             }
         }
+
+                .custom-table-Calificacion {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+
+        .custom-table-Calificacion thead {
+            background-color: rgb(37, 64, 90);
+            color: #fff;
+        }
+
+        .custom-table-Calificacion th,
+        .custom-table-Calificacion td {
+            padding: 2rem;
+            vertical-align: middle;
+            border-color: #dee2e6;
+        }
+
+        .custom-table-Calificacion tbody tr {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .custom-table-Calificacion tbody tr:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f8f9fa;
+        }
     </style>
 
 </head>
@@ -118,15 +163,18 @@
     <div class="main p-3">
         <div class="text-center">
             <?php
-            include("../Layout/mensajes.php");
             include("../Configuration/functions_php/functionsCRUDProfesor.php");
+            include("../Configuration/functions_php/functionsCRUDMaterias.php");
+            include("../Layout/mensajes.php");
+            include("../Configuration/Configuration.php");
 
             // Obtener el grado_id desde el formulario
             $grado_id = $_POST['grado'];
-            /* CUERPO DEL MENÚ */
+
+            //Obtenemos id profesor
+            $array = array($_POST['profesor'], $_POST['materia']);
             ?>
             <h1 class="my-3" id="titulo">Módulo de Calificaciones</h1>
-
             <div class="d-flex justify-content-between align-items-center">
                 <!-- Filtro con lupa (a la derecha) -->
                 <div class="filtro-container d-flex align-items-center">
@@ -138,22 +186,29 @@
                 <h5>Seleccione un estudiante</h5>
                 <div class="contenedor-calificaciones">
                     <form action="../Desarrollo/search_calificacion_1.php" method="POST">
+                        <input type="hidden" name="profesorCalificacion" id="profesorCalificacion"
+                            value="<?php echo retornarIdProfesor($pdo, $array); ?>">
+                        <input type="hidden" name="materiaCalificacion" id="materiaCalificacion"
+                            value="<?php echo $variable = retornarIdMateria($pdo, $array) ?>">
                         <input type="hidden" name="gradoCalificacion" id="gradoCalificacion"
                             value="<?php echo $grado_id; ?>">
                         <button type="submit" class="back">Volver</button>
                     </form>
+                    <label for="numCalificaciones">Cantidad de calificaciones:</label>
                     <input type="number" id="numCalificaciones" class="input-calificaciones" min="1" max="10" value="1"
                         placeholder="N° calificaciones">
                     <button id="btnAgregarColumnas" class="btn-agregar">Agregar</button>
                     <select class="select-lapso" id="selectLapso">
-                        <option value="1">1er Lapso</option>
-                        <option value="2">2do Lapso</option>
-                        <option value="3">3er Lapso</option>
+                        <option value="1er Lapso">1er Lapso</option>
+                        <option value="1er Lapso">2do Lapso</option>
+                        <option value="1er Lapso">3er Lapso</option>
                     </select>
+                    <label for="anioEscolar">Año escolar</label> <input type="text" id="anioEscolar" name="anioEscolar"
+                        class="input-anioEscolar" readonly>
                 </div>
             </div>
 
-            <div class="custom-table-gradosP">
+            <div class="custom-table-Calificacion">
                 <table class="table table-hover" id="tablaEstudiantes">
                     <thead>
                         <tr style="height: 60px;">
@@ -163,7 +218,6 @@
                             <th>Total</th>
                             <!-- Columnas dinámicas se agregarán aquí -->
                             <th class="acciones-col">Acciones</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -202,6 +256,15 @@
 
             <!-- JavaScript para manejar las columnas dinámicas -->
             <script>
+                // Obtener el año actual
+                const añoActual = new Date().getFullYear();
+                // Calcular el año siguiente
+                const añoSiguiente = añoActual + 1;
+                // Formatear como "2024-2025"
+                const añoEscolar = `${añoActual}-${añoSiguiente}`;
+
+                // Asignar el valor al input
+                document.getElementById('anioEscolar').value = añoEscolar;
                 $(document).ready(function () {
                     // Función para agregar columnas
                     $('#btnAgregarColumnas').click(function () {
@@ -264,10 +327,12 @@
                     // Guardar calificaciones
                     $(document).on('click', '.btn-guardar', function () {
                         const $tr = $(this).closest('tr');
-                        const estudianteId = $tr.data('estudiante-id'); // Corrección aquí
+                        const estudianteId = $tr.data('estudiante-id');
                         const lapso = $('#selectLapso').val();
-                        const gradoId = 1;
-                        const profesorId = 1;
+                        const añoEscolar = $('#anioEscolar').val();
+                        const gradoId = $('#gradoCalificacion').val();
+                        const profesorId = $('#profesorCalificacion').val();
+                        const materiaId = $('#materiaCalificacion').val();
 
                         const calificaciones = [];
                         $tr.find('.calificacion').each(function () {
@@ -277,7 +342,12 @@
                         const total = $tr.find('.total').text();
 
                         if (calificaciones.length === 0) {
-                            alert('No hay calificaciones para guardar');
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Advertencia',
+                                text: 'No hay calificaciones para guardar',
+                                confirmButtonColor: '#3085d6'
+                            });
                             return;
                         }
 
@@ -285,8 +355,10 @@
                         formData.append('estudiante_id', estudianteId);
                         formData.append('grado_id', gradoId);
                         formData.append('lapso_academico', lapso);
+                        formData.append('anioEscolar', añoEscolar);
                         formData.append('profesor_id', profesorId);
                         formData.append('total_calificacion', total);
+                        formData.append('materia_id', materiaId);
 
                         calificaciones.forEach((calif, index) => {
                             formData.append(`calificaciones[${index}]`, calif);
@@ -298,18 +370,60 @@
                             data: formData,
                             processData: false,
                             contentType: false,
-                            dataType: 'json', // Importante: espera JSON
+                            dataType: 'json',
+                            beforeSend: function () {
+                                // Mostrar loader mientras se procesa
+                                Swal.fire({
+                                    title: 'Procesando',
+                                    html: 'Guardando calificaciones...',
+                                    allowOutsideClick: false,
+                                    didOpen: () => {
+                                        Swal.showLoading();
+                                    }
+                                });
+                            },
                             success: function (response) {
-                                alert(response.message);
+                                Swal.close(); // Cerrar el loader
+
+                                if (response.success) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Éxito',
+                                        text: response.message,
+                                        confirmButtonColor: '#28a745',
+                                        timer: 2000,
+                                        timerProgressBar: true
+                                    });
+                                } else if (response.error) {
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Advertencia',
+                                        text: response.message,
+                                        confirmButtonColor: '#ffc107'
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: 'info',
+                                        title: 'Información',
+                                        text: response.message,
+                                        confirmButtonColor: '#17a2b8'
+                                    });
+                                }
                             },
                             error: function (xhr, status, error) {
-                                alert('Error: ' + xhr.responseText);
+                                Swal.close(); // Cerrar el loader
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'Ocurrió un error: ' + (xhr.responseJSON?.message || xhr.responseText || error),
+                                    confirmButtonColor: '#dc3545'
+                                });
                             }
                         });
                     });
-
                 });
             </script>
+            <script src="../js/filtrarLupa.js"></script>
             </main>
             </main>
 
