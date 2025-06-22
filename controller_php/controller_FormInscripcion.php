@@ -18,23 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Procesar los erroes del formulario
     $mensajes = [];
 
-    /* Bandera para validar si hay errores  */
-    $validar = true;
-    $representante = true;
-
-    /* PATRONES BACKEND */
-    $patronCedula = "/^[V|E|J|P][0-9]{7,9}$/";
-    $patronNombre = "/^[A-Za-zÑñÁÉÍÓÚáéíóú\s'-]+$/";
-    $patronEmail = "/^[^\s@]+@[^\s@]+\.[^\s@]+$/";
-    $patronFecha = "/^\d{4}-\d{2}-\d{2}$/";
-    $patronTelefono = "/^(0414|0424|0412|0416|0426)[0-9]{7}$/";
-    $patronEdad = "/^[0-9]{1,2}$/";
-    $patronGenero = "/^(M|F)$/i";
-    $turno = "/^(Mañana)$/i";
-    $trabaja = "/^(Sí|No)$/i";
-    $patronTexto = "/^[A-Za-zÑñÁÉÍÓÚáéíóú\s'-]+$/";
-
-
     $variablesInscripcionEst = array
     (
         trim($_POST['cedulaEst']),
@@ -235,7 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     function validarCamposMadre(array $variablesInscripcionRepr)
     {
         /* PATRONES BACKEND */
-        $patronCedula = "/^[V|E|J|P][0-9]{7,9}$/";
+        $patronCedula = "/^[V|E][0-9]{7,9}$/";
         $patronNombre = "/^[A-Za-zÑñÁÉÍÓÚáéíóú\s'-]+$/";
         $patronEmail = "/^[^\s@]+@[^\s@]+\.[^\s@]+$/";
         $patronFecha = "/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/";
@@ -438,7 +421,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     function validarCamposContacto(array $variablesInscripcionContacto)
     {
         // PATRONES BACKEND 
-        $patronCedula = "/^[V|E|J|P][0-9]{7,9}$/";
+        $patronCedula = "/^[V|E][0-9]{7,9}$/";
         $patronNombre = "/^[A-Za-zÑñÁÉÍÓÚáéíóú\s'-]+$/";
         $patronEmail = "/^[^\s@]+@[^\s@]+\.[^\s@]+$/";
         $patronTelefono = "/^(0414|0424|0412|0416|0426)[0-9]{7}$/";

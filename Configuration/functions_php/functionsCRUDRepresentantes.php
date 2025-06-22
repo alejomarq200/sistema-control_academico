@@ -1,6 +1,5 @@
 <?php
 include("../Configuration/Configuration.php");
-
 function consultarRepresentantes($pdo)
 {
     try {
@@ -20,7 +19,6 @@ function consultarRepresentantes($pdo)
         echo $e->getmessage();
     }
 }
-
 function consultarContactoPago($pdo)
 {
     try {
@@ -40,7 +38,6 @@ function consultarContactoPago($pdo)
         echo $e->getmessage();
     }
 }
-
 
 function editarContacto($pdo, array $data)
 {
@@ -76,7 +73,6 @@ function editarContacto($pdo, array $data)
         echo "Error: " . $e->getMessage();
     }
 }
-
 
 function editarRepresentante($pdo, array $data)
 {

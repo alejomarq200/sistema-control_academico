@@ -1,25 +1,23 @@
 <?php
 include("../Configuration/Configuration.php");
 
-function consultarEstudiantes($pdo)
-{
+function consultarEstudiantes($pdo) {
     try {
-        $stmt = $pdo->prepare("SELECT * FROM estudiantes");
+        $stmt = $pdo->prepare("
+            SELECT e.*, g.id_grado 
+            FROM estudiantes e
+            INNER JOIN grados g ON e.grado_est = g.id
+        ");
         $stmt->execute();
 
-        // Obtener todos los registros
         $estudiantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Verificar si se encontró algún registro
-        if (count($estudiantes) > 0) {
-            return $estudiantes; // Devuelve todos los usuarios
-        } else {
-            return []; // Devuelve un array vacío si no hay registros
-        }
+        return $estudiantes ?: [];
     } catch (PDOException $e) {
-        echo $e->getmessage();
+        echo $e->getMessage();
     }
 }
+
 function editarEstudiante($pdo, array $data)
 {
     try {

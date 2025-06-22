@@ -123,7 +123,7 @@
             },
             cedula: {
                 required: true,
-                regex: /^[V|E|J|P][0-9]{7,9}$/i,
+                regex: /^[V|E][0-9]{7,9}$/i,
                 errorMsg: "Formato cédula inválido (Ej: V12345678)"
             },
             nombres: {
@@ -138,8 +138,8 @@
             },
             fecha_nac: {
                 required: true,
-                regex: /^\d{4}-\d{2}-\d{2}$/,
-                errorMsg: "Formato fecha inválido (AAAA-MM-DD)"
+                regex: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
+                errorMsg: "Formato fecha inválido (DD-MM-YYYY)"
             },
             correo: {
                 required: true,
@@ -188,6 +188,19 @@
             }
         };
 
+        function limpiarErrores() {
+            document.querySelectorAll(".error").forEach(el => el.textContent = "");
+        }
+
+        // Limpiar campos y errores cuando el modal se oculta
+        modal.addEventListener('hidden.bs.modal', function () {
+            // Limpiar campos del formulario
+            document.getElementById('formEditRepresentante').reset();
+
+            // Limpiar mensajes de error
+            limpiarErrores();
+        });
+
         // Cargar datos originales al abrir el modal
         modal.addEventListener("show.bs.modal", function (event) {
             var button = event.relatedTarget;
@@ -215,11 +228,6 @@
                 if (field) field.value = originalValues[key] || '';
             });
         });
-
-        // Limpiar mensajes de error
-        function limpiarErrores() {
-            document.querySelectorAll(".error").forEach(el => el.textContent = "");
-        }
 
         // Validar un campo individual
         function validarCampo(fieldId) {
@@ -284,7 +292,7 @@
             const cambios = {
                 cedula: cedulaActual !== originalValues.cedula,
                 correo: correoActual !== originalValues.correo,
-                telefono:telefonoActual !== originalValues.nro_telefono
+                telefono: telefonoActual !== originalValues.nro_telefono
             };
             return cambios;
         }
@@ -321,7 +329,7 @@
                             // Mostrar errores solo para los campos que cambiaron
                             if (cambios.cedula) $("#cedula_RprError").html(errores[0]);
                             if (cambios.correo) $("#correo_RprError").html(errores[1]);
-                            if(cambios.telefono) $("#nro_telefono_RprError").html(errores[2]);
+                            if (cambios.telefono) $("#nro_telefono_RprError").html(errores[2]);
 
                             // Verificar si no hay errores en los campos que cambiaron
                             const sinErrores =

@@ -188,7 +188,7 @@
             },
             f_nacimiento_est: {
                 required: true,
-                regex: /^\d{4}-\d{2}-\d{2}$/,
+                regex: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
                 errorMsg: "Formato fecha inválido (DD-MM-AAAA)"
             },
             edad_est: {
@@ -228,7 +228,7 @@
             },
             grado_est: {
                 required: true,
-                regex: /^[1-9][0-9]?$/,
+                regex: /[a-zA-Z0-9]/,
                 errorMsg: "Grado inválido"
             },
             turno_est: {
@@ -291,10 +291,19 @@
             });
         });
 
-        // Limpiar mensajes de error
-        function limpiarErrores() {
+         function limpiarErrores() {
             document.querySelectorAll(".error").forEach(el => el.textContent = "");
         }
+
+        // Limpiar campos y errores cuando el modal se oculta
+        modal.addEventListener('hidden.bs.modal', function () {
+            // Limpiar campos del formulario
+            document.getElementById('formEditEstudiante').reset();
+
+            // Limpiar mensajes de error
+            limpiarErrores();
+        });
+
 
         // Validar un campo individual
         function validarCampo(fieldId) {

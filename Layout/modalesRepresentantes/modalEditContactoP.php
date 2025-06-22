@@ -122,7 +122,7 @@
             },
             cedulaContacto: {
                 required: true,
-                regex: /^[V|E|J|P][0-9]{7,9}$/i,
+                regex: /^[V|E][0-9]{7,9}$/i,
                 errorMsg: "Formato cédula inválido (Ej: V12345678)"
             },
             nombresContacto: {
@@ -294,6 +294,19 @@
             return cambios;
         }
 
+        // Limpiar campos y errores cuando el modal se oculta
+        modal.addEventListener('hidden.bs.modal', function () {
+            // Limpiar campos del formulario
+            document.getElementById('formEditContacto').reset();
+
+            // Limpiar mensajes de error
+            limpiarErrores();
+        });
+
+        // Función para limpiar errores
+        function limpiarErrores() {
+            document.querySelectorAll(".error").forEach(el => el.textContent = "");
+        }
 
         // Actualiza el evento submit
         form.addEventListener("submit", function (e) {
@@ -326,7 +339,7 @@
 
                         // Mostrar errores solo para los campos que cambiaron
                         if (cambios.cedula) $("#cedulaContacto_RprError").html(errores[0]);
-                        if (cambios.telefono) $("#nro_telefonoContacto_RprError").html(errores[2]);
+                        if (cambios.telefono) $("#nro_telefonoContacto_RprError").html(errores[1]);
 
                         // Verificar si no hay errores en los campos que cambiaron
                         const sinErrores =
@@ -347,66 +360,9 @@
             }
 
         });
-        // Manejar envío del formulario
-        /*    var form = document.querySelector("#formEditContacto");
-            
-    
-            // Manejar envío del formulario
-            if (form) {
-                form.addEventListener("submit", function (e) {
-                    e.preventDefault();
-                    if (isSubmitting) return;
-    
-                    if (!validarFormulario()) {
-                        isSubmitting = false;
-                        return;
-                    }
-    
-                    // Verificar si hay cambios en campos críticos
-                    const cambios = hayCambiosEnCamposCriticos();
-                    const hayCambiosCriticos = cambios.cedula || cambios.correo || cambios.telefono;
-    
-                    if (!hayCambiosCriticos) {
-                        // No hay cambios en campos críticos - enviar directamente
-                        mostrarConfirmacion();
-                    } else {
-                        // Hay cambios en campos críticos - validar con AJAX
-                        isSubmitting = true;
-    
-                        $.ajax({
-                            url: "../AJAX/AJAX_Representantes/searchInfoRepresentante.php",
-                            type: "POST",
-                            data: $(form).serialize(),
-                            success: function (resultado) {
-                                const errores = resultado.split('|||');
-    
-                                // Mostrar errores solo para los campos que cambiaron
-                                if (cambios.cedula) $("#cedula_RprError").html(errores[0]);
-                                if (cambios.correo) $("#correo_RprError").html(errores[1]);
-                                if(cambios.telefono) $("#nro_telefono_RprError").html(errores[2]);
-    
-                                // Verificar si no hay errores en los campos que cambiaron
-                                const sinErrores =
-                                    (!cambios.cedula || $("#cedula_RprError").text().trim() === "") &&
-                                    (!cambios.correo || $("#correo_RprError").text().trim() === "") &&
-                                    (!cambios.telefono || $("#nro_telefono_RprError").text().trim() === "");
-    
-                                if (sinErrores) {
-                                    mostrarConfirmacion();
-                                } else {
-                                    isSubmitting = false;
-                                }
-                            },
-                            error: function (xhr, status, error) {
-                                console.error("Error en la solicitud AJAX:", error);
-                                isSubmitting = false;
-                            }
-                        });
-                    }
-                });
-            }*/
+
         function mostrarConfirmacion() {
-            let titulo = "¿Desea editar la información del representante?";
+            let titulo = "¿Desea editar la información del contacto?";
 
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
@@ -427,7 +383,7 @@
                 if (result.isConfirmed) {
                     swalWithBootstrapButtons.fire({
                         title: "Acción procesada con éxito",
-                        text: "La información del representante se editó correctamente.",
+                        text: "La información del contacto se editó correctamente.",
                         icon: "success"
                     }).then(() => {
                         form.submit();

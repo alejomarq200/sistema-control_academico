@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $errores[$campo] = 'Debe contener solo letras.';
                 }
 
-                if ($regla === 'fecha' && !DateTime::createFromFormat('Y-m-d', $valor)) {
+                if ($regla === 'fecha' && !preg_match('/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/', $valor)) {
                     $errores[$campo] = 'Formato de fecha inválido. (Ej: 2024-06-12)';
                 }
 
