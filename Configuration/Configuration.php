@@ -1,12 +1,3 @@
-<html>
-
-<head>
-    <!-- Alerts Sweet Alert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-
-</html>
-
 <?php
 
 $host = "localhost";

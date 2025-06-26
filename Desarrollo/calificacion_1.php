@@ -64,7 +64,7 @@
             background-color: #f8f9fa;
         }
     </style>
-    <title>Registrar Calificaciones</title>
+    <title>Consultar Calificaciones</title>
 
 </head>
 
@@ -83,7 +83,7 @@
             // Obtener el grado_id desde algún parámetro (GET, POST, etc.)
             $grado_id = $_POST['gradoCalificacion']; // Ejemplo con valor por defecto 1
             ?>
-            <h1 class="my-3" id="titulo">Módulo de Calificaciones</h1>
+            <h1 class="my-3" id="titulo">Módulo de Calificaciones: Consultar Calificación</h1>
 
             <div class="d-flex justify-content-between align-items-center">
                 <!-- Filtro con lupa (a la derecha) -->
@@ -95,7 +95,7 @@
             <div>
                 <h5>Seleccione un profesor</h5>
                 <div class="contenedor-calificaciones">
-                    <form action="../Desarrollo/search_calificacion.php" method="POST">
+                    <form action="../Desarrollo/calificacion.php" method="POST">
                         <input type="hidden" name="profesorC" id="profesorC" value="<?php echo $grado_id; ?>">
                         <button type="submit" class="back">Volver</button>
                     </form>
@@ -126,7 +126,7 @@
                                 <td><?php echo htmlspecialchars($pm['nombre']); ?></td>
                                 <td><?php echo htmlspecialchars($pm['materia_nombre']); ?></td>
                                 <td>
-                                    <form action="search_calificacion_2.php" method="POST">
+                                    <form action="calificacion_2.php" method="POST">
                                         <input type="hidden" name="grado" name="grado" value="<?php echo $grado_id; ?>">
                                         <input type="hidden" name="profesor" value="<?php echo $pm['cedula']; ?>">
                                         <input type="hidden" name="materia" value="<?php echo $pm['materia_nombre']; ?>">

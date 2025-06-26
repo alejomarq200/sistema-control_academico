@@ -572,7 +572,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         elseif ($tieneMadre && !$tienePadre && $hayRepresentante) {
             $idMadre = retornarIdRepresentante($pdo, $madreData);
             if (!$idMadre && $valMadre['valido']) {
-                $idMadre = insertarRepresentante($pdo, $madreData);
+                $idMadre = insertarRepresentante($pdo, $madreData); 
             }
 
             if ($idEst && $idMadre && $idContacto) {

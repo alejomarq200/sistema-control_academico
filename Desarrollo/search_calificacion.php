@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/tablaGGrados.css">
-    <title>Consultar Calificaciones</title>
+    <title>Registrar Calificaciones</title>
 
 </head>
 
@@ -28,7 +28,7 @@
             include("../Layout/mensajes.php");
             /* CUERPO DEL MENÚ */
             ?>
-            <h1 class="my-3" id="titulo">Módulo de Calificaciones</h1>
+            <h1 class="my-3" id="titulo">Módulo de Calificaciones: Registro de Calificación</h1>
 
             <div class="d-flex justify-content-between align-items-center">
                 <!-- Filtro con lupa (a la derecha) -->

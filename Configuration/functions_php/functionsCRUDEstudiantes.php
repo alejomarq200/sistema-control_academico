@@ -75,10 +75,11 @@ function editarEstudiante($pdo, array $data)
         echo "Error: " . $e->getMessage();
     }
 }
-function obtenerCalificacionesAgrupadas($pdo) {
+function obtenerCalificacionesAgrupadas($pdo, $idEstudiante = null) {
     try {
-        $stmt = $pdo->prepare("
+        $sql = "
             SELECT 
+                id,
                 año_escolar,
                 id_grado,
                 lapso_academico,
@@ -88,18 +89,29 @@ function obtenerCalificacionesAgrupadas($pdo) {
                 calificacion,
                 total_calificacion
             FROM calificaciones
-            ORDER BY id_estudiante, id_materia, id
-        ");
+        ";
+
+        if ($idEstudiante !== null) {
+            $sql .= " WHERE id_estudiante = :idEstudiante";
+        }
+
+        $sql .= " ORDER BY id_estudiante, id_materia, id";
+
+        $stmt = $pdo->prepare($sql);
+
+        if ($idEstudiante !== null) {
+            $stmt->bindParam(':idEstudiante', $idEstudiante, PDO::PARAM_INT);
+        }
+
         $stmt->execute();
         $calificaciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        // Agrupar por estudiante y materia
+
         $agrupadas = [];
         $maxCalifs = 0;
-        
+
         foreach ($calificaciones as $calif) {
             $key = $calif['id_estudiante'].'_'.$calif['id_materia'];
-            
+
             if (!isset($agrupadas[$key])) {
                 $agrupadas[$key] = [
                     'año_escolar' => $calif['año_escolar'],
@@ -112,16 +124,20 @@ function obtenerCalificacionesAgrupadas($pdo) {
                     'total_calificacion' => $calif['total_calificacion']
                 ];
             }
-            
-            $agrupadas[$key]['calificaciones'][] = $calif['calificacion'];
+
+            $agrupadas[$key]['calificaciones'][] = [
+                'id' => $calif['id'],
+                'valor' => $calif['calificacion']
+            ];
+
             $maxCalifs = max($maxCalifs, count($agrupadas[$key]['calificaciones']));
         }
-        
+
         return [
             'calificaciones' => array_values($agrupadas),
             'max_califs' => $maxCalifs
         ];
-        
+
     } catch (PDOException $e) {
         error_log("Error al obtener calificaciones: " . $e->getMessage());
         return ['calificaciones' => [], 'max_califs' => 0];
