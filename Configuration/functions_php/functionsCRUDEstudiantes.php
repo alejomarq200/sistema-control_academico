@@ -143,3 +143,24 @@ function obtenerCalificacionesAgrupadas($pdo, $idEstudiante = null) {
         return ['calificaciones' => [], 'max_califs' => 0];
     }
 }
+
+
+function retornarNombreEstudiante($pdo, array $estudiante)
+{
+    try {
+        // Verificar que el rol exista en el array del usuario
+        if (!isset($estudiante['id_estudiante'])) {
+            return 'IdEst no definido';
+        }
+
+        $stmt = $pdo->prepare("SELECT nombres_est  FROM estudiantes WHERE id = :id");
+        $stmt->bindValue(':id', $estudiante['id_estudiante']);
+        $stmt->execute();
+
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resultado ? $resultado['nombres_est'] : 'Estado no encontrado';
+    } catch (PDOException $e) {
+        error_log("Error en retornarNombreEst: " . $e->getMessage());
+        return 'Error al obtener rol';
+    }
+}

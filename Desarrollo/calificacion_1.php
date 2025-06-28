@@ -9,13 +9,58 @@
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Registrar Calificaciones</title>
     <style>
+        /* Contenedor principal */
         .contenedor-calificaciones {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 20px;
             flex-wrap: wrap;
+        }
+
+        /* Estilo para el input de número */
+        .input-calificaciones {
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 120px;
+            transition: border-color 0.15s ease-in-out;
+        }
+
+        .input-calificaciones:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .input-anioEscolar {
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 200px;
+            transition: border-color 0.15s ease-in-out;
+        }
+
+        .input-anioEscolar:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        /* Estilo para el botón */
+        .btn-agregar {
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.15s ease-in-out;
         }
 
         .back {
@@ -34,7 +79,47 @@
             color: white;
         }
 
-        .custom-table-Calificacion {
+        .btn-agregar:hover {
+            background-color: #218838;
+        }
+
+        /* Estilo para el select de lapsos */
+        .select-lapso {
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: white;
+            cursor: pointer;
+            min-width: 150px;
+        }
+
+        .select-lapso:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        /* Estilo para las opciones */
+        .select-lapso option {
+            padding: 8px;
+        }
+
+        /* Versión responsive para pantallas pequeñas */
+        @media (max-width: 576px) {
+            .contenedor-calificaciones {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .input-calificaciones,
+            .btn-agregar,
+            .select-lapso {
+                width: 100%;
+            }
+        }
+
+                .custom-table-Calificacion {
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -64,7 +149,6 @@
             background-color: #f8f9fa;
         }
     </style>
-    <title>Consultar Calificaciones</title>
 
 </head>
 
@@ -79,12 +163,16 @@
     <div class="main p-3">
         <div class="text-center">
             <?php
+            include("../Configuration/functions_php/functionsCRUDProfesor.php");
+            include("../Configuration/functions_php/functionsCRUDMaterias.php");
             include("../Layout/mensajes.php");
-            // Obtener el grado_id desde algún parámetro (GET, POST, etc.)
-            $grado_id = $_POST['gradoCalificacion']; // Ejemplo con valor por defecto 1
-            ?>
-            <h1 class="my-3" id="titulo">Módulo de Calificaciones: Consultar Calificación</h1>
+            include("../Configuration/Configuration.php");
 
+            // Obtener el grado_id desde el formulario
+            $grado_id = $_POST['gradoCalificacion'];
+
+            ?>
+            <h1 class="my-3" id="titulo">Módulo de Calificaciones</h1>
             <div class="d-flex justify-content-between align-items-center">
                 <!-- Filtro con lupa (a la derecha) -->
                 <div class="filtro-container d-flex align-items-center">
@@ -93,60 +181,68 @@
                 </div>
             </div>
             <div>
-                <h5>Seleccione un profesor</h5>
+                <h5>Seleccione un estudiante</h5>
                 <div class="contenedor-calificaciones">
                     <form action="../Desarrollo/calificacion.php" method="POST">
-                        <input type="hidden" name="profesorC" id="profesorC" value="<?php echo $grado_id; ?>">
+                        <input type="hidden" name="gradoCalificacion" id="gradoCalificacion"
+                            value="<?php echo $grado_id; ?>">
                         <button type="submit" class="back">Volver</button>
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="custom-table-Calificacion">
-            <table class="table table-hover">
-                <thead>
-                    <tr style="height: 60px;">
-                        <th>Cédula Profesor</th>
-                        <th>Nombre Profesor</th>
-                        <th>Materia</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    include("../Configuration/functions_php/functionsCRUDProfesor.php");
 
-                    $profesoresMaterias = enlistar($pdo, $grado_id);
+            <div class="custom-table-Calificacion">
+                <table class="table table-hover" id="tablaEstudiantes">
+                    <thead>
+                        <tr style="height: 60px;">
+                            <th>Cédula Estudiante</th>
+                            <th>Nombre Estudiante</th>
+                            <th>Apellido Estudiante</th>
+                            <th>Promedio</th>
+                            <!-- Columnas dinámicas se agregarán aquí -->
+                            <th class="acciones-col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
 
-                    if (!empty($profesoresMaterias)) {
-                        foreach ($profesoresMaterias as $pm) {
-                            ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($pm['cedula']); ?></td>
-                                <td><?php echo htmlspecialchars($pm['nombre']); ?></td>
-                                <td><?php echo htmlspecialchars($pm['materia_nombre']); ?></td>
-                                <td>
-                                    <form action="calificacion_2.php" method="POST">
-                                        <input type="hidden" name="grado" name="grado" value="<?php echo $grado_id; ?>">
-                                        <input type="hidden" name="profesor" value="<?php echo $pm['cedula']; ?>">
-                                        <input type="hidden" name="materia" value="<?php echo $pm['materia_nombre']; ?>">
-                                        <button type="submit" class="btn btn-secondary">
-                                            <i class="bi bi-arrow-right-circle"></i> Registrar calificaciones
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <?php
+                        if ($grado_id) {
+                            $estudiantes = estudiantexNota($pdo, $grado_id);
+
+                            if (!empty($estudiantes)) {
+                                foreach ($estudiantes as $estudiante) {
+                                    ?>
+                                    <tr data-estudiante-id="<?php echo $estudiante['id']; ?>">
+                                        <td><?php echo htmlspecialchars($estudiante['cedula_est'] ?? 'N/A'); ?></td>
+                                        <td><?php echo htmlspecialchars($estudiante['nombres_est']); ?></td>
+                                        <td><?php echo htmlspecialchars($estudiante['apellidos_est']); ?></td>
+                                        <td>20</td>
+                                        <!-- Columnas dinámicas se agregarán aquí -->
+                                        <td>
+                                            <form action="calificacion_2.php" method="POST">
+                                             <input type="hidden" name="idEstudiante" id="idEstudiante" value="<?php echo $estudiante['id']; ?>">
+                                             <input type="hidden" name="gradoCalificacion" id="gradoCalificacion" value="<?php echo $grado_id;?>">                                                   
+                                            <button type="submit" class="btn btn-success btn-guardar">
+                                             Seleccionar <i class="bi bi-arrow-right-square"></i> 
+                                            </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                            } else {
+                                echo "<tr><td colspan='5'>No se encontraron estudiantes inscritos en este grado.</td></tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='5'>No se ha seleccionado un grado válido.</td></tr>";
                         }
-                    } else {
-                        echo "<tr><td colspan='4'>No se encontraron profesores con materias asignadas para este grado.</td></tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-        </main>
-        </main>
-        <script src="../js/filtrarLupa.js"></script>
+                        ?>
+                    </tbody>
+                </table>
+            </div>
 
+            <!-- JavaScript para manejar las columnas dinámicas --> 
+            <script src="../js/filtrarLupa.js"></script>
+          </main>
+    </main>
 </html>

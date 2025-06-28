@@ -257,3 +257,24 @@ function estudiantexNota($pdo, $grado_id)
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+function retornarNombreProfesor($pdo, array $profesor)
+{
+    try {
+        // Verificar que el rol exista en el array del usuario
+        if (!isset($profesor['id_profesor'])) {
+            return 'IdMateria no definido';
+        }
+
+        $stmt = $pdo->prepare("SELECT nombre FROM profesores WHERE id_profesor = :id_profesor");
+        $stmt->bindValue(':id_profesor', $profesor['id_profesor']);
+        $stmt->execute();
+
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resultado ? $resultado['nombre'] : 'Estado no encontrado';
+    } catch (PDOException $e) {
+        error_log("Error en retornarNombreEst: " . $e->getMessage());
+        return 'Error al obtener rol';
+    }
+}

@@ -179,3 +179,24 @@ function HabilitarMateria($pdo, $idGuia)
         exit();
     }
 }
+
+
+function retornarNombreMateria($pdo, array $materia)
+{
+    try {
+        // Verificar que el rol exista en el array del usuario
+        if (!isset($materia['id_materia'])) {
+            return 'IdMateria no definido';
+        }
+
+        $stmt = $pdo->prepare("SELECT nombre FROM materias WHERE id_materia = :id_materia");
+        $stmt->bindValue(':id_materia', $materia['id_materia']);
+        $stmt->execute();
+
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resultado ? $resultado['nombre'] : 'Estado no encontrado';
+    } catch (PDOException $e) {
+        error_log("Error en retornarNombreEst: " . $e->getMessage());
+        return 'Error al obtener rol';
+    }
+}

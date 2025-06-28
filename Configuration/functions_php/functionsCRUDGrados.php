@@ -148,3 +148,4 @@ function consultarMateriasConGrados($pdo) {
     }
     return $resultados;
 }
+
