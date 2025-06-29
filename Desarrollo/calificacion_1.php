@@ -204,43 +204,40 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
+                <?php
+                    if ($grado_id) {
+                        $estudiantes = estudiantexNota($pdo, $grado_id);
 
-                        if ($grado_id) {
-                            $estudiantes = estudiantexNota($pdo, $grado_id);
-
-                            if (!empty($estudiantes)) {
-                                foreach ($estudiantes as $estudiante) {
-                                    ?>
-                                    <tr data-estudiante-id="<?php echo $estudiante['id']; ?>">
-                                        <td><?php echo htmlspecialchars($estudiante['cedula_est'] ?? 'N/A'); ?></td>
-                                        <td><?php echo htmlspecialchars($estudiante['nombres_est']); ?></td>
-                                        <td><?php echo htmlspecialchars($estudiante['apellidos_est']); ?></td>
-                                        <td>20</td>
-                                        <!-- Columnas dinámicas se agregarán aquí -->
-                                        <td>
-                                            <form action="calificacion_2.php" method="POST">
-                                             <input type="hidden" name="idEstudiante" id="idEstudiante" value="<?php echo $estudiante['id']; ?>">
-                                             <input type="hidden" name="gradoCalificacion" id="gradoCalificacion" value="<?php echo $grado_id;?>">                                                   
-                                            <button type="submit" class="btn btn-success btn-guardar">
-                                             Seleccionar <i class="bi bi-arrow-right-square"></i> 
-                                            </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }
-                            } else {
-                                echo "<tr><td colspan='5'>No se encontraron estudiantes inscritos en este grado.</td></tr>";
+                        if (!empty($estudiantes)) {
+                            foreach ($estudiantes as $estudiante) {
+                                ?>
+                                <tr data-estudiante-id="<?php echo $estudiante['id']; ?>">
+                                    <td><?php echo htmlspecialchars($estudiante['cedula_est'] ?? 'N/A'); ?></td>
+                                    <td><?php echo htmlspecialchars($estudiante['nombres_est']); ?></td>
+                                    <td><?php echo htmlspecialchars($estudiante['apellidos_est']); ?></td>
+                                    <!-- COLUMNA PROMEDIO -->
+                                    <td><?php echo isset($estudiante['promedio_calificacion']) ? number_format($estudiante['promedio_calificacion'], 2) : 'N/A'; ?></td>                <!-- Columnas dinámicas se agregarán aquí -->
+                                    <td>
+                                        <form action="calificacion_2.php" method="POST">
+                                        <input type="hidden" name="idEstudiante" id="idEstudiante" value="<?php echo $estudiante['id']; ?>">
+                                        <input type="hidden" name="gradoCalificacion" id="gradoCalificacion" value="<?php echo $grado_id;?>">                                                   
+                                        <button type="submit" class="btn btn-success btn-guardar">Seleccionar <i class="bi bi-arrow-right-square"></i> 
+                                        </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <?php
                             }
                         } else {
-                            echo "<tr><td colspan='5'>No se ha seleccionado un grado válido.</td></tr>";
+                            echo "<tr><td colspan='6'>No se encontraron estudiantes inscritos en este grado.</td></tr>";
                         }
-                        ?>
+                    } else {
+                        echo "<tr><td colspan='6'>No se ha seleccionado un grado válido.</td></tr>";
+                    }
+                ?>
                     </tbody>
                 </table>
             </div>
-
             <!-- JavaScript para manejar las columnas dinámicas --> 
             <script src="../js/filtrarLupa.js"></script>
           </main>

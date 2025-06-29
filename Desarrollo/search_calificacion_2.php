@@ -198,10 +198,10 @@
                     <input type="number" id="numCalificaciones" class="input-calificaciones" min="1" max="10" value="1"
                         placeholder="N° calificaciones">
                     <button id="btnAgregarColumnas" class="btn-agregar">Agregar</button>
-                    <select class="select-lapso" id="selectLapso">
+                    <select class="select-lapso" id="selectLapso" name="selectLapso">
                         <option value="1er Lapso">1er Lapso</option>
-                        <option value="1er Lapso">2do Lapso</option>
-                        <option value="1er Lapso">3er Lapso</option>
+                        <option value="2do Lapso">2do Lapso</option>
+                        <option value="3er Lapso">3er Lapso</option>
                     </select>
                     <label for="anioEscolar">Año escolar</label> <input type="text" id="anioEscolar" name="anioEscolar"
                         class="input-anioEscolar" readonly>

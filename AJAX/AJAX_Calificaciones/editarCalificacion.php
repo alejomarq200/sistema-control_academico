@@ -1,9 +1,14 @@
 <?php
-include("../../Configuration/Configuration.php");
 header('Content-Type: application/json');
 
+// Incluir configuración de la base de datos
+include("../../Configuration/Configuration.php");
+
 // Verificar que los datos requeridos existen
-if (!isset($_POST['id_calif']) || !isset($_POST['valor_calif']) || !isset($_POST['total_calificacion'])) {
+if (
+    !isset($_POST['id_calif']) || !isset($_POST['valor_calif']) || !isset($_POST['total_calificacion']) ||
+    !isset($_POST['id_estudiante']) || !isset($_POST['id_materia'])
+) {
     http_response_code(400);
     echo json_encode([
         'success' => false,
@@ -14,7 +19,9 @@ if (!isset($_POST['id_calif']) || !isset($_POST['valor_calif']) || !isset($_POST
 
 $ids = $_POST['id_calif'];
 $valores = $_POST['valor_calif'];
-$total = $_POST['total_calificacion']; // Cambié de 'promedioCalculado' a 'total_calificacion'
+$total = $_POST['total_calificacion'];
+$idEstudiante = $_POST['id_estudiante'];
+$idMateria = $_POST['id_materia'];
 
 try {
     // Verificar que los arrays tengan la misma longitud
@@ -25,7 +32,14 @@ try {
     // Iniciar transacción
     $pdo->beginTransaction();
 
-    $sql = "UPDATE calificaciones SET calificacion = :valor, total_calificacion = :total WHERE id = :id";
+    // Actualizar cada calificación
+    $sql = "UPDATE calificaciones SET 
+            calificacion = :valor, 
+            total_calificacion = :total
+            WHERE id = :id 
+            AND id_estudiante = :id_estudiante
+            AND id_materia = :id_materia";
+
     $stmt = $pdo->prepare($sql);
 
     for ($i = 0; $i < count($ids); $i++) {
@@ -37,9 +51,16 @@ try {
 
         $stmt->execute([
             ':valor' => $valor,
-            ':total' => floatval($total), // Usamos el mismo promedio para todos
-            ':id' => intval($ids[$i])
+            ':total' => floatval($total),
+            ':id' => intval($ids[$i]),
+            ':id_estudiante' => intval($idEstudiante),
+            ':id_materia' => intval($idMateria)
         ]);
+
+        // Verificar si se actualizó alguna fila
+        if ($stmt->rowCount() === 0) {
+            throw new Exception("No se pudo actualizar la calificación con ID {$ids[$i]}");
+        }
     }
 
     // Confirmar transacción

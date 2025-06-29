@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mensajes = [];
 
     /* Regex sólo letras con mínimo 2 caracteres por primer y segundo nombre: Nombre*/
-    $patronName = "/^[A-Za-zñÑáéíóúÁÉÍÓÚ]{3,}(?: [A-Za-zñÑáéíóúÁÉÍÓÚ]{2,})?$/";
+    $patronName = "/^[A-Za-zÑñÁÉÍÓÚÜáéíóúü\s\.,'-]+$/";
     $patronIdGuia = "/^[0-9]{1,9}$/";
     
     if (empty($modalMateriaEdit[0])) {

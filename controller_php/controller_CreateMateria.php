@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mensajes = [];
 
     /* Regex sólo letras con mínimo 2 caracteres por primer y segundo nombre: Nombre*/
-    $patronName = "/^[A-Za-zÑñÁÉÍÓÚáéíóú\s'-]+$/";
+    $patronName = "/^[A-Za-zÑñÁÉÍÓÚÜáéíóúü\s\.,'-]+$/";
 
     if (empty($nombreMateria)) {
         $mensajes[] = "Campo nombre de la materia vacio";

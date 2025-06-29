@@ -1,7 +1,8 @@
 <?php
 include("../Configuration/Configuration.php");
 
-function consultarEstudiantes($pdo) {
+function consultarEstudiantes($pdo)
+{
     try {
         $stmt = $pdo->prepare("
             SELECT e.*, g.id_grado 
@@ -74,8 +75,8 @@ function editarEstudiante($pdo, array $data)
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
-}
-function obtenerCalificacionesAgrupadas($pdo, $idEstudiante = null) {
+}function obtenerCalificacionesAgrupadas($pdo, $idEstudiante = null)
+{
     try {
         $sql = "
             SELECT 
@@ -95,7 +96,7 @@ function obtenerCalificacionesAgrupadas($pdo, $idEstudiante = null) {
             $sql .= " WHERE id_estudiante = :idEstudiante";
         }
 
-        $sql .= " ORDER BY id_estudiante, id_materia, id";
+        $sql .= " ORDER BY id_estudiante, id_materia, lapso_academico, id";
 
         $stmt = $pdo->prepare($sql);
 
@@ -110,7 +111,8 @@ function obtenerCalificacionesAgrupadas($pdo, $idEstudiante = null) {
         $maxCalifs = 0;
 
         foreach ($calificaciones as $calif) {
-            $key = $calif['id_estudiante'].'_'.$calif['id_materia'];
+            // Clave única por estudiante, materia y lapso
+            $key = $calif['id_estudiante'] . '_' . $calif['id_materia'] . '_' . $calif['lapso_academico'];
 
             if (!isset($agrupadas[$key])) {
                 $agrupadas[$key] = [
@@ -130,6 +132,7 @@ function obtenerCalificacionesAgrupadas($pdo, $idEstudiante = null) {
                 'valor' => $calif['calificacion']
             ];
 
+            // Actualizar el máximo de calificaciones por grupo
             $maxCalifs = max($maxCalifs, count($agrupadas[$key]['calificaciones']));
         }
 
@@ -143,7 +146,6 @@ function obtenerCalificacionesAgrupadas($pdo, $idEstudiante = null) {
         return ['calificaciones' => [], 'max_califs' => 0];
     }
 }
-
 
 function retornarNombreEstudiante($pdo, array $estudiante)
 {
@@ -162,5 +164,19 @@ function retornarNombreEstudiante($pdo, array $estudiante)
     } catch (PDOException $e) {
         error_log("Error en retornarNombreEst: " . $e->getMessage());
         return 'Error al obtener rol';
+    }
+}
+
+function materiasPorGrado($pdo, $grado_id)
+{
+    try {
+        $stmt = $pdo->prepare("SELECT COUNT(*) AS total_materias FROM grado_materia WHERE id_grado = :id_grado");
+        $stmt->bindValue(':id_grado', $grado_id);
+        $stmt->execute();
+
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resultado['total_materias'];
+    } catch (PDOException $e) {
+        $e->getMessage();
     }
 }

@@ -86,7 +86,7 @@
                 let isValid = true;
                 limpiarErrores();
 
-                const regexName = /^[A-Za-zñÑáéíóúÁÉÍÓÚ]{3,}(?: [A-Za-zñÑáéíóúÁÉÍÓÚ]{2,})?$/;
+               const regexName = /^[A-Za-zÑñÁÉÍÓÚÜáéíóúü\s\.,'-]+$/;
                 const regexIdguia = /^[0-9]{1,9}$/;
 
                 let idguia = document.getElementById("idEditM").value.trim();

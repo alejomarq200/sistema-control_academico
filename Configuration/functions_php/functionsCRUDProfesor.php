@@ -243,13 +243,15 @@ function enlistar($pdo, $grado_id)
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
-
 function estudiantexNota($pdo, $grado_id)
 {
-    $sql = "SELECT id, cedula_est, nombres_est, apellidos_est
-            FROM estudiantes  WHERE grado_est = :grado_est
-            ORDER BY apellidos_est, nombres_est";
+    $sql = "SELECT e.id, e.cedula_est, e.nombres_est, e.apellidos_est, 
+                   AVG(c.total_calificacion) as promedio_calificacion
+            FROM estudiantes e
+            LEFT JOIN calificaciones c ON e.id = c.id_estudiante
+            WHERE e.grado_est = :grado_est
+            GROUP BY e.id, e.cedula_est, e.nombres_est, e.apellidos_est
+            ORDER BY e.apellidos_est, e.nombres_est";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':grado_est', $grado_id, PDO::PARAM_INT);

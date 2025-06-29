@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,219 +8,9 @@
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="../css/calificacion_2.css">
     <title>Consultar Calificaciones</title>
-    <style>
-        /* Contenedor principal */
-        .contenedor-calificaciones {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .back {
-            padding: 8px 16px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.15s ease-in-out;
-        }
-
-        .back:hover {
-            background-color: #218838;
-            color: white;
-        }
-
-        /* Contenedor principal */
-        .tabla-calificaciones-container {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-
-        /* Contenedor responsive para la tabla */
-        .table-responsive {
-            overflow-x: auto;
-            margin-bottom: 15px;
-        }
-
-        /* Estilos generales de la tabla */
-        .calificaciones-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Encabezado de la tabla */
-        .calificaciones-table thead {
-            background-color: #0e2238;
-
-            color: white;
-        }
-
-        .calificaciones-table th {
-            padding: 12px 8px;
-            text-align: center;
-            vertical-align: middle;
-            font-weight: 500;
-            border: 1px solid #dee2e6;
-        }
-
-        .calificacion-header {
-            min-width: 40px;
-        }
-
-        .total-header {
-            background-color: rgb(37, 64, 90);
-
-        }
-
-        /* Cuerpo de la tabla */
-        .calificaciones-table td {
-            padding: 10px 8px;
-            text-align: center;
-            vertical-align: middle;
-            border: 1px solid #dee2e6;
-            transition: all 0.3s ease;
-        }
-
-        .calificaciones-table tbody tr {
-            transition: all 0.3s ease;
-        }
-
-        .calificaciones-table tbody tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-
-        .calificaciones-table tbody tr:hover {
-            background-color: #e9ecef;
-        }
-
-        /* Celdas específicas */
-        .profesor-cell,
-        .materia-cell,
-        .estudiante-cell {
-            text-align: left;
-            padding-left: 12px;
-        }
-
-        .estudiante-cell strong {
-            font-weight: 600;
-        }
-
-        /* Estilos para notas */
-        .nota-cell {
-            font-weight: 500;
-        }
-
-        .nota-baja {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-
-        .nota-alta {
-            color: #2ecc71;
-        }
-
-        .nota-vacia {
-            color: #95a5a6;
-        }
-
-        .total-cell {
-            font-weight: bold;
-            background-color: #f1f8fe;
-        }
-
-        /* Botón de editar */
-        .btn-editar {
-            background: none;
-            border: 1px solid #3498db;
-            color: #3498db;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.85rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .btn-editar:hover {
-            background-color: #3498db;
-            color: white;
-            transform: scale(1.05);
-        }
-
-        /* Fila sin datos */
-        .no-data-row td {
-            padding: 2rem 0;
-            text-align: center;
-            color: #7f8c8d;
-        }
-
-        .no-data-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .no-data-content i {
-            font-size: 1.5rem;
-            color: #bdc3c7;
-        }
-
-        .no-data-content p {
-            margin: 0;
-            font-size: 0.95rem;
-        }
-
-        /* Footer de la tabla */
-        .calificaciones-table tfoot {
-            background-color: #f8f9fa;
-        }
-
-        .tfoot-content {
-            display: flex;
-            justify-content: flex-end;
-            padding: 10px 0;
-        }
-
-        /* Botón de descargar */
-        .btn-descargar {
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-descargar:hover {
-            background-color: #219653;
-            transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-descargar i {
-            font-size: 1rem;
-        }
-    </style>
 </head>
-
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
@@ -234,9 +23,7 @@
         <div class="main p-3">
             <div class="text-center">
                 <?php
-
                 include("../Layout/mensajes.php");
-                /* CUERPO DEL MENÚ */
                 ?>
                 <h1 class="my-3" id="titulo">Módulo de Calificaciones</h1>
                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -259,6 +46,8 @@
                     include("../Configuration/functions_php/functionsCRUDMaterias.php");
                     include("../Configuration/functions_php/functionsCRUDProfesor.php");
                     include("../Layout/modalesCalificaciones/modallDescargarC.php");
+                    include("../Layout/modalesCalificaciones/modalEditarC.php");
+
                     // Obtener el ID del estudiante desde POST o GET
                     $idEstudiante = $_POST['idEstudiante'] ?? $_GET['idEstudiante'] ?? null;
 
@@ -288,13 +77,12 @@
                             return 'Error al obtener rol';
                         }
                     }
-
                     ?>
 
                     <input type="hidden" name="idEstudiante" value="<?= htmlspecialchars($idEstudiante ?? '') ?>">
                     <div class="tabla-calificaciones-container">
                         <div class="table-responsive">
-                            <table class="calificaciones-table">
+                            <table class="calificaciones-table" id="calificaciones-table">
                                 <thead>
                                     <tr>
                                         <th>Año</th>
@@ -367,10 +155,20 @@
                                     <tr>
                                         <td colspan="<?= 6 + $maxCalifs + 2 ?>">
                                             <div class="tfoot-content">
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <label for="contador" class="label-contador">Total de
+                                                        registros:</label>
+                                                    <input type="text" id="contador" class="input-contador" readonly>
+                                                    <input type="hidden" id="total" class="input-contador" readonly>
+                                                    <input type="hidden" name="totalMaterias" id="totalMaterias"
+                                                        value="<?= materiasPorGrado($pdo, $idGrado); ?>">
+                                                </div>
                                                 <button class="btn-descargar" data-bs-toggle="modal"
                                                     data-bs-target="#formModalDescargarC">
-                                                    <i class="bi bi-download"></i> Descargar Reporte
-                                                </button>
+                                                    <i class="bi bi-download"></i> Descargar Reporte</button>
+                                                <button class="btn-promover" id="btn-promover"
+                                                    onclick="mostrarAlerta(this)" disabled>
+                                                    <i class="bi bi-box-arrow-in-up"></i>Promover estudiante</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -380,164 +178,36 @@
                     </div>
                     </main>
                     <script src="../js/filtrarLupa.js"></script>
-</body>
-</div>
-</main>
-<!-- Modal -->
-<style>
-    .error {
-        text-align: left;
-        padding-left: 0;
-        color: red;
-        font-size: 0.85rem;
-        margin-top: 0.1rem;
-        margin-bottom: 0.5rem;
-    }
-</style>
+                    <script>
+                        // Cambia el nombre de la función alert para evitar conflictos
+                        contarFilasTbody();
 
-<div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <form id="formEditarCalificacion" class="modal-content">
-            <!-- Eliminé el action y method del form ya que usamos fetch -->
-            <div class="modal-header">
-                <h5 class="modal-title">Editar Calificaciones</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body" id="contenedorCalificaciones">
-                <!-- Aquí se cargan dinámicamente los campos -->
-            </div>
-            <div class="modal-footer">
-                <div class="d-flex justify-content-between w-100 align-items-center">
-                    <div class="promedio-container">
-                        <strong>Promedio:</strong>
-                        <input type="number" id="promedioCalculado" class="form-control d-inline-block ms-2"
-                            style="width: 80px;" readonly>
-                        <input type="hidden" name="total_calificacion" id="totalCalificacion">
-                    </div>
-                    <button type="button" class="btn btn-primary">Guardar Cambios</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-    <script>
-        document.querySelectorAll('.btn-editar').forEach(button => {
-            button.addEventListener('click', function () {
-                const ids = JSON.parse(this.dataset.ids);
-                const valores = JSON.parse(this.dataset.valores);
+                        compararValores();
 
-                const contenedor = document.getElementById('contenedorCalificaciones');
-                contenedor.innerHTML = '';
+                        function compararValores() {
+                            const contador = parseInt(document.getElementById('contador').value.trim()) || 0;
+                            const totalMaterias = parseInt(document.getElementById('totalMaterias').value.trim()) || 0;
 
-                ids.forEach((id, index) => {
-                    const div = document.createElement('div');
-                    div.classList.add('mb-2');
-                    div.innerHTML = `
-                    <input type="hidden" name="id_calif[]" value="${id}">
-                    <label>Calificación ${index + 1}:</label>
-                    <input type="number" name="valor_calif[]" value="${valores[index]}" 
-                           class="form-control calificacion-input" min="0" max="20" required>
-                `;
-                    contenedor.appendChild(div);
-                });
+                            const btnPromover = document.getElementById('btn-promover');
+                            const total = document.getElementById('total').value = totalMaterias * 3;
 
-                // Calcular promedio inicial
-                calcularPromedio();
-
-                const modal = new bootstrap.Modal(document.getElementById('modalEditar'));
-                modal.show();
-            });
-        });
-
-        // Escuchar cambios en los inputs de calificación
-        document.addEventListener('input', function (e) {
-            if (e.target.classList.contains('calificacion-input')) {
-                calcularPromedio();
-            }
-        });
-
-        function calcularPromedio() {
-            const inputs = document.querySelectorAll('.calificacion-input');
-            let suma = 0;
-            let contador = 0;
-
-            inputs.forEach(input => {
-                const value = parseFloat(input.value);
-                if (!isNaN(value) && value >= 0 && value <= 20) {
-                    suma += value;
-                    contador++;
-                }
-            });
-
-            const promedio = contador > 0 ? (suma / contador) : 0;
-            const promedioRedondeado = Math.round(promedio * 100) / 100; // Redondear a 2 decimales
-
-            document.getElementById('promedioCalculado').value = promedioRedondeado;
-            document.getElementById('totalCalificacion').value = promedioRedondeado;
-        }
-
-
-        document.getElementById('formEditarCalificacion').addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            // Validación básica
-            const inputs = document.querySelectorAll('input[name="valor_calif[]"]');
-            let valid = true;
-
-            inputs.forEach(input => {
-                const value = parseFloat(input.value);
-                if (isNaN(value) || value < 0 || value > 20) {
-                    input.classList.add('is-invalid');
-                    valid = false;
-                } else {
-                    input.classList.remove('is-invalid');
-                }
-            });
-
-            if (!valid) {
-                alert('Por favor ingrese calificaciones válidas (0-20)');
-                return;
-            }
-
-            try {
-                const formData = new FormData(this);
-
-                // Agregar cualquier dato adicional que necesites
-                formData.append('action', 'editar_calificaciones');
-
-                const response = await fetch('../AJAX/AJAX_Calificaciones/editarCalificacion.php', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.message || 'Error en la respuesta del servidor');
-                }
-
-                if (data.success) {
-                    Swal.fire({
-                        title: '¡Éxito!',
-                        text: data.message || 'Calificaciones actualizadas correctamente',
-                        icon: 'success'
-                    }).then(() => {
-                        // Cerrar el modal
-                        const modal = bootstrap.Modal.getInstance(document.getElementById('modalEditar'));
-                        modal.hide();
-                        // Recargar la página
-                        location.reload();
-                    });
-                } else {
-                    throw new Error(data.message || 'Error al actualizar las calificaciones');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                Swal.fire({
-                    title: 'Error',
-                    text: error.message,
-                    icon: 'error'
-                });
-            }
-        });
-    </script>
+                            /*if (total === contador) {
+                              btnPromover.disabled = false;
+                              alert("Botón habilitado");
+                              
+                              } else {
+                              btnPromover.disabled = true;
+                              alert("Botón inhabilitado");
+                            
+                              }*/
+                             }
+                        function contarFilasTbody() {
+                            const tabla = document.getElementById('calificaciones-table');
+                            const tbody = tabla.getElementsByTagName('tbody')[0];
+                            const numeroFilasTbody = tbody.rows.length;
+                            document.getElementById('contador').value = numeroFilasTbody;
+                        }
+                    </script>
+                 </body>
+               </div>
+            </main>
