@@ -29,10 +29,10 @@ function insertar_user($pdo, $variablesModalCreate)
         $stmt->bindValue('cedula', $variablesModalCreate[0] . $variablesModalCreate[1]);
         $stmt->bindValue('nombres', $variablesModalCreate[2]);
         $stmt->bindValue('correo', $variablesModalCreate[3]);
-        $stmt->bindValue('telefono',  $variablesModalCreate[5] . $variablesModalCreate[6]);
-        $stmt->bindValue('contrasena',  $variablesModalCreate[4]);
-        $stmt->bindValue('id_rol',  $variablesModalCreate[7]);
-        $stmt->bindValue('id_estado',  2);
+        $stmt->bindValue('telefono', $variablesModalCreate[5] . $variablesModalCreate[6]);
+        $stmt->bindValue('contrasena', $variablesModalCreate[4]);
+        $stmt->bindValue('id_rol', $variablesModalCreate[7]);
+        $stmt->bindValue('id_estado', 2);
 
 
         $stmt->execute();
@@ -135,5 +135,27 @@ function habilitarUsuario($pdo, $idGuia)
         $_SESSION['titulo'] = 'Error';
         header("Location: ../Desarrollo/search_user.php");
         exit();
+    }
+}
+
+/* FUNCIONES DE REPORTES */
+function reporteUsuarios($pdo, $estado, $rol)
+{
+    try {
+        $stmt = $pdo->prepare("SELECT cedula, nombres, correo, telefono, contrasena, id_rol, id_estado 
+        FROM users WHERE id_estado = :estado AND id_rol = :rol");
+        
+        $stmt->bindValue(':estado', $estado, PDO::PARAM_INT);
+        $stmt->bindValue(':rol', $rol, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $usuarios ?: []; // Devuelve usuarios o array vacío
+        
+    } catch (PDOException $e) {
+        // Mejor práctica: Loguear el error y/o lanzar excepción
+        error_log("Error en reporteUsuarios: " . $e->getMessage());
+        return [];
     }
 }

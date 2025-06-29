@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -11,9 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/tablaGGrados.css">
     <title>Consultar Calificaciones</title>
-
 </head>
-
 <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
 <div class="wrapper">
     <?php
@@ -69,8 +67,8 @@
                                             <button type="submit" class="btn btn-secondary">
                                                 <i class="bi bi-arrow-right-circle"></i>
                                             </button>
+                                        </form>
                                     </td>
-                                    </form>
                                 </tr>
                                 <?php
                             }
@@ -83,5 +81,6 @@
             </div>
             </main>
             </main>
-        <script src="../js/filtrarLupa.js"></script>
+            <script src="../js/filtrarLupa.js"></script>
+
 </html>

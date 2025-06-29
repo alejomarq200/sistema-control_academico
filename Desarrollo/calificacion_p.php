@@ -126,7 +126,7 @@
                                 <td><?php echo htmlspecialchars($pm['nombre']); ?></td>
                                 <td><?php echo htmlspecialchars($pm['materia_nombre']); ?></td>
                                 <td>
-                                    <form action="search_calificacion_2.php" method="POST">
+                                    <form action="calificacion_p_1.php" method="POST">
                                         <input type="hidden" name="grado" name="grado" value="<?php echo $grado_id; ?>">
                                         <input type="hidden" name="profesor" value="<?php echo $pm['cedula']; ?>">
                                         <input type="hidden" name="materia" value="<?php echo $pm['materia_nombre']; ?>">

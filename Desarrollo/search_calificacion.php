@@ -63,7 +63,7 @@
                                     <td><?php echo ($grado['categoria_grado']); ?>
                                     </td>
                                     <td>
-                                        <form action="search_calificacion_1.php" method="POST" id="formPrueba">
+                                        <form action="../controller_php/validar_grado.php" method="POST" id="formPrueba">
                                             <input type="text" name="gradoCalificacion" id="gradoCalificacion"
                                                 value="<?php echo $grado['id'] ?>" hidden>
                                             <button type="submit" class="btn btn-secondary">

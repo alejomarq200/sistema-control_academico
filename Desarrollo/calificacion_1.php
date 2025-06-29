@@ -221,7 +221,8 @@
                                         <form action="calificacion_2.php" method="POST">
                                         <input type="hidden" name="idEstudiante" id="idEstudiante" value="<?php echo $estudiante['id']; ?>">
                                         <input type="hidden" name="gradoCalificacion" id="gradoCalificacion" value="<?php echo $grado_id;?>">                                                   
-                                        <button type="submit" class="btn btn-success btn-guardar">Seleccionar <i class="bi bi-arrow-right-square"></i> 
+                                        <button type="submit" class="btn btn-success btn-guardar">
+                                        Seleccionar <i class="bi bi-arrow-right-square"></i> 
                                         </button>
                                         </form>
                                     </td>
@@ -238,6 +239,7 @@
                     </tbody>
                 </table>
             </div>
+
             <!-- JavaScript para manejar las columnas dinámicas --> 
             <script src="../js/filtrarLupa.js"></script>
           </main>
