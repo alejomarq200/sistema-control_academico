@@ -185,145 +185,89 @@
                 </div>
             </div>
             <ul class="sidebar-nav">
+                <!-- Menú de Registro con submenú -->
                 <li class="sidebar-item">
-                    <a href="inscripcion.php" class="sidebar-link">
-                        <i class="bi bi-file-person-fill"></i>
-                        <span>Inscripción</span>
+                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#registro"
+                        aria-expanded="false" aria-controls="registro">
+                        <i class="bi bi-file-earmark-plus-fill"></i>
+                        <span>Registro</span>
                     </a>
-                </li>
-
-                <!-- Menú de Estudiantes con submenú -->
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#estudiantes"
-                        aria-expanded="false" aria-controls="estudiantes">
-                        <i class="fas fa-user-graduate"></i>
-                        <span>Estudiantes</span>
-                    </a>
-                    <ul id="estudiantes" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="search_estudiantes.php" class="sidebar-link">
-                                <i class="bi bi-search"></i>
-                                <span>Consultar</span>
-                            </a>
-                        </li>
+                    <ul id="registro" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
                             <a href="inscripcion.php" class="sidebar-link">
                                 <i class="bi bi-person-plus"></i>
                                 <span>Nuevo Estudiante</span>
                             </a>
                         </li>
-                    </ul>
-                </li>
-
-                <!-- Menú de Representantes con submenú -->
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#representantes" aria-expanded="false" aria-controls="representantes">
-                        <i class="bi bi-person-raised-hand"></i>
-                        <span>Representantes</span>
-                    </a>
-                    <ul id="representantes" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="search_representantes.php" class="sidebar-link">
-                                <i class="bi bi-search"></i>
-                                <span>Consultar</span>
+                            <a href="registro_profesor.php" class="sidebar-link">
+                                <i class="bi bi-person-plus"></i>
+                                <span>Nuevo Profesor</span>
                             </a>
                         </li>
-                         <li class="sidebar-item">
-                            <a href="search_c_pago.php" class="sidebar-link">
-                                <i class="bi bi-person-rolodex"></i>
-                                <span>Contacto Pago</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Menú de Calificaciones con submenú -->
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#calificaciones" aria-expanded="false" aria-controls="calificaciones">
-                        <i class="fas fa-spell-check"></i>
-                        <span>Calificaciones</span>
-                    </a>
-                    <ul id="calificaciones" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="calificacion.php" class="sidebar-link">
-                                <i class="bi bi-search"></i>
-                                <span>Consultar</span>
+                            <a href="registro_materia.php" class="sidebar-link">
+                                <i class="bi bi-journal-plus"></i>
+                                <span>Nueva Materia</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="search_calificacion.php" class="sidebar-link">
-                                <i class="bi bi-journal-text"></i>
-                                <span>Registrar</span>
+                                <i class="bi bi-bookmark-plus"></i>
+                                <span>Nueva Calificación</span>
                             </a>
                         </li>
                     </ul>
                 </li>
 
-                <!-- Menú de Grados con submenú -->
+                <!-- Menú de Gestión con submenú -->
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#grados"
-                        aria-expanded="false" aria-controls="grados">
-                        <i class="fi fi-rr-degree-credential"></i>
-                        <span>Grados</span>
+                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#gestion"
+                        aria-expanded="false" aria-controls="gestion">
+                        <i class="bi bi-clipboard2-data-fill"></i>
+                        <span>Gestión</span>
                     </a>
-                    <ul id="grados" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <ul id="gestion" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="search_grado.php" class="sidebar-link">
-                                <i class="bi bi-search"></i>
-                                <span>Consultar Grados</span>
+                            <a href="search_estudiantes.php" class="sidebar-link">
+                                <i class="fas fa-user-graduate"></i>
+                                <span>Estudiantes</span>
                             </a>
                         </li>
-                    </ul>
-                </li>
-
-                <!-- Menú de Profesores con submenú -->
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#profesores"
-                        aria-expanded="false" aria-controls="profesores">
-                        <i class="bi bi-person-square"></i>
-                        <span>Profesores</span>
-                    </a>
-                    <ul id="profesores" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="search_representantes.php" class="sidebar-link">
+                                <i class="bi bi-person-raised-hand"></i>
+                                <span>Representantes</span>
+                            </a>
+                        </li>
                         <li class="sidebar-item">
                             <a href="search_profesor.php" class="sidebar-link">
-                                <i class="bi bi-search"></i>
-                                <span>Consultar Profesores</span>
+                                <i class="bi bi-person-square"></i>
+                                <span>Profesores</span>
                             </a>
                         </li>
-                    </ul>
-                </li>
-
-                <!-- Menú de Materias con submenú -->
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#materias"
-                        aria-expanded="false" aria-controls="materias">
-                        <i class="fas fa-book"></i>
-                        <span>Materias</span>
-                    </a>
-                    <ul id="materias" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
                             <a href="search_materia.php" class="sidebar-link">
-                                <i class="bi bi-search"></i>
-                                <span>Consultar Materias</span>
+                                <i class="fas fa-book"></i>
+                                <span>Materias</span>
                             </a>
                         </li>
-                    </ul>
-                </li>
-
-                <!-- Menú de Usuarios con submenú -->
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#usuarios"
-                        aria-expanded="false" aria-controls="usuarios">
-                        <i class="bi bi-people-fill"></i>
-                        <span>Usuarios</span>
-                    </a>
-                    <ul id="usuarios" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="search_user.php" class="sidebar-link">
-                                <i class="bi bi-search"></i>
-                                <span>Consultar Usuarios</span>
+                            <a href="search_grado.php" class="sidebar-link">
+                                <i class="fi fi-rr-degree-credential"></i>
+                                <span>Grados</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="search_c_pago.php" class="sidebar-link">
+                                <i class="bi bi-person-rolodex"></i>
+                                <span>Contactos de Pago</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="calificacion.php" class="sidebar-link">
+                                <i class="fas fa-spell-check"></i>
+                                <span>Calificaciones</span>
                             </a>
                         </li>
                     </ul>
@@ -346,6 +290,24 @@
                         <li class="sidebar-item">
                             <a href="#" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
+                                <span>Reporte de Inscripciones</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <i class="bi bi-file-earmark-bar-graph"></i>
+                                <span>Reporte de Profesores</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <i class="bi bi-file-earmark-bar-graph"></i>
+                                <span>Reporte de Materias</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <i class="bi bi-file-earmark-bar-graph"></i>
                                 <span>Reporte de Calificaciones</span>
                             </a>
                         </li>
@@ -355,16 +317,68 @@
                                 <span>Reporte de Asistencia</span>
                             </a>
                         </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <i class="bi bi-file-earmark-bar-graph"></i>
+                                <span>Reporte de Usuarios</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
+                <!-- Menú de Mantenimiento con submenú -->
                 <li class="sidebar-item">
-                    <a href="mantenimiento.php" class="sidebar-link">
+                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#mantenimiento"
+                        aria-expanded="false" aria-controls="mantenimiento">
                         <i class="bi bi-gear-fill"></i>
                         <span>Mantenimiento</span>
                     </a>
+                    <ul id="mantenimiento" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="search_user.php" class="sidebar-link">
+                                <i class="bi bi-people-fill"></i>
+                                <span>Usuarios</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="auditoria.php" class="sidebar-link">
+                                <i class="bi bi-shield-check"></i>
+                                <span>Auditoría</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="mantenimiento.php" class="sidebar-link">
+                                <i class="bi bi-database-check"></i>
+                                <span>Base de Datos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Menú de Ayuda con submenú -->
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#ayuda"
+                        aria-expanded="false" aria-controls="ayuda">
+                        <i class="bi bi-question-circle-fill"></i>
+                        <span>Ayuda</span>
+                    </a>
+                    <ul id="ayuda" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="manual_admin.php" class="sidebar-link">
+                                <i class="bi bi-journal-bookmark-fill"></i>
+                                <span>Manual Administrador</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="manual_usuario.php" class="sidebar-link">
+                                <i class="bi bi-journal-bookmark"></i>
+                                <span>Manual Usuario</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
+
             <div class="sidebar-footer">
                 <a href="../Configuration/Logout.php" class="sidebar-link">
                     <i class="bi bi-box-arrow-left"></i>

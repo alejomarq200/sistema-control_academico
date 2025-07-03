@@ -9,7 +9,7 @@
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <title>Consultar Grados</title>
+    <title>Mantenimiento</title>
 </head>
 
 <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
@@ -58,9 +58,8 @@
                             <input type="file" name="backup_file" class="input-file"
                                 style="background: none; border: none; cursor: pointer;" />
                             <div>
-            <input type="submit" name="restore" value="Restore"
-                class="btn-action" />
-        </div>
+                                <input type="submit" name="restore" value="Restore" class="btn-action" />
+                            </div>
                         </div>
                     </div>
                 </form>

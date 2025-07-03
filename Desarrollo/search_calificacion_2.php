@@ -185,7 +185,7 @@
             <div>
                 <h5>Seleccione un estudiante</h5>
                 <div class="contenedor-calificaciones">
-                    <form action="../Desarrollo/search_calificacion_1.php" method="POST">
+                    <form action="../controller_php/validar_grado.php" method="POST">
                         <input type="hidden" name="profesorCalificacion" id="profesorCalificacion"
                             value="<?php echo retornarIdProfesor($pdo, $array); ?>">
                         <input type="hidden" name="materiaCalificacion" id="materiaCalificacion"
