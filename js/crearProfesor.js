@@ -4,7 +4,7 @@
             var isSubmitting = false; // Flag para controlar doble envío
 
             const regexDni = /^[0-9]{7,9}$/;
-            const regexName = /^[A-Za-zñÑáéíóúÁÉÍÓÚ]{3,}(?: [A-Za-zñÑáéíóúÁÉÍÓÚ]{2,})?$/;
+            const regexName = /^[A-Za-zÑñÁÉÍÓÚáéíóú\s'-]+$/;
             const regexPhone = /^[0-9]{7}$/;
 
             function limpiarErrores() {

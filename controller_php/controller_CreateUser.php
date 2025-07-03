@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $patronDni = "/^[0-9]{7,9}$/";
 
     /* Regex sólo letras con mínimo 2 caracteres por primer y segundo nombre: Nombre*/
-    $patronName = "/^[A-Za-zñÑáéíóúÁÉÍÓÚ]{3,}(?: [A-Za-zñÑáéíóúÁÉÍÓÚ]{2,})?$/";
+    $patronName = "/^[A-Za-zÑñÁÉÍÓÚáéíóú\s'-]+$/";
 
     $patronEmail = "/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/";
     /* 1 dígito, 1 letra minúscula, 1 letra mayúscula, 1 caracter especial entre 6 y 20 */
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($variablesModalCreate[1])) {
         $validar = false;
         $mensajes[] = 'Cédula es obligatorio';
-    } else if (!preg_match($patronDni,  $variablesModalCreate[1])) {
+    } else if (!preg_match($patronDni, $variablesModalCreate[1])) {
         $validar = false;
         $mensajes[] = 'Formato inválido: Ingrese de 7 a 8 númericos';
     }
@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $variablesModalCreate[7] = 2;
     }
     if ($validar) {
-    insertar_user($pdo, $variablesModalCreate);
+        insertar_user($pdo, $variablesModalCreate);
     } else {
         /* PENDIENTE: SI VULNERAN JS IMPLEMENTAR MENSAJES CON CSS Y HTML O REDIRECCIONAR */
         foreach ($mensajes as $valores) {

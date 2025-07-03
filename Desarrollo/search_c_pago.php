@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/modalesProfesor/tablaGestionPr.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="../css/modalesProfesor/tablaGestionPr.css">
+
     <title>Consultar Contacto de Pago</title>
 </head>
 <body>

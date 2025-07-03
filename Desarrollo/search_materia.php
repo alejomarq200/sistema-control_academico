@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -8,14 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../css/tablaMaterias.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="../css/tablaMaterias.css">
     <title>Consultar Materias</title>
 </head>
 
 <body>
-
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
         <?php
@@ -37,10 +36,6 @@
                         <input type="text" id="txtFiltarr" class="filtro-input form-control" placeholder="Buscar...">
                         <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
                     </div>
-                    <!-- Botón de Agregar Usuarios (a la izquierda) -->
-                    <a href="#ModalFormM" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ModalFormM">
-                        Agregar asignaturas
-                    </a>
                 </div>
                 <div class="custom-table">
                     <table class="table table-hover">
@@ -55,7 +50,6 @@
                         <tbody>
                             <?php
                             include("../Configuration/functions_php/functionsCRUDMaterias.php");
-                            include("../Layout/modalesMaterias/modalMCreate.php");
                             include("../Layout/modalesMaterias/modalMEdit.php");
                             include("../Layout/modalesMaterias/modalMDisable.php");
                             include("../Layout/modalesMaterias/modalMEnable.php");

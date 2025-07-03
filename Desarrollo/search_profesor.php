@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,13 +9,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/modalesProfesor/tablaGestionPr.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="../css/modalesProfesor/tablaGestionPr.css">
     <title>Consultar Profesores</title>
-
 </head>
-
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
@@ -49,11 +46,6 @@
                             <i class="bi bi-plus-circle-dotted"></i>
                         </label>
                     </a>
-
-                    <a href="#ModalFormP" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ModalFormP">
-                        Agregar Profesores
-                        <i class="bi bi-person-plus-fill"></i>
-                    </a>
                 </div>
                 <div class="custom-table">
                     <table class="table table-hover">
@@ -71,7 +63,6 @@
                             <?php
 
                             include("../Configuration/functions_php/functionsCRUDProfesor.php");
-                            include("../Layout/modalesProfesores/modalPCreate.php");
                             include("../Layout/modalesProfesores/modalPEdit.php");
                             include("../Layout/modalesProfesores/modalPEnable.php");
                             include("../Layout/modalesProfesores/modalPDisable.php");

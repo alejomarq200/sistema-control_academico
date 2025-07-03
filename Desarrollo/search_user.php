@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="../css/tableUser.css">
     <title>Consultar Usuarios</title>
 </head>
+
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
@@ -33,11 +35,6 @@
                         <input type="text" id="txtFiltarr" class="filtro-input form-control" placeholder="Buscar...">
                         <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
                     </div>
-                    <!-- Botón de Agregar Usuarios (a la izquierda) -->
-                    <a href="#ModalForm" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ModalForm">
-                        Agregar Usuarios
-                        <i class="bi bi-person-plus-fill"></i>
-                    </a>
                 </div>
                 <div class="custom-table">
                     <table class="table table-hover">
@@ -56,7 +53,6 @@
                             <?php
                             include("../Configuration/functions_php/functionsCRUDUser.php");
                             include("../Layout/modalesUsuarios/modalUEdit.php");
-                            include("../Layout/modalesUsuarios/modalUCreate.php");
                             include("../Layout/modalesUsuarios/modalUDisable.php");
                             include("../Layout/modalesUsuarios/modalUEnable.php");
 

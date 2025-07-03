@@ -1,0 +1,196 @@
+:root {
+  --color-primario: #2c3e50;
+  --color-secundario: rgb(30, 93, 134);
+  --color-accento: rgb(247, 252, 0);
+  --color-fondo: #ecf0f1;
+  --color-texto: #2c3e50;
+  --color-borde: #bdc3c7;
+  --color-btn: rgb(122, 156, 179);
+}
+
+body {
+  background-color: var(--color-fondo);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--color-texto);
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0.9)
+    ),
+    url("https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid var(--color-secundario);
+  position: relative;
+  overflow: hidden;
+}
+
+.form-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(
+    90deg,
+    var(--color-secundario),
+    var(--color-accento)
+  );
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--color-primario);
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.form-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--color-secundario),
+    var(--color-accento)
+  );
+  border-radius: 3px;
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--color-primario);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.form-label i {
+  margin-right: 8px;
+  color: var(--color-secundario);
+}
+
+.form-control,
+.form-select {
+  border-radius: 8px;
+  padding: 12px 15px;
+  border: 2px solid var(--color-borde);
+  transition: all 0.3s;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--color-secundario);
+  box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+}
+/* Estilos específicos para el campo de contraseña */
+.password-field-container {
+  position: relative;
+  margin-bottom: 1.5rem;
+  /* Espacio adicional para el mensaje de error */
+}
+
+.password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 20px;
+  /* Posición fija respecto al campo */
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--color-secundario);
+  z-index: 2;
+}
+
+.errores {
+  text-align: left;
+  padding-left: 0;
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 0.1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+/* Asegurar que el mensaje de error no afecte la posición del icono */
+#contrasenaErrorCreate {
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  align-items: flex-end;
+  gap: 15px;
+}
+
+.select-box {
+  min-width: 100px;
+}
+
+.input-box {
+  flex-grow: 1;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 12px;
+  font-weight: 600;
+  background: linear-gradient(
+    135deg,
+    var(--color-secundario),
+    var(--color-btn)
+  );
+  border: none;
+  border-radius: 8px;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  margin-top: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+}
+
+.education-icon {
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--color-secundario);
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .column {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .select-box {
+    width: 100%;
+  }
+}

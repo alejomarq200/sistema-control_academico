@@ -37,7 +37,7 @@ function insertarMateria($pdo, $nombreMateria, $nivelMateria)
             $_SESSION['mensaje'] = 'Asignatura registrada exitosamente.';
             $_SESSION['icono'] = 'success';
             $_SESSION['titulo'] = 'Success';
-            header("Location: ../Desarrollo/search_materia.php");
+            header("Location: ../Desarrollo/new_materia.php");
             exit();
         }
     } catch (PDOException $e) {

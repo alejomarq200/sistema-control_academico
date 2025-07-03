@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sidebar With Bootstrap</title>
+    <title>Barra Lateral</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
@@ -200,13 +199,13 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="registro_profesor.php" class="sidebar-link">
+                            <a href="new_profesor.php" class="sidebar-link">
                                 <i class="bi bi-person-plus"></i>
                                 <span>Nuevo Profesor</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="registro_materia.php" class="sidebar-link">
+                            <a href="new_materia.php" class="sidebar-link">
                                 <i class="bi bi-journal-plus"></i>
                                 <span>Nueva Materia</span>
                             </a>

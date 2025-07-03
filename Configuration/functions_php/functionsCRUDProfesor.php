@@ -40,7 +40,7 @@ function insertarProfesor($pdo, $variablesModalCreateP)
             $_SESSION['mensaje'] = 'Profesor registrado exitosamente.';
             $_SESSION['icono'] = 'success';
             $_SESSION['titulo'] = 'Success';
-            header("Location: ../Desarrollo/search_profesor.php");
+            header("Location: ../Desarrollo/new_profesor.php");
             exit();
         }
     } catch (PDOException $e) {

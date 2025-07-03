@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +7,6 @@
     <title>Controller PHP - REGISTER PROFESOR</title>
     <link rel="stylesheet" href="../css/alerts.css">
 </head>
-
 <?php
 
 session_start();
@@ -23,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     /* Patrones para validar campos */
     $patronDni = "/^[V|E][0-9]{7,9}$/";
     /* Regex sólo letras con mínimo 2 caracteres por primer y segundo nombre: Nombre*/
-    $patronName = "/^[A-Za-zñÑáéíóúÁÉÍÓÚ]{3,}(?: [A-Za-zñÑáéíóúÁÉÍÓÚ]{2,})?$/";
+    $patronName = "/^[A-Za-zÑñÁÉÍÓÚáéíóú\s'-]+$/";
 
     $patronPhone = "/^[0-9]{7,8}$/";
 
