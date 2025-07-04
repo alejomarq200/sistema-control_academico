@@ -12,9 +12,6 @@
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="../css/moduloEstudiantes.css">
     <title>Consultar Estudiantes</title>
-    <style>
-     
-    </style>
 </head>
 
 <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
@@ -32,15 +29,14 @@
             /* CUERPO DEL MENÚ */
             ?>
             <h1 class="my-3" id="titulo">Módulo de Estudiantes</h1>
-
             <!-- CONTENEDOR CENTRADO CON ESTILOS MEJORADOS -->
             <div class="filters-container">
                 <!-- FILTROS CON DISEÑO MODERNO -->
                 <div class="filters-wrapper">
-                     <div class="filtro-container d-flex align-items-center">
-                    <input type="text" id="txtFiltarr" class="filtro-input form-control" placeholder="Buscar...">
-                    <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
-                </div>
+                    <div class="filtro-container d-flex align-items-center">
+                        <input type="text" id="txtFiltarr" class="filtro-input form-control" placeholder="Buscar...">
+                        <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
+                    </div>
                     <!-- Filtro de Grado con estilo mejorado -->
                     <div class="filter-group">
                         <label for="filtroGrado" class="filter-label">
@@ -75,7 +71,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="custom-table-Estudiantes">
                 <table class="table table-hover">
                     <thead>
@@ -84,8 +79,7 @@
                             <th scope="col">Nombres</th>
                             <th scope="col">Apellidos</th>
                             <th scope="col">Edad</th>
-                            <th scope="col">Grado</th>
-                            <th scope="col">Turno</th>
+                            <th scope="col" class="grado" style="display:block">Grado</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
@@ -106,10 +100,10 @@
                                     <td><?php echo ($estudiante['nombres_est']); ?>
                                     <td><?php echo ($estudiante['apellidos_est']); ?></td>
                                     <td><?php echo ($estudiante['edad_est']); ?>
-                                    <td data-grado-id="<?php echo $estudiante['grado_est']; ?>">
+                                    <td class="grado1" style="display: block;"
+                                        data-grado-id="<?php echo $estudiante['grado_est']; ?>">
                                         <?php echo ($estudiante['id_grado']); ?>
                                     </td>
-                                    <td><?php echo ($estudiante['turno_est']); ?></td>
                                     <td class="genero" style="display:none;"><?php echo $estudiante['sexo']; ?></td>
                                     <!-- Género oculto para filtro -->
                                     <td>
@@ -143,7 +137,7 @@
                                 <?php
                             }
                         } else {
-                            echo "<tr><td colspan='8'>No se encontraron usuarios.</td></tr>";
+                            echo "<tr><td colspan='8'>No se encontraron estudiantes.</td></tr>";
                         }
                         ?>
                     </tbody>
@@ -153,42 +147,76 @@
         </div>
     </div>
     <script>
-        const filtroGrado = document.getElementById('filtroGrado');
-        const filtroGenero = document.getElementById('filtroGenero');
-        const filas = document.querySelectorAll('#tablaEstudiantes tr');
+        document.addEventListener("DOMContentLoaded", function () {
+            const filtroGrado = document.getElementById('filtroGrado');
+            const filtroGenero = document.getElementById('filtroGenero');
+            const filas = document.querySelectorAll('#tablaEstudiantes tr');
+            const columnaGradoHeader = document.querySelector('th.grado');
+            const columnasGrado = document.querySelectorAll('td.grado1');
 
-        function filtrarTabla() {
-            const gradoSeleccionado = filtroGrado.value.toLowerCase();
-            const generoSeleccionado = filtroGenero.value.toLowerCase();
+            function aplicarFiltros() {
+                const gradoSeleccionado = filtroGrado.value;
+                const generoSeleccionado = filtroGenero.value.toLowerCase();
 
-            filas.forEach(fila => {
-                const grado = fila.querySelector('.grado')?.textContent.toLowerCase();
-                const genero = fila.querySelector('.genero')?.textContent.toLowerCase();
+                // Solo recargar si ambos filtros están vacíos
+                if (gradoSeleccionado === "" && generoSeleccionado === "") {
+                    window.location.href = "search_estudiantes.php";
+                    return;
+                }
 
-                const coincideGrado = !gradoSeleccionado || grado === gradoSeleccionado;
-                const coincideGenero = !generoSeleccionado || genero === generoSeleccionado;
+                // Control de visibilidad de columna grado
+                if (gradoSeleccionado === "") {
+                    // Mostrar columna grado si no hay filtro de grado
+                    columnaGradoHeader.style.display = '';
+                    columnasGrado.forEach(col => col.style.display = '');
+                } else {
+                    // Ocultar columna grado si hay filtro de grado
+                    columnaGradoHeader.style.display = 'none';
+                    columnasGrado.forEach(col => col.style.display = 'none');
+                }
 
-                fila.style.display = (coincideGrado && coincideGenero) ? '' : 'none';
-            });
-        }
+                // Aplicar filtros
+                filas.forEach(fila => {
+                    if (fila.cells.length <= 1) return; // Saltar filas especiales
 
-        filtroGrado.addEventListener('change', filtrarTabla);
-        filtroGenero.addEventListener('change', filtrarTabla);
-        function filtrarTabla() {
-            const gradoSeleccionado = filtroGrado.value; // No usar toLowerCase()
-            const generoSeleccionado = filtroGenero.value.toLowerCase();
+                    const gradoId = fila.querySelector('.grado1')?.getAttribute('data-grado-id');
+                    const genero = fila.querySelector('.genero')?.textContent.toLowerCase();
 
-            filas.forEach(fila => {
-                // Obtener el ID del grado desde el data attribute
-                const gradoId = fila.querySelector('td[data-grado-id]')?.getAttribute('data-grado-id');
-                const genero = fila.querySelector('.genero')?.textContent.toLowerCase();
+                    const coincideGrado = gradoSeleccionado === "" || gradoId === gradoSeleccionado;
+                    const coincideGenero = generoSeleccionado === "" || genero === generoSeleccionado;
 
-                const coincideGrado = !gradoSeleccionado || gradoId === gradoSeleccionado;
-                const coincideGenero = !generoSeleccionado || genero === generoSeleccionado;
+                    fila.style.display = (coincideGrado && coincideGenero) ? '' : 'none';
+                });
 
-                fila.style.display = (coincideGrado && coincideGenero) ? '' : 'none';
-            });
-        }
+                // Mostrar mensaje si no hay resultados
+                const filasVisibles = Array.from(filas).some(fila =>
+                    fila.style.display !== 'none' && fila.cells.length > 1
+                );
+
+                if (!filasVisibles) {
+                    // Limpiar mensajes anteriores
+                    document.querySelectorAll('#tablaEstudiantes tr.mensaje-no-resultados').forEach(el => el.remove());
+
+                    const mensaje = document.createElement('tr');
+                    mensaje.className = 'mensaje-no-resultados';
+                    mensaje.innerHTML = '<td colspan="6">No se encontraron estudiantes con los filtros seleccionados.</td>';
+                    document.getElementById('tablaEstudiantes').appendChild(mensaje);
+                }
+            }
+
+            // Aplicar filtros al cambiar selección
+            filtroGrado.addEventListener('change', aplicarFiltros);
+            filtroGenero.addEventListener('change', aplicarFiltros);
+
+            // Estado inicial
+            if (filtroGrado.value === "" && filtroGenero.value === "") {
+                columnaGradoHeader.style.display = '';
+                columnasGrado.forEach(col => col.style.display = '');
+            } else {
+                aplicarFiltros(); // Aplicar filtros si hay valores al cargar
+            }
+        });
+
 
         document.getElementById('txtFiltarr').addEventListener('input', function () {
             const filtro = this.value.toLowerCase(); // Texto del filtro en minúsculas
