@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* Estilos generales para la modal */
-        #ModalFormDisableM .modal-content {
+        #ModalFormDisableA .modal-content {
             border-radius: 15px;
             border: none;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -15,7 +15,7 @@
         }
 
         /* Estilos para el botón de cerrar */
-        #ModalFormDisableM .btn-close {
+        #ModalFormDisableA .btn-close {
             position: absolute;
             top: 15px;
             right: 15px;
@@ -24,17 +24,17 @@
             transition: opacity 0.3s ease;
         }
 
-        #ModalFormDisableM .btn-close:hover {
+        #ModalFormDisableA .btn-close:hover {
             opacity: 1;
         }
 
         /* Estilos para el área del formulario */
-        #ModalFormDisableM .form-area {
+        #ModalFormDisableA .form-area {
             padding: 1.5rem;
             /* Reducir el padding */
         }
 
-        #ModalFormDisableM .form-area h1 {
+        #ModalFormDisableA .form-area h1 {
             font-size: 1.5rem;
             /* Tamaño de fuente un poco más pequeño */
             font-weight: 600;
@@ -44,7 +44,7 @@
         }
 
         /* Estilos para las etiquetas */
-        #ModalFormDisableM .form-label {
+        #ModalFormDisableA .form-label {
             font-weight: 500;
             color: #555;
             margin-bottom: 0.25rem;
@@ -60,7 +60,7 @@
         }
 
         /* Estilos para los inputs */
-        #ModalFormDisableM .form-control {
+        #ModalFormDisableA .form-control {
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 0.5rem;
@@ -73,14 +73,14 @@
             /* Reducir el margen inferior */
         }
 
-        #ModalFormDisableM .form-control:focus {
+        #ModalFormDisableA .form-control:focus {
             border-color: #007bff;
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
             outline: none;
         }
 
         /* Estilos para los mensajes de error */
-        #ModalFormDisableM .error {
+        #ModalFormDisableA .error {
             text-align: left;
             /* Alinear el texto a la izquierda */
             padding-left: 0;
@@ -97,7 +97,7 @@
         }
 
         /* Estilos para el botón de enviar */
-        #ModalFormDisableM .btn-light {
+        #ModalFormDisableA .btn-light {
             background-color: #007bff;
             color: white;
             border: none;
@@ -113,24 +113,24 @@
             /* Reducir el margen superior */
         }
 
-        #ModalFormDisableM .btn-light:hover {
+        #ModalFormDisableA .btn-light:hover {
             background-color: #0056b3;
         }
 
         /* Estilos para el modal-body */
-        #ModalFormDisableM .modal-body {
+        #ModalFormDisableA .modal-body {
             padding: 0;
             /* Eliminar el padding predeterminado */
         }
 
         /* Estilos para el modal-dialog */
-        #ModalFormDisableM .modal-dialog {
+        #ModalFormDisableA .modal-dialog {
             max-width: 500px;
             /* Ancho máximo de la modal */
         }
 
         /* Estilos para el fondo de la modal */
-        #ModalFormDisableM .modal-backdrop {
+        #ModalFormDisableA .modal-backdrop {
             background-color: rgba(0, 0, 0, 0.5);
         }
 
@@ -162,7 +162,7 @@
 </head>
 
 <body>
-    <div class="modal fade" id="ModalFormDisableM" tabindex="-1" aria-labelledby="ModalFormLabel" aria-hidden="true">
+    <div class="modal fade" id="ModalFormDisableA" tabindex="-1" aria-labelledby="ModalFormLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
@@ -196,7 +196,7 @@
     <!-- SCRIPT-->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            var modal = document.getElementById("ModalFormDisableM");
+            var modal = document.getElementById("ModalFormDisableA");
 
             modal.addEventListener("show.bs.modal", function (event) {
                 var button = event.relatedTarget; // Botón que activó el modal

@@ -298,7 +298,6 @@
                         form1.classList.remove("active");
                         form2.classList.add("active");
                         progress.style.width = "100.00%";
-                        CategoriaMateria();
                     }
                 });
 

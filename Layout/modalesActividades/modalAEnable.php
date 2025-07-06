@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* Estilos generales para la modal */
-        #ModalFormDisableM .modal-content {
+        #ModalFormEnableM .modal-content {
             border-radius: 15px;
             border: none;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -15,7 +15,7 @@
         }
 
         /* Estilos para el botón de cerrar */
-        #ModalFormDisableM .btn-close {
+        #ModalFormEnableM .btn-close {
             position: absolute;
             top: 15px;
             right: 15px;
@@ -24,17 +24,17 @@
             transition: opacity 0.3s ease;
         }
 
-        #ModalFormDisableM .btn-close:hover {
+        #ModalFormEnableM .btn-close:hover {
             opacity: 1;
         }
 
         /* Estilos para el área del formulario */
-        #ModalFormDisableM .form-area {
+        #ModalFormEnableM .form-area {
             padding: 1.5rem;
             /* Reducir el padding */
         }
 
-        #ModalFormDisableM .form-area h1 {
+        #ModalFormEnableM .form-area h1 {
             font-size: 1.5rem;
             /* Tamaño de fuente un poco más pequeño */
             font-weight: 600;
@@ -44,7 +44,7 @@
         }
 
         /* Estilos para las etiquetas */
-        #ModalFormDisableM .form-label {
+        #ModalFormEnableM .form-label {
             font-weight: 500;
             color: #555;
             margin-bottom: 0.25rem;
@@ -60,7 +60,7 @@
         }
 
         /* Estilos para los inputs */
-        #ModalFormDisableM .form-control {
+        #ModalFormEnableM .form-control {
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 0.5rem;
@@ -73,7 +73,7 @@
             /* Reducir el margen inferior */
         }
 
-        #ModalFormDisableM .form-control:focus {
+        #ModalFormEnableM .form-control:focus {
             border-color: #007bff;
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
             outline: none;
@@ -97,7 +97,7 @@
         }
 
         /* Estilos para el botón de enviar */
-        #ModalFormDisableM .btn-light {
+        #ModalFormEnableM .btn-light {
             background-color: #007bff;
             color: white;
             border: none;
@@ -113,7 +113,7 @@
             /* Reducir el margen superior */
         }
 
-        #ModalFormDisableM .btn-light:hover {
+        #ModalFormEnableM .btn-light:hover {
             background-color: #0056b3;
         }
 
@@ -124,13 +124,13 @@
         }
 
         /* Estilos para el modal-dialog */
-        #ModalFormDisableM .modal-dialog {
+        #ModalFormEnableM .modal-dialog {
             max-width: 500px;
             /* Ancho máximo de la modal */
         }
 
         /* Estilos para el fondo de la modal */
-        #ModalFormDisableM .modal-backdrop {
+        #ModalFormEnableM .modal-backdrop {
             background-color: rgba(0, 0, 0, 0.5);
         }
 
@@ -162,31 +162,31 @@
 </head>
 
 <body>
-    <div class="modal fade" id="ModalFormDisableM" tabindex="-1" aria-labelledby="ModalFormLabel" aria-hidden="true">
+    <div class="modal fade" id="ModalFormEnableM" tabindex="-1" aria-labelledby="ModalFormLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="form-area">
-                        <h1 class="text-center">Inhabilitar Materia</h1>
-                        <form action="../controller_php/controller_DisableMaterias.php" method="POST"
-                            id="form-DisableM">
+                        <h1 class="text-center">Habiltar Materia</h1>
+                        <form action="../controller_php/controller_EnableMaterias.php" method="POST"
+                            id="form-EnableM">
                             <div class="mb-1">
-                                <input type="text" name="idDisableM" id="idDisableM" class="input" hidden>
+                                <input type="text" name="idEnableM" id="idEnableM" class="input" hidden>
                             </div>
                             <div class="mb-1">
-                                <label for="nombreDisableM" class="form-label">Nombre de la materia</label>
-                                <input type="text" class="form-control" name="nombreDisableM" id="nombreDisableM"
+                                <label for="nombreEnableM" class="form-label">Nombre de la materia</label>
+                                <input type="text" class="form-control" name="nombreEnableM" id="nombreEnableM"
                                     disabled>
                             </div>
                             <div class="mb-1">
-                                <label for="nivelDisableM" class="form-label">Nivel de la materia</label>
-                                <select name="nivelDisableM" id="nivelDisableM" disabled>
+                                <label for="nivelEnableM" class="form-label">Nivel de la materia</label>
+                                <select name="nivelEnableM" id="nivelEnableM" disabled>
                                     <option value="Seleccionar">Seleccinar</option>
                                     <option value="Primaria">Primaria</option>
                                     <option value="Secundaria">Secundaria</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-light mt-2">Inhabilitar</button>
+                            <button type="submit" class="btn btn-light mt-2">Habilitar</button>
                         </form>
                     </div>
                 </div>
@@ -196,7 +196,7 @@
     <!-- SCRIPT-->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            var modal = document.getElementById("ModalFormDisableM");
+            var modal = document.getElementById("ModalFormEnableM");
 
             modal.addEventListener("show.bs.modal", function (event) {
                 var button = event.relatedTarget; // Botón que activó el modal
@@ -207,23 +207,23 @@
                 var nivelMateria = button.getAttribute("data-nivel");
 
                 // Asignar valores a los campos del formulario
-                document.getElementById("idDisableM").value = IDGUIA;
-                document.getElementById("nombreDisableM").value = nombreMateria;
-                document.getElementById("nivelDisableM").value = nivelMateria;
-                });
+                document.getElementById("idEnableM").value = IDGUIA;
+                document.getElementById("nombreEnableM").value = nombreMateria;
+                document.getElementById("nivelEnableM").value = nivelMateria;
             });
+        });
         document
-            .getElementById("form-DisableM")
+            .getElementById("form-EnableM")
             .addEventListener("submit", function (event) {
                 event.preventDefault(); // Prevenir el envío del formulario
 
                 // Limpiar errores previos
                 const errorElements = document.querySelectorAll(".error");
-                const formulario = document.getElementById("form-DisableM");
+                const formulario = document.getElementById("form-EnableM");
                 errorElements.forEach((el) => (el.textContent = ""));
 
                 // Obtener valores
-                let idguia = document.getElementById("idDisableM").value.trim();
+                let idguia = document.getElementById("idEnableM").value.trim();
 
                 const regexIdGuia = /^[0-9]{1,9}$/;
 
@@ -237,7 +237,7 @@
                 }
 
                 if (isValid) {
-                    let titulo = "¿Desea inhabilitar la asignatura seleccionada?";
+                    let titulo = "¿Desea habilitar la asignatura seleccionada?";
 
                     const swalWithBootstrapButtons = Swal.mixin({
                         customClass: {
@@ -248,10 +248,9 @@
                     });
                     swalWithBootstrapButtons.fire({
                         title: titulo,
-                        text: "Si inhabilita una asignatura no podrá realizar ninguna acción de asginar profesor o grados con ella",
-                        icon: "warning",
+                          icon: "warning",
                         showCancelButton: true,
-                        confirmButtonText: "Sí, inhabilitar!",
+                        confirmButtonText: "Sí, habilitar!",
                         cancelButtonText: "No, cancelar!",
                         reverseButtons: true
                     }).then((result) => {
@@ -280,7 +279,7 @@
 
         // Ocultar mensajes de error y limpiar el formulario al cerrar la modal
         document
-            .getElementById("ModalFormDisableM")
+            .getElementById("ModalFormEnableM")
             .addEventListener("hidden.bs.modal", function () {
                 // Ocultar todos los mensajes de error
                 let errors = document.querySelectorAll(".error");
@@ -289,7 +288,7 @@
                 });
 
                 // Limpiar los campos del formulario
-                document.getElementById("form-DisableM").reset();
+                document.getElementById("form-EnableM").reset();
             });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>

@@ -4,10 +4,9 @@ include("../../Layout/mensajes.php");
 
 /* ASGINAMOS GRADO A PARTIR DE LA CATGORIA SELECCIONADA */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-
-    if (isset($_POST['nombreGrado'])) {
-        $idGrado = $_POST['nombreGrado'];
+    if (isset($_POST['nombreGrado']) || isset($_POST['gradoActividad'])) {
+        // Usar operador ternario para elegir cuál variable tomar
+        $idGrado = isset($_POST['nombreGrado']) ? $_POST['nombreGrado'] : $_POST['gradoActividad'];
 
         try {
             // Consulta con JOIN para obtener el nombre de la materia
@@ -34,4 +33,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo '<option value="Error en la consulta">Error en la consulta: ' . htmlspecialchars($e->getMessage()) . '</option>';
         }
     }
- }
+}

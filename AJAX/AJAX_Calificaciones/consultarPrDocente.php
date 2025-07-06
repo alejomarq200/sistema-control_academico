@@ -1,8 +1,9 @@
 <?php
 include("../../Configuration/Configuration.php");
 
-if (isset($_POST['docente'])) {
-       $idProfesor = $_POST['docente'];
+if (isset($_POST['docente']) || isset($_POST['profesorActividad'])) {
+    // Usar operador ternario para elegir cuál variable tomar
+    $idProfesor = isset($_POST['docente']) ? $_POST['docente'] : $_POST['profesorActividad'];
 
        try {
            // Consulta con JOIN para obtener el nombre de la materia
