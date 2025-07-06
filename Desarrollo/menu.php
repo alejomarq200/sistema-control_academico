@@ -211,7 +211,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="search_calificacion.php" class="sidebar-link">
+                            <a href="new_calificacion.php" class="sidebar-link">
                                 <i class="bi bi-bookmark-plus"></i>
                                 <span>Nueva Calificación</span>
                             </a>
@@ -264,7 +264,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="calificacion.php" class="sidebar-link">
+                            <a href="search_calificacion.php" class="sidebar-link">
                                 <i class="fas fa-spell-check"></i>
                                 <span>Calificaciones</span>
                             </a>

@@ -59,7 +59,7 @@ try {
 
         // Verificar si se actualizó alguna fila
         if ($stmt->rowCount() === 0) {
-            throw new Exception("No se pudo actualizar la calificación con ID {$ids[$i]}");
+            throw new Exception("No se notron cambios en las calificaciones del estudiante");
         }
     }
 

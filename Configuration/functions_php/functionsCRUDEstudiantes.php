@@ -75,7 +75,9 @@ function editarEstudiante($pdo, array $data)
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
-}function obtenerCalificacionesAgrupadas($pdo, $idEstudiante = null)
+}
+
+function obtenerCalificacionesAgrupadas($pdo, $idEstudiante = null)
 {
     try {
         $sql = "
