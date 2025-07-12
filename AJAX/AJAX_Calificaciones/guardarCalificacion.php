@@ -44,7 +44,7 @@ try {
 
     // Verificar si ya existe registro para evitar duplicados
     $stmt = $pdo->prepare("SELECT 1 FROM calificaciones 
-                          WHERE año_escolar = ? 
+                          WHERE anio_escolar = ? 
                           AND id_grado = ? 
                           AND lapso_academico = ? 
                           AND id_estudiante = ?
@@ -65,7 +65,7 @@ try {
     $pdo->beginTransaction();
 
     $insertSql = "INSERT INTO calificaciones (
-                    año_escolar, id_grado, lapso_academico, 
+                    anio_escolar, id_grado, lapso_academico, 
                     id_profesor, id_materia, id_estudiante, calificacion
                  ) VALUES (?, ?, ?, ?, ?, ?, ?)";
 

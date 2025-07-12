@@ -15,9 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Bundle JS (incluye Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <!-- Tus scripts personalizados -->
-
     <style>
         /* Estilos generales */
         body {
@@ -81,14 +79,6 @@
         .search-bar {
             display: flex;
             margin-bottom: 15px;
-        }
-
-        .search-input {
-            flex: 1;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px 0 0 5px;
-            font-size: 1rem;
         }
 
         .search-btn {
@@ -367,6 +357,15 @@
             margin-bottom: 8px;
             color: #d9534f;
         }
+
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            font-size: 1rem;
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -377,6 +376,8 @@
         error_reporting(0);
         session_start();
         include("menu.php");
+        include("../Configuration/Configuration.php");
+        include("../Configuration/functions_php/functionsCRUDEstudiantes.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
         <div class="main p-3">
@@ -409,37 +410,37 @@
                             </div>
                         </div>
                     </section>
-                    <!-- Filtros de Búsqueda -->
+                    <!-- Formulario de Filtros -->
                     <form action method="POST" id="infoEstudiante">
                         <section class="search-filters">
-                            <div class="search-bar">
-                                <input type="text" placeholder="Buscar estudiante..." class="search-input"
-                                    name="busquedaEstudiante">
-                                <button class="search-btn"><i class="fas fa-search"></i></button>
+                            <div class="search-box">
+                                <input type="text" autocomplete="off" placeholder="Buscar estudiante..."
+                                    class="search-input" name="busquedaEstudiante" /> <button class="search-btn"><i
+                                        class="fas fa-search" style="display: none;"></i></button>
+                                <div class="result"></div>
                             </div>
                             <div class="filter-inputs">
                                 <select class="filter-input" id="categoriaGrado" name="categoriaGrado"
-                                    onchange="buscarGradodeMaterias()">
+                                    onchange="buscarGradodeMaterias()" required>
                                     <option value>Nivel</option>
-                                    <option value="Primaria">Primaria</option>
                                     <option value="Secundaria">Secundaria</option>
                                 </select>
                                 <select class="filter-input" name="nombreGrado" id="nombreGrado"
-                                    onchange="cargarSelectMateriasxProfesor()">
+                                    onchange="cargarSelectMateriasxProfesor()" required>
                                     <option value>Grados</option>
                                     <option value="Seleccionar">Seleccionar</option>
                                 </select>
-                                <select class="filter-input" id="lapso" name="lapso">
+                                <select class="filter-input" id="lapso" name="lapso" required>
                                     <option value>Lapso</option>
                                     <option value="1er Lapso">1er Lapso</option>
                                     <option value="2do Lapso">2do Lapso</option>
                                     <option value="3er Lapso">3er Lapso</option>
                                 </select>
                                 <select class="filter-input" name="docente" id="docente"
-                                    onchange="cargarProfesorxGrado()">
+                                    onchange="cargarProfesorxGrado()" required>
                                     <option value>Docente</option>
                                 </select>
-                                <select class="filter-input" id="materias" name="materias">
+                                <select class="filter-input" id="materias" name="materias" required>
                                     <option value>Asignaturas</option>
                                 </select>
                                 <input type="text" class="filter-input" placeholder="Año escolar" id="anio_escolar"
@@ -448,271 +449,248 @@
                             </div>
                         </section>
                     </form>
-                    <!-- Tabla de Estudiantes -->
                     <section class="student-table">
                         <?php
-                        include("../Configuration/Configuration.php");
-                        include("../Configuration/functions_php/functionsCRUDEstudiantes.php");
-                        include("../Layout/modalesCalificaciones/modallDescargarC.php");
-                        include("../Layout/modalesCalificaciones/modalEditarC.php");
-                        function obtenerCalificacionesFiltradas($pdo, $idGrado = null, $lapso = null, $materia = null, $docente = null, $anioEscolar = null, $busquedaEstudiante = null)
-                        {
-                            try {
-                                $params = [];
-
-                                if ($busquedaEstudiante) {
-                                    // Consulta con INNER JOIN para buscar por nombre o apellido del estudiante
-                                    $sql = "SELECT 
-                        c.id, 
-                        c.año_escolar, 
-                        c.id_grado, 
-                        c.lapso_academico, 
-                        c.id_profesor, 
-                        c.id_materia, 
-                        c.id_estudiante, 
-                        c.calificacion, 
-                        c.total_calificacion
-                    FROM calificaciones c
-                    INNER JOIN estudiantes e ON c.id_estudiante = e.id
-                   WHERE (e.nombres_est LIKE :busqueda OR e.apellidos_est LIKE :busqueda OR e.cedula_est LIKE :busqueda)";
-                                    $params[':busqueda'] = '%' . $busquedaEstudiante . '%';
-                                } else {
-                                    // Consulta tradicional sin búsqueda de estudiante específica
-                                    $sql = "SELECT 
-                        id, 
-                        año_escolar, 
-                        id_grado, 
-                        lapso_academico, 
-                        id_profesor, 
-                        id_materia, 
-                        id_estudiante, 
-                        calificacion, 
-                        total_calificacion
-                    FROM calificaciones
-                    WHERE 1=1";
-                                }
-
-                                // Agregar filtros adicionales si existen
-                                if ($idGrado) {
-                                    $sql .= " AND id_grado = :id_grado";
-                                    $params[':id_grado'] = $idGrado;
-                                }
-
-                                if ($lapso) {
-                                    $sql .= " AND lapso_academico = :lapso";
-                                    $params[':lapso'] = $lapso;
-                                }
-
-                                if ($materia) {
-                                    $sql .= " AND id_materia = :materia";
-                                    $params[':materia'] = $materia;
-                                }
-
-                                if ($docente) {
-                                    $sql .= " AND id_profesor = :docente";
-                                    $params[':docente'] = $docente;
-                                }
-
-                                if ($anioEscolar) {
-                                    $sql .= " AND año_escolar = :anio_escolar";
-                                    $params[':anio_escolar'] = $anioEscolar;
-                                }
-
-                                $sql .= " ORDER BY id_materia, lapso_academico";
-
-                                $stmt = $pdo->prepare($sql);
-
-                                foreach ($params as $key => $value) {
-                                    $stmt->bindValue($key, $value);
-                                }
-
-                                $stmt->execute();
-
-                                $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                                // Procesar resultados para agrupar por estudiante/materia/lapso
-                                $calificacionesAgrupadas = [];
-                                $maxCalifs = 0;
-
-                                foreach ($resultados as $row) {
-                                    $key = $row['id_estudiante'] . '-' . $row['id_materia'] . '-' . $row['lapso_academico'];
-
-                                    if (!isset($calificacionesAgrupadas[$key])) {
-                                        $calificacionesAgrupadas[$key] = [
-                                            'id_estudiante' => $row['id_estudiante'],
-                                            'id_materia' => $row['id_materia'],
-                                            'id_profesor' => $row['id_profesor'],
-                                            'id_grado' => $row['id_grado'],
-                                            'lapso_academico' => $row['lapso_academico'],
-                                            'año_escolar' => $row['año_escolar'],
-                                            'calificaciones' => [],
-                                            'total_calificacion' => $row['total_calificacion']
-                                        ];
-                                    }
-
-                                    $calificacionesAgrupadas[$key]['calificaciones'][] = [
-                                        'id' => $row['id'],
-                                        'valor' => $row['calificacion']
-                                    ];
-
-                                    if (count($calificacionesAgrupadas[$key]['calificaciones']) > $maxCalifs) {
-                                        $maxCalifs = count($calificacionesAgrupadas[$key]['calificaciones']);
-                                    }
-                                }
-
-                                return [
-                                    'calificaciones' => array_values($calificacionesAgrupadas),
-                                    'max_califs' => $maxCalifs
-                                ];
-
-                            } catch (PDOException $e) {
-                                error_log("Error al obtener calificaciones: " . $e->getMessage());
-                                return [
-                                    'calificaciones' => [],
-                                    'max_califs' => 0
-                                ];
-                            }
-                        }
-
+                        // Recoger parámetros del formulario
+                        $idProfesor = $_POST['docente'] ?? null;
+                        $idMateria = $_POST['materias'] ?? null;
                         $idGrado = $_POST['nombreGrado'] ?? null;
                         $lapso = $_POST['lapso'] ?? null;
-                        $materia = $_POST['materias'] ?? null;
-                        $docente = $_POST['docente'] ?? null;
-                        $anioEscolar = $_POST['anio_escolar'] ?? null;
+                        // Ejemplo resultado devuelto: V14256321 - Arianna Solis
                         $busquedaEstudiante = $_POST['busquedaEstudiante'] ?? null;
+                        $anioEscolar = $_POST['anio_escolar'] ?? null;
 
+                        // Verificar si hay parámetros válidos para la consulta
+                        if ($busquedaEstudiante || ($idProfesor && $idMateria && $idGrado)) {
+                            // Construir consulta SQL base
+                            $sql = "SELECT e.id, e.cedula_est, e.nombres_est, e.apellidos_est,
+                            c.id as calificacion_id, c.lapso_academico, c.calificacion
+                            FROM estudiantes e
+                            JOIN profesor_materia_grado pmg ON pmg.id_grado = e.grado_est
+                            LEFT JOIN calificaciones c ON c.id_estudiante = e.id 
+                            AND c.id_materia = pmg.id_materia
+                            AND c.id_grado = pmg.id_grado";
 
-                        $datos = obtenerCalificacionesFiltradas($pdo, $idGrado, $lapso, $materia, $docente, $anioEscolar, $busquedaEstudiante);
+                            // Preparar condiciones y parámetros
+                            $conditions = [];
+                            $params = [];
 
-                        $calificaciones = $datos['calificaciones'];
-                        $maxCalifs = $datos['max_califs'];
-                        ?>
-                        <div class="filtros-aplicados-inline">
-                            <strong>Filtros aplicados:</strong>
+                            // Búsqueda por nombre/cedula
+                            if ($busquedaEstudiante) {
+                                // Extraer solo la parte antes del guión (si existe)
+                                $partes = explode('-', $busquedaEstudiante);
+                                $valorFiltrado = trim($partes[0]); // trim() elimina espacios alrededor
+                        
+                                // Determinar si es cédula (empieza con V/E/J/P) o nombre
+                                if (preg_match('/^[VEJP]\d/', $valorFiltrado)) {
+                                    // Búsqueda por cédula exacta o parcial
+                                    $conditions[] = "e.cedula_est LIKE ?";
+                                    $params[] = $valorFiltrado . '%';
+                                } else {
+                                    // Búsqueda por nombre/apellido
+                                    $conditions[] = "(e.nombres_est LIKE ? OR e.apellidos_est LIKE ?)";
+                                    $params[] = '%' . $valorFiltrado . '%';
+                                    $params[] = '%' . $valorFiltrado . '%';
+                                }
+                            }
 
-                            <?php if ($busquedaEstudiante): ?>
-                                <span class="filtro-tag">Búsqueda: <?= htmlspecialchars($busquedaEstudiante) ?></span>
-                            <?php endif; ?>
+                            // Filtros regulares (se mantienen igual)
+                            if ($idProfesor) {
+                                $conditions[] = "pmg.id_profesor = ?";
+                                $params[] = $idProfesor;
+                            }
 
-                            <?php if ($idGrado): ?>
-                                <span class="filtro-tag">Grado: <?= htmlspecialchars($idGrado) ?></span>
-                            <?php endif; ?>
+                            if ($idMateria) {
+                                $conditions[] = "pmg.id_materia = ?";
+                                $params[] = $idMateria;
+                            }
 
-                            <?php if ($lapso): ?>
-                                <span class="filtro-tag">Lapso: <?= htmlspecialchars($lapso) ?></span>
-                            <?php endif; ?>
+                            if ($idGrado) {
+                                $conditions[] = "pmg.id_grado = ?";
+                                $params[] = $idGrado;
+                            }
 
-                            <?php if ($materia): ?>
-                                <span class="filtro-tag">Materia: <?= htmlspecialchars($materia) ?></span>
-                            <?php endif; ?>
+                            if ($lapso) {
+                                $conditions[] = "c.lapso_academico = ?";
+                                $params[] = $lapso;
+                            }
 
-                            <?php if ($docente): ?>
-                                <span class="filtro-tag">Docente: <?= htmlspecialchars($docente) ?></span>
-                            <?php endif; ?>
+                            // Combinar condiciones
+                            if (!empty($conditions)) {
+                                $sql .= " WHERE " . implode(" AND ", $conditions);
+                            }
 
-                            <?php if ($anioEscolar): ?>
-                                <span class="filtro-tag">Año escolar: <?= htmlspecialchars($anioEscolar) ?></span>
-                            <?php endif; ?>
+                            // Ordenar resultados
+                            $sql .= " ORDER BY e.apellidos_est, e.nombres_est, c.lapso_academico";
 
-                            <?php if (!$busquedaEstudiante && !$idGrado && !$lapso && !$materia && !$docente && !$anioEscolar): ?>
-                                <span class="filtro-tag">Sin filtros aplicados.</span>
-                            <?php endif; ?>
-                        </div>
-                        <div class="tabla-calificaciones-container">
-                            <div class="table-responsive">
-                                <table class="calificaciones-table" id="calificaciones-table">
-                                    <thead>
-                                        <tr>
-                                            <th style="display: none;">Año</th> <!-- Oculto pero disponible -->
-                                            <th style="display: none;">Grado</th> <!-- Oculto pero disponible -->
-                                            <th style="display: none;">Lapso</th> <!-- Oculto pero disponible -->
-                                            <th style="display: none;">Profesor</th> <!-- Oculto pero disponible -->
-                                            <th style="display: none;">Materia</th>
-                                            <th>Estudiante</th>
-                                            <?php for ($i = 1; $i <= $maxCalifs; $i++): ?>
-                                                <th class="calificacion-header">C<?= $i ?></th>
-                                            <?php endfor; ?>
-                                            <th class="total-header">Total</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php if (!empty($calificaciones)): ?>
-                                            <?php foreach ($calificaciones as $calif): ?>
-                                                <tr>
-                                                    <td style="display: none;"><?= $calif['año_escolar'] ?></td>
-                                                    <td style="display: none;">
-                                                        <input type="hidden" id="grado" name="grado"
-                                                            value="<?= $calif['id_grado'] ?>">
-                                                    </td>
-                                                    <td style="display: none;"><?= $calif['lapso_academico'] ?></td>
-                                                    <td style="display: none;">
-                                                        <input type="hidden" id="profesor" name="profesor"
-                                                            value="<?= $calif['id_profesor'] ?>">
-                                                    </td>
-                                                    <td style="display: none;">
+                            // Ejecutar consulta
+                            $stmt = $pdo->prepare($sql);
+                            $stmt->execute($params);
+                            $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                                                        <input type="hidden" name="materia" id="materia"
-                                                            value="<?= $calif['id_materia'] ?>">
-                                                    </td>
-                                                    <td class="estudiante-cell">
+                            // Procesar resultados para agrupar por estudiante (se mantiene igual)
+                            $estudiantesConCalificaciones = [];
+                            foreach ($resultados as $row) {
+                                $idEstudiante = $row['id'];
 
-                                                        <strong><?= $idEst = retornarNombreEstudiante($pdo, $calif); ?></strong>
-                                                        <input type="hidden" id="idEstudante" name="idEstudiante"
-                                                            value="<?= $calif['id_estudiante'] ?>">
-                                                    </td>
-                                                    <?php foreach ($calif['calificaciones'] as $nota): ?>
-                                                        <td
-                                                            class="nota-cell <?= ($nota['valor'] < 10) ? 'nota-baja' : 'nota-alta' ?>">
-                                                            <span data-id="<?= $nota['id'] ?>"><?= $nota['valor'] ?></span>
-                                                        </td>
-                                                    <?php endforeach; ?>
-                                                    <?php for ($i = count($calif['calificaciones']); $i < $maxCalifs; $i++): ?>
-                                                        <td class="nota-vacia">-</td>
-                                                    <?php endfor; ?>
-                                                    <td class="total-cell"><?= $calif['total_calificacion'] ?></td>
-                                                    <td class="acciones-cell">
-                                                        <button class="btn-editar" data-est="<?= $calif['id_estudiante'] ?>"
-                                                            data-mat="<?= $calif['id_materia'] ?>"
-                                                            data-ids='<?= json_encode(array_column($calif["calificaciones"], "id")) ?>'
-                                                            data-valores='<?= json_encode(array_column($calif["calificaciones"], "valor")) ?>'>
-                                                            <i class="bi bi-pencil"></i> Editar
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        <?php else: ?>
-                                            <tr class="no-data-row">
-                                                <td colspan="<?= 2 + $maxCalifs + 2 ?>">
-                                                    <!-- Ajustado por columnas ocultas -->
-                                                    <div class="no-data-content">
-                                                        <i class="bi bi-exclamation-circle-fill"></i>
-                                                        <p>No hay calificaciones registradas con los filtros actuales</p>
-                                                    </div>
-                                                </td>
+                                if (!isset($estudiantesConCalificaciones[$idEstudiante])) {
+                                    $estudiantesConCalificaciones[$idEstudiante] = [
+                                        'id' => $row['id'],
+                                        'cedula_est' => $row['cedula_est'],
+                                        'nombre_completo' => $row['nombres_est'] . ' ' . $row['apellidos_est'],
+                                        'calificaciones' => []
+                                    ];
+                                }
+
+                                if ($row['calificacion_id']) {
+                                    $estudiantesConCalificaciones[$idEstudiante]['calificaciones'][] = [
+                                        'id' => $row['calificacion_id'],
+                                        'valor' => $row['calificacion'],
+                                        'lapso' => $row['lapso_academico']
+                                    ];
+                                }
+                            }
+
+                            //función genérica para retornar valores específicos y sencillos
+                            function obtenerValorUnico($pdo, $tabla, $columna, $columnaWhere, $valorWhere)
+                            {
+                                try {
+                                    // Validar nombres de tabla y columnas (solo caracteres permitidos en SQL)
+                                    if (
+                                        !preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $tabla) ||
+                                        !preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $columna) ||
+                                        !preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $columnaWhere)
+                                    ) {
+                                        throw new InvalidArgumentException("Nombres de tabla o columna no válidos");
+                                    }
+
+                                    $stmt = $pdo->prepare("SELECT `$columna` FROM `$tabla` WHERE `$columnaWhere` = :valor");
+                                    $stmt->bindParam(':valor', $valorWhere);
+                                    $stmt->execute();
+
+                                    $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+                                    return $resultado[$columna] ?? null; // Mejor retornar null que un string genérico
+                        
+                                } catch (PDOException $e) {
+                                    error_log("Error en obtenerValorUnico [Tabla: $tabla, Col: $columna]: " . $e->getMessage());
+                                    return null;
+                                } catch (InvalidArgumentException $e) {
+                                    error_log("Error de validación: " . $e->getMessage());
+                                    return null;
+                                }
+                            }
+
+                            $nombreProfesor = obtenerValorUnico($pdo, 'profesores', 'nombre', 'id_profesor', $idProfesor);
+                            $nombreGrado = obtenerValorUnico($pdo, 'grados', 'id_grado', 'id', $idGrado);
+                            $nombreMateria = obtenerValorUnico($pdo, 'materias', 'nombre', 'id_materia', $idMateria);
+                            $nombreEstudiante = obtenerValorUnico($pdo, 'estudiantes', 'nombres_est', 'cedula_est', $busquedaEstudiante);
+                            $idEstudianteSearch = obtenerValorUnico($pdo, 'estudiantes', 'cedula_est', 'nombre_est', $busquedaEstudiante);
+                            ?>
+
+                            <!-- Mostrar filtros aplicados -->
+                            <div class="filtros-aplicados-inline">
+                                <strong>Filtros aplicados:</strong>
+                                <?php if ($busquedaEstudiante): ?>
+                                    <span class="filtro-tag">Grado: <?= htmlspecialchars($busquedaEstudiante) ?></span>
+                                <?php endif; ?>
+
+                                <?php if ($nombreGrado): ?>
+                                    <span class="filtro-tag">Grado: <?= htmlspecialchars($nombreGrado) ?></span>
+                                <?php endif; ?>
+
+                                <?php if ($lapso): ?>
+                                    <span class="filtro-tag">Lapso: <?= htmlspecialchars($lapso) ?></span>
+                                <?php endif; ?>
+
+                                <?php if ($nombreMateria): ?>
+                                    <span class="filtro-tag">Materia: <?= htmlspecialchars($nombreMateria) ?></span>
+                                <?php endif; ?>
+
+                                <?php if ($nombreProfesor): ?>
+                                    <span class="filtro-tag">Docente: <?= htmlspecialchars($nombreProfesor) ?></span>
+                                <?php endif; ?>
+
+                                <?php if ($anioEscolar): ?>
+                                    <span class="filtro-tag">Año escolar: <?= htmlspecialchars($anioEscolar) ?></span>
+                                <?php endif; ?>
+
+                                <?php if (!$busquedaEstudiante && !$idGrado && !$lapso && !$idMateria && !$idProfesor && !$anioEscolar): ?>
+                                    <span class="filtro-tag">Sin filtros aplicados.</span>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Tabla de resultados -->
+                            <div class="tabla-calificaciones-container">
+                                <div class="table-responsive">
+                                    <table class="calificaciones-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Cédula</th>
+                                                <th>Estudiante</th>
+                                                <?php
+                                                // Determinar el número máximo de calificaciones por estudiante
+                                                $maxCalifs = 0;
+                                                if (!empty($estudiantesConCalificaciones)) {
+                                                    foreach ($estudiantesConCalificaciones as $estudiante) {
+                                                        $count = count($estudiante['calificaciones']);
+                                                        if ($count > $maxCalifs) {
+                                                            $maxCalifs = $count;
+                                                        }
+                                                    }
+
+                                                    // Generar encabezados dinámicos para las calificaciones
+                                                    for ($i = 1; $i <= $maxCalifs; $i++) {
+                                                        echo "<th>C$i</th>";
+                                                    }
+                                                }
+                                                ?>
+                                                <th>Acciones</th>
                                             </tr>
-                                        <?php endif; ?>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            // Mostrar los resultados
+                                            if (!empty($estudiantesConCalificaciones)) {
+                                                foreach ($estudiantesConCalificaciones as $estudiante) {
+                                                    ?>
+                                                    <tr data-estudiante-id="<?= htmlspecialchars($estudiante['id']) ?>"
+                                                        data-grado-id="<?= htmlspecialchars($idGrado) ?>"
+                                                        data-materia-id="<?= htmlspecialchars($idMateria) ?>"
+                                                        data-profesor-id="<?= htmlspecialchars($idProfesor) ?>">
+                                                        <td><?= htmlspecialchars($estudiante['cedula_est']) ?></td>
+                                                        <td><?= htmlspecialchars($estudiante['nombre_completo']) ?></td>
+
+                                                        <?php
+                                                        // Mostrar las calificaciones
+                                                        foreach ($estudiante['calificaciones'] as $calificacion) {
+                                                            echo '<td class="' . ($calificacion['valor'] < 10 ? 'nota-baja' : 'nota-alta') . '">';
+                                                            echo htmlspecialchars($calificacion['valor']);
+                                                            echo '</td>';
+                                                        }
+
+                                                        // Completar con celdas vacías si tiene menos calificaciones
+                                                        for ($i = count($estudiante['calificaciones']); $i < $maxCalifs; $i++) {
+                                                            echo '<td class="nota-vacia">-</td>';
+                                                        }
+                                                        ?>
+
+                                                        <td>
+                                                            <button class="btn-editar" data-estudiante="<?= $estudiante['id'] ?>"
+                                                                data-calificaciones='<?= json_encode($estudiante['calificaciones']) ?>'>
+                                                                <i class="bi bi-pencil"></i> Editar
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='" . ($maxCalifs + 3) . "'>No se encontraron estudiantes con calificaciones para los filtros seleccionados.</td></tr>";
+                                            }
+                        } else {
+                            echo "<tr><td colspan='4'>Por favor, selecciona profesor, materia y grado o ingresa un nombre para buscar.</td></tr>";
+                        }
+                        ?>
                                     </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="<?= 6 + $maxCalifs + 2 ?>">
-                                                <div class="tfoot-content">
-                                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                                        <label for="contador" class="label-contador">Total de
-                                                            registros:</label>
-                                                        <input type="text" id="contador" class="input-contador"
-                                                            readonly>
-                                                        <input type="hidden" id="total" class="input-contador" readonly>
-                                                        <input type="hidden" name="totalMaterias" id="totalMaterias"
-                                                            value="<?= materiasPorGrado($pdo, $idGrado); ?>">
-                                                    </div>
-                                                    <button class="btn-descargar" data-bs-toggle="modal"
-                                                        data-bs-target="#formModalDescargarC">
-                                                        <i class="bi bi-download"></i> Descargar Reporte</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -722,19 +700,214 @@
         </div>
     </div>
 </body>
+<!-- Modal para editar calificaciones -->
+<div class="modal fade" id="editarCalificacionesModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Calificaciones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarCalificaciones">
+                    <input type="hidden" id="estudianteId" name="estudiante_id">
+                    <input type="hidden" id="gradoId" name="grado_id">
+                    <input type="hidden" id="materiaId" name="materia_id">
+                    <input type="hidden" id="profesorId" name="profesor_id">
+
+                    <div class="mb-3">
+                        <label class="form-label">Estudiante:</label>
+                        <p class="form-control-static" id="nombreEstudiante"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Cédula:</label>
+                        <p class="form-control-static" id="cedulaEstudiante"></p>
+                    </div>
+
+                    <div id="camposCalificaciones">
+                        <!-- Los campos de calificaciones se generarán dinámicamente aquí -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="guardarCambios">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
-    // Obtener el año actual
-    const añoActual = new Date().getFullYear();
-    // Calcular el año siguiente
-    const añoSiguiente = añoActual + 1;
-    // Formatear como "2024-2025"
-    const añoEscolar = `${añoActual}-${añoSiguiente}`;
+    $(document).ready(function () {
+        $('.search-box input[type="text"]').on("keyup input", function () {
+            /* Get input value on change */
+            var inputVal = $(this).val();
+            var resultDropdown = $(this).siblings(".result");
+            if (inputVal.length) {
+                $.get("backend-search.php", { term: inputVal }).done(function (data) {
+                    // Display the returned data in browser
+                    resultDropdown.html(data);
+                });
+            } else {
+                resultDropdown.empty();
+            }
+        });
+
+        // Set search input value on click of result item
+        $(document).on("click", ".result p", function () {
+            $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
+            $(this).parent(".result").empty();
+        });
+    });
+
+    $(document).ready(function () {
+        // Manejar clic en botón editar
+        $(document).on('click', '.btn-editar', function () {
+            const estudianteId = $(this).data('estudiante');
+            const calificaciones = $(this).data('calificaciones');
+            const fila = $(this).closest('tr');
+
+            // Obtener datos del estudiante
+            const cedula = fila.find('td:eq(0)').text();
+            const nombre = fila.find('td:eq(1)').text();
+            const gradoId = fila.data('grado-id');
+            const materiaId = fila.data('materia-id');
+            const profesorId = fila.data('profesor-id');
+
+            // Llenar datos estáticos del modal
+            $('#estudianteId').val(estudianteId);
+            $('#gradoId').val(gradoId);
+            $('#materiaId').val(materiaId);
+            $('#profesorId').val(profesorId);
+            $('#nombreEstudiante').text(nombre);
+            $('#cedulaEstudiante').text(cedula);
+
+            // Generar campos de calificaciones dinámicamente
+            const camposCalificaciones = $('#camposCalificaciones');
+            camposCalificaciones.empty();
+
+            if (calificaciones && calificaciones.length > 0) {
+                calificaciones.forEach((calificacion, index) => {
+                    camposCalificaciones.append(`
+                    <div class="mb-3">
+                        <label for="calificacion-${index}" class="form-label">
+                            Calificación ${index + 1} (Lapso: ${calificacion.lapso})
+                        </label>
+                        <input type="number" class="form-control calificacion-input" 
+                               id="calificacion-${index}" name="calificaciones[${index}][valor]"
+                               min="0" max="20" step="0.01" value="${calificacion.valor}">
+                        <input type="hidden" name="calificaciones[${index}][id]" value="${calificacion.id}">
+                        <input type="hidden" name="calificaciones[${index}][lapso]" value="${calificacion.lapso}">
+                    </div>
+                `);
+                });
+            } else {
+                camposCalificaciones.append('<p>No hay calificaciones registradas</p>');
+            }
+
+            // Mostrar el modal
+            $('#editarCalificacionesModal').modal('show');
+        });
+
+        // Manejar el guardado de cambios
+        $('#guardarCambios').click(function () {
+            const formData = $('#formEditarCalificaciones').serialize();
+
+            $.ajax({
+                url: '../AJAX/AJAX_Calificaciones/editarCalificacion.php',
+                method: 'POST',
+                data: formData,
+                beforeSend: function () {
+                    $('#guardarCambios').prop('disabled', true).html(
+                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
+                    );
+                },
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Éxito!',
+                            text: 'Calificaciones actualizadas correctamente',
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        }).then(() => {
+                            $('#editarCalificacionesModal').modal('hide');
+                            // Opción 1: Recargar la página
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.message || 'Error al actualizar calificaciones',
+                            confirmButtonText: 'Entendido'
+                        });
+                    }
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error de conexión',
+                        text: 'Ocurrió un error al conectar con el servidor: ' + xhr.statusText,
+                        confirmButtonText: 'Entendido'
+                    });
+                },
+                complete: function () {
+                    $('#guardarCambios').prop('disabled', false).text('Guardar Cambios');
+                }
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Calcular y asignar el año escolar
+        const añoActual = new Date().getFullYear();
+        $('#anio_escolar').val(`${añoActual}-${añoActual + 1}`);
 
 
-    // Cambia el nombre de la función alert para evitar conflictos
-    contarFilasTbody();
+        // Cambia el nombre de la función alert para evitar conflictos
+        contarFilasTbody();
 
-    compararValores();
+        compararValores();
+        const form = document.getElementById('infoEstudiante');
+        const searchInput = document.querySelector('input[name="busquedaEstudiante"]');
+        const requiredSelects = [
+            document.querySelector('select[name="nombreGrado"]'),
+            document.querySelector('select[name="docente"]'),
+            document.querySelector('select[name="materias"]')
+        ];
+
+        // Controlar campos requeridos según búsqueda
+        searchInput.addEventListener('input', function () {
+            const hasSearch = this.value.trim() !== '';
+            requiredSelects.forEach(select => {
+                select.required = hasSearch;
+            });
+        });
+
+        // Validar envío del formulario
+        form.addEventListener('submit', function (e) {
+            const hasSearch = searchInput.value.trim() !== '';
+            const missingRequired = requiredSelects.some(select => !select.value);
+
+            if (hasSearch && missingRequired) {
+                e.preventDefault();
+                alert('Cuando buscas por nombre de estudiante, debes seleccionar grado, docente y materia');
+                return false;
+            }
+
+            // Validación mínima para consulta general
+            if (!hasSearch && missingRequired) {
+                e.preventDefault();
+                alert('Para consultar el listado completo, debes seleccionar grado, docente y materia');
+                return false;
+            }
+        });
+    });
+
 
     function compararValores() {
         const contador = parseInt(document.getElementById('contador').value.trim()) || 0;

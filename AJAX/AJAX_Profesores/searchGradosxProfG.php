@@ -1,7 +1,7 @@
 <?php
 include("../../Configuration/Configuration.php");
 include("../../Layout/mensajes.php");
-
+include("../../Configuration/functions_php/functionsCRUDProfesor.php");
 /* ASGINAMOS GRADO A PARTIR DE LA CATGORIA SELECCIONADA */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     function retornarIdProfesor($pdo, $variable)

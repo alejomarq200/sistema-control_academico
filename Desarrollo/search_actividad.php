@@ -52,8 +52,9 @@
                             include("../Configuration/Configuration.php");
                             include("../Configuration/functions_php/functioncsCRUDActividades.php");
                             include("../Layout/modalesActividades/modalAEdit.php");
-                           // include("../Layout/modalesActividades/modalADisable.php");
-                           // include("../Layout/modalesActividades/modalAEnable.php");
+                            include("../Layout/modalesActividades/modalADisable.php");
+                            include("../Layout/modalesActividades/modalAEnable.php");
+                            
                             $actividades = consultarActividadesCRUD($pdo);
 
                             if (!empty($actividades)) {
@@ -77,11 +78,21 @@
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#ModalFormEnableM" data-id="<?= $actividad['id_actividad'] ?>">
+                                                data-bs-target="#ModalFormEnableA"
+                                                data-id="<?=htmlspecialchars($actividad['id_actividad'])  ?>"
+                                                data-nombreG="<?=  htmlspecialchars($actividad['nombre_grado']) ?>"
+                                                data-nombreM="<?= htmlspecialchars($actividad['nombre_materia']) ?>"
+                                                data-nombreP="<?= htmlspecialchars($actividad['nombre_profesor']) ?>"
+                                                data-contenido="<?= htmlspecialchars($actividad['contenido']) ?>">
                                                 <i class='bx bx-check-circle'></i>
                                             </button>
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#ModalFormDisableA" data-id="<?= $actividad['id_actividad'] ?>">
+                                                data-bs-target="#ModalFormDisableA" 
+                                                data-id="<?=htmlspecialchars($actividad['id_actividad'])  ?>"
+                                                data-nombreG="<?=  htmlspecialchars($actividad['nombre_grado']) ?>"
+                                                data-nombreM="<?= htmlspecialchars($actividad['nombre_materia']) ?>"
+                                                data-nombreP="<?= htmlspecialchars($actividad['nombre_profesor']) ?>"
+                                                data-contenido="<?= htmlspecialchars($actividad['contenido']) ?>">
                                                 <i class="bi bi-x-circle"></i>
                                             </button>
                                             <button type="button" class="btn btn-secondary"
@@ -102,5 +113,4 @@
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </body>
 </div>
-
 </html>

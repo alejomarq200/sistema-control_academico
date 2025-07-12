@@ -109,7 +109,7 @@
                     <h1 class="module-title">Módulo de Calificaciones: Registrar calificaciones</h1>
 
                     <div class="buttons-container">
-                        <a href="/registrar-primaria" class="action-button primary-button">
+                        <a href="../Desarrollo/calificacion_primaria.php" class="action-button primary-button">
                             <i class="fas fa-pencil-alt button-icon"></i>
                             Registrar calificación primaria
                         </a>

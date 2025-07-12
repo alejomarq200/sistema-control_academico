@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,100 @@
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="../css/modalesProfesor/tablaGestionPr.css">
     <title>Consultar Profesores</title>
+    <style>
+        .filters-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin: 2rem auto;
+            max-width: 900px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .filters-wrapper {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9rem;
+        }
+
+        .filter-select {
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            padding: 0.65rem 1rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+        }
+
+        .filter-select:focus {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+            outline: none;
+        }
+
+        /* Efecto hover para los selects */
+        .filter-select:hover {
+            border-color: #adb5bd;
+        }
+
+        /* Iconos */
+        .bi {
+            margin-right: 8px;
+            font-size: 1.1em;
+            vertical-align: middle;
+        }
+
+        .filtro-container {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filtro-input {
+            height: 46px;
+            /* Igualar al tamaño del select */
+            padding: 0.65rem 1rem;
+            font-size: 0.95rem;
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .filtro-input:focus {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+            outline: none;
+        }
+
+        .lupa-icon {
+            font-size: 1.1rem;
+            margin-left: 0.5rem;
+            color: #6c757d;
+        }
+
+        /* Para mantener consistencia visual entre filtro-input y filter-select */
+        .form-select.filter-select {
+            height: 46px;
+            /* Mismo alto que el input */
+        }
+    </style>
 </head>
+
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
@@ -31,13 +125,26 @@
                 ?>
                 <h1 class="my-3" id="titulo">Módulo de Profesores</h1>
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <!-- Filtro con lupa (a la derecha) -->
-                    <div class="filtro-container d-flex align-items-center">
-                        <input type="text" id="txtFiltarr" class="filtro-input form-control" placeholder="Buscar...">
-                        <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
+                <div class="filters-container">
+                    <!-- FILTROS CON DISEÑO MODERNO -->
+                    <div class="filters-wrapper">
+                        <div class="filtro-container d-flex align-items-center">
+                            <input type="text" id="txtFiltarr" class="filtro-input form-control"
+                                placeholder="Buscar...">
+                            <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
+                        </div>
+                        <!-- Filtro de Nivel Académico -->
+                        <div class="filter-group">
+                            <label for="filtroNivel" class="filter-label">
+                                <i class="bi bi-book-half"></i> Nivel Académico
+                            </label>
+                            <select id="filtroNivel" class="form-select filter-select">
+                                <option value="">Todos los niveles</option>
+                                <option value="Primaria">Primaria</option>
+                                <option value="Secundaria">Secundaria</option>
+                            </select>
+                        </div>
                     </div>
-                    <!--Fin de Boton-->
                 </div>
                 <div style="margin-bottom: 15px;">
                     <a class="boton-modal-gestionPr">
@@ -53,7 +160,7 @@
                             <tr>
                                 <th scope="col">Cédula</th>
                                 <th scope="col">Nombres</th>
-                                <th scope="col">Nivel del Grado</th>
+                                <th scope="col" style="display: none;">Nivel del Grado</th>
                                 <th scope="col">Número de Teléfono</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
@@ -82,7 +189,7 @@
                                     <tr>
                                         <td><?php echo ($profesor['cedula']); ?></td>
                                         <td><?php echo ($profesor['nombre']); ?></td>
-                                        <td><?php echo ($profesor['nivel_grado']); ?></td>
+                                        <td style="display: none;"><?php echo ($profesor['nivel_grado']); ?></td>
                                         <td><?php echo ($profesor['telefono']); ?></td>
                                         <td><?php echo ($profesor['estado']); ?></td>
                                         <td>
@@ -103,7 +210,7 @@
                                                 data-telefono="<?php echo $profesor['telefono']; ?>"
                                                 data-estado="<?php echo $profesor['estado']; ?>"
                                                 data-nivelProfesor="<?php echo $profesor['nivel_grado'] ?>">
-                                              <i class='bx  bx-check-circle'  ></i> 
+                                                <i class='bx  bx-check-circle'></i>
                                             </button>
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                                 data-bs-target="#ModalFormPDisable"
@@ -113,7 +220,7 @@
                                                 data-telefono="<?php echo $profesor['telefono']; ?>"
                                                 data-estado="<?php echo $profesor['estado']; ?>"
                                                 data-nivelProfesor="<?php echo $profesor['nivel_grado'] ?>">
-                                                  <i class="bi bi-x-circle"></i>
+                                                <i class="bi bi-x-circle"></i>
                                             </button>
                                             <button type="button" class="btn btn-secondary"
                                                 data-id="<?php echo $profesor['id_profesor']; ?>"
@@ -228,8 +335,23 @@
                     <label for="btn-modal-gestionPr" class="cerrar-modal-gestionPr"></label>
                 </div>
                 <!--Fin de Ventana Modal-->
-    </body>
-    <script>
+        </body>
+        <script>
+            document.getElementById('filtroNivel').addEventListener('change', function () {
+                const nivelSeleccionado = this.value.toLowerCase();
+                const filas = document.querySelectorAll('table tbody tr');
+
+                filas.forEach(fila => {
+                    const nivelGrado = fila.querySelector('td:nth-child(3)').textContent.toLowerCase();
+
+                    if (nivelSeleccionado === '' || nivelGrado === nivelSeleccionado) {
+                        fila.style.display = '';
+                    } else {
+                        fila.style.display = 'none';
+                    }
+                });
+            });
+
     function eliminarProfesor(button) {
         let titulo = "¿Desea eliminar al profesor seleccionado?";
 

@@ -59,9 +59,9 @@ function EditarActividad($pdo, array $modalActividadEdit)
         $stmt->bindValue(':id_actividad', $modalActividadEdit[0]);
 
         $stmt->execute();
- 
+
         if ($stmt->rowCount() > 0) {
-          return true;
+            return true;
         } else {
             return false;
         }
@@ -86,6 +86,43 @@ function existeActividad($pdo, array $arreglo)
         }
     } catch (PDOException $e) {
         echo $e->getmessage();
+        return false;
+    }
+}
+
+
+function habilitarActividad($pdo, $idGuia)
+{
+    try {
+        $stmt = $pdo->prepare("UPDATE actividades SET id_estado = :id_estado  WHERE id_actividad = :id_actividad");
+        $stmt->bindValue(':id_estado', 2);
+        $stmt->bindValue(':id_actividad', $idGuia);
+        $stmt->execute();
+
+        // Verificar si se encontró algún registro
+        if ($stmt->rowCount() > 0) {
+            return true;
+        }
+    } catch (PDOException $e) {
+        $e->getMessage();
+        return false;
+    }
+}
+
+function inhabilitarActividad($pdo, $idGuia)
+{
+    try {
+        $stmt = $pdo->prepare("UPDATE actividades SET id_estado = :id_estado  WHERE id_actividad = :id_actividad");
+        $stmt->bindValue(':id_estado', 1);
+        $stmt->bindValue(':id_actividad', $idGuia);
+        $stmt->execute();
+
+        // Verificar si se encontró algún registro
+        if ($stmt->rowCount() > 0) {
+            return true;
+        }
+    } catch (PDOException $e) {
+        $e->getMessage();
         return false;
     }
 }

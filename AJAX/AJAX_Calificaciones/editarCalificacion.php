@@ -1,95 +1,74 @@
 <?php
+include("../../Configuration/Configuration.php"); // Archivo con tu conexión PDO
 header('Content-Type: application/json');
 
-// Incluir configuración de la base de datos
-include("../../Configuration/Configuration.php");
-
-// Verificar que los datos requeridos existen
-if (
-    !isset($_POST['id_calif']) || !isset($_POST['valor_calif']) || !isset($_POST['total_calificacion']) ||
-    !isset($_POST['id_estudiante']) || !isset($_POST['id_materia'])
-) {
-    http_response_code(400);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Datos incompletos'
-    ]);
-    exit;
-}
-
-$ids = $_POST['id_calif'];
-$valores = $_POST['valor_calif'];
-$total = $_POST['total_calificacion'];
-$idEstudiante = $_POST['id_estudiante'];
-$idMateria = $_POST['id_materia'];
-
 try {
-    // Verificar que los arrays tengan la misma longitud
-    if (count($ids) !== count($valores)) {
-        throw new Exception('La cantidad de IDs no coincide con la cantidad de valores');
+    // Validar solo campos esenciales
+    $requiredFields = ['estudiante_id', 'grado_id', 'materia_id', 'profesor_id'];
+    foreach ($requiredFields as $field) {
+        if (empty($_POST[$field])) {
+            throw new Exception("Campo requerido faltante: $field");
+        }
     }
 
-    // Iniciar transacción
+    // Verificar si hay calificaciones para actualizar
+    if (empty($_POST['calificaciones']) || !is_array($_POST['calificaciones'])) {
+        throw new Exception("No se recibieron datos de calificaciones para actualizar");
+    }
+
     $pdo->beginTransaction();
+    $updatesCount = 0;
 
-    // Actualizar cada calificación
-    $sql = "UPDATE calificaciones SET 
-            calificacion = :valor, 
-            total_calificacion = :total
-            WHERE id = :id 
-            AND id_estudiante = :id_estudiante
-            AND id_materia = :id_materia";
+    // Procesar solo las calificaciones recibidas
+    foreach ($_POST['calificaciones'] as $calificacionData) {
+        // Validar que tenga los datos mínimos
+        if (empty($calificacionData['id']) || !isset($calificacionData['valor'])) {
+            continue; // Saltar esta calificación si no tiene datos válidos
+        }
 
-    $stmt = $pdo->prepare($sql);
-
-    for ($i = 0; $i < count($ids); $i++) {
-        // Validar que el valor esté entre 0 y 20
-        $valor = floatval($valores[$i]);
+        $valor = (float)$calificacionData['valor'];
         if ($valor < 0 || $valor > 20) {
-            throw new Exception("La calificación {$valor} no está en el rango permitido (0-20)");
+            throw new Exception("El valor de la calificación debe estar entre 0 y 20");
         }
 
-        $stmt->execute([
+        // Actualizar solo si el valor es diferente
+        $stmt = $pdo->prepare("UPDATE calificaciones 
+                              SET calificacion = :valor 
+                              WHERE id = :id 
+                              AND id_estudiante = :estudiante_id
+                              AND id_grado = :grado_id
+                              AND id_materia = :materia_id
+                              AND id_profesor = :id_profesor
+                              AND (:lapso IS NULL OR lapso_academico = :lapso)
+                              AND calificacion != :valor"); // Solo actualiza si cambió
+
+        $params = [
             ':valor' => $valor,
-            ':total' => floatval($total),
-            ':id' => intval($ids[$i]),
-            ':id_estudiante' => intval($idEstudiante),
-            ':id_materia' => intval($idMateria)
-        ]);
+            ':id' => $calificacionData['id'],
+            ':estudiante_id' => $_POST['estudiante_id'],
+            ':grado_id' => $_POST['grado_id'],
+            ':materia_id' => $_POST['materia_id'],
+            ':id_profesor' => $_POST['profesor_id'],
+            ':lapso' => $calificacionData['lapso'] ?? null
+        ];
 
-        // Verificar si se actualizó alguna fila
-        if ($stmt->rowCount() === 0) {
-            throw new Exception("No se notron cambios en las calificaciones del estudiante");
-        }
+        $stmt->execute($params);
+        $updatesCount += $stmt->rowCount();
     }
 
-    // Confirmar transacción
     $pdo->commit();
-
+    
     echo json_encode([
         'success' => true,
-        'message' => 'Calificaciones actualizadas correctamente',
-        'promedio' => $total
+        'message' => $updatesCount > 0 ? 'Calificaciones actualizadas correctamente' : 'No se realizaron cambios',
+        'updatesCount' => $updatesCount
     ]);
-} catch (PDOException $e) {
-    // Revertir transacción si hay error
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
-    }
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Error en la base de datos: ' . $e->getMessage()
-    ]);
+
 } catch (Exception $e) {
-    // Revertir transacción si hay error
-    if (isset($pdo) && $pdo->inTransaction()) {
-        $pdo->rollBack();
-    }
-    http_response_code(400);
+    $pdo->rollBack();
+    
     echo json_encode([
         'success' => false,
         'message' => $e->getMessage()
     ]);
 }
-?>

@@ -181,6 +181,7 @@ function retornarIdProfesor($pdo, array $arreglo)
     }
 }
 
+
 function gestionarProfesor($pdo, array $arregloPr)
 {
     try {
