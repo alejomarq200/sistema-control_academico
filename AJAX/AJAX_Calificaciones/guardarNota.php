@@ -64,7 +64,7 @@ try {
         $pdo->beginTransaction();
         
         $sql = "INSERT INTO calificaciones (
-                año_escolar, id_grado, lapso_academico, 
+                anio_escolar, id_grado, lapso_academico, 
                 id_profesor, id_materia, id_estudiante, 
                 calificacion, actividad
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";

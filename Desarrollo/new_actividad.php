@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,9 +31,14 @@
                         <div class="education-icon">
                             <i class="fas fa-book-open"></i>
                         </div>
+                         <div class="mb-3">
+                                <label for="anioEscolar" class="form-label">Año Escolar</label>
+                                <input type="hidden" class="form-control" id="anioEscolar" name="anioEscolar" readonly>
+                            </div>
                         <h1 class="form-title">Registro de Actividades</h1>
                         <form action="../controller_php/controller_CreateActividad.php" method="POST"
                             id="form-RegisterActividad">
+                            <input type="hidden" name="añoEscolar" id="añoEscolar">
                             <div class="mb-4">
                                 <input type="hidden" name="categoriaGrado" id="categoriaGrado" value="Primaria"
                                     style="display: none;" readonly>
@@ -82,8 +88,17 @@
         </div>
     </div>
     <!-- SCRIPT -->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Obtener el año actual
+            const añoActual = new Date().getFullYear();
+            // Calcular el año siguiente
+            const añoSiguiente = añoActual + 1;
+            // Formatear como "2024-2025"
+            const añoEscolar = `${añoActual}-${añoSiguiente}`;
+
+            // Asignar el valor al input
+            document.getElementById('anioEscolar').value = añoEscolar;
             buscarGradoxNivel();
             document.getElementById("form-RegisterActividad").addEventListener("submit", function (event) {
                 event.preventDefault(); // Prevenir el envío del formulario
@@ -125,7 +140,8 @@
                 }
 
                 if (isSubmitting) {
-                   $.ajax({
+                    var anio = document.getElementById('añoEscolar').value =  añoEscolar;
+                    $.ajax({
                         url: "../AJAX/AJAX_Calificaciones/existeActividad.php",
                         type: "POST",
                         data: $("#form-RegisterActividad").serialize(),
@@ -136,7 +152,8 @@
                             var errores = document.getElementById("ErrorActividad").textContent;
 
                             if (errores.trim() === "") {
-                               $("#form-RegisterActividad").submit(); 
+                                $("#form-RegisterActividad").submit();
+                                anio;
                             } else {
                                 console.log("Error en la validación: ", errores);
                                 isSubmitting = false; // Restablecer bandera
@@ -221,7 +238,7 @@
                 }
             });
         }
-</script>
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

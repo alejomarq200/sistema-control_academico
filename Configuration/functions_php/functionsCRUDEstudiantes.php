@@ -182,3 +182,31 @@ function materiasPorGrado($pdo, $grado_id)
         $e->getMessage();
     }
 }
+
+function obtenerValorUnico($pdo, $tabla, $columna, $columnaWhere, $valorWhere)
+{
+    try {
+        // Validar nombres de tabla y columnas (solo caracteres permitidos en SQL)
+        if (
+            !preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $tabla) ||
+            !preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $columna) ||
+            !preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $columnaWhere)
+        ) {
+            throw new InvalidArgumentException("Nombres de tabla o columna no válidos");
+        }
+
+        $stmt = $pdo->prepare("SELECT `$columna` FROM `$tabla` WHERE `$columnaWhere` = :valor");
+        $stmt->bindParam(':valor', $valorWhere);
+        $stmt->execute();
+
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resultado[$columna] ?? null; // Mejor retornar null que un string genérico
+
+    } catch (PDOException $e) {
+        error_log("Error en obtenerValorUnico [Tabla: $tabla, Col: $columna]: " . $e->getMessage());
+        return null;
+    } catch (InvalidArgumentException $e) {
+        error_log("Error de validación: " . $e->getMessage());
+        return null;
+    }
+}

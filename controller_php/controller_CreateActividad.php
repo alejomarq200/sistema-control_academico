@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         trim($_POST['gradoActividad']),
         trim($_POST['profesorActividad']),
         trim($_POST['categoriaGrado']),
+        trim($_POST['añoEscolar'])
     );
 
     $validar = true;
@@ -60,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($validar) {
-        if (existeActividad($pdo, $variablesActividades)) {
+       if (existeActividad($pdo, $variablesActividades)) {
             $_SESSION['mensaje'] = 'La actividad a registrar ya existe en el grado y asignatura seleccionada.';
             $_SESSION['icono'] = 'error';
             $_SESSION['titulo'] = 'Error';
