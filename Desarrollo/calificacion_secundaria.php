@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Módulo Estudiantes</title>
+    <title>Módulo Calificaciones: Secundaria</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="../css/moduloCalificacion_s.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -15,376 +15,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Bundle JS (incluye Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-        /* Estilos generales */
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
-        }
-
-        .student-module {
-            margin-left: 100px;
-            /* Ajusta según tu sidebar */
-            padding: 15px;
-        }
-
-        /* Sección de Institución */
-        .institution-info {
-            background: #ffffff;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .institution-info h2 {
-            margin-top: 0;
-            color: #21608b;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #555;
-        }
-
-        .info-item i {
-            color: #21608b;
-        }
-
-        /* Filtros de Búsqueda */
-        .search-filters {
-            background: #ffffff;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .search-bar {
-            display: flex;
-            margin-bottom: 15px;
-        }
-
-        .search-input {
-            flex: 1;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px 0 0 5px;
-            font-size: 1rem;
-        }
-
-        .search-btn {
-            background: rgb(30, 114, 171);
-            color: white;
-            border: none;
-            padding: 0 20px;
-            border-radius: 0 5px 5px 0;
-            cursor: pointer;
-        }
-
-        .filter-inputs {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .filter-input {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            flex: 1;
-            min-width: 150px;
-        }
-
-        .filter-btn {
-            background: #15a451;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        /* Tabla de Estudiantes */
-        .student-table {
-            background: #ffffff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        th,
-        td {
-            padding: 12px 15px;
-            text-align: center;
-            border-bottom: 1px solid #eee;
-        }
-
-        th {
-            background-color: #0e2238;
-
-            color: rgb(255, 255, 255);
-            font-weight: 600;
-        }
-
-        .status {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .status.active {
-            background: #e3f8e8;
-            color: #2ecc71;
-        }
-
-        .status.inactive {
-            background: #feeaea;
-            color: #e74c3c;
-        }
-
-        .action-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            margin: 0 5px;
-            padding: 5px;
-        }
-
-        .action-btn.edit {
-            color: #3498db;
-        }
-
-        .action-btn.delete {
-            color: #e74c3c;
-        }
-
-        .action-btn.view {
-            color: #2ecc71;
-        }
-
-
-        /* Celdas específicas */
-        .profesor-cell,
-        .materia-cell,
-        .estudiante-cell {
-            text-align: left;
-            padding-left: 12px;
-        }
-
-        .estudiante-cell strong {
-            font-weight: 600;
-        }
-
-        /* Estilos para notas */
-        .nota-cell {
-            font-weight: 500;
-        }
-
-        .nota-baja {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-
-        .nota-alta {
-            color: #2ecc71;
-        }
-
-        .nota-vacia {
-            color: #95a5a6;
-        }
-
-        .total-cell {
-            font-weight: bold;
-            background-color: #f1f8fe;
-        }
-
-        /* Botón de editar */
-        .btn-editar {
-            background: none;
-            border: 1px solid #3498db;
-            color: #3498db;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.85rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .btn-editar:hover {
-            background-color: #3498db;
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .tfoot-content {
-            display: flex;
-            justify-content: flex-end;
-            padding: 10px 0;
-        }
-
-        /* Botón de descargar */
-        .btn-descargar {
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-descargar:hover {
-            background-color: #219653;
-            transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-descargar i {
-            font-size: 1rem;
-        }
-
-        .btn-promover {
-            background-color: rgb(24, 26, 161);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-left: 10px;
-        }
-
-        .btn-promover:hover {
-            background-color: rgb(35, 33, 150);
-            transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-promover i {
-            font-size: 1rem;
-        }
-
-        .input-contador {
-            width: 60px;
-            padding: 6px;
-            text-align: center;
-            background-color: rgb(60, 81, 112);
-            border: none;
-            border-radius: 8px;
-            outline: none;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-right: 15px;
-        }
-
-        .label-contador {
-            font-weight: 600;
-            color: #555;
-            font-size: 16px;
-        }
-
-        .filtros-aplicados-inline {
-            background-color: #f8f9fa;
-            padding: 10px 12px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            border-left: 4px solid #4caf50;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .filtros-aplicados-inline strong {
-            margin-right: 8px;
-            color: #333;
-        }
-
-        .filtro-tag {
-            background-color: #e0f2f1;
-            color: #00695c;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 13px;
-            display: inline-block;
-        }
-
-        .no-data-content {
-            text-align: center;
-            padding: 15px;
-            color: #d9534f;
-        }
-
-        .no-data-content i {
-            font-size: 24px;
-            margin-bottom: 8px;
-            color: #d9534f;
-        }
-
-        .contenedor-calificaciones {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-          /* Estilo para el input de número */
-        .input-calificaciones {
-            padding: 8px 12px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            font-size: 16px;
-            width: 120px;
-            transition: border-color 0.15s ease-in-out;
-        }
-
-        .input-calificaciones:focus {
-            border-color: #80bdff;
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-        }
-    </style>
 </head>
 
 <body>
@@ -487,6 +117,9 @@
                         $anioEscolar = $_POST['anio_escolar'] ?? null;
                         $busquedaEstudiante = $_POST['busquedaEstudiante'] ?? null;
 
+                        $grado = obtenerValorUnico($pdo, 'grados', 'id_grado', 'id',$idGrado);
+                        $nombreMateria = obtenerValorUnico($pdo, 'materias', 'nombre', 'id_materia',$materia);
+                        $profesor =  obtenerValorUnico($pdo, 'profesores', 'nombre', 'id_profesor',$docente);
                         ?>
                         <div class="filtros-aplicados-inline">
                             <strong>Filtros aplicados:</strong>
@@ -495,20 +128,20 @@
                                 <span class="filtro-tag">Búsqueda: <?= htmlspecialchars($busquedaEstudiante) ?></span>
                             <?php endif; ?>
 
-                            <?php if ($idGrado): ?>
-                                <span class="filtro-tag">Grado: <?= htmlspecialchars($idGrado) ?></span>
+                            <?php if ($grado): ?>
+                                <span class="filtro-tag">Grado: <?= htmlspecialchars($grado) ?></span>
                             <?php endif; ?>
 
                             <?php if ($lapso): ?>
                                 <span class="filtro-tag">Lapso: <?= htmlspecialchars($lapso) ?></span>
                             <?php endif; ?>
 
-                            <?php if ($materia): ?>
-                                <span class="filtro-tag">Materia: <?= htmlspecialchars($materia) ?></span>
+                            <?php if ($nombreMateria): ?>
+                                <span class="filtro-tag">Materia: <?= htmlspecialchars($nombreMateria) ?></span>
                             <?php endif; ?>
 
-                            <?php if ($docente): ?>
-                                <span class="filtro-tag">Docente: <?= htmlspecialchars($docente) ?></span>
+                            <?php if ($profesor): ?>
+                                <span class="filtro-tag">Docente: <?= htmlspecialchars($profesor) ?></span>
                             <?php endif; ?>
 
                             <?php if ($anioEscolar): ?>
@@ -651,11 +284,12 @@
             const gradoId = $tr.data('grado-id');
             const materiaId = $tr.data('materia-id');
             const profesorId = $tr.data('profesor-id');
-
+            const total = $tr.find('.total').text();
             const lapso = $('#selectLapso').val();
             const anioEscolar = $('#anio_escolar').val();
 
             const calificaciones = [];
+            console.log(total);
             // Asumo que tienes inputs con clase .calificacion en cada fila para capturar las notas
             $tr.find('.calificacion').each(function () {
                 calificaciones.push(parseFloat($(this).val()) || 0);
@@ -681,7 +315,8 @@
                     profesor_id: profesorId,
                     materia_id: materiaId,
                     anioEscolar: anioEscolar,
-                    calificaciones: calificaciones
+                    calificaciones: calificaciones,
+                    total: total
                 },
                 success: function (respuesta) {
                     if (respuesta.success) {
@@ -707,7 +342,6 @@
                         });
                     }
                 },
-
                 error: function () {
                     Swal.fire({
                         icon: 'error',

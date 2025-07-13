@@ -31,12 +31,13 @@ function consultarActividadesCRUD($pdo)
 function insertarActividad($pdo, array $arreglo)
 {
     try {
-        $stmt = $pdo->prepare("INSERT INTO actividades (anio_escolar, contenido, id_materia, id_grado, id_profesor, id_estado) VALUES (:anio_escolar, :contenido, :id_materia, :id_grado, :id_profesor, :id_estado)");
-        $stmt->bindValue(':anio_escolar', $arreglo[5]);
+        $stmt = $pdo->prepare("INSERT INTO actividades (anio_escolar, contenido, tipo_contenido, id_materia, id_grado, id_profesor, id_estado) VALUES (:anio_escolar, :contenido, :tipo_contenido, :id_materia, :id_grado, :id_profesor, :id_estado)");
+        $stmt->bindValue(':anio_escolar', $arreglo[4]);
         $stmt->bindValue(':contenido', $arreglo[0]);
+        $stmt->bindValue(':tipo_contenido', $arreglo[3]);
         $stmt->bindValue(':id_materia', $arreglo[1]);
         $stmt->bindValue(':id_grado', $arreglo[2]);
-        $stmt->bindValue(':id_profesor', $arreglo[3]);
+        $stmt->bindValue(':id_profesor', $arreglo[5]);
         $stmt->bindValue(':id_estado', 2);
 
         $stmt->execute();
@@ -76,13 +77,21 @@ function EditarActividad($pdo, array $modalActividadEdit)
 function existeActividad($pdo, array $arreglo)
 {
     try {
-        $stmt = $pdo->prepare("SELECT * FROM actividades WHERE contenido = :contenido  AND id_materia = :id_materia AND id_grado = :id_grado AND anio_escolar = :anio_escolar");
+        $stmt = $pdo->prepare(
+            "SELECT * FROM actividades 
+             WHERE contenido = :contenido
+             AND id_materia = :id_materia
+             AND id_grado = :id_grado 
+             AND tipo_contenido = :tipo_contenido 
+             AND anio_escolar = :anio_escolar"
+        );
+
         $stmt->bindValue(':contenido', $arreglo[0]);
         $stmt->bindValue(':id_materia', $arreglo[1]);
         $stmt->bindValue(':id_grado', $arreglo[2]);
-        $stmt->bindValue(':anio_escolar', $arreglo[5]);
+        $stmt->bindValue(':tipo_contenido', $arreglo[3]);
+        $stmt->bindValue(':anio_escolar', $arreglo[4]);
         $stmt->execute();
-
 
         if ($stmt->rowCount() > 0) {
             return true;
@@ -92,7 +101,6 @@ function existeActividad($pdo, array $arreglo)
         return false;
     }
 }
-
 
 function habilitarActividad($pdo, $idGuia)
 {

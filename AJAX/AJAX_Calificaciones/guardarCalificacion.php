@@ -36,6 +36,7 @@ try {
     $profesorId = $_POST['profesor_id'] ?? null;
     $materiaId = $_POST['materia_id'];
     $anioEscolar = $_POST['anioEscolar'];
+    $total = $_POST['total'];
 
     $calificaciones = $_POST['calificaciones'] ?? [];
     if (empty($calificaciones)) {
@@ -66,8 +67,8 @@ try {
 
     $insertSql = "INSERT INTO calificaciones (
                     anio_escolar, id_grado, lapso_academico, 
-                    id_profesor, id_materia, id_estudiante, calificacion
-                 ) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    id_profesor, id_materia, id_estudiante, calificacion, promedio
+                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     $insertStmt = $pdo->prepare($insertSql);
 
@@ -79,7 +80,8 @@ try {
             $profesorId,
             $materiaId,
             $estudianteId,
-            $calificacion]);
+            $calificacion,
+            $total]);
     }
 
     $pdo->commit();

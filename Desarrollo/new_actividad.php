@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +7,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-straight/css/uicons-bold-straight.css'>
     <link rel="stylesheet" href="../css/modalesActividades/regActividad.css">
 </head>
-
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
@@ -32,7 +31,6 @@
                             <i class="fas fa-book-open"></i>
                         </div>
                          <div class="mb-3">
-                                <label for="anioEscolar" class="form-label">Año Escolar</label>
                                 <input type="hidden" class="form-control" id="anioEscolar" name="anioEscolar" readonly>
                             </div>
                         <h1 class="form-title">Registro de Actividades</h1>
@@ -68,6 +66,12 @@
                                     <option value="Seleccionar" selected>Seleccione una asignatura...</option>
                                 </select>
                                 <p class="error1" id="ErrorAsignatura"></p>
+                            </div>
+                             <div class="mb-4">
+                                <label for="tipoContenido" class="form-label"><i class="fi fi-bs-overview"></i>
+                                    Tipo de Contenido</label>
+                               <input type="text" name="tipoContenido" id="tipoContenido" class="form-control" placeholder="Describa el tipo de contenido">
+                                <p class="error1" id="ErrortipoContenido"></p>
                             </div>
                             <div class="textarea-container">
                                 <textarea name="actividad" id="actividad" class="styled-textarea"
@@ -108,6 +112,7 @@
                 var profesorActividad = document.getElementById("profesorActividad").value.trim();
                 var asignatura = document.getElementById("asignatura").value.trim();
                 var actividad = document.getElementById("actividad").value.trim();
+                var tipoContenido = document.getElementById("tipoContenido").value.trim();
 
                 const regexName = /^[A-Za-zÑñÁÉÍÓÚÜáéíóúü\s\.,'-]+$/;
 
@@ -126,18 +131,26 @@
                 }
 
                 if (!actividad) {
-                    document.getElementById("ErrorActividad").textContent = "La actividad se encuentra vacia";
+                    document.getElementById("ErrorActividad").textContent = "La actividad se encuentra es obligatoria";
                     isSubmitting = false;
                 } else {
                     document.getElementById("ErrorActividad").textContent = "";
                 }
 
                 if (!profesorActividad || profesorActividad == "Seleccionar") {
-                    document.getElementById("ErrorProfesorActividad").textContent = "El profesor se encuentra vacio";
+                    document.getElementById("ErrorProfesorActividad").textContent = "La información del profesor es obligatoria";
                     isSubmitting = false;
                 } else {
                     document.getElementById("ErrorProfesorActividad").textContent = "";
                 }
+
+                if(!tipoContenido || !regexName.test(tipoContenido)) {
+                    document.getElementById('ErrortipoContenido').textContent = "El tipo de cntenidoes obligatorio";
+                    isSubmitting = false;
+                } else {
+                    document.getElementById('ErrortipoContenido').textContent = "";
+                }
+
 
                 if (isSubmitting) {
                     var anio = document.getElementById('añoEscolar').value =  añoEscolar;
@@ -151,13 +164,12 @@
 
                             var errores = document.getElementById("ErrorActividad").textContent;
 
-                            if (errores.trim() === "") {
+                           if (errores.trim() === "") {
                                 $("#form-RegisterActividad").submit();
-                                anio;
                             } else {
                                 console.log("Error en la validación: ", errores);
                                 isSubmitting = false; // Restablecer bandera
-                            }
+                            }   
                         },
                         //Controlamos error de AJAX
                         error: function (xhr, status, error) {

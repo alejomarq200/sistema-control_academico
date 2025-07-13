@@ -23,6 +23,7 @@ try {
     $anioEscolar = $_POST['anio_escolar'] ?? null;
     $calificacion = $_POST['calificacion'] ?? null;
     $actividad = $_POST['actividad'] ?? null;
+    $tipoContenido = $_POST['tipoContenido'] ?? null;
 
     // Validar datos requeridos
     $camposRequeridos = [
@@ -32,7 +33,8 @@ try {
         'lapso' => $lapso,
         'anio_escolar' => $anioEscolar,
         'calificacion' => $calificacion,
-        'actividad' => $actividad
+        'actividad' => $actividad,
+        'tipoContenido' => $tipoContenido
     ];
 
     foreach ($camposRequeridos as $nombre => $valor) {
@@ -66,13 +68,13 @@ try {
         $sql = "INSERT INTO calificaciones (
                 anio_escolar, id_grado, lapso_academico, 
                 id_profesor, id_materia, id_estudiante, 
-                calificacion, actividad
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                calificacion, actividad, tipo_actividad
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
         $success = $stmt->execute([
             $anioEscolar, $gradoId, $lapso,
             $profesorId, $materiaId, $estudianteId,
-            $calificacion, $actividad
+            $calificacion, $actividad, $tipoContenido
         ]);
 
         if ($success) {

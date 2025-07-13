@@ -1,0 +1,122 @@
+ /* Estilos para el modal de edición */
+        #editarCalificacionesModal .modal-content {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        #editarCalificacionesModal .modal-header {
+            background: linear-gradient(135deg, #4a6bff 0%, #0e2238 100%);
+            color: white;
+            border-bottom: none;
+            padding: 1.5rem;
+        }
+
+        #editarCalificacionesModal .modal-title {
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        #editarCalificacionesModal .btn-close {
+            filter: invert(1);
+            opacity: 0.8;
+            transition: all 0.3s;
+        }
+
+        #editarCalificacionesModal .btn-close:hover {
+            opacity: 1;
+            transform: rotate(90deg);
+        }
+
+        #editarCalificacionesModal .modal-body {
+            padding: 2rem;
+        }
+
+        /* Estilos para los campos del formulario */
+        #formEditarCalificaciones .form-label {
+            font-weight: 600;
+            color: #3a3a3a;
+            margin-bottom: 0.5rem;
+        }
+
+        #formEditarCalificaciones .form-control-static {
+            font-size: 1.1rem;
+            color: #4a5568;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Estilos para los campos de calificación */
+        .campo-calificacion {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #21608b;
+        }
+
+        .campo-calificacion label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .campo-calificacion input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .campo-calificacion input:focus {
+            border-color: #0e2238;
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
+            outline: none;
+        }
+
+        /* Estilos para los botones */
+        #editarCalificacionesModal .modal-footer {
+            border-top: none;
+            padding: 1.5rem;
+            background-color: #f8fafc;
+        }
+
+        #editarCalificacionesModal .btn-secondary {
+            background-color: #e2e8f0;
+            color: #4a5568;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        #editarCalificacionesModal .btn-secondary:hover {
+            background-color: #cbd5e0;
+        }
+
+        #editarCalificacionesModal .btn-primary {
+            background: linear-gradient(135deg, #4a6bff 0%, #0e2238 100%);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(74, 107, 255, 0.2);
+        }
+
+        #editarCalificacionesModal .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(74, 107, 255, 0.3);
+        }
+
+        /* Efecto de hover para los campos de calificación */
+        .campo-calificacion:hover {
+            background-color: #f1f5f9;
+            transform: translateX(2px);
+            transition: all 0.3s;
+        }

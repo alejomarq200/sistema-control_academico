@@ -18,12 +18,13 @@ include("../Configuration/Configuration.php");
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $variablesActividades = array(
-        trim($_POST['actividad']),
-        trim($_POST['asignatura']),
-        trim($_POST['gradoActividad']),
-        trim($_POST['profesorActividad']),
-        trim($_POST['categoriaGrado']),
-        trim($_POST['añoEscolar'])
+        trim($_POST['actividad']), //0
+        trim($_POST['asignatura']), //1
+        trim($_POST['gradoActividad']), //2
+        trim($_POST['tipoContenido']), //3
+        trim($_POST['añoEscolar']), //4
+        trim($_POST['profesorActividad']), //5
+        trim($_POST['tipoContenido']) //6
     );
 
     $validar = true;
@@ -32,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mensajes = [];
 
     /* Regex sólo letras con mínimo 2 caracteres por primer y segundo nombre: Nombre*/
-    // $patronName = "/^[A-Za-zÑñÁÉÍÓÚÜáéíóúü\s\.,'-]+$/";
 
     if (empty($variablesActividades[0])) {
         $mensajes[] = "Campo actividad vacio";
@@ -50,18 +50,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $validar = false;
     }
 
-    if (empty($variablesActividades[3]) || $variablesActividades[3] == "Seleccionar") {
-        $mensajes[] = "Campo profesor de la actividad vacio";
+    if (empty($variablesActividades[3])) {
+        $mensajes[] = "Campo tipo de contenido de la actividad vacio";
         $validar = false;
     }
 
-    if (empty($variablesActividades[4]) || $variablesActividades[4] == "Secundaria") {
-        $mensajes[] = "Campo categoria de la actividad vacio";
+    if (empty($variablesActividades[4])) {
+        $mensajes[] = "Campo año escolar de la actividad vacio";
+        $validar = false;
+    }
+
+    if (empty($variablesActividades[5]) || $variablesActividades[5] == "Seleccionar") {
+        $mensajes[] = "Campo profesor de de la actividad vacio";
+        $validar = false;
+    }
+
+    if (empty($variablesActividades[6])) {
+        $mensajes[] = "Campo tipo de la actividad vacio";
         $validar = false;
     }
 
     if ($validar) {
-       if (existeActividad($pdo, $variablesActividades)) {
+        if (existeActividad($pdo, $variablesActividades)) {
             $_SESSION['mensaje'] = 'La actividad a registrar ya existe en el grado y asignatura seleccionada.';
             $_SESSION['icono'] = 'error';
             $_SESSION['titulo'] = 'Error';
