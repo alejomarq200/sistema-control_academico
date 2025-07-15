@@ -37,7 +37,7 @@
                             <p class="errorMEdit" id="nombreErrorEditM"></p>
                             <div class="mb-1">
                                 <label for="nivelEditM" class="form-label">Nivel de la materia</label>
-                                <select name="nivelEditM" id="nivelEditM">
+                                <select name="nivelEditM" id="nivelEditM" class="form-control">
                                     <option value="Seleccionar">Seleccinar</option>
                                     <option value="Primaria">Primaria</option>
                                     <option value="Secundaria">Secundaria</option>
@@ -51,8 +51,6 @@
             </div>
         </div>
     </div>
-    <!-- SCRIPT
-    <script src="../js/validarEditMateria.js"></script>-->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var modal = document.getElementById("ModalFormMEdit");

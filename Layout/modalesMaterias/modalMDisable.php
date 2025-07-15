@@ -180,7 +180,7 @@
                             </div>
                             <div class="mb-1">
                                 <label for="nivelDisableM" class="form-label">Nivel de la materia</label>
-                                <select name="nivelDisableM" id="nivelDisableM" disabled>
+                                <select name="nivelDisableM" id="nivelDisableM" class="form-control" disabled>
                                     <option value="Seleccionar">Seleccinar</option>
                                     <option value="Primaria">Primaria</option>
                                     <option value="Secundaria">Secundaria</option>

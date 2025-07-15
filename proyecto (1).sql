@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-07-2025 a las 20:48:50
+-- Tiempo de generación: 15-07-2025 a las 17:08:30
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `actividades` (
   `id_actividad` int(11) NOT NULL,
   `anio_escolar` varchar(25) NOT NULL,
+  `tipo_contenido` varchar(55) DEFAULT NULL,
   `contenido` varchar(255) NOT NULL,
   `id_materia` int(10) NOT NULL,
   `id_grado` int(10) NOT NULL,
@@ -41,21 +42,11 @@ CREATE TABLE `actividades` (
 -- Volcado de datos para la tabla `actividades`
 --
 
-INSERT INTO `actividades` (`id_actividad`, `anio_escolar`, `contenido`, `id_materia`, `id_grado`, `id_profesor`, `id_estado`) VALUES
-(11, '', 'Realiza actividad escrita de la letra Aa hasta la Hh.', 111, 1, 47, 2),
-(12, '', 'Realiza actividad escrita de la letra Ii hasta Rr.', 111, 1, 47, 2),
-(13, '', 'Realiza actividad escrita de la  letra Ss hasta Zz.', 111, 1, 47, 2),
-(14, '', 'Realiza actividad efeméride de 14 de septiembre con su dibujo.', 112, 1, 47, 2),
-(15, '', 'Realiza actividad efeméride de 12 de 0tubre  con su dibujo.', 112, 1, 47, 2),
-(16, '', 'Realiza actividad efeméride de Día de la alimentación  con su dibujo.', 112, 1, 47, 2),
-(17, '', 'Realiza actividad efeméride  de Simón Rodríguez  con su dibujo.', 112, 1, 47, 2),
-(18, '', 'Asistió a la actividad', 114, 1, 47, 2),
-(19, '', 'Mostró seguridad al realizar las actividades', 112, 1, 47, 2),
-(20, '', 'Realizó las actividades de deporte enviadas a casa', 113, 1, 47, 2),
-(21, '', 'Cumple con las asignaciones y ejercicios.', 114, 1, 47, 2),
-(22, '', 'Atiende instrucciones en las actividades presenciales.', 115, 1, 47, 2),
-(23, '', 'Trabaja en orden  siguiendo patrones.', 115, 1, 47, 2),
-(24, '', 'Presenta pulcritud en sus trabajos.', 115, 1, 47, 2);
+INSERT INTO `actividades` (`id_actividad`, `anio_escolar`, `tipo_contenido`, `contenido`, `id_materia`, `id_grado`, `id_profesor`, `id_estado`) VALUES
+(30, '2025-2026', 'Contenidos', 'Realiza actividad escrita de la letra Aa hasta la Hh.', 111, 1, 47, 2),
+(32, '2025-2026', 'Contenidos', 'Realiza actividad escrita de la letra Ii hasta Rr.', 111, 1, 47, 2),
+(35, '2025-2026', 'Caligrafía', 'Realiza caligrafías programadas.', 111, 1, 47, 2),
+(36, '2025-2026', 'Caligrafía', 'Sigue el patrón en la escritura mayúscula en cuaderno doble línea.', 111, 1, 47, 2);
 
 -- --------------------------------------------------------
 
@@ -72,26 +63,77 @@ CREATE TABLE `calificaciones` (
   `id_materia` int(5) NOT NULL,
   `id_estudiante` int(5) NOT NULL,
   `calificacion` varchar(10) NOT NULL,
-  `actividad` int(11) DEFAULT NULL
+  `actividad` int(11) DEFAULT NULL,
+  `tipo_actividad` varchar(55) DEFAULT NULL,
+  `promedio` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `calificaciones`
 --
 
-INSERT INTO `calificaciones` (`id`, `anio_escolar`, `id_grado`, `lapso_academico`, `id_profesor`, `id_materia`, `id_estudiante`, `calificacion`, `actividad`) VALUES
-(249, '2025-2026', 7, '1er Lapso', 43, 99, 5, '15.00', NULL),
-(250, '2025-2026', 7, '1er Lapso', 43, 99, 5, '12.00', NULL),
-(251, '2025-2026', 7, '1er Lapso', 43, 99, 5, '14.00', NULL),
-(252, '2025-2026', 7, '1er Lapso', 43, 99, 7, '20.00', NULL),
-(253, '2025-2026', 7, '1er Lapso', 43, 99, 7, '12.00', NULL),
-(254, '2025-2026', 7, '1er Lapso', 43, 99, 7, '15.00', NULL),
-(255, '2025-2026', 7, '1er Lapso', 43, 99, 8, '16.00', NULL),
-(256, '2025-2026', 7, '1er Lapso', 43, 99, 8, '12.00', NULL),
-(257, '2025-2026', 7, '1er Lapso', 43, 99, 8, '14.00', NULL),
-(258, '2025-2026', 7, '1er Lapso', 43, 99, 9, '18.00', NULL),
-(259, '2025-2026', 7, '1er Lapso', 43, 99, 9, '16.00', NULL),
-(260, '2025-2026', 7, '1er Lapso', 43, 99, 9, '12.00', NULL);
+INSERT INTO `calificaciones` (`id`, `anio_escolar`, `id_grado`, `lapso_academico`, `id_profesor`, `id_materia`, `id_estudiante`, `calificacion`, `actividad`, `tipo_actividad`, `promedio`) VALUES
+(290, '2025-2026', 1, 'Lapso Único', 47, 111, 8, 'MB', 30, '', 0.00),
+(291, '2025-2026', 1, 'Lapso Único', 47, 111, 4, 'EX', 30, '', 0.00),
+(292, '2025-2026', 1, 'Lapso Único', 47, 111, 3, 'EX', 30, '', 0.00),
+(293, '2025-2026', 1, 'Lapso Único', 47, 111, 2, 'MB', 30, '', 0.00),
+(294, '2025-2026', 1, 'Lapso Único', 47, 111, 1, 'DM', 30, '', 0.00),
+(295, '2025-2026', 7, '1er Lapso', 43, 99, 5, '12', NULL, '', 0.00),
+(296, '2025-2026', 7, '1er Lapso', 43, 99, 5, '14', NULL, '', 0.00),
+(297, '2025-2026', 7, '1er Lapso', 43, 99, 5, '16', NULL, '', 0.00),
+(298, '2025-2026', 7, '1er Lapso', 43, 99, 7, '12', NULL, '', 0.00),
+(299, '2025-2026', 7, '1er Lapso', 43, 99, 7, '15', NULL, '', 0.00),
+(300, '2025-2026', 7, '1er Lapso', 43, 99, 7, '13', NULL, '', 0.00),
+(301, '2025-2026', 7, '1er Lapso', 43, 99, 9, '15', NULL, '', 0.00),
+(302, '2025-2026', 7, '1er Lapso', 43, 99, 9, '13', NULL, '', 0.00),
+(303, '2025-2026', 7, '1er Lapso', 43, 99, 9, '14', NULL, '', 0.00),
+(304, '2025-2026', 7, '2do Lapso', 43, 99, 9, '15', NULL, '', 0.00),
+(305, '2025-2026', 7, '2do Lapso', 43, 99, 9, '15', NULL, '', 0.00),
+(306, '2025-2026', 7, '2do Lapso', 43, 99, 9, '14', NULL, '', 0.00),
+(307, '2025-2026', 7, '2do Lapso', 43, 99, 7, '12', NULL, '', 0.00),
+(308, '2025-2026', 7, '2do Lapso', 43, 99, 7, '15', NULL, '', 0.00),
+(309, '2025-2026', 7, '2do Lapso', 43, 99, 7, '12', NULL, '', 0.00),
+(310, '2025-2026', 7, '2do Lapso', 43, 99, 5, '11', NULL, '', 0.00),
+(311, '2025-2026', 7, '2do Lapso', 43, 99, 5, '14', NULL, '', 0.00),
+(312, '2025-2026', 7, '2do Lapso', 43, 99, 5, '16', NULL, '', 0.00),
+(313, '2025-2026', 7, '3er Lapso', 43, 99, 9, '12', NULL, '', 0.00),
+(314, '2025-2026', 7, '3er Lapso', 43, 99, 9, '13', NULL, '', 0.00),
+(315, '2025-2026', 7, '3er Lapso', 43, 99, 9, '14', NULL, '', 0.00),
+(316, '2025-2026', 7, '3er Lapso', 43, 99, 7, '14', NULL, '', 0.00),
+(317, '2025-2026', 7, '3er Lapso', 43, 99, 7, '15', NULL, '', 0.00),
+(318, '2025-2026', 7, '3er Lapso', 43, 99, 7, '16', NULL, '', 0.00),
+(319, '2025-2026', 7, '3er Lapso', 43, 99, 5, '15', NULL, '', 0.00),
+(320, '2025-2026', 7, '3er Lapso', 43, 99, 5, '12', NULL, '', 0.00),
+(321, '2025-2026', 7, '3er Lapso', 43, 99, 5, '14', NULL, '', 0.00),
+(322, '2025-2026', 7, '1er Lapso', 41, 106, 5, '14', NULL, '', 0.00),
+(323, '2025-2026', 7, '1er Lapso', 41, 106, 5, '15', NULL, '', 0.00),
+(324, '2025-2026', 7, '1er Lapso', 41, 106, 5, '16', NULL, '', 0.00),
+(325, '2025-2026', 7, '1er Lapso', 41, 106, 7, '12', NULL, '', 0.00),
+(326, '2025-2026', 7, '1er Lapso', 41, 106, 7, '14', NULL, '', 0.00),
+(327, '2025-2026', 7, '1er Lapso', 41, 106, 7, '16', NULL, '', 0.00),
+(328, '2025-2026', 7, '1er Lapso', 41, 106, 9, '14', NULL, '', 0.00),
+(329, '2025-2026', 7, '1er Lapso', 41, 106, 9, '12', NULL, '', 0.00),
+(330, '2025-2026', 7, '1er Lapso', 41, 106, 9, '15', NULL, '', 0.00),
+(331, '2025-2026', 7, '2do Lapso', 41, 106, 5, '12', NULL, '', 0.00),
+(332, '2025-2026', 7, '2do Lapso', 41, 106, 5, '13', NULL, '', 0.00),
+(333, '2025-2026', 7, '2do Lapso', 41, 106, 5, '14', NULL, '', 0.00),
+(334, '2025-2026', 7, '2do Lapso', 41, 106, 7, '14', NULL, '', 0.00),
+(335, '2025-2026', 7, '2do Lapso', 41, 106, 7, '15', NULL, '', 0.00),
+(336, '2025-2026', 7, '2do Lapso', 41, 106, 7, '16', NULL, '', 0.00),
+(337, '2025-2026', 7, '2do Lapso', 41, 106, 9, '12', NULL, '', 0.00),
+(338, '2025-2026', 7, '2do Lapso', 41, 106, 9, '14', NULL, '', 0.00),
+(339, '2025-2026', 7, '2do Lapso', 41, 106, 9, '16', NULL, '', 0.00),
+(340, '2025-2026', 7, '3er Lapso', 41, 106, 5, '14', NULL, '', 0.00),
+(341, '2025-2026', 7, '3er Lapso', 41, 106, 5, '15', NULL, '', 0.00),
+(342, '2025-2026', 7, '3er Lapso', 41, 106, 5, '16', NULL, '', 0.00),
+(343, '2025-2026', 7, '3er Lapso', 41, 106, 7, '12', NULL, '', 0.00),
+(344, '2025-2026', 7, '3er Lapso', 41, 106, 7, '14', NULL, '', 0.00),
+(345, '2025-2026', 7, '3er Lapso', 41, 106, 7, '16', NULL, '', 0.00),
+(346, '2025-2026', 7, '3er Lapso', 41, 106, 9, '15', NULL, '', 0.00),
+(347, '2025-2026', 7, '3er Lapso', 41, 106, 9, '18', NULL, '', 0.00),
+(348, '2025-2026', 7, '3er Lapso', 41, 106, 9, '12', NULL, '', 0.00),
+(349, '2025-2026', 1, 'Lapso Único', 47, 111, 1, 'EX', 35, 'Caligrafía', 0.00),
+(350, '2025-2026', 7, '1er Lapso', 39, 104, 5, '14', NULL, NULL, 14.00);
 
 -- --------------------------------------------------------
 
@@ -321,6 +363,24 @@ INSERT INTO `materias` (`id_materia`, `nivel_materia`, `nombre`, `id_estado`) VA
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `materias_pendientes`
+--
+
+CREATE TABLE `materias_pendientes` (
+  `id` int(12) NOT NULL,
+  `id_estudiante` int(8) NOT NULL,
+  `id_materia` int(5) NOT NULL,
+  `id_grado` int(5) NOT NULL,
+  `anio_escolar` varchar(20) NOT NULL,
+  `promedio_final` decimal(5,2) NOT NULL,
+  `estado` enum('pendiente','recuperada','repetida') NOT NULL DEFAULT 'pendiente',
+  `fecha_registro` datetime NOT NULL DEFAULT current_timestamp(),
+  `fecha_actualizacion` datetime DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `profesores`
 --
 
@@ -346,7 +406,7 @@ INSERT INTO `profesores` (`id_profesor`, `cedula`, `nombre`, `nivel_grado`, `tel
 (41, 'V87954122', 'José Quero', 'Secundaria', '04241212111', 2),
 (42, 'V14521364', 'Yovana Salas', 'Secundaria', '04241111111', 2),
 (43, 'V6998211', 'Gio Ledezma', 'Secundaria', '04121212111', 2),
-(45, 'V142563210', 'Cecilia Miraflores', 'Primaria', '04121425632', 2),
+(45, 'V142563210', 'Cecilia Miraflores', 'Primaria', '04121425632', 1),
 (46, 'V14265211', 'Merino Manuel', 'Primaria', '04141725632', 2),
 (47, 'V15226331', 'Yhoiber Leon', 'Primaria', '04241425632', 2);
 
@@ -569,6 +629,15 @@ ALTER TABLE `materias`
   ADD KEY `id_estado` (`id_estado`);
 
 --
+-- Indices de la tabla `materias_pendientes`
+--
+ALTER TABLE `materias_pendientes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_estudiante` (`id_estudiante`),
+  ADD KEY `id_materia` (`id_materia`),
+  ADD KEY `id_grado` (`id_grado`);
+
+--
 -- Indices de la tabla `profesores`
 --
 ALTER TABLE `profesores`
@@ -620,13 +689,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `actividades`
 --
 ALTER TABLE `actividades`
-  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `calificaciones`
 --
 ALTER TABLE `calificaciones`
-  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=265;
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=351;
 
 --
 -- AUTO_INCREMENT de la tabla `contacto_pago`
@@ -669,6 +738,12 @@ ALTER TABLE `inscripciones`
 --
 ALTER TABLE `materias`
   MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+
+--
+-- AUTO_INCREMENT de la tabla `materias_pendientes`
+--
+ALTER TABLE `materias_pendientes`
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `profesores`
@@ -756,6 +831,14 @@ ALTER TABLE `inscripciones`
 --
 ALTER TABLE `materias`
   ADD CONSTRAINT `materias_ibfk_1` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id_estado`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `materias_pendientes`
+--
+ALTER TABLE `materias_pendientes`
+  ADD CONSTRAINT `materias_pendientes_ibfk_1` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id`),
+  ADD CONSTRAINT `materias_pendientes_ibfk_2` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id_materia`),
+  ADD CONSTRAINT `materias_pendientes_ibfk_3` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id`);
 
 --
 -- Filtros para la tabla `profesores`

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="../css/tablaMaterias.css">
+    <link rel="stylesheet" href="../css/moduloMaterias.css">
     <title>Consultar Materias</title>
 </head>
 
@@ -30,11 +30,36 @@
                 /* CUERPO DEL MENÚ */
                 ?>
                 <h1 class="my-3" id="titulo">Módulo de Asignaturas</h1>
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <!-- Filtro con lupa (a la derecha) -->
-                    <div class="filtro-container d-flex align-items-center">
-                        <input type="text" id="txtFiltarr" class="filtro-input form-control" placeholder="Buscar...">
-                        <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
+                <div class="filters-container">
+                    <!-- FILTROS CON DISEÑO MODERNO -->
+                    <div class="filters-wrapper">
+                        <div class="filtro-container d-flex align-items-center">
+                            <input type="text" id="txtFiltarr" class="filtro-input form-control"
+                                placeholder="Buscar...">
+                            <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
+                        </div>
+                        <!-- Filtro de Nivel Académico -->
+                        <div class="filter-group">
+                            <label for="filtroNivel" class="filter-label">
+                                <i class="bi bi-book-half"></i> Nivel Académico
+                            </label>
+                            <select id="filtroNivel" class="form-select filter-select">
+                                <option value="">Todos los niveles</option>
+                                <option value="Primaria">Primaria</option>
+                                <option value="Secundaria">Secundaria</option>
+                            </select>
+
+                        </div>
+                        <div class="filter-group">
+                            <label for="filtroEstado" class="filter-label">
+                                <i class="bi bi-check-circle"></i> Estado
+                            </label>
+                            <select id="filtroEstado" class="form-select filter-select">
+                                <option value="">Estado</option>
+                                <option value="Activo">Activo</option>
+                                <option value="Inactivo">Inactivo</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="custom-table">
@@ -42,8 +67,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">Nombre de la asignatura</th>
-                                <th scope="col">Nivel de la asignatura</th>
-                                <th scope="col">Estado</th>
+                                <th scope="col" style="display:none;">Nivel de la asignatura</th>
+                                <th scope="col" style="display: none;">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -65,8 +90,8 @@
                                     ?>
                                     <tr>
                                         <td><?php echo ($materia['nombre']); ?></td>
-                                        <td><?php echo ($materia['nivel_materia']); ?></td>
-                                        <td><?php echo ($materia['id_estado']); ?></td>
+                                        <td style="display:none;"><?php echo ($materia['nivel_materia']); ?></td>
+                                        <td style="display: none;"><?php echo ($materia['id_estado']); ?></td>
 
                                         <td>
                                             <a href="#ModalFormMEdit" class="btn btn-dark" data-bs-toggle="modal"
@@ -109,4 +134,36 @@
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </body>
 </div>
+<script>
+    document.getElementById('filtroNivel').addEventListener('change', function () {
+        const nivelSeleccionado = this.value.toLowerCase();
+        const filas = document.querySelectorAll('table tbody tr');
+
+        filas.forEach(fila => {
+            const nivelGrado = fila.querySelector('td:nth-child(2)').textContent.toLowerCase();
+
+            if (nivelSeleccionado === '' || nivelGrado === nivelSeleccionado) {
+                fila.style.display = '';
+            } else {
+                fila.style.display = 'none';
+            }
+        });
+    });
+
+    document.getElementById('filtroEstado').addEventListener('change', function () {
+        const nivelSeleccionado = this.value.toLowerCase();
+        const filas = document.querySelectorAll('table tbody tr');
+
+        filas.forEach(fila => {
+            const nivelEstado = fila.querySelector('td:nth-child(3)').textContent.toLowerCase();
+
+            if (nivelSeleccionado === '' || nivelEstado === nivelSeleccionado) {
+                fila.style.display = '';
+            } else {
+                fila.style.display = 'none';
+            }
+        });
+    });
+</script>
+
 </html>

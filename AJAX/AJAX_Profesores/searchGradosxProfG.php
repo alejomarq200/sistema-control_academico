@@ -1,7 +1,6 @@
 <?php
 include("../../Configuration/Configuration.php");
 include("../../Layout/mensajes.php");
-include("../../Configuration/functions_php/functionsCRUDProfesor.php");
 /* ASGINAMOS GRADO A PARTIR DE LA CATGORIA SELECCIONADA */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     function retornarIdProfesor($pdo, $variable)
@@ -60,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo '<option value="' . $fila["id_grado"] . '">' . htmlspecialchars($nombreGrado) . '</option>';
             }
         } else {
-            echo '<option value="Error grado asignado">Categoria sin grado asignados</option>';
+            echo '<option value="Error grado asignado">Profesor sin grados asignados</option>';
         }
     } catch (PDOException $e) {
         echo '<option value="Error en la consulta">Error en la consulta</option>';

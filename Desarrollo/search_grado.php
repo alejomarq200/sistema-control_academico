@@ -9,12 +9,9 @@
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../css/tablaGGrados.css">
-
-   <title>Consultar Grados</title>
- 
+    <link rel="stylesheet" href="../css/moduloGrados.css">
+    <title>Consultar Grados</title>
 </head>
-
 <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
 <div class="wrapper">
     <?php
@@ -31,11 +28,25 @@
             ?>
             <h1 class="my-3" id="titulo">Módulo de Grados</h1>
 
-            <div class="d-flex justify-content-between align-items-center">
-                <!-- Filtro con lupa (a la derecha) -->
-                <div class="filtro-container d-flex align-items-center">
-                    <input type="text" id="txtFiltarr" class="filtro-input form-control" placeholder="Buscar...">
-                    <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
+            <div class="filters-container">
+                <!-- FILTROS CON DISEÑO MODERNO -->
+                <div class="filters-wrapper">
+                    <div class="filtro-container d-flex align-items-center">
+                        <input type="text" id="txtFiltarr" class="filtro-input form-control" placeholder="Buscar...">
+                        <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
+                    </div>
+                    <!-- Filtro de Nivel Académico -->
+                    <div class="filter-group">
+                        <label for="filtroNivel" class="filter-label">
+                            <i class="bi bi-book-half"></i> Nivel Académico
+                        </label>
+                        <select id="filtroNivel" class="form-select filter-select">
+                            <option value="">Todos los niveles</option>
+                            <option value="Primaria">Primaria</option>
+                            <option value="Secundaria">Secundaria</option>
+                        </select>
+
+                    </div>
                 </div>
             </div>
             <div style="margin-bottom: 15px;">
@@ -59,8 +70,8 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Nombre del curso</th>
-                            <th scope="col">Nivel del curso</th>
+                            <th scope="col">Nombre del grado</th>
+                            <th scope="col">Nivel del grado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -125,7 +136,7 @@
                                                             data-nombre-Profesor="<?php echo htmlspecialchars($profesor['nombre']); ?>"
                                                             data-id-custom="<?php echo htmlspecialchars($profesor['nivel_grado']); ?>"
                                                             data-nombre-custom="<?php echo htmlspecialchars($profesor['nombre_grados']); ?>">
-                                                            <i class="bi bi-arrow-right-square-fill"></i>
+                                                            <i class="bi bi-arrow-right-circle"></i> Detalles
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -277,6 +288,38 @@
                 <!--Fin de Ventana Modal-->
             </body>
             <script>
+
+                document.getElementById('filtroNivel').addEventListener('change', function () {
+                    const nivelSeleccionado = this.value.toLowerCase();
+                    const filas = document.querySelectorAll('table tbody tr');
+
+                    filas.forEach(fila => {
+                        // Cambiar de nth-child(1) a nth-child(2) para obtener el nivel del grado
+                        const nivelGrado = fila.querySelector('td:nth-child(2)').textContent.toLowerCase();
+
+                        if (nivelSeleccionado === '' || nivelGrado.includes(nivelSeleccionado)) {
+                            fila.style.display = '';
+                        } else {
+                            fila.style.display = 'none';
+                        }
+                    });
+                });
+
+                   document.getElementById('txtFiltarr').addEventListener('input', function () {
+        const filtro = this.value.toLowerCase(); // Texto del filtro en minúsculas
+        const filas = document.querySelectorAll('tbody tr'); // Todas las filas de la tabla
+
+        filas.forEach(fila => {
+            const textoFila = fila.textContent.toLowerCase(); // Texto de la fila en minúsculas
+            if (textoFila.includes(filtro)) {
+                fila.style.display = ''; // Muestra la fila si coincide
+            } else {
+                fila.style.display = 'none'; // Oculta la fila si no coincide
+            }
+        });
+    });
+            </script>
+            <script>
                 var form1 = document.getElementById("form1-grados");
                 var form2 = document.getElementById("form2-grados");
                 var back1 = document.getElementById("back1");
@@ -364,23 +407,28 @@
 
                         if (!nombre) {
                             isValid = false;
-                            document.getElementById("errorMateriaPG").textContent = "Campo nombre de la materia es obligatorio";
+                            document.getElementById("errorMateriaPG").textContent =
+                                "Campo nombre de la materia es obligatorio";
                         } else if (!regexName.test(nombre)) {
                             isValid = false;
-                            document.getElementById("errorMateriaPG").textContent = "Formato inválido: Admite solo letras con espacios";
+                            document.getElementById("errorMateriaPG").textContent =
+                                "Formato inválido: Admite solo letras con espacios";
                         }
 
                         if (!nivelGrado) {
                             isValid = false;
-                            document.getElementById("errorCategoriaGrado").textContent = "Campo nombre nivel del grado es obligatorio";
+                            document.getElementById("errorCategoriaGrado").textContent =
+                                "Campo nombre nivel del grado es obligatorio";
                         } else if (nivelGrado != "Primaria" && nivelGrado != "Secundaria") {
                             isValid = false;
-                            document.getElementById("errorCategoriaGrado").textContent = "Seleccione un nivel del grado correcto";
+                            document.getElementById("errorCategoriaGrado").textContent =
+                                "Seleccione un nivel del grado correcto";
                         }
 
                         if (!grado || grado == "Seleccionar") {
                             isValid = false;
-                            document.getElementById("errorNombreGrado").textContent = "Seleccione un grado correcto";
+                            document.getElementById("errorNombreGrado").textContent =
+                                "Seleccione un grado correcto";
                         }
 
                         if (isValid) {
@@ -402,7 +450,8 @@
 
                             document.getElementById("categoriaGrado").value = "";
                             document.getElementById("nombreGrado").value = "Seleccionar";
-                            document.getElementById("materiasxGrado").innerHTML = '<option value="Seleccionar">Seleccionar</option>';
+                            document.getElementById("materiasxGrado").innerHTML =
+                                '<option value="Seleccionar">Seleccionar</option>';
                         }
                     });
                 });

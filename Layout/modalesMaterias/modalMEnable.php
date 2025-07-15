@@ -168,8 +168,7 @@
                 <div class="modal-body">
                     <div class="form-area">
                         <h1 class="text-center">Habiltar Materia</h1>
-                        <form action="../controller_php/controller_EnableMaterias.php" method="POST"
-                            id="form-EnableM">
+                        <form action="../controller_php/controller_EnableMaterias.php" method="POST" id="form-EnableM">
                             <div class="mb-1">
                                 <input type="text" name="idEnableM" id="idEnableM" class="input" hidden>
                             </div>
@@ -180,7 +179,7 @@
                             </div>
                             <div class="mb-1">
                                 <label for="nivelEnableM" class="form-label">Nivel de la materia</label>
-                                <select name="nivelEnableM" id="nivelEnableM" disabled>
+                                <select name="nivelEnableM" id="nivelEnableM" class="form-control" disabled>
                                     <option value="Seleccionar">Seleccinar</option>
                                     <option value="Primaria">Primaria</option>
                                     <option value="Secundaria">Secundaria</option>
@@ -248,7 +247,7 @@
                     });
                     swalWithBootstrapButtons.fire({
                         title: titulo,
-                          icon: "warning",
+                        icon: "warning",
                         showCancelButton: true,
                         confirmButtonText: "Sí, habilitar!",
                         cancelButtonText: "No, cancelar!",

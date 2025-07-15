@@ -10,73 +10,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="../css/moduloRepresentantes.css">
     <title>Consultar Representantes</title>
-    <style>
-        .filtro-container {
-            position: relative;
-            width: 100%;
-            max-width: 300px;
-            margin-bottom: 20px;
-            margin-left: 55px;
-        }
-
-        .filtro-input {
-            width: 100%;
-            padding: 10px 40px 10px 15px;
-            border: 1px solid #ccc;
-            border-radius: 40px;
-            font-size: 16px;
-            outline: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .filtro-input:focus {
-            border-color: #007bff;
-            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
-        }
-
-        .lupa-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #777;
-            pointer-events: none;
-        }
-
-        .custom-table-Representantes {
-            margin: 0 auto;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            border: 1px solid #dee2e6;
-            width: 1100px;
-        }
-
-        .custom-table-Representantes thead {
-            background-color: rgb(37, 64, 90);
-            color: #fff;
-        }
-
-        .custom-table-Representantes th,
-        .custom-table-Representantes td {
-            padding: 2rem;
-            vertical-align: middle;
-            border-color: #dee2e6;
-        }
-
-        .custom-table-Representantes tbody tr {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .custom-table-Representantes tbody tr:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #f8f9fa;
-        }
-    </style>
 </head>
 
 <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
@@ -93,7 +28,7 @@
             include("../Layout/mensajes.php");
             /* CUERPO DEL MENÚ */
             ?>
-            <h1 class="my-3" id="titulo">Módulo de Representantes</h1>
+            <h1 class="my-3" id="titulo">Módulo de Representantes: Consultar Información</h1>
 
             <div class="d-flex justify-content-between align-items-center">
                 <!-- Filtro con lupa (a la derecha) -->
@@ -167,7 +102,8 @@
                                             data-trabaja="<?php echo $representante['trabaja']; ?>"
                                             data-nombre_empr="<?php echo $representante['nombre_empr'] ?>"
                                             data-telefono_empr="<?php echo $representante['telefono_empr'] ?>"
-                                            data-direccion_empr="<?php echo $representante['direccion_empr'] ?>">                                            <i class="bi bi-pencil-square"></i>
+                                            data-direccion_empr="<?php echo $representante['direccion_empr'] ?>">                                 
+                                            <i class="bi bi-pencil-square"></i>
                                         </a>
                                     </td>
                                 </tr>

@@ -12,100 +12,8 @@
     <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="../css/modalesProfesor/tablaGestionPr.css">
+    <link rel="stylesheet" href="../css/moduloProfesores.css">
     <title>Consultar Profesores</title>
-    <style>
-        .filters-container {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            margin: 2rem auto;
-            max-width: 900px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .filters-wrapper {
-            display: flex;
-            gap: 1.5rem;
-            align-items: flex-end;
-        }
-
-        .filter-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .filter-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #495057;
-            font-size: 0.9rem;
-        }
-
-        .filter-select {
-            border-radius: 8px;
-            border: 1px solid #ced4da;
-            padding: 0.65rem 1rem;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
-        }
-
-        .filter-select:focus {
-            border-color: #86b7fe;
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
-            outline: none;
-        }
-
-        /* Efecto hover para los selects */
-        .filter-select:hover {
-            border-color: #adb5bd;
-        }
-
-        /* Iconos */
-        .bi {
-            margin-right: 8px;
-            font-size: 1.1em;
-            vertical-align: middle;
-        }
-
-        .filtro-container {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .filtro-input {
-            height: 46px;
-            /* Igualar al tamaño del select */
-            padding: 0.65rem 1rem;
-            font-size: 0.95rem;
-            border-radius: 8px;
-            border: 1px solid #ced4da;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
-            transition: all 0.3s ease;
-        }
-
-        .filtro-input:focus {
-            border-color: #86b7fe;
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
-            outline: none;
-        }
-
-        .lupa-icon {
-            font-size: 1.1rem;
-            margin-left: 0.5rem;
-            color: #6c757d;
-        }
-
-        /* Para mantener consistencia visual entre filtro-input y filter-select */
-        .form-select.filter-select {
-            height: 46px;
-            /* Mismo alto que el input */
-        }
-    </style>
 </head>
 
 <body>
@@ -124,7 +32,6 @@
                 /* CUERPO DEL MENÚ */
                 ?>
                 <h1 class="my-3" id="titulo">Módulo de Profesores</h1>
-
                 <div class="filters-container">
                     <!-- FILTROS CON DISEÑO MODERNO -->
                     <div class="filters-wrapper">
@@ -142,6 +49,17 @@
                                 <option value="">Todos los niveles</option>
                                 <option value="Primaria">Primaria</option>
                                 <option value="Secundaria">Secundaria</option>
+                            </select>
+
+                        </div>
+                        <div class="filter-group">
+                            <label for="filtroEstado" class="filter-label">
+                                <i class="bi bi-gender-ambiguous"></i> Estado
+                            </label>
+                            <select id="filtroEstado" class="form-select filter-select">
+                                <option value="">Estado</option>
+                                <option value="Activo">Activo</option>
+                                <option value="Inactivo">Inactivo</option>
                             </select>
                         </div>
                     </div>
@@ -162,7 +80,7 @@
                                 <th scope="col">Nombres</th>
                                 <th scope="col" style="display: none;">Nivel del Grado</th>
                                 <th scope="col">Número de Teléfono</th>
-                                <th scope="col">Estado</th>
+                                <th scope="col" style="display: none;">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -191,7 +109,7 @@
                                         <td><?php echo ($profesor['nombre']); ?></td>
                                         <td style="display: none;"><?php echo ($profesor['nivel_grado']); ?></td>
                                         <td><?php echo ($profesor['telefono']); ?></td>
-                                        <td><?php echo ($profesor['estado']); ?></td>
+                                        <td style="display: none;"><?php echo ($profesor['estado']); ?></td>
                                         <td>
                                             <a href="#ModalFormPEdit" class="btn btn-dark" data-bs-toggle="modal"
                                                 data-bs-target="#ModalFormPEdit"
@@ -239,176 +157,100 @@
                     </table>
                 </div>
                 </main>
+            </div>
+        </div>
+    </div>
+</body>
+<!--Ventana Modal-->
+<input type="checkbox" id="btn-modal-gestionPr">
+<div class="container-modal-gestionPr">
+    <div class="content-modal-gestionPr">
+        <h2>Gestión de Grados</h2>
+        <div class="container">
+            <form id="form1-gestionPr">
+                <table id="tabla-general">
+                    <thead>
+                        <tr style="height: 60px;">
+                            <th>Cédula Profesor</th>
+                            <th>Nombre Profesor</th>
+                            <th>Nivel de Grado</th>
+                            <th>Materias(s)</th>
+                            <th>Grado(s)</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $profesoresAsignados = obtenerProfesoresAsignados($pdo);
 
-                <!--Ventana Modal-->
-                <input type="checkbox" id="btn-modal-gestionPr">
-                <div class="container-modal-gestionPr">
-                    <div class="content-modal-gestionPr">
-                        <h2>Gestión de Grados</h2>
-                        <div class="container">
-                            <form id="form1-gestionPr">
-                                <table id="tabla-general">
-                                    <thead>
-                                        <tr style="height: 60px;">
-                                            <th>Cédula Profesor</th>
-                                            <th>Nombre Profesor</th>
-                                            <th>Nivel de Grado</th>
-                                            <th>Materias(s)</th>
-                                            <th>Grado(s)</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $profesoresAsignados = obtenerProfesoresAsignados($pdo);
-
-                                        if (!empty($profesoresAsignados)) {
-                                            foreach ($profesoresAsignados as $profesor) {
-                                                //$nombreMateria = retornarMateriasEnTabla($pdo, $profesor);
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo htmlspecialchars($profesor['cedula']); ?></td>
-                                                    <td><?php echo htmlspecialchars($profesor['nombre']); ?></td>
-                                                    <td><?php echo htmlspecialchars($profesor['nivel_grado']); ?></td>
-                                                    <td><?php echo htmlspecialchars($profesor['materias_asignados']); ?></td>
-                                                    <td><?php echo htmlspecialchars($profesor['grados_asignados']); ?></td>
-                                                    <td>
-                                                        <button type="button" class="next1-gestionPr"
-                                                            data-cedula="<?php echo htmlspecialchars($profesor['cedula']); ?>"
-                                                            data-nombre="<?php echo htmlspecialchars($profesor['nombre']); ?>"
-                                                            data-grado="<?php echo htmlspecialchars($profesor['grados_asignados']); ?>"
-                                                            data-nivelProfesor="<?php echo htmlspecialchars($profesor['nivel_grado']); ?>">
-                                                            <i class="bi bi-pencil-square"></i> Editar
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <?php
-                                            }
-                                        } else {
-                                            echo "<tr><td colspan='6'>No se encontraron profesores activos.</td></tr>";
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </form>
-                            <form method="POST" action="../controller_php/controller_FormMultiStepGestionPr.php"
-                                id="form2-gestionPr">
-                                <h3>Información del Grado</h3>
-                                <label for="cedulaProfesorG" class="labelGrados">Cédula del Profesor:</label>
-                                <input type="text" name="cedulaProfesorG" id="cedulaProfesorG"
-                                    style="margin-bottom: -30px;" readonly>
-                                <p class="errorFormMultiPr" id="errorCedulaProfesorG"></p>
-                                <label for="nombreProfesorG" class="labelGrados">Nombre del Profesor:</label>
-                                <input type="text" name="nombreProfesorG" id="nombreProfesorG"
-                                    style="margin-bottom: -30px;" readonly>
-                                <p class="errorFormMultiPr" id="errorProfesorG"></p>
-                                <label for="nivelProfesorG" class="labelGrados">Nivel del Profesor:</label>
-                                <input type="text" name="nivelProfesorG" id="nivelProfesorG"
-                                    style="margin-bottom: -30px;" readonly>
-                                <p class="errorFormMultiPr" id="errornivelProfesorG"></p>
-                                <label for="gradosG" class="labelGrados">Grado(s):</label>
-                                <select name="gradosG" id="gradosG" class="selectGrados"
-                                    onclick="cargarSelectMateriasxProfesor()">
-                                    <option value="Seleccionar" selected>Seleccionar</option>
-                                </select>
-                                <p class="errorFormMultiPr" id="errorGradosG"></p>
-                                <label for="materiasG" class="labelGrados">Materia(s):</label>
-                                <select name="materiasG" id="materiasG" class="selectGrados">
-                                    <option value="No asignado" selected>No asignado</option>
-                                </select>
-                                <p class="errorFormMultiPr" id="errorMateriasG"></p>
-                                <div class="btn-box">
-                                    <button type="button" id="back1-gestionPr">Volver</button>
-                                    <button type="submit">Registrar</button>
-                                </div>
-                            </form>
-                            <div class="step-row-gestionPr">
-                                <div id="progress-gestionPr"></div>
-                                <div class="step-col-gestionPr"><small>Primer paso</small></div>
-                                <div class="step-col-gestionPr"><small>Segundo paso</small></div>
-                            </div>
-                        </div>
-                        <div class="btn-cerrar-gestionPr">
-                            <label for="btn-modal-gestionPr">Cerrar</label>
-                        </div>
-                    </div>
-                    <label for="btn-modal-gestionPr" class="cerrar-modal-gestionPr"></label>
-                </div>
-                <!--Fin de Ventana Modal-->
-        </body>
-        <script>
-            document.getElementById('filtroNivel').addEventListener('change', function () {
-                const nivelSeleccionado = this.value.toLowerCase();
-                const filas = document.querySelectorAll('table tbody tr');
-
-                filas.forEach(fila => {
-                    const nivelGrado = fila.querySelector('td:nth-child(3)').textContent.toLowerCase();
-
-                    if (nivelSeleccionado === '' || nivelGrado === nivelSeleccionado) {
-                        fila.style.display = '';
-                    } else {
-                        fila.style.display = 'none';
-                    }
-                });
-            });
-
-    function eliminarProfesor(button) {
-        let titulo = "¿Desea eliminar al profesor seleccionado?";
-
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: "btn btn-success",
-                cancelButton: "btn btn-danger"
-            },
-            buttonsStyling: false
-        });
-        swalWithBootstrapButtons.fire({
-            title: titulo,
-            text: "La eliminación de una profesor afectará los registros que se relacionan a él de manera definitiva",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Sí, eliminar!",
-            cancelButtonText: "No, cancelar!",
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                swalWithBootstrapButtons.fire({
-                    title: "Acción procesada con éxito",
-                    text: "La información del profesor se eliminó correctamente.",
-                    icon: "success"
-                }).then(() => {
-
-                    var url = "../AJAX/AJAX_Profesores/DeleteProfesores.php";
-                    // Obtiene el data-id del botón que se hizo clic
-                    var miVariable = $(button).data("id");
-
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: {
-                            variable: miVariable
-                        },
-                        success: function (data) {
-                            location.href = "search_profesor.php";
-                        },
-                        error: function (xhr, status, error) {
-                            console.error("Error:", error);
+                        if (!empty($profesoresAsignados)) {
+                            foreach ($profesoresAsignados as $profesor) {
+                                //$nombreMateria = retornarMateriasEnTabla($pdo, $profesor);
+                                ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($profesor['cedula']); ?></td>
+                                    <td><?php echo htmlspecialchars($profesor['nombre']); ?></td>
+                                    <td><?php echo htmlspecialchars($profesor['nivel_grado']); ?></td>
+                                    <td><?php echo htmlspecialchars($profesor['materias_asignados']); ?></td>
+                                    <td><?php echo htmlspecialchars($profesor['grados_asignados']); ?></td>
+                                    <td>
+                                        <button type="button" class="next1-gestionPr"
+                                            data-cedula="<?php echo htmlspecialchars($profesor['cedula']); ?>"
+                                            data-nombre="<?php echo htmlspecialchars($profesor['nombre']); ?>"
+                                            data-grado="<?php echo htmlspecialchars($profesor['grados_asignados']); ?>"
+                                            data-nivelProfesor="<?php echo htmlspecialchars($profesor['nivel_grado']); ?>">
+                                            <i class="bi bi-pencil-square"></i> Editar
+                                        </button>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                        } else {
+                            echo "<tr><td colspan='6'>No se encontraron profesores activos.</td></tr>";
                         }
-                    });
-                });
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                swalWithBootstrapButtons.fire({
-                    title: "Acción cancelada",
-                    text: "Se deshizo la acción de editar",
-                    icon: "error"
-                });
-            }
-        });
-    }
-</script>
+                        ?>
+                    </tbody>
+                </table>
+            </form>
+            <form method="POST" action="../controller_php/controller_FormMultiStepGestionPr.php" id="form2-gestionPr">
+                <h3>Información del Grado</h3>
+                <label for="cedulaProfesorG" class="labelGrados">Cédula del Profesor:</label>
+                <input type="text" name="cedulaProfesorG" id="cedulaProfesorG" style="margin-bottom: -30px;" readonly>
+                <p class="errorFormMultiPr" id="errorCedulaProfesorG"></p>
+                <label for="nombreProfesorG" class="labelGrados">Nombre del Profesor:</label>
+                <input type="text" name="nombreProfesorG" id="nombreProfesorG" style="margin-bottom: -30px;" readonly>
+                <p class="errorFormMultiPr" id="errorProfesorG"></p>
+                <label for="nivelProfesorG" class="labelGrados">Nivel del Profesor:</label>
+                <input type="text" name="nivelProfesorG" id="nivelProfesorG" style="margin-bottom: -30px;" readonly>
+                <p class="errorFormMultiPr" id="errornivelProfesorG"></p>
+                <label for="gradosG" class="labelGrados">Grado(s):</label>
+                <select name="gradosG" id="gradosG" class="selectGrados" onchange="cargarSelectMateriasxProfesor()">
+                    <option value="Seleccionar" selected>Seleccionar</option>
+                </select>
+                <p class="errorFormMultiPr" id="errorGradosG"></p>
+                <label for="materiasG" class="labelGrados">Materia(s):</label>
+                <select name="materiasG" id="materiasG" class="selectGrados">
+                    <option value="No asignado" selected>No asignado</option>
+                </select>
+                <p class="errorFormMultiPr" id="errorMateriasG"></p>
+                <div class="btn-box">
+                    <button type="button" id="back1-gestionPr">Volver</button>
+                    <button type="submit">Registrar</button>
+                </div>
+            </form>
+            <div class="step-row-gestionPr">
+                <div id="progress-gestionPr"></div>
+                <div class="step-col-gestionPr"><small>Primer paso</small></div>
+                <div class="step-col-gestionPr"><small>Segundo paso</small></div>
+            </div>
+        </div>
+        <div class="btn-cerrar-gestionPr">
+            <label for="btn-modal-gestionPr">Cerrar</label>
+        </div>
+    </div>
+    <label for="btn-modal-gestionPr" class="cerrar-modal-gestionPr"></label>
+</div>
+<!--Fin de Ventana Modal-->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var form1 = document.getElementById("form1-gestionPr");
@@ -543,22 +385,7 @@
             }
         });
     });
-
-    document.getElementById('txtFiltarr').addEventListener('input', function () {
-        const filtro = this.value.toLowerCase(); // Texto del filtro en minúsculas
-        const filas = document.querySelectorAll('tbody tr'); // Todas las filas de la tabla
-
-        filas.forEach(fila => {
-            const textoFila = fila.textContent.toLowerCase(); // Texto de la fila en minúsculas
-            if (textoFila.includes(filtro)) {
-                fila.style.display = ''; // Muestra la fila si coincide
-            } else {
-                fila.style.display = 'none'; // Oculta la fila si no coincide
-            }
-        });
-    });
 </script>
-</div>
-</main>
+<script src="../js/moduloProfesor.js"></script>
 
 </html>
