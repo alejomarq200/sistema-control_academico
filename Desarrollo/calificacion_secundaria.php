@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -99,7 +100,7 @@
                     <div class="contenedor-calificaciones">
                         <label for="numCalificaciones">Cantidad de calificaciones:</label>
                         <input type="number" id="numCalificaciones" class="input-calificaciones" min="1" max="10"
-                            value="1" placeholder="N° calificaciones" >
+                            value="1" placeholder="N° calificaciones">
                         <button id="btnAgregarColumnas" class="filter-btn">Agregar</button>
                     </div>
                     <!-- Tabla de Estudiantes -->
@@ -117,9 +118,9 @@
                         $anioEscolar = $_POST['anio_escolar'] ?? null;
                         $busquedaEstudiante = $_POST['busquedaEstudiante'] ?? null;
 
-                        $grado = obtenerValorUnico($pdo, 'grados', 'id_grado', 'id',$idGrado);
-                        $nombreMateria = obtenerValorUnico($pdo, 'materias', 'nombre', 'id_materia',$materia);
-                        $profesor =  obtenerValorUnico($pdo, 'profesores', 'nombre', 'id_profesor',$docente);
+                        $grado = obtenerValorUnico($pdo, 'grados', 'id_grado', 'id', $idGrado);
+                        $nombreMateria = obtenerValorUnico($pdo, 'materias', 'nombre', 'id_materia', $materia);
+                        $profesor = obtenerValorUnico($pdo, 'profesores', 'nombre', 'id_profesor', $docente);
                         ?>
                         <div class="filtros-aplicados-inline">
                             <strong>Filtros aplicados:</strong>
@@ -333,6 +334,13 @@
                             text: respuesta.message,
                             confirmButtonColor: '#f0ad4e'  // color tipo warning (amarillo)
                         });
+                    } else if (respuesta.error && respuesta.message.includes('Su materia se registró ')) {
+                          Swal.fire({
+                            icon: 'warning',
+                            title: 'Atención',
+                            text: respuesta.message,
+                            confirmButtonColor: '#f0ad4e'  // color tipo warning (amarillo)
+                        });
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -341,6 +349,7 @@
                             confirmButtonColor: '#d33'
                         });
                     }
+
                 },
                 error: function () {
                     Swal.fire({
@@ -351,7 +360,7 @@
                     });
                 }
             });
-        });
+    });
 
     });
 

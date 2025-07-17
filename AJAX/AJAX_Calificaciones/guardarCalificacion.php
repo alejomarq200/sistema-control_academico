@@ -1,15 +1,5 @@
 <?php
-
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db = "Proyecto";
-
-// Variable de conexión
-$dsn = 'mysql:host=' . $host . ';dbname=' . $db;
-// Instanciamos PDO
-$pdo = new PDO($dsn, $user, $pass);
-
+include("../../Configuration/Configuration.php");
 header('Content-Type: application/json');
 
 $response = [
@@ -17,6 +7,78 @@ $response = [
     'error' => false,
     'message' => ''
 ];
+
+// Función para validar las calificaciones previas
+function validarCalificacionesPrevias($pdo, $estudianteId, $materiaId, $gradoId, $anioEscolar)
+{
+    // 1. Verificar que exista al menos una calificación en cada lapso
+    $stmt = $pdo->prepare("SELECT lapso_academico 
+                          FROM calificaciones 
+                          WHERE id_estudiante = ? 
+                          AND id_materia = ?
+                          AND lapso_academico IN ('1er Lapso', '2do Lapso', '3er Lapso')
+                          GROUP BY lapso_academico");
+    $stmt->execute([$estudianteId, $materiaId]);
+    $lapsosConCalificacion = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    // Verificar que estén los 3 lapsos
+    $lapsosRequeridos = ['1er Lapso', '2do Lapso', '3er Lapso'];
+    $lapsosFaltantes = array_diff($lapsosRequeridos, $lapsosConCalificacion);
+
+    if (!empty($lapsosFaltantes)) {
+        return [
+            'success' => false,
+            'message' => 'Faltan calificaciones en los siguientes lapsos: ' . implode(', ', $lapsosFaltantes)
+        ];
+    }
+
+    // 2. Calcular el promedio total
+    $stmt = $pdo->prepare("SELECT SUM(calificacion) as suma, COUNT(*) as cantidad
+                          FROM calificaciones 
+                          WHERE id_estudiante = ? 
+                          AND id_materia = ?");
+    $stmt->execute([$estudianteId, $materiaId]);
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $promedio = ($data['cantidad'] > 0) ? ($data['suma'] / $data['cantidad']) : 0;
+
+    // 3. Verificar si el promedio es menor a 10
+    if ($promedio < 10) {
+        // Verificar si ya existe en materias_pendientes
+        $stmt = $pdo->prepare("SELECT 1 FROM materias_pendientes 
+                             WHERE id_estudiante = ? AND id_materia = ? AND anio_escolar = ?");
+        $stmt->execute([$estudianteId, $materiaId, $anioEscolar]);
+
+        if ($stmt->rowCount() === 0) {
+            // Insertar en materias_pendientes si no existe
+            $fechaActual = date('Y-m-d H:i:s');
+            $stmt = $pdo->prepare("INSERT INTO materias_pendientes 
+                                  (id_estudiante, id_materia, id_grado, anio_escolar, promedio_final, estado, fecha_registro, fecha_actualizacion) 
+                                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([
+                $estudianteId,
+                $materiaId,
+                $gradoId,
+                $anioEscolar,
+                $promedio,
+                'pendiente',
+                $fechaActual,
+                $fechaActual
+            ]);
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Su materia se registró como pendiente. Con Promedio de: ' . round($promedio, 2)
+        ];
+    }
+
+    return [
+        'success' => true,
+        'message' => 'Materia aprobada. Promedio: ' . round($promedio, 2)
+    ];
+}
+
 
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -81,24 +143,42 @@ try {
             $materiaId,
             $estudianteId,
             $calificacion,
-            $total]);
+            $total
+        ]);
     }
 
-    $pdo->commit();
+    // En tu bloque try, modifica la llamada a la función:
+    if ($lapso === '3er Lapso') {
+        $validacion = validarCalificacionesPrevias($pdo, $estudianteId, $materiaId, $gradoId, $anioEscolar);
+
+        if (!$validacion['success']) {
+            $pdo->commit(); // Confirmamos las calificaciones primero
+            echo json_encode([
+                'success' => false,
+                'error' => true,
+                'message' => $validacion['message']
+            ]);
+            exit;
+        }
+    }
 
     $response = [
         'success' => true,
         'message' => 'Calificaciones guardadas correctamente'
     ];
 
+    $pdo->commit();
+
 } catch (PDOException $e) {
-    if ($pdo->inTransaction()) $pdo->rollBack();
+    if ($pdo->inTransaction())
+        $pdo->rollBack();
     $response = [
         'error' => true,
         'message' => 'Error en la base de datos: ' . $e->getMessage()
     ];
 } catch (Exception $e) {
-    if (isset($pdo) && $pdo->inTransaction()) $pdo->rollBack();
+    if (isset($pdo) && $pdo->inTransaction())
+        $pdo->rollBack();
     $response = [
         'error' => true,
         'message' => $e->getMessage()

@@ -11,10 +11,10 @@
         /* Estilos generales del contenedor principal */
         .main-content {
             margin-left: 300px;
-            /* Ajusta según el ancho de tu sidebar */
             padding: 10px;
             background: #f5f5f5;
             min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         /* Barra superior */
@@ -73,56 +73,36 @@
             padding: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        th,
-        td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-
-        th {
-            background: #f9f9f9;
-            color: #555;
-        }
-
-        .btn-edit,
-        .btn-delete {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            margin: 0 5px;
-        }
-
-        .btn-edit {
-            color: #2196f3;
-        }
-
-        .btn-delete {
-            color: #f44336;
-        }
     </style>
 </head>
 
 <body>
     <!-- Contenedor Principal (sin sidebar) -->
     <main class="main-content">
+        <?php
+        include("../Configuration/Configuration.php");
+        function retornarTotalRegistros($pdo, $alias, $tabla, $columWhere, $parametro, $retornar)
+        {
+            try {
+                $stmt = $pdo->prepare("SELECT COUNT(*) as $alias FROM $tabla WHERE $columWhere = :$columWhere");
+                $stmt->bindValue(":$columWhere", $parametro, PDO::PARAM_STR);
+                $stmt->execute();
+                $resultado = $stmt->fetch(PDO::FETCH_ASSOC); // SOLO UNA FILA
+                $retornar = $resultado[$alias];
+
+                return $retornar;
+            } catch (PDOException $e) {
+                error_log($e->getMessage());
+            }
+        }
+        ?>
         <!-- Barra Superior -->
         <header class="top-bar">
             <h1>Dashboard</h1>
-            <div class="top-actions">
-                
-            </div>
         </header>
 
         <!-- Cards de Resumen -->
+        <h3>Información Primaria</h3>
         <section class="summary-cards">
             <div class="card">
                 <div class="card-icon" style="background: #e3f2fd;">
@@ -130,7 +110,9 @@
                 </div>
                 <div class="card-info">
                     <h3>Alumnos</h3>
-                    <p>248</p>
+                    <p><?=
+                        $infoPrimaria = retornarTotalRegistros($pdo, 'total', 'estudiantes', 'grado_est', 1, 'totalEst');
+                        htmlspecialchars($infoPrimaria);?></p>
                 </div>
             </div>
             <div class="card">
@@ -139,7 +121,9 @@
                 </div>
                 <div class="card-info">
                     <h3>Profesores</h3>
-                    <p>24</p>
+                    <p><?= $infoPPrimaria = retornarTotalRegistros($pdo, 'total', 'profesores', 'nivel_grado', 'Primaria', 'totalProf');
+                        htmlspecialchars($infoPPrimaria);
+                    ?></p>
                 </div>
             </div>
             <div class="card">
@@ -147,48 +131,52 @@
                     <i class="fas fa-book" style="color: #ff9800;"></i>
                 </div>
                 <div class="card-info">
-                    <h3>Cursos</h3>
-                    <p>15</p>
+                    <h3>Asignaturas</h3>
+                    <p><?= $infoMPrimaria = retornarTotalRegistros($pdo, 'total', 'materias', 'nivel_materia', 'Primaria', 'totalMateria');
+                        htmlspecialchars($infoMPrimaria);
+                    ?></p>
                 </div>
             </div>
         </section>
-
+        <h3>Información Secundaria</h3>
+        <section class="summary-cards">
+            <div class="card">
+                <div class="card-icon" style="background: #e3f2fd;">
+                    <i class="fas fa-users" style="color: #2196f3;"></i>
+                </div>
+                <div class="card-info">
+                    <h3>Alumnos</h3>
+                    <p><?=
+                        $infoSecundaria = retornarTotalRegistros($pdo, 'total', 'estudiantes', 'grado_est', 7, 'totalEst');
+                        htmlspecialchars($infoSecundaria);?></p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="background: #e8f5e9;">
+                    <i class="fas fa-chalkboard-teacher" style="color: #4caf50;"></i>
+                </div>
+                <div class="card-info">
+                    <h3>Profesores</h3>
+                    <p><?= $infoPSecundaria = retornarTotalRegistros($pdo, 'total', 'profesores', 'nivel_grado', 'Secundaria', 'totalProf');
+                        htmlspecialchars($infoPSecundaria);
+                    ?></p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="background: #fff3e0;">
+                    <i class="fas fa-book" style="color: #ff9800;"></i>
+                </div>
+                <div class="card-info">
+                    <h3>Asignaturas</h3>
+                   <p><?= $infoMSecundaria = retornarTotalRegistros($pdo, 'total', 'materias', 'nivel_materia', 'Secundaria', 'totalMateria');
+                        htmlspecialchars($infoMSecundaria);
+                    ?></p>
+                </div>
+            </div>
+        </section>
         <!-- Tabla de Alumnos -->
         <section class="recent-students">
-            <h2>Últimos Alumnos Registrados</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Fecha</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>#001</td>
-                        <td>María Pérez</td>
-                        <td>maria@example.com</td>
-                        <td>10/05/2023</td>
-                        <td>
-                            <button class="btn-edit"><i class="fas fa-edit"></i></button>
-                            <button class="btn-delete"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#002</td>
-                        <td>Juan Gómez</td>
-                        <td>juan@example.com</td>
-                        <td>12/05/2023</td>
-                        <td>
-                            <button class="btn-edit"><i class="fas fa-edit"></i></button>
-                            <button class="btn-delete"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+
         </section>
     </main>
 </body>

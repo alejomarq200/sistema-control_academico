@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -53,7 +52,7 @@
             width: 100%;
             overflow: hidden;
             transition: all 0.35s ease-in-out;
-          /*  background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+            /*  background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
                 url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');*/
             background-size: cover;
             background-attachment: fixed;
@@ -188,9 +187,7 @@
                 <button class="toggle-btn" type="button">
                     <i class="bi bi-chevron-double-right"></i>
                 </button>
-                <div class="sidebar-logo">
-                    <a href="#">CodzSword</a>
-                </div>
+                
             </div>
             <ul class="sidebar-nav">
                 <!-- Menú de Registro con submenú -->
@@ -261,11 +258,30 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="search_materia.php" class="sidebar-link">
+                            <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+                                data-bs-target="#materias-submenu" aria-expanded="false"
+                                aria-controls="materias-submenu">
                                 <i class="fas fa-book"></i>
                                 <span>Materias</span>
                             </a>
+                            <ul id="materias-submenu" class="sidebar-dropdown list-unstyled collapse">
+                                <li class="sidebar-item">
+                                    <a href="search_materia.php" class="sidebar-link">
+                                        <i class="bi bi-search"></i>
+                                        <span>Buscar Materias</span>
+                                    </a>
+                                </li>
+                                <!-- Aquí agregamos el sub-submenú -->
+                                <li class="sidebar-item">
+                                    <a href="materia_pendiente.php" class="sidebar-link">
+                                        <img src="hora.png" alt="Icono hora">
+                                        <span>Materias Pendientes</span>
+                                    </a>
+                                </li>
+
+                            </ul>
                         </li>
+
                         <li class="sidebar-item">
                             <a href="search_grado.php" class="sidebar-link">
                                 <i class="fi fi-rr-degree-credential"></i>
