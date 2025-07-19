@@ -159,3 +159,27 @@ function reporteUsuarios($pdo, $estado, $rol)
         return [];
     }
 }
+
+function recoveryPass($pdo, array $variablesFormRecovery)
+{
+
+    $stmt = $pdo->prepare("UPDATE users SET contrasena = :contrasena WHERE cedula = :cedula");
+    $stmt->bindValue(':contrasena', $variablesFormRecovery[0]);
+    $stmt->bindValue(':cedula', $variablesFormRecovery[2]);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        $_SESSION['mensaje'] = 'Contraseña actualizada con éxito';
+        $_SESSION['icono'] = 'success';
+        $_SESSION['titulo'] = 'Éxito';
+        header("Location: ../Inicio/Logear.php");
+        exit();
+    } else {
+        $_SESSION['mensaje'] = 'Error al actualizar la contraseña. Verifique';
+        $_SESSION['icono'] = 'error';
+        $_SESSION['titulo'] = 'Error';
+
+        header("Location: ../Inicio/Logear.php");
+        exit();
+    }
+}

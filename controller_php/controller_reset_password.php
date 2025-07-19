@@ -1,10 +1,8 @@
 <?php
 session_start();
 include("../Configuration/Configuration.php");
-include("../Configuration/validate_user.php");
-include("../Configuration/functions_php/functionsNewPassword.php");
-
-valid_sesion($_SESSION['id']);
+include("../Configuration/functions_php/functionsCRUDUser.php");
+//valid_sesion($_SESSION['id']);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -34,12 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     /* Si validar es verdadero se procesa el envío del código al correo */
     if ($validar) {
-
-        recoveryPass($pdo, $variablesFormRecovery);
-        
+        if ($variablesFormRecovery[0] === $variablesFormRecovery[1]) {
+            recoveryPass($pdo, $variablesFormRecovery);
+        }
     } else {
-        for($i = 0; $i < count($mensajes); $i++){
-            echo "<br>" . $mensajes . "<br>" ;
+        for ($i = 0; $i < count($mensajes); $i++) {
+            echo "<br>" . $mensajes . "<br>";
         }
     }
 }
