@@ -38,9 +38,9 @@
     </div>
 </div>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         // Manejar clic en botón editar
-        $(document).on('click', '.btn-editar', function () {
+        $(document).on('click', '.btn-editar', function() {
             const estudianteId = $(this).data('estudiante');
             const calificaciones = $(this).data('calificaciones');
             const fila = $(this).closest('tr');
@@ -88,30 +88,57 @@
         });
 
         // Manejar el guardado de cambios
-        $('#guardarCambios').click(function () {
+        $('#guardarCambios').click(function() {
             const formData = $('#formEditarCalificaciones').serialize();
 
             $.ajax({
                 url: '../AJAX/AJAX_Calificaciones/editarCalificacion.php',
                 method: 'POST',
                 data: formData,
-                beforeSend: function () {
+                dataType: 'json', // Asegura que jQuery parseé la respuesta como JSON
+                beforeSend: function() {
                     $('#guardarCambios').prop('disabled', true).html(
                         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...'
                     );
                 },
-                success: function (response) {
+                success: function(response) {
+                    // Verificar si la respuesta es un string y necesita ser parseada
+                    if (typeof response === 'string') {
+                        try {
+                            response = JSON.parse(response);
+                        } catch (e) {
+                            console.error('Error parsing JSON:', e);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Formato de respuesta inválido del servidor',
+                                confirmButtonText: 'Entendido'
+                            });
+                            return;
+                        }
+                    }
+
                     if (response.success) {
+                        // Construir mensaje detallado
+                        let mensaje = response.message;
+
+                        // Agregar información adicional si existe
+                        if (response.materiaPendiente) {
+                            mensaje += "\n\nEstado materia pendiente:";
+                            mensaje += "\n- Acción realizada: " + (response.materiaPendiente.accionRealizada || 'ninguna');
+                            mensaje += "\n- Promedio anterior: " + (response.materiaPendiente.promedioAnterior || 'N/A');
+                            mensaje += "\n- Promedio nuevo: " + (response.materiaPendiente.promedioNuevo || 'N/A');
+                        }
+
                         Swal.fire({
                             icon: 'success',
                             title: '¡Éxito!',
-                            text: 'Calificaciones actualizadas correctamente',
-                            timer: 3000,
+                            html: mensaje.replace(/\n/g, '<br>'), // Convertir saltos de línea a <br>
+                            timer: 4000, // Un poco más de tiempo para leer
                             timerProgressBar: true,
-                            showConfirmButton: false
+                            showConfirmButton: true // Permitir cerrar manualmente
                         }).then(() => {
                             $('#editarCalificacionesModal').modal('hide');
-                            // Opción 1: Recargar la página
                             location.reload();
                         });
                     } else {
@@ -123,15 +150,20 @@
                         });
                     }
                 },
-                error: function (xhr) {
+                error: function(xhr) {
+                    let errorMsg = 'Ocurrió un error al conectar con el servidor: ' + xhr.statusText;
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+
                     Swal.fire({
                         icon: 'error',
                         title: 'Error de conexión',
-                        text: 'Ocurrió un error al conectar con el servidor: ' + xhr.statusText,
+                        text: errorMsg,
                         confirmButtonText: 'Entendido'
                     });
                 },
-                complete: function () {
+                complete: function() {
                     $('#guardarCambios').prop('disabled', false).text('Guardar Cambios');
                 }
             });

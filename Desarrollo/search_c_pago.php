@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="../css/modalesProfesor/tablaGestionPr.css">
+    <link rel="stylesheet" href="../css/moduloCPago.css">
 
     <title>Consultar Contacto de Pago</title>
 </head>
+
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
@@ -59,11 +61,11 @@
                             include("../Layout/modalesRepresentantes/modalEditContactoP.php");
 
                             $contactoPago = consultarContactoPago($pdo); // Obtener los usuarios
-                            
+
                             if (!empty($contactoPago)) {
                                 foreach ($contactoPago as $cPago) { // Iterar sobre cada usuario
 
-                                    ?>
+                            ?>
                                     <tr>
                                         <td><?php echo ($cPago['cedula']); ?></td>
                                         <td><?php echo ($cPago['nombres']); ?></td>
@@ -88,12 +90,12 @@
                                                 data-direccion_empresa="<?php echo $cPago['direccion_empresa'] ?>">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                             <button type="button" class="btn btn-danger">
-                                            <i class="bi bi-download"></i>
-                                        </button>
+                                            <button type="button" class="btn btn-danger">
+                                                <i class="bi bi-download"></i>
+                                            </button>
                                         </td>
                                     </tr>
-                                    <?php
+                            <?php
                                 }
                             } else {
                                 echo "<tr><td colspan='8'>No se encontraron usuarios.</td></tr>";
@@ -103,6 +105,7 @@
                     </table>
                 </div>
                 </main>
+                <script src="../js/filtrarLupa.js"></script>
 </body>
 </div>
 </main>

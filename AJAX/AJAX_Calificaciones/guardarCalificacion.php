@@ -9,16 +9,17 @@ $response = [
 ];
 
 // Función para validar las calificaciones previas
-function validarCalificacionesPrevias($pdo, $estudianteId, $materiaId, $gradoId, $anioEscolar)
+function validarCalificacionesPrevias($pdo, $estudianteId, $materiaId, $gradoId, $anioEscolar, $profesorId)
 {
     // 1. Verificar que exista al menos una calificación en cada lapso
     $stmt = $pdo->prepare("SELECT lapso_academico 
                           FROM calificaciones 
                           WHERE id_estudiante = ? 
                           AND id_materia = ?
+                          AND id_profesor = ?
                           AND lapso_academico IN ('1er Lapso', '2do Lapso', '3er Lapso')
                           GROUP BY lapso_academico");
-    $stmt->execute([$estudianteId, $materiaId]);
+    $stmt->execute([$estudianteId, $materiaId, $profesorId]);
     $lapsosConCalificacion = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
     // Verificar que estén los 3 lapsos
@@ -36,8 +37,9 @@ function validarCalificacionesPrevias($pdo, $estudianteId, $materiaId, $gradoId,
     $stmt = $pdo->prepare("SELECT SUM(calificacion) as suma, COUNT(*) as cantidad
                           FROM calificaciones 
                           WHERE id_estudiante = ? 
-                          AND id_materia = ?");
-    $stmt->execute([$estudianteId, $materiaId]);
+                          AND id_materia = ?
+                          AND id_profesor = ?");
+    $stmt->execute([$estudianteId, $materiaId, $profesorId]);
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $promedio = ($data['cantidad'] > 0) ? ($data['suma'] / $data['cantidad']) : 0;
@@ -46,23 +48,23 @@ function validarCalificacionesPrevias($pdo, $estudianteId, $materiaId, $gradoId,
     if ($promedio < 10) {
         // Verificar si ya existe en materias_pendientes
         $stmt = $pdo->prepare("SELECT 1 FROM materias_pendientes 
-                             WHERE id_estudiante = ? AND id_materia = ? AND anio_escolar = ?");
-        $stmt->execute([$estudianteId, $materiaId, $anioEscolar]);
+                             WHERE id_estudiante = ? AND id_materia = ? AND id_profesor = ? AND anio_escolar = ?");
+        $stmt->execute([$estudianteId, $materiaId, $profesorId, $anioEscolar]);
 
         if ($stmt->rowCount() === 0) {
             // Insertar en materias_pendientes si no existe
-            $fechaActual = date('Y-m-d H:i:s');
+            $fechaActual = date('d-m-Y');
             $stmt = $pdo->prepare("INSERT INTO materias_pendientes 
-                                  (id_estudiante, id_materia, id_grado, anio_escolar, promedio_final, estado, fecha_registro, fecha_actualizacion) 
+                                  (id_estudiante, id_materia, id_grado, id_profesor, anio_escolar, promedio_final, estado, fecha_registro) 
                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([
                 $estudianteId,
                 $materiaId,
                 $gradoId,
+                $profesorId,
                 $anioEscolar,
                 $promedio,
                 'pendiente',
-                $fechaActual,
                 $fechaActual
             ]);
         }
@@ -149,7 +151,7 @@ try {
 
     // En tu bloque try, modifica la llamada a la función:
     if ($lapso === '3er Lapso') {
-        $validacion = validarCalificacionesPrevias($pdo, $estudianteId, $materiaId, $gradoId, $anioEscolar);
+        $validacion = validarCalificacionesPrevias($pdo, $estudianteId, $materiaId, $gradoId, $anioEscolar, $profesorId);
 
         if (!$validacion['success']) {
             $pdo->commit(); // Confirmamos las calificaciones primero

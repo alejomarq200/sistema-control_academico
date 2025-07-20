@@ -4,9 +4,9 @@ include("../../Configuration/Configuration.php");
 include("../../Layout/mensajes.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!empty($_POST['variable'])) { // Asegúrate de que 'variable' esté definida
+    if (!empty($_POST['variable'])) { // Asegurarse que la variable esté definida
         $resultado = $_POST['variable'];
-       try {
+        try {
             $stmt = $pdo->prepare("DELETE FROM materias WHERE id_materia = :id_materia");
 
             $stmt->bindValue(':id_materia', $resultado);
@@ -18,8 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['titulo'] = 'Success';
             }
         } catch (PDOException $e) {
-        }  
-       echo $resulado;
+            error_log($e->getMessage());
+        }
+        echo $resulado;
     } else {
         echo "Error: No se recibió la variable.";
     }
