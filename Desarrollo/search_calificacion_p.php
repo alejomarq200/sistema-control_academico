@@ -16,7 +16,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../css/moduloCalificacion_p.css">
 </head>
-
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
@@ -35,24 +34,20 @@
                 <main class="student-module">
                     <!-- Sección de Información de la Institución -->
                     <section class="institution-info">
-                        <h2><i class="fas fa-school"></i> Institución Educativa
-                            Ejemplo</h2>
+                        <h2><i class="fas fa-school"></i>UNIDAD EDUCATIVA COLEGIO “PRADO DEL NORTE” </h2>
                         <div class="info-grid">
                             <div class="info-item">
                                 <i class="fas fa-id-card"></i>
-                                <span>RIF: J-12345678-9</span>
+                                <span>Cód.DEA: PD00361303</span>
                             </div>
                             <div class="info-item">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span>Av. Principal, Ciudad, Estado</span>
+                                <span>AV. INTERCOMUNAL TAMACA EL CUJI KM. 08 VÍA DUACA</span>
                             </div>
-                            <div class="info-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>contacto@instituto.edu</span>
-                            </div>
+
                             <div class="info-item">
                                 <i class="fas fa-phone"></i>
-                                <span>+58 412-1234567</span>
+                                <span>0251-8145640</span>
                             </div>
                         </div>
                     </section>
@@ -291,7 +286,6 @@
                                     }
                                     ?>
                                 </tbody>
-
                             </table>
                         </div>
                     </section>
@@ -302,13 +296,16 @@
     </div>
     </div>
 </body>
+
 <script>
-    $(document).ready(function () {
-        $('.search-box input[type="text"]').on("keyup input", function () {
+    $(document).ready(function() {
+        $('.search-box input[type="text"]').on("keyup input", function() {
             var inputVal = $(this).val();
             var resultDropdown = $(this).siblings(".result");
             if (inputVal.length) {
-                $.get("backend-search.php", { term: inputVal }).done(function (data) {
+                $.get("backend-search.php", {
+                    term: inputVal
+                }).done(function(data) {
                     // Display the returned data in browser
                     resultDropdown.html(data);
                 });
@@ -318,24 +315,36 @@
         });
 
         // Set search input value on click of result item
-        $(document).on("click", ".result p", function () {
+        $(document).on("click", ".result p", function() {
             $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
             $(this).parent(".result").empty();
         });
     });
-    
 </script>
 <script>
-    document.getElementById("infoEstudiante").addEventListener("submit", function (event) {
+    document.getElementById("infoEstudiante").addEventListener("submit", function(event) {
         event.preventDefault();
-
         // Array con todos los campos a validar
-        const campos = [
-            { id: 'categoriaGrado', nombre: 'Nivel' },
-            { id: 'nombreGrado', nombre: 'Grado' },
-            { id: 'docente', nombre: 'Docente' },
-            { id: 'materias', nombre: 'Asignatura' },
-            { id: 'tipoContenido', nombre: 'Tipo Contenido' },
+        const campos = [{
+                id: 'categoriaGrado',
+                nombre: 'Nivel'
+            },
+            {
+                id: 'nombreGrado',
+                nombre: 'Grado'
+            },
+            {
+                id: 'docente',
+                nombre: 'Docente'
+            },
+            {
+                id: 'materias',
+                nombre: 'Asignatura'
+            },
+            {
+                id: 'tipoContenido',
+                nombre: 'Tipo Contenido'
+            },
 
         ];
 
@@ -427,12 +436,13 @@
         }
     }
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         // Calcular y asignar el año escolar
         const añoActual = new Date().getFullYear();
         $('#anio_escolar').val(`${añoActual}-${añoActual + 1}`);
+        
 
-        $(document).on('click', '.btn-guardar', function () {
+        $(document).on('click', '.btn-guardar', function() {
             const $tr = $(this).closest('tr');
             const $btn = $(this);
             //$btn.prop('disabled', true).html('<i class="bi bi-hourglass"></i> Procesando...');
@@ -457,7 +467,7 @@
             }
 
             // Buscar qué input tiene valor en esta fila
-            $tr.find('.input-table').each(function () {
+            $tr.find('.input-table').each(function() {
                 const valor = $(this).val().trim();
                 if (valor !== '') {
                     calificacion = valor;
@@ -497,7 +507,7 @@
                 type: 'POST',
                 data: datos,
                 dataType: 'json',
-                success: function (response) {
+                success: function(response) {
                     if (response.type === 'success') {
                         Swal.fire({
                             icon: 'success',
@@ -508,8 +518,7 @@
                         });
                         // Opcional: Limpiar campos después de guardar
                         $tr.find('.input-table').val('').prop('disabled', false).css('border-color', '');
-                    }
-                    else if (response.type === 'warning') {
+                    } else if (response.type === 'warning') {
                         Swal.fire({
                             icon: 'warning',
                             title: 'Advertencia',
@@ -517,8 +526,7 @@
                             showConfirmButton: true,
                             confirmButtonText: 'Entendido'
                         });
-                    }
-                    else {
+                    } else {
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
@@ -527,7 +535,7 @@
                         });
                     }
                 },
-                error: function (xhr) {
+                error: function(xhr) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error de conexión',
@@ -546,10 +554,10 @@
             url: "../AJAX/AJAX_Grados/searchGradoxMateria.php",
             type: "POST",
             data: $("#infoEstudiante").serialize(),
-            success: function (resultado) {
+            success: function(resultado) {
                 $("#nombreGrado").html(resultado);
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error("Error en la solicitud AJAX:", error);
             }
         });
@@ -560,11 +568,11 @@
             type: "POST",
             url: "../AJAX/AJAX_Calificaciones/consultarPrCalificacion.php",
             data: $("#infoEstudiante").serialize(),
-            success: function (resultado) {
+            success: function(resultado) {
                 $("#docente").html(resultado);
                 cargarProfesorxGrado();
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error("Error en la solicitud AJAX:", error);
             }
         });
@@ -575,10 +583,10 @@
             type: "POST",
             url: "../AJAX/AJAX_Calificaciones/consultarPrDocente.php",
             data: $("#infoEstudiante").serialize(),
-            success: function (resultado) {
+            success: function(resultado) {
                 $("#materias").html(resultado);
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error("Error en la solicitud AJAX:", error);
             }
         });
@@ -589,10 +597,10 @@
             url: "../AJAX/AJAX_Calificaciones/actividadxAsignatura.php",
             type: "POST",
             data: $("#infoEstudiante").serialize(),
-            success: function (resultado) {
+            success: function(resultado) {
                 $("#contenidos").html(resultado);
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error("Error en la solicitud AJAX:", error);
             }
         });
@@ -603,13 +611,14 @@
             url: "../AJAX/AJAX_Calificaciones/contenidoxAsignatura.php",
             type: "POST",
             data: $("#infoEstudiante").serialize(),
-            success: function (resultado) {
+            success: function(resultado) {
                 $("#tipoContenido").html(resultado);
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error("Error en la solicitud AJAX:", error);
             }
         })
     }
 </script>
+
 </html>

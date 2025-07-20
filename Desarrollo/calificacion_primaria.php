@@ -35,24 +35,20 @@
                 <main class="student-module">
                     <!-- Sección de Información de la Institución -->
                     <section class="institution-info">
-                        <h2><i class="fas fa-school"></i> Institución Educativa
-                            Ejemplo</h2>
+                        <h2><i class="fas fa-school"></i>UNIDAD EDUCATIVA COLEGIO “PRADO DEL NORTE”	</h2>
                         <div class="info-grid">
                             <div class="info-item">
                                 <i class="fas fa-id-card"></i>
-                                <span>RIF: J-12345678-9</span>
+                                <span>Cód.DEA: PD00361303</span>
                             </div>
                             <div class="info-item">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span>Av. Principal, Ciudad, Estado</span>
+                                <span>AV. INTERCOMUNAL TAMACA EL CUJI KM. 08 VÍA DUACA</span>
                             </div>
-                            <div class="info-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>contacto@instituto.edu</span>
-                            </div>
+                          
                             <div class="info-item">
                                 <i class="fas fa-phone"></i>
-                                <span>+58 412-1234567</span>
+                                <span>0251-8145640</span>
                             </div>
                         </div>
                     </section>
@@ -68,6 +64,8 @@
                                     readonly>
                                 <input type="hidden" id="selectLapso" name="selectLapso"
                                     value="<?php echo $_POST['lapso']; ?>" required>
+                                     <input type="text" id="tcontent" name="tcontent"
+                                    value="<?php echo $_POST['tipocontenido']; ?>">
                             </div>
                             <div class="filter-inputs">
                                 <select class="filter-input" id="categoriaGrado" name="categoriaGrado"
@@ -90,7 +88,7 @@
                                     onchange="buscarActividadxAsignatura()" required>
                                     <option value=>Asignaturas</option>
                                 </select>
-                                <input type="hidden" name="tipoContenido" id="tipoContenido" readonly>
+                                <input type="text" name="tipocontenido" id="tipocontenido" readonly>
                                 <button class="filter-btn">Filtrar</button>
                             </div>
                             <div class="search-bar" style="margin-top: 15px;">
@@ -409,7 +407,7 @@
             }
 
             // Verifica que el input existe y tiene valor
-            const tipoContenidoInput = $('#tipoContenido');
+            const tipoContenidoInput = $('#tcontent');
             if (!tipoContenidoInput.length) {
                 console.error('Input #tipoContenido no encontrado');
                 return;
@@ -554,7 +552,7 @@
                         success: function (response) {
                             if (response.success) {
                                 // Asigna el valor al input deseado
-                                $('#tipoContenido').val(response.tipo_contenido);
+                                $('#tipocontenido').val(response.tipo_contenido);
                             } else {
                                 console.log(response.message);
                                 // Opcional: mostrar mensaje de error al usuario

@@ -342,7 +342,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="descargarCalificaciones.php" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
                                 <span>Reporte de Calificaciones</span>
                             </a>

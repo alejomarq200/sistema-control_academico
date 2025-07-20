@@ -35,25 +35,21 @@
                 ?>
                 <main class="student-module">
                     <!-- Sección de Información de la Institución -->
-                    <section class="institution-info">
-                        <h2><i class="fas fa-school"></i> Institución Educativa
-                            Ejemplo</h2>
+                     <section class="institution-info">
+                        <h2><i class="fas fa-school"></i>UNIDAD EDUCATIVA COLEGIO “PRADO DEL NORTE”	</h2>
                         <div class="info-grid">
                             <div class="info-item">
                                 <i class="fas fa-id-card"></i>
-                                <span>RIF: J-12345678-9</span>
+                                <span>Cód.DEA: PD00361303</span>
                             </div>
                             <div class="info-item">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span>Av. Principal, Ciudad, Estado</span>
+                                <span>AV. INTERCOMUNAL TAMACA EL CUJI KM. 08 VÍA DUACA</span>
                             </div>
-                            <div class="info-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>contacto@instituto.edu</span>
-                            </div>
+                          
                             <div class="info-item">
                                 <i class="fas fa-phone"></i>
-                                <span>+58 412-1234567</span>
+                                <span>0251-8145640</span>
                             </div>
                         </div>
                     </section>
