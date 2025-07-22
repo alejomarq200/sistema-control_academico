@@ -86,14 +86,26 @@ foreach ($estudiantesIds as $estudianteId) {
     $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', $datosGenerales['nombrePr']), 0, 1);
     $pdf->Cell(0, 10, 'EX= EXCELENTE     MB= MUY BIEN     B = BIEN     DM= DEBE MEJORAR', 0, 1, 'C');
 
-    // Asignaturas y calificaciones
+    $mostrarEncabezados = true;
+
     foreach ($asignaturas as $asignatura) {
         $pdf->SetFont('Arial', 'B', 11);
         $pdf->Cell(150, 10, iconv('UTF-8', 'windows-1252', $asignatura['nombre']), 1, 0);
-        $pdf->Cell(10, 10, '', 1, 0, 'C');
-        $pdf->Cell(10, 10, '', 1, 0, 'C');
-        $pdf->Cell(10, 10, '', 1, 0, 'C');
-        $pdf->Cell(10, 10, '', 1, 1, 'C');
+
+        // Solo mostrar EX, MB, B, DM en la primera asignatura
+        if ($mostrarEncabezados) {
+            $pdf->Cell(10, 10, 'EX', 1, 0, 'C');
+            $pdf->Cell(10, 10, 'MB', 1, 0, 'C');
+            $pdf->Cell(10, 10, 'B', 1, 0, 'C');
+            $pdf->Cell(10, 10, 'DM', 1, 1, 'C');
+            $mostrarEncabezados = false; // Desactivar para las siguientes asignaturas
+        } else {
+            // Celdas vacías para las demás asignaturas
+            $pdf->Cell(10, 10, '', 1, 0, 'C');
+            $pdf->Cell(10, 10, '', 1, 0, 'C');
+            $pdf->Cell(10, 10, '', 1, 0, 'C');
+            $pdf->Cell(10, 10, '', 1, 1, 'C');
+        }
 
         $sqlTiposActividad = "SELECT DISTINCT c.tipo_actividad 
                               FROM calificaciones c 
