@@ -12,6 +12,7 @@
 <body>
     <div class="formbold-main-wrapper">
         <div class="formbold-form-wrapper">
+            <h1>Planilla de Inscripción</h1>
             <form action="../controller_php/controller_FormInscripcion.php" method="POST" id="form">
                 <div class="formbold-steps">
                     <ul>
@@ -34,7 +35,7 @@
                 <div class="formbold-form-step-1 active">
                     <div class="mb-3">
                         <label for="anioEscolar" class="form-label">Año Escolar</label>
-                        <input type="text" class="form-control" id="anioEscolar" name="anioEscolar" readonly>
+                        <input type="text" class="formbold-form-input" id="anioEscolar" name="anioEscolar" readonly>
                     </div>
                     <div>
                         <label for="cedulaEst" class="formbold-form-label">Cédula</label>

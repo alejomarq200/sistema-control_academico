@@ -64,7 +64,7 @@
                                     readonly>
                                 <input type="hidden" id="selectLapso" name="selectLapso"
                                     value="<?php echo $_POST['lapso']; ?>" required>
-                                     <input type="text" id="tcontent" name="tcontent"
+                                     <input type="hidden" id="tcontent" name="tcontent"
                                     value="<?php echo $_POST['tipocontenido']; ?>">
                             </div>
                             <div class="filter-inputs">
@@ -88,7 +88,7 @@
                                     onchange="buscarActividadxAsignatura()" required>
                                     <option value=>Asignaturas</option>
                                 </select>
-                                <input type="text" name="tipocontenido" id="tipocontenido" readonly>
+                                <input type="hidden" name="tipocontenido" id="tipocontenido" readonly>
                                 <button class="filter-btn">Filtrar</button>
                             </div>
                             <div class="search-bar" style="margin-top: 15px;">
