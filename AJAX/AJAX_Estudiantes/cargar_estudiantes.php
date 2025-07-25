@@ -1,6 +1,6 @@
 <?php
 error_reporting(0);
-include("../Configuration/Configuration.php");
+include("../../Configuration/Configuration.php");
 $grado = $_POST['gradoModal'] ?? null;
 $anioEscolar = $_POST['anioModal'] ?? null;
 

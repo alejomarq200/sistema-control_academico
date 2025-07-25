@@ -42,17 +42,18 @@ function insertarEstudiantes($pdo, array $data)
 }
 
 
-function insertarRepresentante($pdo, array $dataRepr)
+function insertarRepresentante($pdo, array $dataRepr, $parantesco)
 {
     try {
         $stmt = $pdo->prepare(
-            "INSERT INTO representantes (cedula, nombres, apellidos, fecha_nac, correo, direccion,
+            "INSERT INTO representantes (cedula, parentesco, nombres, apellidos, fecha_nac, correo, direccion,
             nro_telefono, grado_inst, profesion, trabaja, nombre_empr, telefono_empr, direccion_empr) 
-            VALUES (:cedula, :nombres, :apellidos, :fecha_nac, :correo, :direccion, :nro_telefono, 
+            VALUES (:cedula, :parentesco, :nombres, :apellidos, :fecha_nac, :correo, :direccion, :nro_telefono, 
             :grado_inst, :profesion, :trabaja, :nombre_empr, :telefono_empr, :direccion_empr)"
         );
 
         $stmt->bindValue(':cedula', $dataRepr[0]);
+        $stmt->bindValue(':parentesco', $parantesco);
         $stmt->bindValue(':nombres', $dataRepr[1]);
         $stmt->bindValue(':apellidos', $dataRepr[2]);
         $stmt->bindValue(':fecha_nac', $dataRepr[3]);

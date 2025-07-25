@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <!-- Scripts necesarios -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../css/tablaActividades.css">
     <title>Reportes de Calificaciones</title>
 </head>
 
@@ -22,7 +21,7 @@
         <?php
         error_reporting(0);
         session_start();
-        include("menu.php");
+        include("../Desarrollo/menu.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA -->
         <div class="main p-3">
@@ -30,15 +29,6 @@
                 <main>
                     <?php include("../Layout/mensajes.php"); ?>
                     <h1 class="my-3" id="titulo">Reporte de Calificaciones</h1>
-
-                    <!-- Contenedor de filtro -->
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="filtro-container d-flex align-items-center">
-                            <input type="text" id="txtFiltarr" class="filtro-input form-control" placeholder="Buscar...">
-                            <span class="lupa-icon ms-2">&#128269;</span>
-                        </div>
-                    </div>
-
                     <!-- Contenedores para los botones de Primaria y Secundaria -->
                     <div class="row mb-4">
                         <!-- Contenedor Primaria -->
@@ -72,8 +62,8 @@
 <!-- Modal -->
 <div class="modal fade" id="modalDescargarEstudiantes" tabindex="-1" aria-labelledby="modalLabelEstudiantes" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form id="formEstudiantes" action="../ajax/cargar_estudiantes.php" method="POST">
+        <div class="modal-content"><!-- ../ajax/cargar_estudiantes.php -->
+            <form id="formEstudiantes" action="#" method="POST">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalLabelEstudiantes">Descargar Lista de Estudiantes</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -146,7 +136,7 @@
                 `);
 
                 $.ajax({
-                    url: 'cargar_estudiantes.php',
+                    url: '../AJAX/AJAX_Estudiantes/cargar_estudiantes.php',
                     type: 'POST',
                     data: formData,
                     success: function(html) {

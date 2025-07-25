@@ -123,7 +123,7 @@
         }
 
         .sidebar-link i {
-           font-size: 20px;
+            font-size: 20px;
             margin-right: .75rem;
         }
 
@@ -331,7 +331,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="../reportes/descargarPlanillaInscr.php" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
                                 <span>Reporte de Inscripciones</span>
                             </a>
@@ -349,7 +349,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="descargarCalificaciones.php" class="sidebar-link">
+                            <a href="../reportes/descargarCalificaciones.php" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
                                 <span>Reporte de Calificaciones</span>
                             </a>

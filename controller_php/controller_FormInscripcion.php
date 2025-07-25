@@ -18,8 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Procesar los erroes del formulario
     $mensajes = [];
 
-    $variablesInscripcionEst = array
-    (
+    $variablesInscripcionEst = array(
         trim($_POST['cedulaEst']),
         trim($_POST['nombresEst']),
         trim($_POST['apellidosEst']),
@@ -42,8 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $madre = "M";
 
-    $variablesInscripcionRepr = array
-    (
+    $variablesInscripcionRepr = array(
         trim($_POST['cedula' . $madre]),
         trim($_POST['nombres' . $madre]),
         trim($_POST['apellidos' . $madre]),
@@ -60,8 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     );
 
     $padre = "P";
-    $variablesInscripcionReprP = array
-    (
+    $variablesInscripcionReprP = array(
         trim($_POST['cedula' . $padre]),
         trim($_POST['nombres' . $padre]),
         trim($_POST['apellidos' . $padre]),
@@ -77,8 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         trim($_POST['direccionEmpresa' . $padre])
     );
 
-    $variablesInscripcionContacto = array
-    (
+    $variablesInscripcionContacto = array(
         trim($_POST['cedulaC']),
         trim($_POST['nombresC']),
         trim($_POST['apellidosC']),
@@ -514,6 +510,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // VALIDACIÓN DE QUÉ PADRES SE VAN A REGISTRAR
     function retornarCampos($pdo, array $estData, array $madreData, array $padreData, array $contactoData)
     {
+        $parentesco = null;
         // Validación
         $valEst = validarCamposEstudiante($estData);
         $valMadre = validarCamposMadre($madreData);
@@ -545,12 +542,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($tieneMadre && $tienePadre && $hayRepresentante) {
             $idMadre = retornarIdRepresentante($pdo, $madreData);
             if (!$idMadre && $valMadre['valido']) {
-                $idMadre = insertarRepresentante($pdo, $madreData);
+                $parentesco = "madre"; 
+                $idMadre = insertarRepresentante($pdo, $madreData, $parentesco);
             }
 
             $idPadre = retornarIdRepresentante($pdo, $padreData);
             if (!$idPadre && $valPadre['valido']) {
-                $idPadre = insertarRepresentante($pdo, $padreData);
+                $parentesco = "padre";
+                // Inserta el padre
+                $idPadre = insertarRepresentante($pdo, $padreData, $parentesco);
             }
 
             if ($idEst && $idMadre && $idPadre && $idContacto) {
@@ -571,8 +571,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // === CASO SOLO MADRE ===
         elseif ($tieneMadre && !$tienePadre && $hayRepresentante) {
             $idMadre = retornarIdRepresentante($pdo, $madreData);
+                $parentesco = "madre";
             if (!$idMadre && $valMadre['valido']) {
-                $idMadre = insertarRepresentante($pdo, $madreData); 
+                $idMadre = insertarRepresentante($pdo, $madreData,  $parentesco);
             }
 
             if ($idEst && $idMadre && $idContacto) {
@@ -590,7 +591,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         elseif (!$tieneMadre && $tienePadre && $hayRepresentante) {
             $idPadre = retornarIdRepresentante($pdo, $padreData);
             if (!$idPadre && $valPadre['valido']) {
-                $idPadre = insertarRepresentante($pdo, $padreData);
+                $parentesco = "padre";
+                $idPadre = insertarRepresentante($pdo, $padreData, $parentesco);
             }
 
             if ($idEst && $idPadre && $idContacto) {
