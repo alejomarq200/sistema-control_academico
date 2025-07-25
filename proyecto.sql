@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-07-2025 a las 05:26:36
+-- Tiempo de generación: 25-07-2025 a las 03:19:55
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -69,6 +69,22 @@ INSERT INTO `actividades` (`id_actividad`, `anio_escolar`, `tipo_contenido`, `co
 (56, '2025-2026', 'Contenidos', 'Atiende instrucciones en las actividades presenciales.', 115, 1, 47, 2),
 (57, '2025-2026', 'Contenidos', 'Trabaja en orden  siguiendo patrones.', 115, 1, 47, 2),
 (58, '2025-2026', 'Contenidos', 'Presenta pulcritud en sus trabajos.', 115, 1, 47, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `aulas`
+--
+
+CREATE TABLE `aulas` (
+  `id_aula` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `capacidad` int(11) NOT NULL,
+  `ubicacion` varchar(100) NOT NULL,
+  `id_grado` int(11) NOT NULL,
+  `anio_escolar` varchar(20) NOT NULL,
+  `estado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -295,7 +311,16 @@ INSERT INTO `contacto_pago` (`id`, `cedula`, `nombres`, `apellidos`, `direccion`
 (30, 'V147414122', 'contacto', 'contacto', 'Barquisimeto Lara', '04244152102', 'contactoprueba@gmail.com', 'Bachillerato', 'Ingeniero Sistemas', 'Sí', 'Seguros Qualita', '04241111111', 'Avenida Venezula'),
 (31, 'V14511101', 'Fabian', 'Solis', 'Barquisimeto Lara', '04241156321', 'fabian@gmail.com', 'Bachillerato', 'Ingeniero Sistemas', 'Sí', 'Sistemas GRUCAS', '04241115631', 'Avenida Los Leones'),
 (32, 'V12345678', 'Mariaca', 'Solis', 'Barquisimeto Lara', '04245211000', 'madre@gmail.com', 'Bachillerato', 'Ninguna registrada', 'Sí', 'Benzemos Lara', '04241115621', 'Circunvalacion'),
-(33, 'V51263321', 'Zoraida', 'Mejias', 'Barquisimeto Lara', '04245211000', 'zoraida@gmail.com', 'Bachillerato', 'Ninguna registrada', 'Sí', 'Lidotel Bqto', '04125632100', 'Circunvalacion');
+(33, 'V51263321', 'Zoraida', 'Mejias', 'Barquisimeto Lara', '04245211000', 'zoraida@gmail.com', 'Bachillerato', 'Ninguna registrada', 'Sí', 'Lidotel Bqto', '04125632100', 'Circunvalacion'),
+(34, 'V12121101', 'Mariela', 'Suarez', 'Barquisimeto', '04241121210', 'mariela@gmail.com', 'Bachillerato', 'Licenciada', 'Sí', 'Seguros Lara', '04241010101', 'Cabudare Centro'),
+(35, 'V14441210', 'Andres', 'Mendoza', 'Barquisimeto', '04241010100', 'andres@gmail.com', 'Bachillerato', 'Ninguna activa', 'Sí', 'TGS Solutions', '04241124251', 'Barquisimeto'),
+(36, 'V15666631', 'Yovan', 'Silva', 'Barquisimeto', '04241442421', 'yovans@gmail.com', 'Bachillerato', 'Ninguna activa', 'Sí', 'Mercados Lara', '04245563110', 'Barquisimeto'),
+(37, 'V17789854', 'Marcial', 'Solorzano', 'Barquisimeto', '04124452101', 'marcials@gmail.com', 'Licenciado', 'Ninguna activa', 'Sí', 'Bencemos Lara', '04241121210', 'Barquisimeto'),
+(38, 'V77741210', 'Enrique', 'Mendoza', 'Barquisimeto', '04241156221', 'enrique@gmail.com', 'Lincenciatura', 'Ninguna activa', 'Sí', 'GT Nascars', '04241244211', 'Barquisimeto'),
+(39, 'V7777851', 'Alfredo', 'Mejias', 'Barquisimeto', '04241010100', 'mejias1@gmail.com', 'Bachillerato', 'Ninguna activa', 'Sí', 'TGS Solutions', '04241244211', 'Barquisimeto'),
+(40, 'V7785211', 'Margot', 'Robbie', 'Barquisimeto', '04245599981', 'margot@gmail.com', 'Ninguna aun', 'Ninguna aún', 'Sí', 'Seguros Lara', '04241010101', 'Cabudare Centro'),
+(41, 'V7741663', 'Enrique', 'Bonilla', 'Barquisimeto', '04241010100', 'enrique@gmail.com', 'Lincenciatura', 'Ninguna activa', 'Sí', 'Mercados Lara', '04245563110', 'Barquisimeto'),
+(42, 'V89333121', 'Jairo', 'Menendez', 'Barquisimeto', '04241442421', 'jairo@gmail.com', 'Bachillerato', 'Ninguna activa', 'Sí', 'Mercados Lara', '04241124251', 'Barquisimeto');
 
 -- --------------------------------------------------------
 
@@ -356,7 +381,15 @@ INSERT INTO `estudiantes` (`id`, `cedula_est`, `nombres_est`, `apellidos_est`, `
 (5, 'V14256311', 'Fabian Enrique', 'Salsedo', 'M', '14/12/2013', 13, 'Barquisimeto', 'Barquisimeto', 'Colegio Dioscesano', 'Ninguno aun', 'Ninguno aun', 'Ninguno aun', 7, 'Mañana', '', '', 'Ninguno aun', 'Ninguno aun'),
 (7, 'V1201000', 'Yovana', 'Sarate', 'F', '08/02/2012', 13, 'Barquisimeto', 'Barquisimeto', 'Colegio Dioscesano', 'Ninguno aun', 'Ninguno aun', 'Ninguno aun', 7, 'Mañana', '', '', 'Ninguno aun', 'Ninguno aun'),
 (8, 'V1212100', 'Sofia', 'Gonzales', 'F', '14/12/2013', 15, 'Barquisimeto', 'Barquisimeto', 'Colegio 24 de Junio', 'Ninguno aun', 'Ninguno aun', 'Ninguno aun', 1, 'Mañana', '', '', 'Ninguno aun', 'Ninguno aun'),
-(9, 'V21001212', 'Mery', 'Sanchez', 'F', '14/12/2013', 15, 'Barquisimeto', 'Barquisimeto', 'Colegio 24 de Junio', 'Retiro formal', 'Ninguno aun', 'Ninguno aun', 7, 'Mañana', '', '', 'Ninguno aun', 'Ninguno aun');
+(9, 'V21001212', 'Mery', 'Sanchez', 'F', '14/12/2013', 15, 'Barquisimeto', 'Barquisimeto', 'Colegio 24 de Junio', 'Retiro formal', 'Ninguno aun', 'Ninguno aun', 7, 'Mañana', '', '', 'Ninguno aun', 'Ninguno aun'),
+(10, 'V1421210', 'Marian', 'López', 'F', '14/06/2008', 17, 'Barquisimeto', 'Barquisimeto', 'Colegio Los Ilustres', 'Salida Formal', 'Igualación segundo grado', 'Retiro formal', 7, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades'),
+(11, 'V25633210', 'Andres', 'Menendez', 'M', '14/10/2009', 16, 'Barquisimeto', 'Barquisimeto', 'Colegio Las Americas', 'Salida Formal', 'Igualación segundo grado', 'Retiro formal', 7, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades'),
+(12, 'V14424211', 'Enrique', 'Castañeda', 'M', '08/08/2010', 15, 'Barquisimeto', 'Barquisimeto', 'Colegio Los Ilustres', 'Salida Formal', 'Igualación segundo grado', 'Retiro formal', 7, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades'),
+(13, 'V12421210', 'Maria Victoria', 'Serrano', 'F', '14/10/2010', 15, 'Barquisimeto', 'Barquisimeto', 'Colegio Las Americas', 'Salida Formal', 'Igualación segundo grado', 'Retiro formal', 7, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades'),
+(14, 'V14455210', 'Fabian', 'Salazar', 'F', '14/06/2012', 13, 'Barquisimeto', 'Barquisimeto', 'Colegio Las Americas', 'Retiro formal', 'Igualación segundo grado', 'Ninguna aún', 7, 'Mañana', 'Ningun registro', 'Ningun registro', 'No posee vacunas', 'No tiene enfermedades'),
+(15, 'V1888889', 'Pedro', 'Pascal', 'M', '14/06/2013', 13, 'Barquisimeto', 'Barquisimeto', 'Colegio Las Americas', 'Retiro formal', 'Igualación segundo grado', 'Retiro formal', 7, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades'),
+(16, 'V7841120', 'Verónica', 'Leiva', 'F', '14/06/2012', 13, 'Barquisimeto', 'Barquisimeto', 'Colegio Las Americas', 'Retiro formal', 'Igualación segundo grado', 'Ninguna aún', 7, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades'),
+(17, 'V28999654', 'Veronica', 'Serrano', 'F', '14/07/2013', 12, 'Barquisimeto', 'Barquisimeto', 'Colegio Las Americas', 'Salida Formal', 'Igualación segundo grado', 'Ninguna aún', 7, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades');
 
 -- --------------------------------------------------------
 
@@ -424,6 +457,24 @@ INSERT INTO `grado_materia` (`id`, `id_grado`, `id_materia`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `horarios`
+--
+
+CREATE TABLE `horarios` (
+  `id_horario` int(11) NOT NULL,
+  `id_grado` int(11) NOT NULL,
+  `id_aula` int(11) NOT NULL,
+  `id_materia` int(11) NOT NULL,
+  `id_profesor` int(11) NOT NULL,
+  `dia_semana` varchar(15) NOT NULL,
+  `hora_inicio` time NOT NULL,
+  `hora_fin` time NOT NULL,
+  `anio_escolar` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `inscripciones`
 --
 
@@ -442,17 +493,10 @@ CREATE TABLE `inscripciones` (
 --
 
 INSERT INTO `inscripciones` (`id_inscripcion`, `id_estudiante`, `id_representante`, `anio_escolar`, `grado`, `fecha_inscripcion`, `responsable_pago`) VALUES
-(1, 1, 1, '2025-2026', 7, '2025-06-22', 27),
-(2, 2, 2, '2025-2026', 7, '2025-06-22', 28),
-(3, 3, 3, '2025-2026', 7, '2025-06-22', 29),
-(4, 3, 4, '2025-2026', 7, '2025-06-22', 29),
-(5, 3, 5, '2025-2026', 7, '2025-06-22', 30),
-(6, 3, 5, '2025-2026', 7, '2025-06-22', 30),
-(7, 4, 6, '2025-2026', 7, '2025-06-22', 31),
-(8, 4, 7, '2025-2026', 7, '2025-06-22', 31),
-(9, 7, 1, '2025-2026', 7, '2025-06-26', 27),
-(10, 8, 5, '2025-2026', 7, '2025-06-26', 33),
-(11, 9, 1, '2025-2026', 7, '2025-06-26', 27);
+(24, 16, 19, '2025-2026', 7, '2025-07-25', 41),
+(25, 16, 20, '2025-2026', 7, '2025-07-25', 41),
+(26, 17, 21, '2025-2026', 7, '2025-07-25', 42),
+(27, 17, 22, '2025-2026', 7, '2025-07-25', 42);
 
 -- --------------------------------------------------------
 
@@ -621,6 +665,7 @@ INSERT INTO `profesor_materia_grado` (`id`, `id_profesor`, `id_materia`, `id_gra
 CREATE TABLE `representantes` (
   `id` int(5) NOT NULL,
   `cedula` varchar(15) DEFAULT NULL,
+  `parentesco` varchar(25) NOT NULL,
   `nombres` text DEFAULT NULL,
   `apellidos` text DEFAULT NULL,
   `fecha_nac` varchar(20) DEFAULT NULL,
@@ -639,15 +684,11 @@ CREATE TABLE `representantes` (
 -- Volcado de datos para la tabla `representantes`
 --
 
-INSERT INTO `representantes` (`id`, `cedula`, `nombres`, `apellidos`, `fecha_nac`, `correo`, `direccion`, `nro_telefono`, `grado_inst`, `profesion`, `trabaja`, `nombre_empr`, `telefono_empr`, `direccion_empr`) VALUES
-(1, 'V142563210', 'Mariales', 'Solis', '24/05/1980', 'mariales@gmail.com', 'Barquisimeto Lara', '04245632100', 'Universitario', 'Ninguna registrada', 'Sí', 'Benzemos Lara', '04244112204', 'Circunvalacion'),
-(2, 'V14256310', 'Rafael', 'Ramos', '08/12/1995', 'rafael@gmail.com', 'Barquisimeto Lara', '04245663100', 'Primariaaaaa', 'NingunaAAA', 'Sí', 'Soluciones MYT', '04125632100', 'Barquisimeto'),
-(3, 'V14145631', 'Maria', 'Ramos', '25/06/1995', 'mariar@gmail.com', 'Agua Viva Cabudare', '04141112056', 'Bachillerato', 'Ninguno aun', 'Sí', 'Benzemos Lara', '04245633210', 'Circunvalacion'),
-(4, 'V14552103', 'Fabian', 'Andrade', '03/08/2000', 'andrade@gmail.com', 'Avenida Los Leones', '04241211121', 'Bachillerato', 'Ningunaaaa', 'No', '', '', ''),
-(5, 'V51263321', 'Sofia', 'madre', '14/05/1980', 'madre@gmail.com', 'Ninguno aun', '04125632102', 'ASDADSASDASDA', 'Ninguno aun', 'No', '', '', ''),
-(6, 'V14111210', 'Valeria', 'Solis', '14/06/2000', 'Valerias@gmail.com', 'Barquisimeto Lara', '04241115210', 'Bachillerato', 'Ninguna registrada', 'No', '', '', ''),
-(7, 'V14511101', 'Fabian', 'Solis', '24/06/1998', 'fabian@gmail.com', 'Barquisimeto Lara', '04241156321', 'Bachillerato', 'Ingeniero Sistemas', 'Sí', 'Sistemas GRUCAS', '04241115631', 'Avenida Los Leones'),
-(8, 'V12345678', 'Mariaca', 'Solis', '24/06/2024', 'madre@gmail.com', 'Barquisimeto Lara', '04245211000', 'Bachillerato', 'Ninguna registrada', 'Sí', 'Benzemos Lara', '04241115621', 'Circunvalacion');
+INSERT INTO `representantes` (`id`, `cedula`, `parentesco`, `nombres`, `apellidos`, `fecha_nac`, `correo`, `direccion`, `nro_telefono`, `grado_inst`, `profesion`, `trabaja`, `nombre_empr`, `telefono_empr`, `direccion_empr`) VALUES
+(19, 'V15632778', 'madre', 'Miriangel', 'Lopez', '14/12/1988', 'miriangel@gmail.com', 'Barquisimeto', '04241115931', 'Bachillerato', 'Ninguna aún', 'No', '', '', ''),
+(20, 'V7741663', 'padre', 'Enrique', 'Bonilla', '18/06/1996', 'enrique@gmail.com', 'Barquisimeto', '04241010100', 'Lincenciatura', 'Ninguna activa', 'Sí', 'Mercados Lara', '04245563110', 'Barquisimeto'),
+(21, 'V88896240', 'madre', 'Giovanna', 'Sarate', '18/09/2000', 'giovanna@gmail.com', 'Barquisimeto', '04241121210', 'Bachillerato', 'Ninguna aún', 'No', '', '', ''),
+(22, 'V89333121', 'padre', 'Jairo', 'Menendez', '28/06/1996', 'jairo@gmail.com', 'Barquisimeto', '04241442421', 'Bachillerato', 'Ninguna activa', 'Sí', 'Mercados Lara', '04241124251', 'Barquisimeto');
 
 -- --------------------------------------------------------
 
@@ -709,6 +750,14 @@ ALTER TABLE `actividades`
   ADD KEY `id_materia` (`id_materia`);
 
 --
+-- Indices de la tabla `aulas`
+--
+ALTER TABLE `aulas`
+  ADD PRIMARY KEY (`id_aula`),
+  ADD KEY `id_grado` (`id_grado`),
+  ADD KEY `estado` (`estado`);
+
+--
 -- Indices de la tabla `calificaciones`
 --
 ALTER TABLE `calificaciones`
@@ -751,6 +800,16 @@ ALTER TABLE `grado_materia`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_grado` (`id_grado`),
   ADD KEY `id_materia` (`id_materia`);
+
+--
+-- Indices de la tabla `horarios`
+--
+ALTER TABLE `horarios`
+  ADD PRIMARY KEY (`id_horario`),
+  ADD KEY `id_grado` (`id_grado`),
+  ADD KEY `id_aula` (`id_aula`),
+  ADD KEY `id_materia` (`id_materia`),
+  ADD KEY `id_profesor` (`id_profesor`);
 
 --
 -- Indices de la tabla `inscripciones`
@@ -843,7 +902,7 @@ ALTER TABLE `calificaciones`
 -- AUTO_INCREMENT de la tabla `contacto_pago`
 --
 ALTER TABLE `contacto_pago`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de la tabla `estado`
@@ -855,7 +914,7 @@ ALTER TABLE `estado`
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `grados`
@@ -873,7 +932,7 @@ ALTER TABLE `grado_materia`
 -- AUTO_INCREMENT de la tabla `inscripciones`
 --
 ALTER TABLE `inscripciones`
-  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `materias`
@@ -909,7 +968,7 @@ ALTER TABLE `profesor_materia_grado`
 -- AUTO_INCREMENT de la tabla `representantes`
 --
 ALTER TABLE `representantes`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -937,6 +996,13 @@ ALTER TABLE `actividades`
   ADD CONSTRAINT `actividades_ibfk_5` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id_materia`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `aulas`
+--
+ALTER TABLE `aulas`
+  ADD CONSTRAINT `aulas_ibfk_1` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id`),
+  ADD CONSTRAINT `aulas_ibfk_2` FOREIGN KEY (`estado`) REFERENCES `estado` (`id_estado`);
+
+--
 -- Filtros para la tabla `calificaciones`
 --
 ALTER TABLE `calificaciones`
@@ -958,6 +1024,15 @@ ALTER TABLE `estudiantes`
 ALTER TABLE `grado_materia`
   ADD CONSTRAINT `grado_materia_ibfk_1` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `grado_materia_ibfk_2` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id_materia`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `horarios`
+--
+ALTER TABLE `horarios`
+  ADD CONSTRAINT `horarios_ibfk_1` FOREIGN KEY (`id_grado`) REFERENCES `grados` (`id`),
+  ADD CONSTRAINT `horarios_ibfk_2` FOREIGN KEY (`id_aula`) REFERENCES `aulas` (`id_aula`),
+  ADD CONSTRAINT `horarios_ibfk_3` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id_materia`),
+  ADD CONSTRAINT `horarios_ibfk_4` FOREIGN KEY (`id_profesor`) REFERENCES `profesores` (`id_profesor`);
 
 --
 -- Filtros para la tabla `inscripciones`
