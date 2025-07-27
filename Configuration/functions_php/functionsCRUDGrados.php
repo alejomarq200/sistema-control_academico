@@ -93,7 +93,6 @@ function validarExisteMateriaG($pdo, $gradoMateria, $nombreMateria)
 }
 function retornarIdGrado($pdo, $gradoMateria)
 {
-
     try {
         // Preparamos la consulta para obtener solo id_materia
         $stmt = $pdo->prepare("SELECT id FROM grados WHERE id_grado = :id_grado");

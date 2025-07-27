@@ -17,6 +17,7 @@
         href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     <link rel='stylesheet'
         href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
@@ -206,6 +207,18 @@
                     </a>
                     <ul id="registro" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
+                            <a href="new_aula.php" class="sidebar-link">
+                                <i class="fi fi-sr-door-open"></i>
+                                <span>Nueva Aula</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="new_horario.php" class="sidebar-link">
+                                <i class="fi fi-rs-calendar-clock"></i>
+                                <span>Nuevo Horario</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
                             <a href="inscripcion.php" class="sidebar-link">
                                 <i class="bi bi-person-plus"></i>
                                 <span>Nuevo Estudiante</span>
@@ -247,15 +260,21 @@
                     </a>
                     <ul id="gestion" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="search_estudiantes.php" class="sidebar-link">
-                                <i class="fas fa-user-graduate"></i>
-                                <span>Estudiantes</span>
+                            <a href="search_aula.php" class="sidebar-link">
+                              <i class="fi fi-tr-security-gate"></i>
+                                <span>Aulas</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="search_representantes.php" class="sidebar-link">
-                                <i class="bi bi-person-raised-hand"></i>
-                                <span>Representantes</span>
+                            <a href="search_horario.php" class="sidebar-link">
+                              <i class="fi fi-sr-time-fast"></i>
+                                <span>Horario</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="search_estudiantes.php" class="sidebar-link">
+                                <i class="fas fa-user-graduate"></i>
+                                <span>Estudiantes</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -288,20 +307,13 @@
 
                             </ul>
                         </li>
-
                         <li class="sidebar-item">
                             <a href="search_grado.php" class="sidebar-link">
                                 <i class="fi fi-rr-degree-credential"></i>
                                 <span>Grados</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
-                            <a href="search_c_pago.php" class="sidebar-link">
-                                <i class="bi bi-person-rolodex"></i>
-                                <span>Contactos de Pago</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
+                         <li class="sidebar-item">
                             <a href="search_calificacion.php" class="sidebar-link">
                                 <i class="fas fa-spell-check"></i>
                                 <span>Calificaciones</span>
@@ -311,6 +323,18 @@
                             <a href="search_actividad.php" class="sidebar-link">
                                 <i class="fi fi-sr-list-check"></i>
                                 <span>Actividades</span>
+                            </a>
+                        </li>
+                         <li class="sidebar-item">
+                            <a href="search_representantes.php" class="sidebar-link">
+                                <i class="bi bi-person-raised-hand"></i>
+                                <span>Representantes</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="search_c_pago.php" class="sidebar-link">
+                                <i class="bi bi-person-rolodex"></i>
+                                <span>Contactos de Pago</span>
                             </a>
                         </li>
                     </ul>
