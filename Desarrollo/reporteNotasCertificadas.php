@@ -164,7 +164,7 @@ class PDF_Reporte extends TCPDF
         $this->SetFont('helvetica', '', 10);
         $cedula = $estudiante['cedula_est'];
         $x1 = $this->GetX();
-        $this->Cell(30, 6, $cedula, 0, 0, 'C');
+        $this->Cell(50, 6, $cedula, 0, 0, 'C');
         $x2 = $this->GetX();
         $this->Line($x1, $startY + 6, $x2, $startY + 6);
 
@@ -173,7 +173,7 @@ class PDF_Reporte extends TCPDF
         $this->SetFont('helvetica', '', 10);
         $fnacimiento = $estudiante['f_nacimiento_est'];
         $x1 = $this->GetX();
-        $this->Cell(30, 6, $fnacimiento, 0, 0, 'C');
+        $this->Cell(60, 6, $fnacimiento, 0, 0, 'C');
         $x2 = $this->GetX();
         $this->Line($x1, $startY + 6, $x2, $startY + 6);
         $this->Ln();
@@ -222,81 +222,82 @@ class PDF_Reporte extends TCPDF
     }
 
     // Sección IV: Planteles donde cursó estudios
-   public function PlantelesCursados()
+  public function PlantelesCursados()
 {
     $rowHeight = 6;
-    $colWidths = [10, 45, 25, 10]; // Anchos de columna optimizados
-    
+    $colWidths = [5, 60, 20, 10]; // Anchos: Nº, Nombre, Localidad, E.F.
+    $leftTableWidth = array_sum($colWidths);
+    $rightTableWidth = array_sum($colWidths);
+    $titlePosition = 95; // Posición exacta para alinear el título con la segunda tabla
+
+    // Datos fijos
     $planteles = [
-        ['Nº' => '1', 'Nombre' => 'U.E.C. PRADO DEL NORTE', 'Localidad' => 'EL CUJI', 'E.F.' => 'LA'],
-        ['Nº' => '2', 'Nombre' => '*************', 'Localidad' => '************', 'E.F.' => '****'],
-        ['Nº' => '3', 'Nombre' => '*************', 'Localidad' => '************', 'E.F.' => '****'],
-        ['Nº' => '4', 'Nombre' => '*************', 'Localidad' => '************', 'E.F.' => '****'],
-        ['Nº' => '5', 'Nombre' => '*************', 'Localidad' => '************', 'E.F.' => '****'],
+        ['1', 'U.E.C. PRADO DEL NORTE', 'EL CUJI', 'LA'],
+        ['2', '*************', '************', '****'],
+        ['3', '*************', '************', '****'],
+        ['4', '*************', '************', '****'],
+        ['5', '*************', '************', '****']
     ];
 
-    // Dividir en columnas
-    $leftCol = [$planteles[0], $planteles[1]];
-    $rightCol = [$planteles[2], $planteles[3], $planteles[4]];
-
-    // -------- TÍTULO ALINEADO CON PRIMERA TABLA --------
+    // ----- TÍTULO + SEGUNDA CABECERA -----
     $this->SetFont('helvetica', 'B', 12);
-    $this->Cell(array_sum($colWidths), $rowHeight, 'IV. Planteles donde curso estos estudios:', 0, 0);
-
+    $this->Cell($titlePosition, $rowHeight, 'IV. Planteles donde curso estos estudios:', 0, 0);
     
-    // Segunda cabecera
+    // Segunda cabecera (derecha)
     $this->SetFont('helvetica', 'B', 10);
     $this->Cell($colWidths[0], $rowHeight, 'Nº', 1, 0, 'C');
     $this->Cell($colWidths[1], $rowHeight, 'Nombre del Plantel', 1, 0, 'C');
     $this->Cell($colWidths[2], $rowHeight, 'Localidad:', 1, 0, 'C');
     $this->Cell($colWidths[3], $rowHeight, 'E.F.', 1, 1, 'C');
 
-    // -------- PRIMERA FILA DE DATOS (CON PRIMERA CABECERA) --------
+    // ----- PRIMERA FILA -----
+    // Primera cabecera (izquierda)
     $this->SetFont('helvetica', 'B', 10);
-    // Cabecera izquierda
     $this->Cell($colWidths[0], $rowHeight, 'Nº', 1, 0, 'C');
     $this->Cell($colWidths[1], $rowHeight, 'Nombre del Plantel', 1, 0, 'C');
     $this->Cell($colWidths[2], $rowHeight, 'Localidad:', 1, 0, 'C');
     $this->Cell($colWidths[3], $rowHeight, 'E.F.', 1, 0, 'C');
     
-    // Primera fila derecha (Nº 3)
+    // Espacio calculado para alineación exacta
+    
+    // Primer dato derecho (3)
     $this->SetFont('helvetica', '', 10);
-    $data = $rightCol[0];
-    $this->Cell($colWidths[0], $rowHeight, $data['Nº'], 1, 0, 'C');
-    $this->Cell($colWidths[1], $rowHeight, $data['Nombre'], 1, 0);
-    $this->Cell($colWidths[2], $rowHeight, $data['Localidad'], 1, 0);
-    $this->Cell($colWidths[3], $rowHeight, $data['E.F.'], 1, 1, 'C');
+    $this->Cell($colWidths[0], $rowHeight, $planteles[2][0], 1, 0, 'C');
+    $this->Cell($colWidths[1], $rowHeight, $planteles[2][1], 1, 0);
+    $this->Cell($colWidths[2], $rowHeight, $planteles[2][2], 1, 0);
+    $this->Cell($colWidths[3], $rowHeight, $planteles[2][3], 1, 1, 'C');
 
-    // -------- FILAS RESTANTES --------
-    $maxRows = max(count($leftCol), count($rightCol));
-    for ($i = 0; $i < $maxRows; $i++) {
-        // Fila izquierda
-        if (isset($leftCol[$i])) {
-            $data = $leftCol[$i];
-            $this->Cell($colWidths[0], $rowHeight, $data['Nº'], 1, 0, 'C');
-            $this->Cell($colWidths[1], $rowHeight, $data['Nombre'], 1, 0);
-            $this->Cell($colWidths[2], $rowHeight, $data['Localidad'], 1, 0);
-            $this->Cell($colWidths[3], $rowHeight, $data['E.F.'], 1, 0, 'C');
-        } else {
-            $this->Cell(array_sum($colWidths), $rowHeight, '', 1, 0);
-        }
-        
-        // Fila derecha (a partir de la segunda)
-        if ($i > 0 && isset($rightCol[$i])) {
-            $data = $rightCol[$i];
-            $this->Cell($colWidths[0], $rowHeight, $data['Nº'], 1, 0, 'C');
-            $this->Cell($colWidths[1], $rowHeight, $data['Nombre'], 1, 0);
-            $this->Cell($colWidths[2], $rowHeight, $data['Localidad'], 1, 0);
-            $this->Cell($colWidths[3], $rowHeight, $data['E.F.'], 1, 0, 'C');
-        } else {
-            $this->Cell(array_sum($colWidths), $rowHeight, '', 1, 1);
-        }
-    }
+    // ----- SEGUNDA FILA -----
+    // Dato izquierdo (1)
+    $this->Cell($colWidths[0], $rowHeight, $planteles[0][0], 1, 0, 'C');
+    $this->Cell($colWidths[1], $rowHeight, $planteles[0][1], 1, 0);
+    $this->Cell($colWidths[2], $rowHeight, $planteles[0][2], 1, 0);
+    $this->Cell($colWidths[3], $rowHeight, $planteles[0][3], 1, 0, 'C');
+    
+  
+    // Dato derecho (4)
+    $this->Cell($colWidths[0], $rowHeight, $planteles[3][0], 1, 0, 'C');
+    $this->Cell($colWidths[1], $rowHeight, $planteles[3][1], 1, 0);
+    $this->Cell($colWidths[2], $rowHeight, $planteles[3][2], 1, 0);
+    $this->Cell($colWidths[3], $rowHeight, $planteles[3][3], 1, 1, 'C');
+
+    // ----- TERCERA FILA -----
+    // Dato izquierdo (2)
+    $this->Cell($colWidths[0], $rowHeight, $planteles[1][0], 1, 0, 'C');
+    $this->Cell($colWidths[1], $rowHeight, $planteles[1][1], 1, 0);
+    $this->Cell($colWidths[2], $rowHeight, $planteles[1][2], 1, 0);
+    $this->Cell($colWidths[3], $rowHeight, $planteles[1][3], 1, 0, 'C');
+    
+ 
+    
+    // Dato derecho (5)
+    $this->Cell($colWidths[0], $rowHeight, $planteles[4][0], 1, 0, 'C');
+    $this->Cell($colWidths[1], $rowHeight, $planteles[4][1], 1, 0);
+    $this->Cell($colWidths[2], $rowHeight, $planteles[4][2], 1, 0);
+    $this->Cell($colWidths[3], $rowHeight, $planteles[4][3], 1, 1, 'C');
 
     $this->Ln(5);
-}
-
-    // (Mantén las funciones auxiliares ConvertirNumeroALetras, ConvertirNumeroARomano y ObtenerNombreMateria igual)
+}// (Mantén las funciones auxiliares ConvertirNumeroALetras, ConvertirNumeroARomano y ObtenerNombreMateria igual)
 }
 
 // Obtener ID del estudiante

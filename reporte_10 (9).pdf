@@ -1,0 +1,8 @@
+<br />
+<b>Fatal error</b>:  Uncaught TypeError: Unsupported operand types: array * float in C:\xampp\htdocs\Desarrollo_tesis\TCPDF-main\tcpdf.php:5374
+Stack trace:
+#0 C:\xampp\htdocs\Desarrollo_tesis\TCPDF-main\tcpdf.php(5189): TCPDF-&gt;getCellCode(Array, 6, '5', 1, 0, 'C', false, '', 0, true, 'T', 'M')
+#1 C:\xampp\htdocs\Desarrollo_tesis\Desarrollo\reporteNotasCertificadas.php(305): TCPDF-&gt;Cell(Array, 6, '5', 1, 0, 'C')
+#2 C:\xampp\htdocs\Desarrollo_tesis\Desarrollo\reporteNotasCertificadas.php(347): PDF_Reporte-&gt;PlantelesCursados()
+#3 {main}
+  thrown in <b>C:\xampp\htdocs\Desarrollo_tesis\TCPDF-main\tcpdf.php</b> on line <b>5374</b><br />
