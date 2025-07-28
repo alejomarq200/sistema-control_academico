@@ -67,6 +67,8 @@
                             include("../Configuration/functions_php/functionesCRUDAulas.php");
                             include("../Configuration/Configuration.php");
                             include("../Layout/modalesAulas/modalAulaEdit.php");
+                            include("../Layout/modalesAulas/modalAEnable.php");
+                            include("../Layout/modalesAulas/modalADisable.php");
                             $aulas = consultarAulas($pdo); // Obtener los usuarios
 
                             if (!empty($aulas)) {
@@ -89,11 +91,23 @@
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#ModalFormEnableM"
-                                                data-id="<?php echo $materia['id_materia']; ?>"
-                                                data-nombre="<?php echo $materia['nombre']; ?>"
-                                                data-nivel="<?php echo $materia['nivel_materia']; ?>">
+                                                data-bs-target="#ModalFormEnableA"
+                                                data-id="<?=  htmlspecialchars($aula['id_aula']); ?>"
+                                                data-nombre="<?= htmlspecialchars($aula['nombre']); ?>"
+                                                data-capacidad="<?= htmlspecialchars($aula['capacidad']); ?>"
+                                                data-id_grado="<?= htmlspecialchars($aula['id_grado']); ?>"
+                                                data-estado="<?= htmlspecialchars($aula['estado']); ?>">
                                                 <i class='bx  bx-check-circle'></i>
+                                            </button>
+                                              <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#ModalFormDisableA"
+                                                 data-id="<?php echo $aula['id_aula']; ?>"
+                                                data-id="<?=  htmlspecialchars($aula['id_aula']); ?>"
+                                                data-nombre="<?= htmlspecialchars($aula['nombre']); ?>"
+                                                data-capacidad="<?= htmlspecialchars($aula['capacidad']); ?>"
+                                                data-id_grado="<?= htmlspecialchars($aula['id_grado']); ?>"
+                                                data-estado="<?= htmlspecialchars($aula['estado']); ?>">
+                                                 <i class="bi bi-x-circle"></i>
                                             </button>
                                         </td>
                                     </tr>

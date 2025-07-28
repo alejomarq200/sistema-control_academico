@@ -10,7 +10,89 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-straight/css/uicons-regular-straight.css'>
-    <link rel="stylesheet" href="css/regHorarios.css">
+    <style>
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 100px repeat(5, 1fr);
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .schedule-header {
+            background-color: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #dee2e6;
+        }
+
+        .schedule-cell {
+            min-height: 80px;
+            border: 1px solid #dee2e6;
+            padding: 5px;
+            position: relative;
+        }
+
+        .time-slot {
+            background-color: #e9ecef;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .class-event {
+            background-color: #d1e7dd;
+            border-radius: 4px;
+            padding: 3px;
+            margin-bottom: 3px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .class-event:hover {
+            opacity: 0.8;
+        }
+
+        .conflict {
+            background-color: #f8d7da !important;
+        }
+
+        #limpiarHorario {
+            padding: 10px 10px 10px 10px;
+        }
+
+        #editarHorario {
+            padding: 10px 10px 10px 10px;
+        }
+
+        #guardarHorario {
+            padding: 10px 10px 10px 10px;
+        }
+
+        .form-select:focus,
+        .btn:focus {
+            box-shadow: 0 0 0 0.25rem rgba(63, 81, 181, 0.25) !important;
+            border-color: #3f51b5 !important;
+        }
+
+        .btn {
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+        }
+    </style>
 </head>
 
 <body>

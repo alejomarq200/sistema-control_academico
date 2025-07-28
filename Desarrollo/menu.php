@@ -18,6 +18,7 @@
     <link rel='stylesheet'
         href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
@@ -214,7 +215,7 @@
                         </li>
                         <li class="sidebar-item">
                             <a href="new_horario.php" class="sidebar-link">
-                                <i class="fi fi-rs-calendar-clock"></i>
+                                <i class="fi fi-br-time-check"></i> 
                                 <span>Nuevo Horario</span>
                             </a>
                         </li>
@@ -261,13 +262,13 @@
                     <ul id="gestion" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
                             <a href="search_aula.php" class="sidebar-link">
-                              <i class="fi fi-tr-security-gate"></i>
+                                <i class="fi fi-tr-security-gate"></i>
                                 <span>Aulas</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="search_horario.php" class="sidebar-link">
-                              <i class="fi fi-sr-time-fast"></i>
+                                <i class="fi fi-sr-time-fast"></i>
                                 <span>Horario</span>
                             </a>
                         </li>
@@ -313,7 +314,7 @@
                                 <span>Grados</span>
                             </a>
                         </li>
-                         <li class="sidebar-item">
+                        <li class="sidebar-item">
                             <a href="search_calificacion.php" class="sidebar-link">
                                 <i class="fas fa-spell-check"></i>
                                 <span>Calificaciones</span>
@@ -325,7 +326,7 @@
                                 <span>Actividades</span>
                             </a>
                         </li>
-                         <li class="sidebar-item">
+                        <li class="sidebar-item">
                             <a href="search_representantes.php" class="sidebar-link">
                                 <i class="bi bi-person-raised-hand"></i>
                                 <span>Representantes</span>
@@ -355,7 +356,13 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="../reportes/descargarPlanillaInscr.php" class="sidebar-link">
+                            <a href="descargarNCertificadas.php" class="sidebar-link">
+                                <i class="bi bi-file-earmark-bar-graph"></i>
+                                <span>Reporte Notas Certificadas</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="descargarPlanillaInscr.php" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
                                 <span>Reporte de Inscripciones</span>
                             </a>
@@ -373,15 +380,9 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="../reportes/descargarCalificaciones.php" class="sidebar-link">
+                            <a href="descargarCalificaciones.php" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
                                 <span>Reporte de Calificaciones</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
-                                <i class="bi bi-file-earmark-bar-graph"></i>
-                                <span>Reporte de Asistencia</span>
                             </a>
                         </li>
                         <li class="sidebar-item">

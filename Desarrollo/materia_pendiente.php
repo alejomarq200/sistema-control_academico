@@ -342,6 +342,8 @@
         </div>
     </div>
 </div>
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Función para mostrar errores de validación
