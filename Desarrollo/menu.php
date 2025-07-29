@@ -215,7 +215,7 @@
                         </li>
                         <li class="sidebar-item">
                             <a href="new_horario.php" class="sidebar-link">
-                                <i class="fi fi-br-time-check"></i> 
+                                <i class="fi fi-br-time-check"></i>
                                 <span>Nuevo Horario</span>
                             </a>
                         </li>
@@ -425,27 +425,13 @@
 
                 <!-- Menú de Ayuda con submenú -->
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#ayuda"
-                        aria-expanded="false" aria-controls="ayuda">
+                    <a href="moduloManuales.php" class="sidebar-link">
                         <i class="bi bi-question-circle-fill"></i>
                         <span>Ayuda</span>
                     </a>
-                    <ul id="ayuda" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="manual_admin.php" class="sidebar-link">
-                                <i class="bi bi-journal-bookmark-fill"></i>
-                                <span>Manual Administrador</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="manual_usuario.php" class="sidebar-link">
-                                <i class="bi bi-journal-bookmark"></i>
-                                <span>Manual Usuario</span>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
+
 
             <div class="sidebar-footer">
                 <a href="../Configuration/Logout.php" class="sidebar-link">

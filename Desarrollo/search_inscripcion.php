@@ -248,20 +248,7 @@
                         <tbody>
                             <?php
                             include("../Configuration/functions_php/functionsCRUDInscripciones.php");
-                            function cargarAniosEscolares($pdo)
-                            {
-                                $stmt = $pdo->query("SELECT DISTINCT anio_escolar FROM inscripciones");
-
-                                if ($stmt && $stmt->rowCount() > 0) {
-                                    echo '<option value="">Todos los años escolares</option>';
-                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                        $anio = htmlspecialchars($row['anio_escolar']);
-                                        echo "<option value=\"$anio\">$anio</option>";
-                                    }
-                                } else {
-                                    echo '<option value="">No hay años escolares</option>';
-                                }
-                            }
+                           
                             $inscripciones = consultarInscripcionesUnificadas($pdo);
 
                             if (!empty($inscripciones)) {

@@ -2,7 +2,7 @@
 <div class="modal fade" id="modalDescargarPlanillaP" tabindex="-1" aria-labelledby="modalLabelPlanilla" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form id="formPlanilla" action="cargar_planillaP.php" method="POST">
+            <form id="formPlanillaP" action="#" method="POST">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalLabelEstudiantes">Descargar Planillas de Inscripción</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -47,9 +47,14 @@
                     <button type="submit" class="btn btn-success" id="btnDescargarSeleccionados">
                         <i class="bi bi-download"></i> Descargar
                     </button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" id="cerrar-primaria" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    document.getElementById('cerrar-primaria').addEventListener("click", function(e) {
+        window.location.href = "descargarPlanillaInscr.php";
+    });
+</script>

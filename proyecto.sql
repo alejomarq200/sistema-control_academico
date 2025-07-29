@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-07-2025 a las 03:19:55
+-- Tiempo de generación: 28-07-2025 a las 18:10:17
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -80,11 +80,26 @@ CREATE TABLE `aulas` (
   `id_aula` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `capacidad` int(11) NOT NULL,
-  `ubicacion` varchar(100) NOT NULL,
   `id_grado` int(11) NOT NULL,
   `anio_escolar` varchar(20) NOT NULL,
   `estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `aulas`
+--
+
+INSERT INTO `aulas` (`id_aula`, `nombre`, `capacidad`, `id_grado`, `anio_escolar`, `estado`) VALUES
+(5, 'Aula 45', 45, 2, '2025-2026', 1),
+(6, 'Aula 18', 12, 2, '2025-2026', 2),
+(7, 'Aula 20', 16, 7, '2025-2026', 1),
+(8, 'Aula 15', 20, 8, '2025-2026', 2),
+(9, 'Aula 19', 25, 9, '2025-2026', 2),
+(10, 'Aula 401', 25, 3, '2025-2026', 2),
+(11, 'Aula 402', 25, 6, '2025-2026', 2),
+(12, 'Aula 29', 14, 1, '2025-2026', 2),
+(13, 'Aula 31', 16, 1, '2025-2026', 2),
+(14, 'Aula 25', 13, 1, '2025-2026', 2);
 
 -- --------------------------------------------------------
 
@@ -111,42 +126,6 @@ CREATE TABLE `calificaciones` (
 --
 
 INSERT INTO `calificaciones` (`id`, `anio_escolar`, `id_grado`, `lapso_academico`, `id_profesor`, `id_materia`, `id_estudiante`, `calificacion`, `actividad`, `tipo_actividad`, `promedio`) VALUES
-(553, '2025-2026', 7, '1er Lapso', 43, 99, 5, '15', NULL, NULL, 15.00),
-(554, '2025-2026', 7, '1er Lapso', 43, 99, 7, '12', NULL, NULL, 12.00),
-(555, '2025-2026', 7, '1er Lapso', 43, 99, 9, '15.5', NULL, NULL, 15.50),
-(556, '2025-2026', 7, '2do Lapso', 43, 99, 5, '15', NULL, NULL, 15.50),
-(557, '2025-2026', 7, '2do Lapso', 43, 99, 5, '16', NULL, NULL, 15.50),
-(558, '2025-2026', 7, '2do Lapso', 43, 99, 7, '5', NULL, NULL, 3.50),
-(559, '2025-2026', 7, '2do Lapso', 43, 99, 7, '2', NULL, NULL, 3.50),
-(560, '2025-2026', 7, '2do Lapso', 43, 99, 9, '15.5', NULL, NULL, 15.50),
-(561, '2025-2026', 7, '2do Lapso', 43, 99, 9, '15.5', NULL, NULL, 15.50),
-(562, '2025-2026', 7, '3er Lapso', 43, 99, 5, '15', NULL, NULL, 14.33),
-(563, '2025-2026', 7, '3er Lapso', 43, 99, 5, '12', NULL, NULL, 14.33),
-(564, '2025-2026', 7, '3er Lapso', 43, 99, 5, '16', NULL, NULL, 14.33),
-(565, '2025-2026', 7, '3er Lapso', 43, 99, 7, '5', NULL, NULL, 7.00),
-(566, '2025-2026', 7, '3er Lapso', 43, 99, 7, '10', NULL, NULL, 7.00),
-(567, '2025-2026', 7, '3er Lapso', 43, 99, 7, '6', NULL, NULL, 7.00),
-(568, '2025-2026', 7, '3er Lapso', 43, 99, 9, '15.5', NULL, NULL, 15.50),
-(569, '2025-2026', 7, '3er Lapso', 43, 99, 9, '15.5', NULL, NULL, 15.50),
-(570, '2025-2026', 7, '3er Lapso', 43, 99, 9, '15.5', NULL, NULL, 15.50),
-(571, '2025-2026', 7, '1er Lapso', 41, 106, 5, '15', NULL, NULL, 15.00),
-(572, '2025-2026', 7, '1er Lapso', 41, 106, 7, '13.5', NULL, NULL, 13.50),
-(573, '2025-2026', 7, '1er Lapso', 41, 106, 9, '13', NULL, NULL, 13.00),
-(574, '2025-2026', 7, '2do Lapso', 41, 106, 5, '12', NULL, NULL, 8.50),
-(575, '2025-2026', 7, '2do Lapso', 41, 106, 5, '5', NULL, NULL, 8.50),
-(576, '2025-2026', 7, '2do Lapso', 41, 106, 7, '13.5', NULL, NULL, 13.50),
-(577, '2025-2026', 7, '2do Lapso', 41, 106, 7, '13.5', NULL, NULL, 13.50),
-(578, '2025-2026', 7, '2do Lapso', 41, 106, 9, '5', NULL, NULL, 5.50),
-(579, '2025-2026', 7, '2do Lapso', 41, 106, 9, '6', NULL, NULL, 5.50),
-(580, '2025-2026', 7, '3er Lapso', 41, 106, 5, '12', NULL, NULL, 12.33),
-(581, '2025-2026', 7, '3er Lapso', 41, 106, 5, '15', NULL, NULL, 12.33),
-(582, '2025-2026', 7, '3er Lapso', 41, 106, 5, '10', NULL, NULL, 12.33),
-(583, '2025-2026', 7, '3er Lapso', 41, 106, 7, '13.5', NULL, NULL, 13.50),
-(584, '2025-2026', 7, '3er Lapso', 41, 106, 7, '13.5', NULL, NULL, 13.50),
-(585, '2025-2026', 7, '3er Lapso', 41, 106, 7, '13.5', NULL, NULL, 13.50),
-(586, '2025-2026', 7, '3er Lapso', 41, 106, 9, '7', NULL, NULL, 6.00),
-(587, '2025-2026', 7, '3er Lapso', 41, 106, 9, '5', NULL, NULL, 6.00),
-(588, '2025-2026', 7, '3er Lapso', 41, 106, 9, '6', NULL, NULL, 6.00),
 (594, '2025-2026', 1, 'Lapso Único', 47, 111, 1, 'EX', 30, 'Contenidos', NULL),
 (595, '2025-2026', 1, 'Lapso Único', 47, 111, 2, 'EX', 30, 'Contenidos', NULL),
 (596, '2025-2026', 1, 'Lapso Único', 47, 111, 3, 'EX', 30, 'Contenidos', NULL),
@@ -276,7 +255,312 @@ INSERT INTO `calificaciones` (`id`, `anio_escolar`, `id_grado`, `lapso_academico
 (720, '2025-2026', 1, 'Lapso Único', 47, 116, 4, 'MB', 54, 'Contenidos', NULL),
 (721, '2025-2026', 1, 'Lapso Único', 47, 116, 3, 'MB', 54, 'Contenidos', NULL),
 (722, '2025-2026', 1, 'Lapso Único', 47, 116, 2, 'MB', 54, 'Contenidos', NULL),
-(723, '2025-2026', 1, 'Lapso Único', 47, 116, 1, 'MB', 54, 'Contenidos', NULL);
+(723, '2025-2026', 1, 'Lapso Único', 47, 116, 1, 'MB', 54, 'Contenidos', NULL),
+(724, '2025-2026', 1, 'Lapso Único', 47, 111, 18, 'EX', 30, 'Contenidos', NULL),
+(725, '2025-2026', 1, 'Lapso Único', 47, 111, 18, 'EX', 32, 'Contenidos', NULL),
+(726, '2025-2026', 1, 'Lapso Único', 47, 111, 18, 'EX', 35, 'Caligrafía', NULL),
+(727, '2025-2026', 1, 'Lapso Único', 47, 111, 18, 'EX', 36, 'Caligrafía', NULL),
+(728, '2025-2026', 1, 'Lapso Único', 47, 112, 18, 'EX', 41, 'Contenidos', NULL),
+(729, '2025-2026', 1, 'Lapso Único', 47, 112, 18, 'MB', 42, 'Contenidos', NULL),
+(730, '2025-2026', 1, 'Lapso Único', 47, 113, 18, 'EX', 49, 'Contenidos', NULL),
+(827, '2025-2026', 7, '1er lapso', 43, 99, 7, '17', NULL, NULL, 17.33),
+(828, '2025-2026', 7, '1er lapso', 43, 99, 7, '17', NULL, NULL, 17.33),
+(829, '2025-2026', 7, '1er lapso', 43, 99, 7, '17', NULL, NULL, 17.33),
+(863, '2025-2026', 7, '1er lapso', 41, 106, 7, '16', NULL, NULL, 16.33),
+(864, '2025-2026', 7, '1er lapso', 41, 106, 7, '17', NULL, NULL, 16.33),
+(865, '2025-2026', 7, '1er lapso', 41, 106, 7, '16', NULL, NULL, 16.33),
+(866, '2025-2026', 7, '1er lapso', 39, 104, 7, '15', NULL, NULL, 15.33),
+(867, '2025-2026', 7, '1er lapso', 39, 104, 7, '16', NULL, NULL, 15.33),
+(868, '2025-2026', 7, '1er lapso', 39, 104, 7, '15', NULL, NULL, 15.33),
+(869, '2025-2026', 7, '1er lapso', 36, 107, 7, '19', NULL, NULL, 18.67),
+(870, '2025-2026', 7, '1er lapso', 36, 107, 7, '18', NULL, NULL, 18.67),
+(871, '2025-2026', 7, '1er lapso', 36, 107, 7, '19', NULL, NULL, 18.67),
+(872, '2025-2026', 7, '1er lapso', 38, 108, 7, '17', NULL, NULL, 17.00),
+(873, '2025-2026', 7, '1er lapso', 38, 108, 7, '17', NULL, NULL, 17.00),
+(874, '2025-2026', 7, '1er lapso', 38, 108, 7, '17', NULL, NULL, 17.00),
+(875, '2025-2026', 7, '1er lapso', 40, 102, 7, '18', NULL, NULL, 18.33),
+(876, '2025-2026', 7, '1er lapso', 40, 102, 7, '19', NULL, NULL, 18.33),
+(877, '2025-2026', 7, '1er lapso', 40, 102, 7, '18', NULL, NULL, 18.33),
+(878, '2025-2026', 7, '1er lapso', 37, 105, 7, '16', NULL, NULL, 16.33),
+(879, '2025-2026', 7, '1er lapso', 37, 105, 7, '17', NULL, NULL, 16.33),
+(880, '2025-2026', 7, '1er lapso', 37, 105, 7, '16', NULL, NULL, 16.33),
+(881, '2025-2026', 7, '1er lapso', 42, 103, 7, '19', NULL, NULL, 18.33),
+(884, '2025-2026', 7, '1er lapso', 42, 100, 7, '14', NULL, NULL, 14.67),
+(885, '2025-2026', 7, '1er lapso', 42, 100, 7, '15', NULL, NULL, 14.67),
+(886, '2025-2026', 7, '1er lapso', 42, 100, 7, '15', NULL, NULL, 14.67),
+(887, '2025-2026', 7, '1er lapso', 42, 101, 7, '17', NULL, NULL, 17.33),
+(888, '2025-2026', 7, '1er lapso', 42, 101, 7, '17', NULL, NULL, 17.33),
+(889, '2025-2026', 7, '1er lapso', 42, 101, 7, '18', NULL, NULL, 17.33),
+(890, '2025-2026', 7, '1er lapso', 43, 99, 5, '16', NULL, NULL, 16.33),
+(891, '2025-2026', 7, '1er lapso', 43, 99, 5, '17', NULL, NULL, 16.33),
+(892, '2025-2026', 7, '1er lapso', 43, 99, 5, '16', NULL, NULL, 16.33),
+(893, '2025-2026', 7, '1er lapso', 41, 106, 5, '18', NULL, NULL, 18.33),
+(894, '2025-2026', 7, '1er lapso', 41, 106, 5, '19', NULL, NULL, 18.33),
+(895, '2025-2026', 7, '1er lapso', 41, 106, 5, '18', NULL, NULL, 18.33),
+(896, '2025-2026', 7, '1er lapso', 39, 104, 5, '15', NULL, NULL, 14.67),
+(897, '2025-2026', 7, '1er lapso', 39, 104, 5, '14', NULL, NULL, 14.67),
+(898, '2025-2026', 7, '1er lapso', 39, 104, 5, '15', NULL, NULL, 14.67),
+(899, '2025-2026', 7, '1er lapso', 36, 107, 5, '20', NULL, NULL, 19.33),
+(900, '2025-2026', 7, '1er lapso', 36, 107, 5, '19', NULL, NULL, 19.33),
+(901, '2025-2026', 7, '1er lapso', 36, 107, 5, '19', NULL, NULL, 19.33),
+(902, '2025-2026', 7, '1er lapso', 38, 108, 5, '13', NULL, NULL, 13.67),
+(903, '2025-2026', 7, '1er lapso', 38, 108, 5, '14', NULL, NULL, 13.67),
+(904, '2025-2026', 7, '1er lapso', 38, 108, 5, '14', NULL, NULL, 13.67),
+(905, '2025-2026', 7, '1er lapso', 40, 102, 5, '17', NULL, NULL, 17.00),
+(906, '2025-2026', 7, '1er lapso', 40, 102, 5, '17', NULL, NULL, 17.00),
+(907, '2025-2026', 7, '1er lapso', 40, 102, 5, '17', NULL, NULL, 17.00),
+(908, '2025-2026', 7, '1er lapso', 37, 105, 5, '16', NULL, NULL, 16.00),
+(909, '2025-2026', 7, '1er lapso', 37, 105, 5, '16', NULL, NULL, 16.00),
+(910, '2025-2026', 7, '1er lapso', 37, 105, 5, '16', NULL, NULL, 16.00),
+(911, '2025-2026', 7, '1er lapso', 42, 103, 5, '18', NULL, NULL, 17.33),
+(912, '2025-2026', 7, '1er lapso', 42, 103, 5, '17', NULL, NULL, 17.33),
+(913, '2025-2026', 7, '1er lapso', 42, 103, 5, '17', NULL, NULL, 17.33),
+(914, '2025-2026', 7, '1er lapso', 42, 100, 5, '15', NULL, NULL, 15.67),
+(915, '2025-2026', 7, '1er lapso', 42, 100, 5, '16', NULL, NULL, 15.67),
+(916, '2025-2026', 7, '1er lapso', 42, 100, 5, '16', NULL, NULL, 15.67),
+(917, '2025-2026', 7, '1er lapso', 42, 101, 5, '17', NULL, NULL, 17.67),
+(918, '2025-2026', 7, '1er lapso', 42, 101, 5, '18', NULL, NULL, 17.67),
+(919, '2025-2026', 7, '1er lapso', 42, 101, 5, '18', NULL, NULL, 17.67),
+(920, '2025-2026', 7, '2do lapso', 43, 99, 5, '16', NULL, NULL, 16.33),
+(921, '2025-2026', 7, '2do lapso', 43, 99, 5, '17', NULL, NULL, 16.33),
+(922, '2025-2026', 7, '2do lapso', 43, 99, 5, '16', NULL, NULL, 16.33),
+(923, '2025-2026', 7, '2do lapso', 41, 106, 5, '18', NULL, NULL, 18.33),
+(924, '2025-2026', 7, '2do lapso', 41, 106, 5, '19', NULL, NULL, 18.33),
+(925, '2025-2026', 7, '2do lapso', 41, 106, 5, '18', NULL, NULL, 18.33),
+(926, '2025-2026', 7, '2do lapso', 39, 104, 5, '15', NULL, NULL, 14.67),
+(927, '2025-2026', 7, '2do lapso', 39, 104, 5, '14', NULL, NULL, 14.67),
+(928, '2025-2026', 7, '2do lapso', 39, 104, 5, '15', NULL, NULL, 14.67),
+(929, '2025-2026', 7, '2do lapso', 36, 107, 5, '20', NULL, NULL, 19.33),
+(930, '2025-2026', 7, '2do lapso', 36, 107, 5, '19', NULL, NULL, 19.33),
+(931, '2025-2026', 7, '2do lapso', 36, 107, 5, '19', NULL, NULL, 19.33),
+(932, '2025-2026', 7, '1er lapso', 38, 108, 5, '13', NULL, NULL, 13.67),
+(933, '2025-2026', 7, '1er lapso', 38, 108, 5, '14', NULL, NULL, 13.67),
+(934, '2025-2026', 7, '1er lapso', 38, 108, 5, '14', NULL, NULL, 13.67),
+(935, '2025-2026', 7, '2do lapso', 40, 102, 5, '17', NULL, NULL, 17.00),
+(936, '2025-2026', 7, '2do lapso', 40, 102, 5, '17', NULL, NULL, 17.00),
+(937, '2025-2026', 7, '2do lapso', 40, 102, 5, '17', NULL, NULL, 17.00),
+(938, '2025-2026', 7, '2do lapso', 37, 105, 5, '16', NULL, NULL, 16.00),
+(939, '2025-2026', 7, '2do lapso', 37, 105, 5, '16', NULL, NULL, 16.00),
+(940, '2025-2026', 7, '2do lapso', 37, 105, 5, '16', NULL, NULL, 16.00),
+(941, '2025-2026', 7, '2do lapso', 42, 103, 5, '18', NULL, NULL, 17.33),
+(942, '2025-2026', 7, '2do lapso', 42, 103, 5, '17', NULL, NULL, 17.33),
+(943, '2025-2026', 7, '2do lapso', 42, 103, 5, '17', NULL, NULL, 17.33),
+(944, '2025-2026', 7, '2do lapso', 42, 100, 5, '15', NULL, NULL, 15.67),
+(945, '2025-2026', 7, '2do lapso', 42, 100, 5, '16', NULL, NULL, 15.67),
+(946, '2025-2026', 7, '2do lapso', 42, 100, 5, '16', NULL, NULL, 15.67),
+(947, '2025-2026', 7, '2do lapso', 42, 101, 5, '17', NULL, NULL, 17.67),
+(948, '2025-2026', 7, '2do lapso', 42, 101, 5, '18', NULL, NULL, 17.67),
+(949, '2025-2026', 7, '2do lapso', 42, 101, 5, '18', NULL, NULL, 17.67),
+(950, '2025-2026', 7, '3er lapso', 43, 99, 5, '16', NULL, NULL, 16.33),
+(951, '2025-2026', 7, '3er lapso', 43, 99, 5, '17', NULL, NULL, 16.33),
+(952, '2025-2026', 7, '3er lapso', 43, 99, 5, '16', NULL, NULL, 16.33),
+(953, '2025-2026', 7, '3er lapso', 41, 106, 5, '18', NULL, NULL, 18.33),
+(954, '2025-2026', 7, '3er lapso', 41, 106, 5, '19', NULL, NULL, 18.33),
+(955, '2025-2026', 7, '3er lapso', 41, 106, 5, '18', NULL, NULL, 18.33),
+(956, '2025-2026', 7, '3er lapso', 39, 104, 5, '15', NULL, NULL, 14.67),
+(957, '2025-2026', 7, '3er lapso', 39, 104, 5, '14', NULL, NULL, 14.67),
+(958, '2025-2026', 7, '3er lapso', 39, 104, 5, '15', NULL, NULL, 14.67),
+(959, '2025-2026', 7, '3er lapso', 36, 107, 5, '20', NULL, NULL, 19.33),
+(960, '2025-2026', 7, '3er lapso', 36, 107, 5, '19', NULL, NULL, 19.33),
+(961, '2025-2026', 7, '3er lapso', 36, 107, 5, '19', NULL, NULL, 19.33),
+(962, '2025-2026', 7, '3er lapso', 38, 108, 5, '13', NULL, NULL, 13.67),
+(963, '2025-2026', 7, '3er lapso', 38, 108, 5, '14', NULL, NULL, 13.67),
+(964, '2025-2026', 7, '3er lapso', 38, 108, 5, '14', NULL, NULL, 13.67),
+(965, '2025-2026', 7, '3er lapso', 40, 102, 5, '17', NULL, NULL, 17.00),
+(966, '2025-2026', 7, '3er lapso', 40, 102, 5, '17', NULL, NULL, 17.00),
+(967, '2025-2026', 7, '3er lapso', 40, 102, 5, '17', NULL, NULL, 17.00),
+(968, '2025-2026', 7, '3er lapso', 37, 105, 5, '16', NULL, NULL, 16.00),
+(969, '2025-2026', 7, '3er lapso', 37, 105, 5, '16', NULL, NULL, 16.00),
+(970, '2025-2026', 7, '3er lapso', 37, 105, 5, '16', NULL, NULL, 16.00),
+(971, '2025-2026', 7, '3er lapso', 42, 103, 5, '18', NULL, NULL, 17.33),
+(972, '2025-2026', 7, '3er lapso', 42, 103, 5, '17', NULL, NULL, 17.33),
+(973, '2025-2026', 7, '3er lapso', 42, 103, 5, '17', NULL, NULL, 17.33),
+(974, '2025-2026', 7, '3er lapso', 42, 100, 5, '15', NULL, NULL, 15.67),
+(975, '2025-2026', 7, '3er lapso', 42, 100, 5, '16', NULL, NULL, 15.67),
+(976, '2025-2026', 7, '3er lapso', 42, 100, 5, '16', NULL, NULL, 15.67),
+(977, '2025-2026', 7, '3er lapso', 42, 101, 5, '17', NULL, NULL, 17.67),
+(978, '2025-2026', 7, '3er lapso', 42, 101, 5, '18', NULL, NULL, 17.67),
+(979, '2025-2026', 7, '3er lapso', 42, 101, 5, '18', NULL, NULL, 17.67),
+(980, '2025-2026', 7, '1er lapso', 43, 99, 10, '16', NULL, NULL, 16.33),
+(981, '2025-2026', 7, '1er lapso', 43, 99, 10, '17', NULL, NULL, 16.33),
+(982, '2025-2026', 7, '1er lapso', 43, 99, 10, '16', NULL, NULL, 16.33),
+(983, '2025-2026', 7, '1er lapso', 41, 106, 10, '18', NULL, NULL, 18.33),
+(984, '2025-2026', 7, '1er lapso', 41, 106, 10, '19', NULL, NULL, 18.33),
+(985, '2025-2026', 7, '1er lapso', 41, 106, 10, '18', NULL, NULL, 18.33),
+(986, '2025-2026', 7, '1er lapso', 39, 104, 10, '15', NULL, NULL, 14.67),
+(987, '2025-2026', 7, '1er lapso', 39, 104, 10, '14', NULL, NULL, 14.67),
+(988, '2025-2026', 7, '1er lapso', 39, 104, 10, '15', NULL, NULL, 14.67),
+(989, '2025-2026', 7, '1er lapso', 36, 107, 10, '20', NULL, NULL, 19.33),
+(990, '2025-2026', 7, '1er lapso', 36, 107, 10, '19', NULL, NULL, 19.33),
+(991, '2025-2026', 7, '1er lapso', 36, 107, 10, '19', NULL, NULL, 19.33),
+(992, '2025-2026', 7, '1er lapso', 38, 108, 10, '13', NULL, NULL, 13.67),
+(993, '2025-2026', 7, '1er lapso', 38, 108, 10, '14', NULL, NULL, 13.67),
+(994, '2025-2026', 7, '1er lapso', 38, 108, 10, '14', NULL, NULL, 13.67),
+(995, '2025-2026', 7, '1er lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(996, '2025-2026', 7, '1er lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(997, '2025-2026', 7, '1er lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(998, '2025-2026', 7, '1er lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(999, '2025-2026', 7, '1er lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1000, '2025-2026', 7, '1er lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1001, '2025-2026', 7, '1er lapso', 42, 103, 10, '18', NULL, NULL, 17.33),
+(1002, '2025-2026', 7, '1er lapso', 42, 103, 10, '17', NULL, NULL, 17.33),
+(1003, '2025-2026', 7, '1er lapso', 42, 103, 10, '17', NULL, NULL, 17.33),
+(1004, '2025-2026', 7, '1er lapso', 42, 100, 10, '15', NULL, NULL, 15.67),
+(1005, '2025-2026', 7, '1er lapso', 42, 100, 10, '16', NULL, NULL, 15.67),
+(1006, '2025-2026', 7, '1er lapso', 42, 100, 10, '16', NULL, NULL, 15.67),
+(1007, '2025-2026', 7, '1er lapso', 42, 101, 10, '17', NULL, NULL, 17.67),
+(1008, '2025-2026', 7, '1er lapso', 42, 101, 10, '18', NULL, NULL, 17.67),
+(1009, '2025-2026', 7, '1er lapso', 42, 101, 10, '18', NULL, NULL, 17.67),
+(1010, '2025-2026', 7, '2do lapso', 43, 99, 10, '16', NULL, NULL, 16.33),
+(1011, '2025-2026', 7, '2do lapso', 43, 99, 10, '17', NULL, NULL, 16.33),
+(1012, '2025-2026', 7, '2do lapso', 43, 99, 10, '16', NULL, NULL, 16.33),
+(1013, '2025-2026', 7, '2do lapso', 41, 106, 10, '18', NULL, NULL, 18.33),
+(1014, '2025-2026', 7, '2do lapso', 41, 106, 10, '19', NULL, NULL, 18.33),
+(1015, '2025-2026', 7, '2do lapso', 41, 106, 10, '18', NULL, NULL, 18.33),
+(1016, '2025-2026', 7, '2do lapso', 39, 104, 10, '15', NULL, NULL, 14.67),
+(1017, '2025-2026', 7, '2do lapso', 39, 104, 10, '14', NULL, NULL, 14.67),
+(1018, '2025-2026', 7, '2do lapso', 39, 104, 10, '15', NULL, NULL, 14.67),
+(1019, '2025-2026', 7, '2do lapso', 36, 107, 10, '20', NULL, NULL, 19.33),
+(1020, '2025-2026', 7, '2do lapso', 36, 107, 10, '19', NULL, NULL, 19.33),
+(1021, '2025-2026', 7, '2do lapso', 36, 107, 10, '19', NULL, NULL, 19.33),
+(1022, '2025-2026', 7, '2do lapso', 38, 108, 10, '13', NULL, NULL, 13.67),
+(1023, '2025-2026', 7, '2do lapso', 38, 108, 10, '14', NULL, NULL, 13.67),
+(1024, '2025-2026', 7, '2do lapso', 38, 108, 10, '14', NULL, NULL, 13.67),
+(1025, '2025-2026', 7, '2do lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(1026, '2025-2026', 7, '2do lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(1027, '2025-2026', 7, '2do lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(1028, '2025-2026', 7, '2do lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1029, '2025-2026', 7, '2do lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1030, '2025-2026', 7, '2do lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1031, '2025-2026', 7, '2do lapso', 42, 103, 10, '18', NULL, NULL, 17.33),
+(1032, '2025-2026', 7, '2do lapso', 42, 103, 10, '17', NULL, NULL, 17.33),
+(1033, '2025-2026', 7, '2do lapso', 42, 103, 10, '17', NULL, NULL, 17.33),
+(1034, '2025-2026', 7, '2do lapso', 42, 100, 10, '15', NULL, NULL, 15.67),
+(1035, '2025-2026', 7, '2do lapso', 42, 100, 10, '16', NULL, NULL, 15.67),
+(1036, '2025-2026', 7, '2do lapso', 42, 100, 10, '16', NULL, NULL, 15.67),
+(1037, '2025-2026', 7, '2do lapso', 42, 101, 10, '17', NULL, NULL, 17.67),
+(1038, '2025-2026', 7, '2do lapso', 42, 101, 10, '18', NULL, NULL, 17.67),
+(1039, '2025-2026', 7, '2do lapso', 42, 101, 10, '18', NULL, NULL, 17.67),
+(1040, '2025-2026', 7, '3er lapso', 43, 99, 10, '16', NULL, NULL, 16.33),
+(1041, '2025-2026', 7, '3er lapso', 43, 99, 10, '17', NULL, NULL, 16.33),
+(1042, '2025-2026', 7, '3er lapso', 43, 99, 10, '16', NULL, NULL, 16.33),
+(1043, '2025-2026', 7, '3er lapso', 41, 106, 10, '18', NULL, NULL, 18.33),
+(1044, '2025-2026', 7, '3er lapso', 41, 106, 10, '19', NULL, NULL, 18.33),
+(1045, '2025-2026', 7, '3er lapso', 41, 106, 10, '18', NULL, NULL, 18.33),
+(1046, '2025-2026', 7, '3er lapso', 39, 104, 10, '15', NULL, NULL, 14.67),
+(1047, '2025-2026', 7, '3er lapso', 39, 104, 10, '14', NULL, NULL, 14.67),
+(1048, '2025-2026', 7, '3er lapso', 39, 104, 10, '15', NULL, NULL, 14.67),
+(1049, '2025-2026', 7, '3er lapso', 36, 107, 10, '20', NULL, NULL, 19.33),
+(1050, '2025-2026', 7, '3er lapso', 36, 107, 10, '19', NULL, NULL, 19.33),
+(1051, '2025-2026', 7, '3er lapso', 36, 107, 10, '19', NULL, NULL, 19.33),
+(1052, '2025-2026', 7, '3er lapso', 38, 108, 10, '13', NULL, NULL, 13.67),
+(1053, '2025-2026', 7, '3er lapso', 38, 108, 10, '14', NULL, NULL, 13.67),
+(1054, '2025-2026', 7, '3er lapso', 38, 108, 10, '14', NULL, NULL, 13.67),
+(1055, '2025-2026', 7, '3er lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(1056, '2025-2026', 7, '3er lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(1057, '2025-2026', 7, '3er lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(1058, '2025-2026', 7, '3er lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1059, '2025-2026', 7, '3er lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1060, '2025-2026', 7, '3er lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1061, '2025-2026', 7, '3er lapso', 42, 103, 10, '18', NULL, NULL, 17.33),
+(1062, '2025-2026', 7, '3er lapso', 42, 103, 10, '17', NULL, NULL, 17.33),
+(1063, '2025-2026', 7, '3er lapso', 42, 103, 10, '17', NULL, NULL, 17.33),
+(1064, '2025-2026', 7, '3er lapso', 42, 100, 10, '15', NULL, NULL, 15.67),
+(1065, '2025-2026', 7, '3er lapso', 42, 100, 10, '16', NULL, NULL, 15.67),
+(1066, '2025-2026', 7, '3er lapso', 42, 100, 10, '16', NULL, NULL, 15.67),
+(1067, '2025-2026', 7, '3er lapso', 42, 101, 1, '17', NULL, NULL, 17.67),
+(1068, '2025-2026', 7, '3er lapso', 42, 101, 1, '18', NULL, NULL, 17.67),
+(1069, '2025-2026', 7, '3er lapso', 42, 101, 1, '18', NULL, NULL, 17.67),
+(1070, '2025-2026', 8, '1er lapso', 43, 99, 10, '16', NULL, NULL, 16.33),
+(1071, '2025-2026', 8, '1er lapso', 43, 99, 10, '17', NULL, NULL, 16.33),
+(1072, '2025-2026', 8, '1er lapso', 43, 99, 10, '16', NULL, NULL, 16.33),
+(1073, '2025-2026', 8, '1er lapso', 41, 106, 10, '18', NULL, NULL, 18.33),
+(1074, '2025-2026', 8, '1er lapso', 41, 106, 10, '19', NULL, NULL, 18.33),
+(1075, '2025-2026', 8, '1er lapso', 41, 106, 10, '18', NULL, NULL, 18.33),
+(1076, '2025-2026', 8, '1er lapso', 39, 104, 10, '15', NULL, NULL, 14.67),
+(1077, '2025-2026', 8, '1er lapso', 39, 104, 10, '14', NULL, NULL, 14.67),
+(1078, '2025-2026', 8, '1er lapso', 39, 104, 10, '15', NULL, NULL, 14.67),
+(1079, '2025-2026', 8, '1er lapso', 36, 107, 10, '20', NULL, NULL, 19.33),
+(1080, '2025-2026', 8, '1er lapso', 36, 107, 10, '19', NULL, NULL, 19.33),
+(1081, '2025-2026', 8, '1er lapso', 36, 107, 10, '19', NULL, NULL, 19.33),
+(1082, '2025-2026', 8, '1er lapso', 38, 108, 10, '13', NULL, NULL, 13.67),
+(1083, '2025-2026', 8, '1er lapso', 38, 108, 10, '14', NULL, NULL, 13.67),
+(1084, '2025-2026', 8, '1er lapso', 38, 108, 10, '14', NULL, NULL, 13.67),
+(1085, '2025-2026', 8, '1er lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(1086, '2025-2026', 8, '1er lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(1087, '2025-2026', 8, '1er lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(1088, '2025-2026', 8, '1er lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1089, '2025-2026', 8, '1er lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1090, '2025-2026', 8, '1er lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1091, '2025-2026', 8, '1er lapso', 42, 103, 10, '18', NULL, NULL, 17.33),
+(1092, '2025-2026', 8, '1er lapso', 42, 103, 10, '17', NULL, NULL, 17.33),
+(1093, '2025-2026', 8, '1er lapso', 42, 103, 10, '17', NULL, NULL, 17.33),
+(1094, '2025-2026', 8, '1er lapso', 42, 100, 10, '15', NULL, NULL, 15.67),
+(1095, '2025-2026', 8, '1er lapso', 42, 100, 10, '16', NULL, NULL, 15.67),
+(1096, '2025-2026', 8, '1er lapso', 42, 100, 10, '16', NULL, NULL, 15.67),
+(1097, '2025-2026', 8, '1er lapso', 42, 101, 10, '17', NULL, NULL, 17.67),
+(1098, '2025-2026', 8, '1er lapso', 42, 101, 10, '18', NULL, NULL, 17.67),
+(1099, '2025-2026', 8, '1er lapso', 42, 101, 10, '18', NULL, NULL, 17.67),
+(1100, '2025-2026', 8, '2do lapso', 43, 99, 10, '16', NULL, NULL, 16.33),
+(1101, '2025-2026', 8, '2do lapso', 43, 99, 10, '17', NULL, NULL, 16.33),
+(1102, '2025-2026', 8, '2do lapso', 43, 99, 10, '16', NULL, NULL, 16.33),
+(1103, '2025-2026', 8, '2do lapso', 41, 106, 10, '18', NULL, NULL, 18.33),
+(1104, '2025-2026', 8, '2do lapso', 41, 106, 10, '19', NULL, NULL, 18.33),
+(1105, '2025-2026', 8, '2do lapso', 41, 106, 10, '18', NULL, NULL, 18.33),
+(1106, '2025-2026', 8, '2do lapso', 39, 104, 10, '15', NULL, NULL, 14.67),
+(1107, '2025-2026', 8, '2do lapso', 39, 104, 10, '14', NULL, NULL, 14.67),
+(1108, '2025-2026', 8, '2do lapso', 39, 104, 10, '15', NULL, NULL, 14.67),
+(1109, '2025-2026', 8, '2do lapso', 36, 107, 10, '20', NULL, NULL, 19.33),
+(1110, '2025-2026', 8, '2do lapso', 36, 107, 10, '19', NULL, NULL, 19.33),
+(1111, '2025-2026', 8, '2do lapso', 36, 107, 10, '19', NULL, NULL, 19.33),
+(1112, '2025-2026', 8, '2do lapso', 38, 108, 10, '13', NULL, NULL, 13.67),
+(1113, '2025-2026', 8, '2do lapso', 38, 108, 10, '14', NULL, NULL, 13.67),
+(1114, '2025-2026', 8, '2do lapso', 38, 108, 10, '14', NULL, NULL, 13.67),
+(1115, '2025-2026', 8, '2do lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(1116, '2025-2026', 8, '2do lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(1117, '2025-2026', 8, '2do lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(1118, '2025-2026', 8, '2do lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1119, '2025-2026', 8, '2do lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1120, '2025-2026', 8, '2do lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1121, '2025-2026', 8, '2do lapso', 42, 103, 10, '18', NULL, NULL, 17.33),
+(1122, '2025-2026', 8, '2do lapso', 42, 103, 10, '17', NULL, NULL, 17.33),
+(1123, '2025-2026', 8, '2do lapso', 42, 103, 10, '17', NULL, NULL, 17.33),
+(1124, '2025-2026', 8, '2do lapso', 42, 100, 10, '15', NULL, NULL, 15.67),
+(1125, '2025-2026', 8, '2do lapso', 42, 100, 10, '16', NULL, NULL, 15.67),
+(1126, '2025-2026', 8, '2do lapso', 42, 100, 10, '16', NULL, NULL, 15.67),
+(1127, '2025-2026', 8, '2do lapso', 42, 101, 10, '17', NULL, NULL, 17.67),
+(1128, '2025-2026', 8, '2do lapso', 42, 101, 10, '18', NULL, NULL, 17.67),
+(1129, '2025-2026', 8, '2do lapso', 42, 101, 10, '18', NULL, NULL, 17.67),
+(1130, '2025-2026', 8, '3er lapso', 43, 99, 10, '16', NULL, NULL, 16.33),
+(1131, '2025-2026', 8, '3er lapso', 43, 99, 10, '17', NULL, NULL, 16.33),
+(1132, '2025-2026', 8, '3er lapso', 43, 99, 10, '16', NULL, NULL, 16.33),
+(1133, '2025-2026', 8, '3er lapso', 41, 106, 10, '18', NULL, NULL, 18.33),
+(1134, '2025-2026', 8, '3er lapso', 41, 106, 10, '19', NULL, NULL, 18.33),
+(1135, '2025-2026', 8, '3er lapso', 41, 106, 10, '18', NULL, NULL, 18.33),
+(1136, '2025-2026', 8, '3er lapso', 39, 104, 10, '15', NULL, NULL, 14.67),
+(1137, '2025-2026', 8, '3er lapso', 39, 104, 10, '14', NULL, NULL, 14.67),
+(1138, '2025-2026', 8, '3er lapso', 39, 104, 10, '15', NULL, NULL, 14.67),
+(1139, '2025-2026', 8, '3er lapso', 36, 107, 10, '20', NULL, NULL, 19.33),
+(1140, '2025-2026', 8, '3er lapso', 36, 107, 10, '19', NULL, NULL, 19.33),
+(1141, '2025-2026', 8, '3er lapso', 36, 107, 10, '19', NULL, NULL, 19.33),
+(1142, '2025-2026', 8, '3er lapso', 38, 108, 10, '13', NULL, NULL, 13.67),
+(1143, '2025-2026', 8, '3er lapso', 38, 108, 10, '14', NULL, NULL, 13.67),
+(1144, '2025-2026', 8, '3er lapso', 38, 108, 10, '14', NULL, NULL, 13.67),
+(1145, '2025-2026', 8, '3er lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(1146, '2025-2026', 8, '3er lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(1147, '2025-2026', 8, '3er lapso', 40, 102, 10, '17', NULL, NULL, 17.00),
+(1148, '2025-2026', 8, '3er lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1149, '2025-2026', 8, '3er lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1150, '2025-2026', 8, '3er lapso', 37, 105, 10, '16', NULL, NULL, 16.00),
+(1151, '2025-2026', 8, '3er lapso', 42, 103, 10, '18', NULL, NULL, 17.33),
+(1152, '2025-2026', 8, '3er lapso', 42, 103, 10, '17', NULL, NULL, 17.33),
+(1153, '2025-2026', 8, '3er lapso', 42, 103, 10, '17', NULL, NULL, 17.33),
+(1154, '2025-2026', 8, '3er lapso', 42, 100, 10, '15', NULL, NULL, 15.67),
+(1155, '2025-2026', 8, '3er lapso', 42, 100, 10, '16', NULL, NULL, 15.67),
+(1156, '2025-2026', 8, '3er lapso', 42, 100, 10, '16', NULL, NULL, 15.67),
+(1157, '2025-2026', 8, '3er lapso', 42, 101, 1, '17', NULL, NULL, 17.67),
+(1158, '2025-2026', 8, '3er lapso', 42, 101, 1, '18', NULL, NULL, 17.67),
+(1159, '2025-2026', 8, '3er lapso', 42, 101, 1, '18', NULL, NULL, 17.67);
 
 -- --------------------------------------------------------
 
@@ -320,7 +604,8 @@ INSERT INTO `contacto_pago` (`id`, `cedula`, `nombres`, `apellidos`, `direccion`
 (39, 'V7777851', 'Alfredo', 'Mejias', 'Barquisimeto', '04241010100', 'mejias1@gmail.com', 'Bachillerato', 'Ninguna activa', 'Sí', 'TGS Solutions', '04241244211', 'Barquisimeto'),
 (40, 'V7785211', 'Margot', 'Robbie', 'Barquisimeto', '04245599981', 'margot@gmail.com', 'Ninguna aun', 'Ninguna aún', 'Sí', 'Seguros Lara', '04241010101', 'Cabudare Centro'),
 (41, 'V7741663', 'Enrique', 'Bonilla', 'Barquisimeto', '04241010100', 'enrique@gmail.com', 'Lincenciatura', 'Ninguna activa', 'Sí', 'Mercados Lara', '04245563110', 'Barquisimeto'),
-(42, 'V89333121', 'Jairo', 'Menendez', 'Barquisimeto', '04241442421', 'jairo@gmail.com', 'Bachillerato', 'Ninguna activa', 'Sí', 'Mercados Lara', '04241124251', 'Barquisimeto');
+(42, 'V89333121', 'Jairo', 'Menendez', 'Barquisimeto', '04241442421', 'jairo@gmail.com', 'Bachillerato', 'Ninguna activa', 'Sí', 'Mercados Lara', '04241124251', 'Barquisimeto'),
+(43, 'V17884411', 'Elena', 'Castro', 'Barquisimeto', '04245596321', 'elena@gmail.com', 'Lincenciatura', 'Ninguna aún', 'Sí', 'Empresa Ejempl', '04241145210', 'Barquisimeto');
 
 -- --------------------------------------------------------
 
@@ -382,14 +667,15 @@ INSERT INTO `estudiantes` (`id`, `cedula_est`, `nombres_est`, `apellidos_est`, `
 (7, 'V1201000', 'Yovana', 'Sarate', 'F', '08/02/2012', 13, 'Barquisimeto', 'Barquisimeto', 'Colegio Dioscesano', 'Ninguno aun', 'Ninguno aun', 'Ninguno aun', 7, 'Mañana', '', '', 'Ninguno aun', 'Ninguno aun'),
 (8, 'V1212100', 'Sofia', 'Gonzales', 'F', '14/12/2013', 15, 'Barquisimeto', 'Barquisimeto', 'Colegio 24 de Junio', 'Ninguno aun', 'Ninguno aun', 'Ninguno aun', 1, 'Mañana', '', '', 'Ninguno aun', 'Ninguno aun'),
 (9, 'V21001212', 'Mery', 'Sanchez', 'F', '14/12/2013', 15, 'Barquisimeto', 'Barquisimeto', 'Colegio 24 de Junio', 'Retiro formal', 'Ninguno aun', 'Ninguno aun', 7, 'Mañana', '', '', 'Ninguno aun', 'Ninguno aun'),
-(10, 'V1421210', 'Marian', 'López', 'F', '14/06/2008', 17, 'Barquisimeto', 'Barquisimeto', 'Colegio Los Ilustres', 'Salida Formal', 'Igualación segundo grado', 'Retiro formal', 7, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades'),
+(10, 'V1421210', 'Marian', 'López', 'F', '14/06/2008', 17, 'Barquisimeto', 'Barquisimeto', 'Colegio Los Ilustres', 'Salida Formal', 'Igualación segundo grado', 'Retiro formal', 8, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades'),
 (11, 'V25633210', 'Andres', 'Menendez', 'M', '14/10/2009', 16, 'Barquisimeto', 'Barquisimeto', 'Colegio Las Americas', 'Salida Formal', 'Igualación segundo grado', 'Retiro formal', 7, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades'),
 (12, 'V14424211', 'Enrique', 'Castañeda', 'M', '08/08/2010', 15, 'Barquisimeto', 'Barquisimeto', 'Colegio Los Ilustres', 'Salida Formal', 'Igualación segundo grado', 'Retiro formal', 7, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades'),
 (13, 'V12421210', 'Maria Victoria', 'Serrano', 'F', '14/10/2010', 15, 'Barquisimeto', 'Barquisimeto', 'Colegio Las Americas', 'Salida Formal', 'Igualación segundo grado', 'Retiro formal', 7, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades'),
 (14, 'V14455210', 'Fabian', 'Salazar', 'F', '14/06/2012', 13, 'Barquisimeto', 'Barquisimeto', 'Colegio Las Americas', 'Retiro formal', 'Igualación segundo grado', 'Ninguna aún', 7, 'Mañana', 'Ningun registro', 'Ningun registro', 'No posee vacunas', 'No tiene enfermedades'),
 (15, 'V1888889', 'Pedro', 'Pascal', 'M', '14/06/2013', 13, 'Barquisimeto', 'Barquisimeto', 'Colegio Las Americas', 'Retiro formal', 'Igualación segundo grado', 'Retiro formal', 7, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades'),
 (16, 'V7841120', 'Verónica', 'Leiva', 'F', '14/06/2012', 13, 'Barquisimeto', 'Barquisimeto', 'Colegio Las Americas', 'Retiro formal', 'Igualación segundo grado', 'Ninguna aún', 7, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades'),
-(17, 'V28999654', 'Veronica', 'Serrano', 'F', '14/07/2013', 12, 'Barquisimeto', 'Barquisimeto', 'Colegio Las Americas', 'Salida Formal', 'Igualación segundo grado', 'Ninguna aún', 7, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades');
+(17, 'V28999654', 'Veronica', 'Serrano', 'F', '14/07/2013', 12, 'Barquisimeto', 'Barquisimeto', 'Colegio Las Americas', 'Salida Formal', 'Igualación segundo grado', 'Ninguna aún', 7, 'Mañana', '', '', 'No posee vacunas', 'No tiene enfermedades'),
+(18, 'V1775754', 'Antonella', 'Lara', 'F', '14/06/2013', 12, 'Barquisimeto', 'Barquisimeto', 'Colegio Las Americas', 'Retiro formal', 'Nivel de Primaria', 'Ninguna aún', 1, 'Mañana', 'Ningun registro', 'Ningun registro', 'No posee vacunas', 'No tiene enfermedades');
 
 -- --------------------------------------------------------
 
@@ -472,6 +758,37 @@ CREATE TABLE `horarios` (
   `anio_escolar` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `horarios`
+--
+
+INSERT INTO `horarios` (`id_horario`, `id_grado`, `id_aula`, `id_materia`, `id_profesor`, `dia_semana`, `hora_inicio`, `hora_fin`, `anio_escolar`) VALUES
+(76, 7, 7, 107, 36, '1', '07:00:00', '08:00:00', '2025-2026'),
+(77, 7, 7, 106, 41, '1', '08:00:00', '09:00:00', '2025-2026'),
+(78, 7, 7, 104, 39, '1', '09:00:00', '10:00:00', '2025-2026'),
+(79, 7, 7, 107, 36, '1', '10:00:00', '11:00:00', '2025-2026'),
+(80, 7, 7, 102, 40, '1', '11:00:00', '12:00:00', '2025-2026'),
+(81, 7, 7, 104, 39, '2', '07:00:00', '08:00:00', '2025-2026'),
+(82, 7, 7, 108, 38, '2', '08:00:00', '09:00:00', '2025-2026'),
+(83, 7, 7, 102, 40, '2', '09:00:00', '10:00:00', '2025-2026'),
+(84, 7, 7, 103, 42, '2', '10:00:00', '11:00:00', '2025-2026'),
+(85, 7, 7, 107, 36, '2', '11:00:00', '12:00:00', '2025-2026'),
+(86, 7, 7, 103, 42, '3', '07:00:00', '10:00:00', '2025-2026'),
+(87, 7, 7, 100, 42, '3', '10:00:00', '11:00:00', '2025-2026'),
+(88, 7, 7, 100, 42, '3', '11:00:00', '12:00:00', '2025-2026'),
+(89, 7, 7, 102, 40, '4', '07:00:00', '08:00:00', '2025-2026'),
+(90, 7, 7, 102, 40, '4', '08:00:00', '10:00:00', '2025-2026'),
+(91, 7, 7, 108, 38, '4', '10:00:00', '12:00:00', '2025-2026'),
+(92, 7, 7, 108, 38, '5', '07:00:00', '08:00:00', '2025-2026'),
+(93, 7, 7, 106, 41, '5', '08:00:00', '09:00:00', '2025-2026'),
+(94, 7, 7, 103, 42, '5', '09:00:00', '10:00:00', '2025-2026'),
+(95, 7, 7, 102, 40, '5', '10:00:00', '12:00:00', '2025-2026'),
+(96, 1, 5, 113, 47, '1', '07:00:00', '08:00:00', '2025-2026'),
+(97, 1, 5, 114, 47, '1', '08:00:00', '09:00:00', '2025-2026'),
+(98, 1, 5, 112, 47, '1', '09:00:00', '10:00:00', '2025-2026'),
+(99, 1, 5, 111, 47, '1', '10:00:00', '11:00:00', '2025-2026'),
+(100, 1, 5, 116, 47, '1', '11:00:00', '12:00:00', '2025-2026');
+
 -- --------------------------------------------------------
 
 --
@@ -496,7 +813,9 @@ INSERT INTO `inscripciones` (`id_inscripcion`, `id_estudiante`, `id_representant
 (24, 16, 19, '2025-2026', 7, '2025-07-25', 41),
 (25, 16, 20, '2025-2026', 7, '2025-07-25', 41),
 (26, 17, 21, '2025-2026', 7, '2025-07-25', 42),
-(27, 17, 22, '2025-2026', 7, '2025-07-25', 42);
+(27, 17, 22, '2025-2026', 7, '2025-07-25', 42),
+(28, 18, 23, '2025-2026', 1, '2025-07-25', 43),
+(29, 18, 24, '2025-2026', 1, '2025-07-25', 43);
 
 -- --------------------------------------------------------
 
@@ -551,16 +870,6 @@ CREATE TABLE `materias_pendientes` (
   `fecha_registro` varchar(15) NOT NULL DEFAULT current_timestamp(),
   `fecha_actualizacion` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `materias_pendientes`
---
-
-INSERT INTO `materias_pendientes` (`id`, `id_estudiante`, `id_materia`, `id_grado`, `id_profesor`, `anio_escolar`, `promedio_final`, `estado`, `fecha_registro`, `fecha_actualizacion`) VALUES
-(24, 7, 99, 7, 43, '2025-2026', 5.00, 'repetida', '20-07-2025', '2025-07-19 21:40:52'),
-(25, 9, 99, 7, 43, '2025-2026', 15.50, 'repetida', '20-07-2025', '2025-07-19 21:59:28'),
-(26, 7, 106, 7, 41, '2025-2026', 13.50, 'recuperada', '20-07-2025', '2025-07-19 21:59:10'),
-(27, 9, 106, 7, 41, '2025-2026', 7.00, 'repetida', '20-07-2025', '2025-07-19 21:59:28');
 
 -- --------------------------------------------------------
 
@@ -688,7 +997,9 @@ INSERT INTO `representantes` (`id`, `cedula`, `parentesco`, `nombres`, `apellido
 (19, 'V15632778', 'madre', 'Miriangel', 'Lopez', '14/12/1988', 'miriangel@gmail.com', 'Barquisimeto', '04241115931', 'Bachillerato', 'Ninguna aún', 'No', '', '', ''),
 (20, 'V7741663', 'padre', 'Enrique', 'Bonilla', '18/06/1996', 'enrique@gmail.com', 'Barquisimeto', '04241010100', 'Lincenciatura', 'Ninguna activa', 'Sí', 'Mercados Lara', '04245563110', 'Barquisimeto'),
 (21, 'V88896240', 'madre', 'Giovanna', 'Sarate', '18/09/2000', 'giovanna@gmail.com', 'Barquisimeto', '04241121210', 'Bachillerato', 'Ninguna aún', 'No', '', '', ''),
-(22, 'V89333121', 'padre', 'Jairo', 'Menendez', '28/06/1996', 'jairo@gmail.com', 'Barquisimeto', '04241442421', 'Bachillerato', 'Ninguna activa', 'Sí', 'Mercados Lara', '04241124251', 'Barquisimeto');
+(22, 'V89333121', 'padre', 'Jairo', 'Menendez', '28/06/1996', 'jairo@gmail.com', 'Barquisimeto', '04241442421', 'Bachillerato', 'Ninguna activa', 'Sí', 'Mercados Lara', '04241124251', 'Barquisimeto'),
+(23, 'V17884411', 'madre', 'Elena', 'Castro', '08/06/1998', 'elena@gmail.com', 'Barquisimeto', '04245596321', 'Lincenciatura', 'Ninguna aún', 'Sí', 'Empresa Ejempl', '04241145210', 'Barquisimeto'),
+(24, 'V17785241', 'padre', 'Fernando', 'Solaris', '08/06/1996', 'fernando@gmail.com', 'Barquisimeto', '04241254242', 'Ningun rgistro', 'Ninguna activa', 'No', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -893,16 +1204,22 @@ ALTER TABLE `actividades`
   MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
+-- AUTO_INCREMENT de la tabla `aulas`
+--
+ALTER TABLE `aulas`
+  MODIFY `id_aula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
 -- AUTO_INCREMENT de la tabla `calificaciones`
 --
 ALTER TABLE `calificaciones`
-  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=724;
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1160;
 
 --
 -- AUTO_INCREMENT de la tabla `contacto_pago`
 --
 ALTER TABLE `contacto_pago`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `estado`
@@ -914,7 +1231,7 @@ ALTER TABLE `estado`
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `grados`
@@ -929,10 +1246,16 @@ ALTER TABLE `grado_materia`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
+-- AUTO_INCREMENT de la tabla `horarios`
+--
+ALTER TABLE `horarios`
+  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+
+--
 -- AUTO_INCREMENT de la tabla `inscripciones`
 --
 ALTER TABLE `inscripciones`
-  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `materias`
@@ -968,7 +1291,7 @@ ALTER TABLE `profesor_materia_grado`
 -- AUTO_INCREMENT de la tabla `representantes`
 --
 ALTER TABLE `representantes`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`

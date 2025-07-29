@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,7 +78,7 @@
                             include("../Layout/modalesMaterias/modalMDisable.php");
                             include("../Layout/modalesMaterias/modalMEnable.php");
                             $materias = consultarMateriasCRUD($pdo); // Obtener los usuarios
-                            
+
                             if (!empty($materias)) {
                                 foreach ($materias as $materia) { // Iterar sobre cada usuario
                                     if ($materia['id_estado'] == 1) {
@@ -87,7 +86,7 @@
                                     } elseif ($materia['id_estado'] == 2) {
                                         $materia['id_estado'] = 'Activo';
                                     }
-                                    ?>
+                            ?>
                                     <tr>
                                         <td><?php echo ($materia['nombre']); ?></td>
                                         <td style="display:none;"><?php echo ($materia['nivel_materia']); ?></td>
@@ -115,12 +114,12 @@
                                                 <i class="bi bi-x-circle"></i>
                                             </button>
                                             <button type="button" class="btn btn-secondary"
-                                                data-id="<?php echo $materia['id_materia']; ?>" onclick="myFunction(this)">
+                                                data-id="<?php echo $materia['id_materia']; ?>" onclick="confirmDeleteMateria(this)">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </td>
                                     </tr>
-                                    <?php
+                            <?php
                                 }
                             } else {
                                 echo "<tr><td colspan='8'>No se encontraron usuarios.</td></tr>";
@@ -130,12 +129,15 @@
                     </table>
                 </div>
                 </main>
-                <script src="../js/validarDeleteMaterias.js"></script>
+                <!--  <script src="../js/validarDeleteMaterias.js"></script>-->
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+            </div>
+        </div>
+    </div>
 </body>
-</div>
+<script src="../js/filtrarLupa.js"></script>
 <script>
-    document.getElementById('filtroNivel').addEventListener('change', function () {
+    document.getElementById('filtroNivel').addEventListener('change', function() {
         const nivelSeleccionado = this.value.toLowerCase();
         const filas = document.querySelectorAll('table tbody tr');
 
@@ -150,7 +152,7 @@
         });
     });
 
-    document.getElementById('filtroEstado').addEventListener('change', function () {
+    document.getElementById('filtroEstado').addEventListener('change', function() {
         const nivelSeleccionado = this.value.toLowerCase();
         const filas = document.querySelectorAll('table tbody tr');
 
@@ -165,5 +167,5 @@
         });
     });
 </script>
-
+<script src="../js/validarDeleteAsignatura.js"></script>
 </html>

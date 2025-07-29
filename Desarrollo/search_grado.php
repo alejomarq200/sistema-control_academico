@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../css/moduloGrados.css">
+    <link rel="stylesheet" href="../css/moduloGGrados.css">
     <title>Consultar Grados</title>
 </head>
 <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
@@ -79,16 +79,16 @@
                         include("../Configuration/functions_php/functionsCRUDGrados.php");
 
                         $grados = consultarGradosCRUD($pdo); // Obtener los usuarios
-                        
+
                         if (!empty($grados)) {
                             foreach ($grados as $grado) { // Iterar sobre cada usuario
-                                ?>
+                        ?>
                                 <tr>
                                     <td><?php echo ($grado['id_grado']); ?></td>
                                     <td><?php echo ($grado['categoria_grado']); ?>
                                     </td>
                                 </tr>
-                                <?php
+                        <?php
                             }
                         } else {
                             echo "<tr><td colspan='8'>No se encontraron usuarios.</td></tr>";
@@ -105,7 +105,7 @@
                 <input type="checkbox" id="btn-modal-gradosP">
                 <div class="container-modal-gradosP">
                     <div class="content-modal-gradosP">
-                        <h2>Gestión de Grados</h2>
+                         <h2>Asignar Profesores a Grados</h2>
                         <div class="container">
                             <form id="form1-gradosP">
                                 <table id="tabla-general-gradosP">
@@ -124,7 +124,7 @@
 
                                         if (!empty($profesoresConGrados)) {
                                             foreach ($profesoresConGrados as $profesor) {
-                                                ?>
+                                        ?>
                                                 <tr>
                                                     <td><?php echo htmlspecialchars($profesor['cedula']); ?></td>
                                                     <td><?php echo htmlspecialchars($profesor['nombre']); ?></td>
@@ -140,7 +140,7 @@
                                                         </button>
                                                     </td>
                                                 </tr>
-                                                <?php
+                                        <?php
                                             }
                                         } else {
                                             echo "<tr><td colspan='5'>No se encontraron profesores registrados.</td></tr>";
@@ -198,7 +198,7 @@
                 <input type="checkbox" id="btn-modal-grados">
                 <div class="container-modal-grados">
                     <div class="content-modal-grados">
-                        <h2>Gestión de Grados</h2>
+                        <h2>Asignar Materias a Grados</h2>
                         <div class="container">
                             <form id="form1-grados">
                                 <table id="tabla-general-grados">
@@ -215,7 +215,7 @@
                                         $materiasYGrados = consultarMateriasConGrados($pdo);
                                         if (!empty($materiasYGrados)):
                                             foreach ($materiasYGrados as $materia):
-                                                ?>
+                                        ?>
                                                 <tr>
                                                     <td><?= htmlspecialchars($materia['nombre_materia']) ?></td>
                                                     <td><?= htmlspecialchars($materia['nivel_materia']) ?></td>
@@ -238,7 +238,7 @@
                                                         </button>
                                                     </td>
                                                 </tr>
-                                                <?php
+                                            <?php
                                             endforeach;
                                         else:
                                             ?>
@@ -288,8 +288,7 @@
                 <!--Fin de Ventana Modal-->
             </body>
             <script>
-
-                document.getElementById('filtroNivel').addEventListener('change', function () {
+                document.getElementById('filtroNivel').addEventListener('change', function() {
                     const nivelSeleccionado = this.value.toLowerCase();
                     const filas = document.querySelectorAll('table tbody tr');
 
@@ -305,21 +304,20 @@
                     });
                 });
 
-                   document.getElementById('txtFiltarr').addEventListener('input', function () {
-        const filtro = this.value.toLowerCase(); // Texto del filtro en minúsculas
-        const filas = document.querySelectorAll('tbody tr'); // Todas las filas de la tabla
+                document.getElementById('txtFiltarr').addEventListener('input', function() {
+                    const filtro = this.value.toLowerCase(); // Texto del filtro en minúsculas
+                    const filas = document.querySelectorAll('tbody tr'); // Todas las filas de la tabla
 
-        filas.forEach(fila => {
-            const textoFila = fila.textContent.toLowerCase(); // Texto de la fila en minúsculas
-            if (textoFila.includes(filtro)) {
-                fila.style.display = ''; // Muestra la fila si coincide
-            } else {
-                fila.style.display = 'none'; // Oculta la fila si no coincide
-            }
-        });
-    });
-            </script>
-            <script>
+                    filas.forEach(fila => {
+                        const textoFila = fila.textContent.toLowerCase(); // Texto de la fila en minúsculas
+                        if (textoFila.includes(filtro)) {
+                            fila.style.display = ''; // Muestra la fila si coincide
+                        } else {
+                            fila.style.display = 'none'; // Oculta la fila si no coincide
+                        }
+                    });
+                });
+
                 var form1 = document.getElementById("form1-grados");
                 var form2 = document.getElementById("form2-grados");
                 var back1 = document.getElementById("back1");
@@ -329,7 +327,7 @@
                 form1.classList.add("active");
                 progress.style.width = "50.00%";
 
-                document.addEventListener("click", function (event) {
+                document.addEventListener("click", function(event) {
                     if (event.target.classList.contains("next1")) {
                         var button = event.target;
                         var id = button.getAttribute("data-nivel");
@@ -344,7 +342,7 @@
                     }
                 });
 
-                back1.onclick = function () {
+                back1.onclick = function() {
                     const errorElements = document.querySelectorAll("#form2-grados .errorFormMultiPr");
                     errorElements.forEach((el) => {
                         el.textContent = "";
@@ -362,10 +360,10 @@
                         url: "../AJAX/AJAX_Grados/searchGradoxMateria.php",
                         type: "POST",
                         data: $("#form2-grados").serialize(),
-                        success: function (resultado) {
+                        success: function(resultado) {
                             $("#nombreGrado").html(resultado);
                         },
-                        error: function (xhr, status, error) {
+                        error: function(xhr, status, error) {
                             console.error("Error en la solicitud AJAX:", error);
                         }
                     });
@@ -376,7 +374,7 @@
                         type: "POST",
                         url: "../AJAX/AJAX_Materias/searchNombreMateriaG.php",
                         data: $("#form2-grados").serialize(),
-                        success: function (data) {
+                        success: function(data) {
                             $("#errorNombreGrado").html(data);
 
                             var errores = document.getElementById("errorNombreGrado").textContent;
@@ -390,8 +388,8 @@
                     });
                 }
 
-                document.addEventListener("DOMContentLoaded", function () {
-                    document.getElementById("form2-grados").addEventListener("submit", function (event) {
+                document.addEventListener("DOMContentLoaded", function() {
+                    document.getElementById("form2-grados").addEventListener("submit", function(event) {
                         event.preventDefault();
                         const errorElements = document.querySelectorAll(".errorFormMultiPr");
                         errorElements.forEach((el) => {
@@ -437,7 +435,7 @@
                     });
 
                     // Resetear modal al abrir
-                    document.getElementById('btn-modal-grados').addEventListener('change', function () {
+                    document.getElementById('btn-modal-grados').addEventListener('change', function() {
                         if (this.checked) {
                             form2.classList.remove("active");
                             form1.classList.add("active");

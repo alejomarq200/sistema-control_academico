@@ -1,4 +1,4 @@
-    .custom-table-gradosP {
+         .custom-table-gradosP {
             width: 70%;
             background-color: #fff;
             border-radius: 10px;
@@ -142,12 +142,13 @@
 
         .content-modal-gradosP {
             width: 100%;
-            max-width: 900px;
-            height: 650px;
+            max-width: 1300px;
+            height: 800px;
             padding: 20px;
             background: rgb(255, 255, 255);
             border-radius: 15px;
             position: relative;
+            font-size: 13px;
         }
 
         .content-modal-gradosP h2 {
@@ -296,11 +297,13 @@
         /* Estilos generales para la tabla */
         #tabla-general-gradosP {
             width: 100%;
-            max-width: 950px;
+            max-width: 1250px;
             border-collapse: collapse;
             font-family: Arial, sans-serif;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 20px;
+            font-size: 13px;
+            
         }
 
         /* Estilo para el caption */
@@ -394,6 +397,8 @@
             font-weight: 500;
         }
 
+
+           
         /* SEGUNDA MODAL EN GRADOS: GRADO_MATERIA*/
         .boton-modal-grados label {
             padding: 8px 10px;
@@ -431,8 +436,8 @@
 
         .content-modal-grados {
             width: 100%;
-            max-width: 900px;
-            height: 650px;
+          max-width: 1300px;
+            height: 800px;
             padding: 20px;
             background: rgb(255, 255, 255);
             border-radius: 15px;
@@ -585,11 +590,13 @@
         /* Estilos generales para la tabla */
         #tabla-general-grados {
             width: 100%;
-            max-width: 950px;
+            max-width: 1250px;
             border-collapse: collapse;
             font-family: Arial, sans-serif;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 20px;
+            font-size: 13px;
+
         }
 
         /* Estilo para el caption */

@@ -1,0 +1,29 @@
+ .admin-card {
+            width: 240px;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+            border: none;
+        }
+
+        .admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .card-label {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #5a4a00;
+        }
