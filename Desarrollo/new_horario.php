@@ -110,7 +110,12 @@
                 /* CUERPO DEL MENÚ */
                 ?>
                 <div class="container-fluid py-4">
-                    <h1 class="mb-4">Gestor de Horarios Escolares</h1>
+                     <!-- Encabezado mejorado -->
+                <div class="mb-4" style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
+                                        <h1 class="mb-4">Gestor de Horarios Escolares</h1>
+
+                    <div class="mx-auto" style="height: 48; width: 100px; background: linear-gradient(to right, #05357cff, #6c757d, #0d6efd);"></div>
+                </div>
 
                     <!-- Filtros y selección inicial - Versión estilizada -->
                     <div class="card mb-4 border-0 shadow-sm" style="background-color: #f8f9fa; border-radius: 10px;">

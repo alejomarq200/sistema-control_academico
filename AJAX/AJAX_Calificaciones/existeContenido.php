@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if($validar) { 
         try {
+            //Validar si existe el registro en la columnas
             $stmt = $pdo->prepare("SELECT * FROM actividades WHERE contenido= :contenido");
             $stmt->bindValue(':contenido', $contenido);
 

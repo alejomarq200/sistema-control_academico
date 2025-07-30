@@ -1,7 +1,7 @@
 <?php
 require_once "../../Configuration/Configuration.php";
 
-header('Content-Type: text/plain'); // Cambiado para ver mejor los errores
+header('Content-Type: text/plain');
 try {
     // Verifica si el request es POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

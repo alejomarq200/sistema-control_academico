@@ -36,7 +36,7 @@
                             <div class="mb-4">
                                 <label for="anioAula" class="form-label"><i class="fi fi-rr-calendar-day"></i> Año escolar</label>
                                 <input type="text" class="form-control" name="anioAula" id="anioAula"
-                                    placeholder="Ej: 2025-2026" pattern="\d{4}-\d{4}" title="Formato: AAAA-AAAA" required>
+                                    placeholder="Ej: 2025-2026" pattern="\d{4}-\d{4}" title="Formato: AAAA-AAAA" required readonly>
                                 <p class="error" id="anioErrorCreateA"></p>
                             </div>
                             <div class="mb-4">
@@ -66,8 +66,7 @@
             </div>
         </div>
     </div>
-    <!-- SCRIPT -->
-    <script src="../js/crearAula.js"></script>
+    <script src="../js/crearAulas.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

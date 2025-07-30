@@ -22,7 +22,7 @@ try {
     }
     $placeholders = implode(',', array_fill(0, count($grados), '?'));
 
-    // Consulta optimizada para secundaria
+    // Consulta  para secundaria
     $sql = "SELECT 
                 e.id, 
                 e.cedula_est, 

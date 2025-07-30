@@ -90,18 +90,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     function retornarIdProfesor($pdo, array $arreglo)
     {
         try {
-            // Preparamos la consulta para obtener solo id_materia
+            // Preparamos la consulta para obtener solo id_profesor
             $stmt = $pdo->prepare("SELECT id_profesor FROM profesores WHERE cedula = :cedula");
             $stmt->bindValue(':cedula', $arreglo[0]);
             $stmt->execute();
 
-            // Obtenemos el resultado (solo la columna id_materia)
+            // Obtenemos el resultado (solo la columna id_profesor)
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // Si hay resultados, devolvemos el id_materia, sino null
+            // Si hay resultados, devolvemos el id_profesor, sino null
             return $resultado ? $resultado['id_profesor'] : null;
         } catch (PDOException $e) {
-            // Manejo de errores (puedes personalizarlo)
             error_log("Error en retornarIdMateria: " . $e->getMessage());
             return null;
         }

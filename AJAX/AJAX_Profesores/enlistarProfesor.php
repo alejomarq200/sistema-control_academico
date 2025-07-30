@@ -14,7 +14,7 @@ function enlistar($pdo)
         if (count($grados) > 0) {
             return $grados; // Devuelve todos los usuarios
         } else {
-            return []; // Devuelve un array vacío si no hay registros
+            return []; // Devuelve un array vacío 
         }
     } catch (PDOException $e) {
         echo $e->getmessage();

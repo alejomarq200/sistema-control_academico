@@ -2,7 +2,6 @@
 include("../../Configuration/Configuration.php");
 
 if (isset($_POST['materias'])) {
-    // Usar operador ternario para elegir cuál variable tomar
     $contenido = $_POST['materias'];
 
     try {

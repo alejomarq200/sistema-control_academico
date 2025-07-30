@@ -132,11 +132,12 @@
                 <?php
                 include("../Layout/mensajes.php");
                 include("../Configuration/Configuration.php");
-                include("../Configuration/functions_php/functionsCRUDInscripciones.php")
+                include("../Configuration/functions_php/functionsCRUDInscripciones.php");
                 /* CUERPO DEL MENÚ */
                 ?>
-                <h1 class="my-3" id="titulo">Módulo de Actividades</h1>
                 <div class="filters-container">
+                <h1 class="my-3" id="titulo">Módulo de Actividades</h1>
+
                     <!-- FILTROS CON DISEÑO MODERNO -->
                     <div class="filters-wrapper">
                         <div class="filtro-container d-flex align-items-center">

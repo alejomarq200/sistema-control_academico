@@ -9,6 +9,7 @@ try {
         throw new Exception('No se especificó el grado');
     }
 
+    //Caramgamos tabla dinámica con referencia de la información del estudiante 
     $sql = "SELECT id, cedula_est, nombres_est, apellidos_est 
             FROM estudiantes 
             WHERE grado_est = :grado";

@@ -24,7 +24,7 @@ try {
         throw new Exception('ID de grado no es numérico. Valor recibido: '.$id_grado);
     }
 
-    // Aquí tu conexión PDO ($pdo debe estar definido)
+    // Definir parametro para mejor manejo
     $stmt = $pdo->prepare("SELECT id_aula, nombre FROM aulas WHERE id_grado = :id_grado");
     $stmt->bindValue(':id_grado', (int)$id_grado, PDO::PARAM_INT);
     $stmt->execute();

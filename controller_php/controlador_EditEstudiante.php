@@ -39,6 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($regla === 'sexo' && !in_array(strtoupper($valor), ['M', 'F'])) {
                     $errores[$campo] = 'Debe ser "M" o "F".';
                 }
+
+                if($regla == 'cedula' && !preg_match('/^[a-zA-Z]+\d+$/', $valor)) {
+                    $errores[$campo] = 'Debe contener una o más letras al inicio y seguido digitos numericos.';
+
+                }
             }
         }
 
@@ -48,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Ejemplo de uso
     $reglas = [
         'idEst' => ['requerido', 'entero'],
-        'cedula_est' => ['no requerido'],
+        'cedula_est' => ['requerido', 'cedula'],
         'apellidos_est' => ['requerido', 'texto'],
         'nombres_est' => ['requerido', 'texto'],
         'sexo' => ['requerido', 'sexo'],
@@ -76,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
-    // Si pasa validación, puedes continuar con la lógica de guardado
+    // Si pasa validación, continuar con la lógica de guardado
     $array = array(
         $_POST['idEst'],
         $_POST['cedula_est'],

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/modalesAulas/editAulas.css">
 </head>
+
 <body>
     <div class="modal fade" id="ModalFormEditaAula" tabindex="-1" aria-labelledby="ModalFormLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -25,7 +27,7 @@
                             <p class="errorAulaEdit" id="nombreErrorAula"></p>
                             <div class="mb-1">
                                 <label for="capacidadAula" class="form-label">Capacidad del Aula</label>
-                                <input type="text" class="form-control" name="capacidadAula" id="capacidadAula">
+                                <input type="text" class="form-control" name="capacidadAula" id="capacidadAula" min="1" max="30">
                             </div>
                             <p class="errorAulaEdit" id="capacidadErrorAula"></p>
                             <div class="mb-1">
@@ -57,8 +59,9 @@
             </div>
         </div>
     </div>
-    <script src="../js/validarEditAula.js"></script>
+    <script src="../js/validarEditAulas.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js"></script>
 </body>
+
 </html>

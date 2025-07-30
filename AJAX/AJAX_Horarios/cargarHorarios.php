@@ -2,7 +2,7 @@
 require_once "../../Configuration/Configuration.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Verificamos si es para cargar los grados
+    // Verificar métdo para diferenciar acciones
     if (isset($_POST['action']) && $_POST['action'] === 'cargar_grados') {
         try {
             $stmt = $pdo->prepare("SELECT id, id_grado FROM grados WHERE categoria_grado = :categoria_grado");

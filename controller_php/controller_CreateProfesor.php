@@ -83,7 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     if ($validar) {
-        /* PENDIENTE VALIDAR DNI ANTES DE INSERTAR */
         insertarProfesor($pdo, $variablesModalCreateP);
 
     } else {

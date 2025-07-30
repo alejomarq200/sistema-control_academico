@@ -5,6 +5,7 @@ include("../../Configuration/Configuration.php");
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $mensaje = null;
+    //Validar que campos a manipular no estén en el formato erróneo
     if (
         isset($_POST['gradoActividad']) && $_POST['gradoActividad'] !== "Seleccionar" ||
         isset($_POST['profesorActividad']) && $_POST['profesorActividad'] !== "Seleccionar" ||

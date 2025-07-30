@@ -105,7 +105,6 @@ function retornarIdGrado($pdo, $gradoMateria)
         // Si hay resultados, devolvemos el id_materia, sino null
         return $resultado ? $resultado['id'] : null;
     } catch (PDOException $e) {
-        // Manejo de errores (puedes personalizarlo)
         error_log("Error en retornarIdMateria: " . $e->getMessage());
         return null;
     }

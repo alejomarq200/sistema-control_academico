@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $calificaciones = $_POST['calificaciones'] ?? [];
 
     try {
+        //Edución de calificación de modal para primaria
         foreach ($calificaciones as $idCalif => $datos) {
             $valor = $datos['valor'];
 

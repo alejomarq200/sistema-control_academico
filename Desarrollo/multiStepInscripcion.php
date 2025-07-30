@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +35,11 @@
                 <!--INICIO DE LOS CAMPOS ESTUDIANTES-->
                 <div class="formbold-form-step-1 active">
                     <div class="mb-3">
-                        <label for="anioEscolar" class="form-label">Año Escolar</label>
+                        <label for="cantidad" class="formbold-form-label"></label>
+                        <span id="cantidad" class="formbold-form-label"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="anioEscolar" class="formbold-form-label">Año Escolar</label>
                         <input type="text" class="formbold-form-input" id="anioEscolar" name="anioEscolar" readonly>
                     </div>
                     <div>
@@ -139,7 +144,7 @@
                         <div>
                             <div>
                                 <label for="gradoEst" class="formbold-form-label">Grado a cursar</label>
-                                <select name="gradoEst" id="gradoEst" class="formbold-form-input">
+                                <select name="gradoEst" id="gradoEst" class="formbold-form-input" onchange="cargarAulas()">
                                     <option value="Seleccionar" selected>Seleccionar</option>
                                 </select>
                                 <span id="gradoEstFeedback" class="error"></span>
@@ -579,7 +584,7 @@
 </body>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         // Obtener el año actual
         const añoActual = new Date().getFullYear();
         // Calcular el año siguiente
@@ -655,7 +660,7 @@
 
 
     // Cargar grados cuando el documento esté listo
-    $(document).ready(function () {
+    $(document).ready(function() {
         cargarGrados();
     });
 
@@ -663,16 +668,42 @@
         $.ajax({
             url: "../AJAX/AJAX_Inscripcion/searchGradosInscr.php",
             type: "POST",
-            data: { action: 'cargar_grados' }, // Enviamos una acción específica
-            success: function (resultado) {
+            data: {
+                action: 'cargar_grados'
+            }, // Enviamos una acción específica
+            success: function(resultado) {
                 $("#gradoEst").html('<option value="Seleccionar" selected>Seleccionar</option>' + resultado);
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error("Error en la solicitud AJAX:", error);
                 $("#gradoEst").html('<option value="Error">Error al cargar grados</option>');
             }
         });
     }
+
+    function cargarAulas() {
+        let gradoSeleccionado = document.getElementById('gradoEst').value;
+        let anioSeleccionado = document.getElementById('anioEscolar').value;
+
+        $.ajax({
+            url: "../AJAX/AJAX_Inscripcion/cargarCantxAula.php",
+            type: "POST",
+            data: {
+                action: 'cargar_aulas',
+                idgrado: gradoSeleccionado,
+                anio: anioSeleccionado
+            },
+            success: function(resultado) {
+                // resultado será algo como "15 / 30"
+                $("#cantidad").html(resultado);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error en la solicitud AJAX:", error);
+                $("#cantidad").html("Error al obtener datos");
+            }
+        });
+    }
+
 
     // Configuración de validación en tiempo real
     function setupValidation(inputElement, feedbackElement, validationRules) {
@@ -1022,7 +1053,7 @@
     setupValidation(document.getElementById('profesionM'), document.getElementById('profesionMFeedback'), textoRules);
     //INFORMACIÓN LABORAL DE LA MADRE
     setupValidation(document.getElementById('trabajaM'), document.getElementById('trabajaMFeedback'), trabajaRules);
-    setupValidation(document.getElementById('nombreEmpresaM'), document.getElementById('nombreEmpresaMFeedback'), nombreRules);
+    setupValidation(document.getElementById('nombreEmpresaM'), document.getElementById('nombreEmpresaMFeedback'), textoRules);
     setupValidation(document.getElementById('tlfnEmepresaM'), document.getElementById('tlfnEmepresaMFeedback'), nroRules);
     setupValidation(document.getElementById('direccionEmpresaM'), document.getElementById('direccionEmpresaMFeedback'), textoRules);
 
@@ -1066,7 +1097,7 @@
             url: "../AJAX/AJAX_Inscripcion/searchDniEstInscr.php",
             type: "POST",
             data: $("#form").serialize(),
-            success: function (resultado) {
+            success: function(resultado) {
                 $("#cedulaEstFeedback").html(resultado);
 
                 const error = document.getElementById('cedulaEstFeedback').textContent;
@@ -1084,15 +1115,16 @@
 
 
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error("Error en la solicitud AJAX:", status, error);
             }
         });
     }
 
     // Navegación entre pasos
-    formSubmitBtn.addEventListener("click", function (event) {
+    formSubmitBtn.addEventListener("click", function(event) {
         event.preventDefault();
+        const cantidad = document.getElementById('cantidad').textContent;
 
         if (stepMenuOne.className.includes('active')) {
             // Validar paso 1 antes de continuar
@@ -1100,8 +1132,29 @@
                 alert('Por favor, corrige los errores en los campos antes de continuar.');
                 return;
             } else {
-                existeEstudiante();
+                // Obtener el texto del span
+                const textoCantidad = document.getElementById('cantidad').textContent;
+
+                // Extraer los dos números del texto con RegExp
+                const numeros = textoCantidad.match(/\d+/g); // Busca todos los números
+
+                if (numeros && numeros.length >= 2) {
+                    const cantidad = parseInt(numeros[0]); // Cantidad actual de estudiantes (ej. 2)
+                    const capacidad = parseInt(numeros[1]); // Capacidad del grado (ej. 15)
+
+                    if (cantidad >= capacidad) {
+                        alert("No se puede inscribir: el aula ya está llena.");
+                        return;
+                    } else {
+                        // Aquí puedes continuar
+                        existeEstudiante(); // o lo que corresponda
+                    }
+                } else {
+                    alert("No se pudo validar la capacidad del aula. Verifica el formato del texto.");
+                    return;
+                }
             }
+
         } else if (stepMenuTwo.className.includes('active')) {
             // Validar paso 2 antes de continuar
             const checkboxMadre = document.querySelector('input[value="síM"]');
@@ -1251,7 +1304,7 @@
         }
     }
     // Manejar botón Atrás
-    formBackBtn.addEventListener("click", function (event) {
+    formBackBtn.addEventListener("click", function(event) {
         event.preventDefault();
 
         if (stepMenuThree.className.includes('active')) {

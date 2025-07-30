@@ -32,8 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } catch (PDOException $e) {
             $errores[1] = "Error al verificar email";
         }
-     }
 
+    }
+
+    // Validar telefono
+    
      if(isset($_POST['telefonoEdit'])) {
         $telefono = trim($_POST['telefonoEdit']);
         try {

@@ -16,8 +16,7 @@ function enviarEmailConfirm($pdo, array $variablesFormEmail)
         $stmt->execute();
         
         if ($stmt->rowCount() > 0) {
-            $result = $stmt->fetch(PDO::FETCH_ASSOC); // Cambiado de fetAll a fetch
-            
+            $result = $stmt->fetch(PDO::FETCH_ASSOC); 
             $mail = new PHPMailer(true);
 
             //Server settings
@@ -87,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    if ($validar) {
     if ($variablesFormEmail[0] == $variablesFormEmail[1]) {
         if (enviarEmailConfirm($pdo, $variablesFormEmail)) {
-            // Asegúrate que las variables de sesión estén establecidas
+            // Asegurarse que las variables de sesión estén establecidas
             session_write_close(); // Guarda los datos de sesión antes de redirigir
             header("Location: ../Inicio/Logear.php");
             exit();

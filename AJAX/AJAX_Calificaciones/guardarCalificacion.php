@@ -11,7 +11,7 @@ $response = [
 // Función para validar las calificaciones previas
 function validarCalificacionesPrevias($pdo, $estudianteId, $materiaId, $gradoId, $anioEscolar, $profesorId)
 {
-    // 1. Verificar que exista al menos una calificación en cada lapso
+    // Verificar que exista al menos una calificación en cada lapso
     $stmt = $pdo->prepare("SELECT lapso_academico 
                           FROM calificaciones 
                           WHERE id_estudiante = ? 
@@ -33,7 +33,7 @@ function validarCalificacionesPrevias($pdo, $estudianteId, $materiaId, $gradoId,
         ];
     }
 
-    // 2. Calcular el promedio total
+    // Calcular el promedio total
     $stmt = $pdo->prepare("SELECT SUM(calificacion) as suma, COUNT(*) as cantidad
                           FROM calificaciones 
                           WHERE id_estudiante = ? 
@@ -44,7 +44,7 @@ function validarCalificacionesPrevias($pdo, $estudianteId, $materiaId, $gradoId,
 
     $promedio = ($data['cantidad'] > 0) ? ($data['suma'] / $data['cantidad']) : 0;
 
-    // 3. Verificar si el promedio es menor a 10
+    // Verificar si el promedio es menor a 10
     if ($promedio < 10) {
         // Verificar si ya existe en materias_pendientes
         $stmt = $pdo->prepare("SELECT 1 FROM materias_pendientes 

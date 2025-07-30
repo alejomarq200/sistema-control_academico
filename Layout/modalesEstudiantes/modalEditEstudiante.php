@@ -168,7 +168,8 @@
             },
             cedula_est: {
                 required: false,
-                regex: /^[V|E|J|P][0-9]{7,9}$/i,
+                //REGEX  VALIDAR CASOS PRIMARIA UNA O MÁS LETRAS (ARTIFICAL) ANTES DE NÚMEROS
+                regex: /^[a-zA-Z]+\d+$/,
                 errorMsg: "Formato cédula inválido (Ej: V12345678)"
             },
             nombres_est: {

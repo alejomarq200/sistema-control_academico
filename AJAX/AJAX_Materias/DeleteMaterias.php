@@ -13,7 +13,7 @@ try {
 
     $idMateria = $_POST['id_materia'];
 
-    // 1. Verificar si la materia está asignada a profesores
+    // Verificar si la materia está asignada a profesores
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM profesor_materia_grado WHERE id_materia = ?");
     $stmt->execute([$idMateria]);
     $asignada = $stmt->fetchColumn();
@@ -23,7 +23,7 @@ try {
          throw new Exception("No se puede eliminar una materia asignada a grados/profesores");      
     }
 
-    // 2. Eliminar la materia
+    // Eliminar la materia
     $stmt = $pdo->prepare("DELETE FROM materias WHERE id_materia = ?");
     $stmt->execute([$idMateria]);
 

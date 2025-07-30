@@ -6,6 +6,7 @@ if (isset($_POST['contenidos'])) {
     $response = ['success' => false, 'message' => ''];
 
     try {
+        //Retornar tipo_contendido para su manipulacion en FRONT
         $stmt = $pdo->prepare("SELECT tipo_contenido FROM actividades WHERE id_actividad = :id_actividad");
         $stmt->bindValue(':id_actividad', $contenido);
         $stmt->execute();

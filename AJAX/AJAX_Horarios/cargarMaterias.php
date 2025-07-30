@@ -1,7 +1,7 @@
 <?php
 require_once "../../Configuration/Configuration.php";
 
-header('Content-Type: text/plain'); // Cambiado para ver mejor los errores
+header('Content-Type: text/plain'); 
 try {
     // Verifica si el request es POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -24,7 +24,7 @@ try {
         throw new Exception('ID de grado no es numérico. Valor recibido: ' . $id_grado);
     }
 
-    // Aquí tu conexión PDO ($pdo debe estar definido)
+    // Definir parametro para mejor manejo
     $stmt = $pdo->prepare("SELECT m.nombre, m.id_materia, pmg.id_materia 
                                   FROM materias m
                                   INNER JOIN profesor_materia_grado pmg

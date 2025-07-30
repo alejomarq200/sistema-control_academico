@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($stmt->rowCount() > 0) {
                     echo '<option value="Seleccionar">Seleccionar</option>';
                     while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        // Usamos el id_materia para el value y el nombre para el texto del option
+                        // Usamos el id_materia para el value y nombre para option
                         echo '<option value="' . $fila["id"] . '">' . htmlspecialchars($fila["id_grado"]) . '</option>';
                     }
                 } else {

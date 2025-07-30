@@ -2,7 +2,7 @@
 include("../Configuration/Configuration.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Verificamos si es para cargar los grados
+    // Verificar si es para cargar los grados
     if (isset($_POST['action']) && $_POST['action'] === 'cargar_grados') {
         $nivel = $_POST['nivel'];
         try {

@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    //Validar telefono
     if (isset($_POST['telefonoEditP'])) {
         $telefono = trim($_POST['telefonoEditP']);
         try {

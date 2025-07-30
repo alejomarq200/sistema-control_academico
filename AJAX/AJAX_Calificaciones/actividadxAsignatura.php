@@ -8,8 +8,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         try {
             // Consulta con JOIN para obtener el nombre de la materia
-            $stmt = $pdo->prepare("SELECT id_actividad, contenido FROM actividades WHERE id_materia = :id_materia");
+            $stmt = $pdo->prepare("SELECT id_actividad, contenido FROM actividades WHERE id_materia = :id_materia AND id_grado = :id_grado");
             $stmt->bindValue(':id_materia', $_POST['materias'], PDO::PARAM_INT);
+            $stmt->bindValue(':id_grado', $_POST['nombreGrado'], PDO::PARAM_STR);
             $stmt->execute();
 
             if ($stmt->rowCount() > 0) {

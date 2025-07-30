@@ -66,7 +66,7 @@ $pdf->AliasNbPages();
 $pdf->AddPage(); // <--- Este es obligatorio antes de cualquier cabecera o Cell/Image
 $pdf->SetAutoPageBreak(false);
 
-$boletinesPorPagina = 3;
+$boletinesPorPagina = 2;
 $contadorBoletin = 0;
 $inicioY = 15;
 

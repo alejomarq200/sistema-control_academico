@@ -4,7 +4,7 @@ include("../../Configuration/Configuration.php");
 include("../../Layout/mensajes.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!empty($_POST['variable'])) { // Asegúrate de que 'variable' esté definida
+    if (!empty($_POST['variable'])) { 
         $resultado = $_POST['variable'];
        try {
             $stmt = $pdo->prepare("DELETE FROM users WHERE id = :id");

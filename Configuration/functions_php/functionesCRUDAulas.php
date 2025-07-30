@@ -2,21 +2,35 @@
 
 function consultarAulas($pdo)
 {
+    // Consulta unificada con JOIN para traer nombre del grado y estado
     try {
-        $stmt = $pdo->prepare("SELECT * FROM aulas INNER JOIN grados ON aulas.id_grado = grados.id_grado INNER JOIN estado ON aulas.estado = estado.id_estado ORDER BY aulas.id_aula ASC");
+        // Consulta unificada con JOIN para traer nombre del grado y estado
+        $stmt = $pdo->prepare("
+            SELECT 
+            aulas.id_aula,
+            aulas.nombre,
+            aulas.capacidad,
+            aulas.anio_escolar,
+            grados.id,
+            grados.id_grado AS nombre_grado,
+            estado.estado AS nombre_estado,
+            aulas.id_grado,
+            aulas.estado
+            FROM aulas
+            JOIN grados ON aulas.id_grado = grados.id
+            JOIN estado ON aulas.estado = estado.id_estado ORDER BY grados.id
+            ");
         $stmt->execute();
-
-        // Obtener todos los registros
         $aulas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Verificar si se encontró algún registro
-        if (count($aulas) > 0) {
-            return $aulas; // Devuelve todos los usuarios
-        } else {
-            return []; // Devuelve un array vacío si no hay registros
-        }
     } catch (PDOException $e) {
         echo $e->getmessage();
+    }
+
+    // Verificar si se encontró algún registro
+    if (count($aulas) > 0) {
+        return $aulas; // Devuelve todos los usuarios
+    } else {
+        return []; // Devuelve un array vacío si no hay registros
     }
 }
 
@@ -29,7 +43,7 @@ function insertarAula($pdo, array $variablesAula)
         $stmt->bindValue(':capacidad', $variablesAula['capacidadAula'], PDO::PARAM_STR);
         $stmt->bindValue(':id_grado', $variablesAula['gradoAula'], PDO::PARAM_INT);
         $stmt->bindValue(':anio', $variablesAula['anioAula'], PDO::PARAM_STR);
-        $stmt->bindValue(':estado', 2, PDO::PARAM_INT); // Asumiendo que 1 es el estado activo
+        $stmt->bindValue(':estado', 2, PDO::PARAM_INT); 
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
@@ -63,11 +77,7 @@ function ediltarAulas($pdo, array $modalAulaEdit)
         }
     } catch (PDOException $e) {
         error_log("Error en editarAulas: " . $e->getMessage());
-        /* $_SESSION['mensaje'] = 'Error al editar el aula.';
-        $_SESSION['icono'] = 'error';
-        $_SESSION['titulo'] = 'Error';
-        header("Location: ../Desarrollo/search_aula.php");
-        exit();*/
+    
     }
 }
 

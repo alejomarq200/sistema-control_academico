@@ -166,8 +166,9 @@
                 include("../Layout/mensajes.php");
                 /* CUERPO DEL MENÚ */
                 ?>
-                <h1 class="my-3" id="titulo">Módulo de Inscripciones</h1>
+               
                 <div class="filters-container">
+                     <h1 class="my-3" id="titulo">Módulo de Inscripciones</h1>
                     <!-- FILTROS CON DISEÑO MODERNO -->
                     <div class="filters-wrapper">
                         <div class="filtro-container d-flex align-items-center">
@@ -213,7 +214,8 @@
                                 <i class="bi bi-calendar3"></i> Año Escolar
                             </label>
                             <select id="filtroAnioEscolar" class="form-select filter-select">
-                                <?php cargarAniosEscolares($pdo); ?>
+                                 <option value="">Todos los años</option>
+                                <option value="2025-2026">2025-2026</option>
                             </select>
                         </div>
                         <div class="filter-group">

@@ -8,6 +8,7 @@ if ($_POST['action'] === 'guardar_edicion') {
     try {
         $pdo->beginTransaction();
 
+        //Editar horario con referencia del id guardado en cada card
         foreach ($horario as $clase) {
             if (isset($clase['id_horario']) || !empty($clase['id_horario'])) {
                  // Actualizar clase existente

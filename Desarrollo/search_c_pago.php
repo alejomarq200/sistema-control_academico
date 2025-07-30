@@ -32,7 +32,11 @@
                 include("../Layout/mensajes.php");
                 /* CUERPO DEL MENÚ */
                 ?>
+                 <div class="mb-4" style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
                 <h1 class="my-3" id="titulo">Módulo de Contacto de Pago</h1>
+    
+                    <div class="mx-auto" style="height: 48; width: 100px; background: linear-gradient(to right, #05357cff, #6c757d, #0d6efd);"></div>
+                </div>
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <!-- Filtro con lupa (a la derecha) -->

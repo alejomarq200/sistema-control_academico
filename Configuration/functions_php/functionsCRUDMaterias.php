@@ -86,7 +86,6 @@ function retornarIdMateria($pdo, array $arreglo) {
         return $resultado ? $resultado['id_materia'] : null;
         
     } catch (PDOException $e) {
-        // Manejo de errores (puedes personalizarlo)
         error_log("Error en retornarIdMateria: " . $e->getMessage());
         return null;
     }
@@ -107,7 +106,6 @@ function retornarIdGrado($pdo, $modalMultiStepGrado){
         return $resultado ? $resultado['id'] : null;
         
     } catch (PDOException $e) {
-        // Manejo de errores (puedes personalizarlo)
         error_log("Error en retornarIdMateria: " . $e->getMessage());
         return null;
     }

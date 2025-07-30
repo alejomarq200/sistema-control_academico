@@ -1,6 +1,4 @@
 <?php
-/* Attempt MySQL server connection. Assuming you are running MySQL
-server with default setting (user 'root' with no password) */
 try {
     $pdo = new PDO("mysql:host=localhost;dbname=proyecto", "root", "");
     // Set the PDO error mode to exception
@@ -19,7 +17,7 @@ try {
         // Inicia SQL base
         $sql = "SELECT * FROM estudiantes WHERE ";
 
-        // Agrega condiciones correctamente encapsuladas
+        // Agregar condiciones correctamente encapsuladas
         if ($isCedula) {
             $sql .= "(cedula_est LIKE :term)";
         } else {

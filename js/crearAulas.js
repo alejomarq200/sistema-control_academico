@@ -79,10 +79,10 @@
                         success: function(resultado) {
                             var errores = resultado.split("|||");
                             $("#nombreErrorCreateA").html(errores[0]);
-                          
+                            $("#gradoErrorCreateA").html(errores[1]);
 
-                            if ($("#nombreErrorCreateA").text().trim() === "") {
-                                formuluario.submit(); // ✅ Envío final solo una vez
+                            if ($("#nombreErrorCreateA").text().trim() === "" && $("#gradoErrorCreateA").text().trim() === "") {
+                               formuluario.submit(); // ✅ Envío final solo una vez
                             } else {
                                 console.log("Error en la validación: ", errores);
                             }

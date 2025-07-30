@@ -29,8 +29,9 @@
                 include("../Layout/mensajes.php");
                 /* CUERPO DEL MENÚ */
                 ?>
-                <h1 class="my-3" id="titulo">Módulo de Aulas</h1>
                 <div class="filters-container">
+                <h1 class="my-3" id="titulo">Módulo de Aulas</h1>
+
                     <!-- FILTROS CON DISEÑO MODERNO -->
                     <div class="filters-wrapper">
                         <div class="filtro-container d-flex align-items-center">
@@ -64,59 +65,62 @@
                         </thead>
                         <tbody>
                             <?php
-                            include("../Configuration/functions_php/functionesCRUDAulas.php");
+
                             include("../Configuration/Configuration.php");
                             include("../Layout/modalesAulas/modalAulaEdit.php");
                             include("../Layout/modalesAulas/modalAEnable.php");
                             include("../Layout/modalesAulas/modalADisable.php");
+                            include("../Configuration/functions_php/functionesCRUDAulas.php");
+                            
                             $aulas = consultarAulas($pdo); // Obtener los usuarios
-
-                            if (!empty($aulas)) {
-                                foreach ($aulas as $aula) { // Iterar sobre cada usuario
-
-                            ?>
+                            if (!empty($aulas)): ?>
+                                <?php foreach ($aulas as $aula): ?>
                                     <tr>
                                         <td><?= htmlspecialchars($aula['nombre']); ?></td>
                                         <td><?= htmlspecialchars($aula['capacidad']); ?></td>
-                                        <td><?= htmlspecialchars($aula['id_grado']); ?></td>
-                                        <td><?= htmlspecialchars($aula['estado']); ?></td>
+                                        <td><?= htmlspecialchars($aula['nombre_grado']); ?></td>
+                                        <td><?= htmlspecialchars($aula['nombre_estado']); ?></td>
                                         <td>
+                                            <!-- Botón Editar -->
                                             <a href="#ModalFormEditaAula" class="btn btn-dark" data-bs-toggle="modal"
-                                                data-bs-target="#ModalFormEditaAula" 
-                                                data-id="<?=  htmlspecialchars($aula['id_aula']); ?>"
+                                                data-bs-target="#ModalFormEditaAula"
+                                                data-id="<?= htmlspecialchars($aula['id_aula']); ?>"
                                                 data-nombre="<?= htmlspecialchars($aula['nombre']); ?>"
                                                 data-capacidad="<?= htmlspecialchars($aula['capacidad']); ?>"
-                                                data-id_grado="<?= htmlspecialchars($aula['id_grado']); ?>"
-                                                data-estado="<?= htmlspecialchars($aula['estado']); ?>">
+                                                data-id_grado="<?= htmlspecialchars($aula['nombre_grado']); ?>"
+                                                data-estado="<?= htmlspecialchars($aula['nombre_estado']); ?>">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
+
+                                            <!-- Botón Activar -->
                                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                                 data-bs-target="#ModalFormEnableA"
-                                                data-id="<?=  htmlspecialchars($aula['id_aula']); ?>"
+                                                data-id="<?= htmlspecialchars($aula['id_aula']); ?>"
                                                 data-nombre="<?= htmlspecialchars($aula['nombre']); ?>"
                                                 data-capacidad="<?= htmlspecialchars($aula['capacidad']); ?>"
-                                                data-id_grado="<?= htmlspecialchars($aula['id_grado']); ?>"
-                                                data-estado="<?= htmlspecialchars($aula['estado']); ?>">
-                                                <i class='bx  bx-check-circle'></i>
+                                                data-id_grado="<?= htmlspecialchars($aula['nombre_grado']); ?>"
+                                                data-estado="<?= htmlspecialchars($aula['nombre_estado']); ?>">
+                                                <i class='bx bx-check-circle'></i>
                                             </button>
-                                              <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+
+                                            <!-- Botón Desactivar -->
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                                 data-bs-target="#ModalFormDisableA"
-                                                 data-id="<?php echo $aula['id_aula']; ?>"
-                                                data-id="<?=  htmlspecialchars($aula['id_aula']); ?>"
+                                                data-id="<?= htmlspecialchars($aula['id_aula']); ?>"
                                                 data-nombre="<?= htmlspecialchars($aula['nombre']); ?>"
                                                 data-capacidad="<?= htmlspecialchars($aula['capacidad']); ?>"
-                                                data-id_grado="<?= htmlspecialchars($aula['id_grado']); ?>"
-                                                data-estado="<?= htmlspecialchars($aula['estado']); ?>">
-                                                 <i class="bi bi-x-circle"></i>
+                                                data-id_grado="<?= htmlspecialchars($aula['nombre_grado']); ?>"
+                                                data-estado="<?= htmlspecialchars($aula['nombre_estado']); ?>">
+                                                <i class="bi bi-x-circle"></i>
                                             </button>
                                         </td>
                                     </tr>
-                            <?php
-                                }
-                            } else {
-                                echo "<tr><td colspan='8'>No se encontraron usuarios.</td></tr>";
-                            }
-                            ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="5">No se encontraron aulas.</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -128,27 +132,14 @@
     </div>
 </body>
 <script>
-    document.getElementById('filtroNivel').addEventListener('change', function() {
-        const nivelSeleccionado = this.value.toLowerCase();
-        const filas = document.querySelectorAll('table tbody tr');
-
-        filas.forEach(fila => {
-            const nivelGrado = fila.querySelector('td:nth-child(2)').textContent.toLowerCase();
-
-            if (nivelSeleccionado === '' || nivelGrado === nivelSeleccionado) {
-                fila.style.display = '';
-            } else {
-                fila.style.display = 'none';
-            }
-        });
-    });
+   
 
     document.getElementById('filtroEstado').addEventListener('change', function() {
         const nivelSeleccionado = this.value.toLowerCase();
         const filas = document.querySelectorAll('table tbody tr');
 
         filas.forEach(fila => {
-            const nivelEstado = fila.querySelector('td:nth-child(3)').textContent.toLowerCase();
+            const nivelEstado = fila.querySelector('td:nth-child(4)').textContent.toLowerCase();
 
             if (nivelSeleccionado === '' || nivelEstado === nivelSeleccionado) {
                 fila.style.display = '';

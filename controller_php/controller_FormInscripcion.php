@@ -95,22 +95,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mensajes = [];
         $valido = true;
 
-        // Patrones
-        $patronCedula = "/^[V|E|J|P][0-9]{7,9}$/";
+
         $patronNombre = "/^[A-Za-zÑñÁÉÍÓÚáéíóú\s'-]+$/";
-        $patronFecha = "/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/"; // o usa el que prefieras
+        $patronFecha = "/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/";
         $patronEdad = "/^[0-9]{1,2}$/";
         $patronGenero = "/^(M|F)$/i";
         $turno = "/^(Mañana)$/i";
         $patronTexto = "/^.{10,}$/"; // mínimo 10 caracteres
 
-        // Validaciones
-        if (!empty($_POST['checkDniEst'])) {
-            if (empty($variablesInscripcionEst[0]) || !preg_match($patronCedula, $variablesInscripcionEst[0])) {
-                $mensajes[] = "Cédula inválida o vacía.";
-                $valido = false;
-            }
-        }
+
 
         if (empty($variablesInscripcionEst[1]) || !preg_match($patronNombre, $variablesInscripcionEst[1])) {
             $mensajes[] = "Nombre inválido o vacío.";
@@ -507,8 +500,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ];
     }
 
+    $cedula = $variablesInscripcionEst[0];
     // VALIDACIÓN DE QUÉ PADRES SE VAN A REGISTRAR
-    function retornarCampos($pdo, array $estData, array $madreData, array $padreData, array $contactoData)
+    function retornarCampos($pdo, array $estData, array $madreData, array $padreData, array $contactoData, $cedula)
     {
         $parentesco = null;
         // Validación
@@ -518,13 +512,61 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $valContacto = validarCamposContacto($contactoData);
 
         // Fecha y año escolar
-        $fecha = date("Y-m-d");
+        $fecha = date("d-m-Y");
         $añoEscolar = $_POST['anioEscolar'];
 
         // Inserta o retorna ID del estudiante
-        $idEst = retornarIdEstudiante($pdo, $estData);
-        if (!$idEst && $valEst['valido']) {
-            $idEst = insertarEstudiantes($pdo, $estData);
+
+        $patronCedula = "/^[V|E|J|P][0-9]{7,9}$/";
+        if (!empty($_POST['checkDniEst'])) {
+            if (empty($cedula[0]) || !preg_match($patronCedula, $cedula)) {
+                $mensajes[] = "Cédula inválida o vacía.";
+            }
+        } else {
+            $tienePadre = !empty($_POST['padreSi']);
+            $tieneMadre = !empty($_POST['madreSi']);
+
+            $inicialPadre = '';
+            $inicialMadre = '';
+            $dniGenerado = '';
+
+            // Obtener iniciales si existen
+            if ($tienePadre) {
+                $nombrePadre = trim($_POST['nombresP']);
+                $inicialPadre = strtoupper(substr($nombrePadre, 0, 1));
+            }
+
+            if ($tieneMadre) {
+                $nombreMadre = trim($_POST['nombresM']);
+                $inicialMadre = strtoupper(substr($nombreMadre, 0, 1));
+            }
+
+            // Generar parte numérica aleatoria o secuencial
+            $numeroAleatorio = rand(100000, 999999); // puedes cambiar esto si tienes un mejor generador
+
+            // Construcción del DNI
+            if ($tienePadre && $tieneMadre) {
+                // Ambas iniciales
+                $dniGenerado = $inicialMadre . $inicialPadre . $numeroAleatorio; // Ej: LA123456
+            } elseif ($tieneMadre && !$tienePadre) {
+                // Solo madre
+                $dniGenerado = $inicialMadre . $numeroAleatorio; // Ej: L123456
+            } elseif ($tienePadre && !$tieneMadre) {
+                // Solo padre
+                $dniGenerado = $inicialPadre . $numeroAleatorio; // Ej: A123456
+            } else {
+                // Sin ninguno (por si acaso)
+                $mensajes[] = "Debe seleccionar al menos un representante (madre o padre).";
+                $valido = false;
+            }
+
+            // Asignar al campo de cédula del estudiante
+            $cedula = $dniGenerado;
+        }
+
+
+        if ($valEst['valido']) {
+            $idEst = insertarEstudiantes($pdo, $estData, $cedula);
         }
 
         // Inserta o retorna ID del contacto
@@ -542,7 +584,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($tieneMadre && $tienePadre && $hayRepresentante) {
             $idMadre = retornarIdRepresentante($pdo, $madreData);
             if (!$idMadre && $valMadre['valido']) {
-                $parentesco = "madre"; 
+                $parentesco = "madre";
                 $idMadre = insertarRepresentante($pdo, $madreData, $parentesco);
             }
 
@@ -571,7 +613,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // === CASO SOLO MADRE ===
         elseif ($tieneMadre && !$tienePadre && $hayRepresentante) {
             $idMadre = retornarIdRepresentante($pdo, $madreData);
-                $parentesco = "madre";
+            $parentesco = "madre";
             if (!$idMadre && $valMadre['valido']) {
                 $idMadre = insertarRepresentante($pdo, $madreData,  $parentesco);
             }
@@ -634,5 +676,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    retornarCampos($pdo, $variablesInscripcionEst, $variablesInscripcionRepr, $variablesInscripcionReprP, $variablesInscripcionContacto);
+    retornarCampos($pdo, $variablesInscripcionEst, $variablesInscripcionRepr, $variablesInscripcionReprP, $variablesInscripcionContacto, $cedula);
 }

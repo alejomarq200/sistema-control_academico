@@ -2,7 +2,7 @@
 include("../../Configuration/Configuration.php");
 include("../../Layout/mensajes.php");
 
-/* ASGINAMOS GRADO A PARTIR DE LA CATGORIA SELECCIONADA */
+/* ASGINAMOS GRADO A PARTIR DE LA CATGORIA SELECCIONADA  PROFESOR*/
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['nombreGrado']) || isset($_POST['gradoActividad'])) {
         // Usar operador ternario para elegir cuál variable tomar

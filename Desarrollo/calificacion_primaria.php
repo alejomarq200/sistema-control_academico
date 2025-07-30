@@ -167,7 +167,6 @@
                                             <th>Nombre Estudiante</th>
                                             <th>Apellido Estudiante</th>
                                             <th colspan="4">Calificación</th>
-                                            <!-- colspan="4" para abarcar las 4 subcolumnas -->
                                             <th class="acciones-col">Acciones</th>
                                         </tr>
                                         <tr>

@@ -4,7 +4,7 @@ include("../../Configuration/Configuration.php");
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mensaje = null;
     $validar = false;
-    $errores = ['', '', '']; // Inicializar array de errores (0: cédula, 1: correo)
+    $errores = ['', '', '']; // Inicializar array de errores
 
     // Verificar cédula si existe y no está vacía
     if (!empty($_POST['cedula'])) {

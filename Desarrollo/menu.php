@@ -58,6 +58,30 @@
             display: flex;
         }
 
+        /* Estilos para el logo del sidebar */
+        .sidebar-logo {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1rem;
+            padding: 0 1rem;
+        }
+
+        .sidebar-logo img {
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-logo img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Cuando el sidebar está contraído */
+        .sidebar-collapsed .sidebar-logo {
+            padding: 0;
+        }
+
+        .sidebar-collapsed .sidebar-logo img {
+            max-height: 40px !important;
+        }
+
         .main {
             min-height: 100vh;
             width: 100%;
@@ -196,8 +220,18 @@
                 <button class="toggle-btn" type="button">
                     <i class="bi bi-chevron-double-right"></i>
                 </button>
-
             </div>
+
+            <!-- Logo del sidebar -->
+            <div class="sidebar-logo text-center py-3">
+                <a href="#">
+                    <img src="../imgs/LOGO.jpg" alt="Logo del Colegio" class="img-fluid" style="max-height: 85px;">
+                </a>
+            </div>
+            <a href="dashboard.php" class="sidebar-link collapsed">
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+            </a>
             <ul class="sidebar-nav">
                 <!-- Menú de Registro con submenú -->
                 <li class="sidebar-item">
@@ -261,15 +295,15 @@
                     </a>
                     <ul id="gestion" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="search_aula.php" class="sidebar-link">
-                                <i class="fi fi-tr-security-gate"></i>
-                                <span>Aulas</span>
+                            <a href="search_inscripcion.php" class="sidebar-link">
+                                <i class="fi fi-br-file-spreadsheet"></i>
+                                <span>Inscripciones</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="search_horario.php" class="sidebar-link">
-                                <i class="fi fi-sr-time-fast"></i>
-                                <span>Horario</span>
+                            <a href="search_aula.php" class="sidebar-link">
+                                <i class="fi fi-tr-security-gate"></i>
+                                <span>Aulas</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -305,7 +339,6 @@
                                         <span>Materias Pendientes</span>
                                     </a>
                                 </li>
-
                             </ul>
                         </li>
                         <li class="sidebar-item">
@@ -356,7 +389,19 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="descargarNCertificadas.php" class="sidebar-link">
+                            <a href="descargarCalificaciones.php" class="sidebar-link">
+                                <i class="bi bi-file-earmark-bar-graph"></i>
+                                <span>Reporte de Calificaciones</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="descargarConstancias.php" class="sidebar-link">
+                                <i class="bi bi-file-earmark-bar-graph"></i>
+                                <span>Reporte de Constancias</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
                                 <span>Reporte Notas Certificadas</span>
                             </a>
@@ -377,12 +422,6 @@
                             <a href="#" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
                                 <span>Reporte de Materias</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="descargarCalificaciones.php" class="sidebar-link">
-                                <i class="bi bi-file-earmark-bar-graph"></i>
-                                <span>Reporte de Calificaciones</span>
                             </a>
                         </li>
                         <li class="sidebar-item">

@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 // Consulta SQL
                 $stmt = $pdo->prepare("SELECT id, id_grado FROM grados WHERE categoria_grado = :categoria_grado");
-                // Ejecutar la consulta
+                // Retornmos valor
                 $stmt->bindValue(':categoria_grado', $categoria);
                 $stmt->execute();
 

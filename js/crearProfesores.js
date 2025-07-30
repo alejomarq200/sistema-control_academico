@@ -1,4 +1,4 @@
-   document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function () {
             var modal = document.getElementById("ModalFormP");
             var form = document.getElementById("form-RegisterProfesor");
             var isSubmitting = false; // Flag para controlar doble envío
@@ -103,9 +103,5 @@
                         },
                     });
                 }
-            });
-
-            modal.addEventListener("show.bs.modal", function () {
-                limpiarErrores();
             });
         });

@@ -27,7 +27,7 @@ try {
     $tieneMateriaPendiente = false;
     $accionMateriaPendiente = null;
 
-    // 1. Procesar actualización de calificaciones
+    // Procesar actualización de calificaciones
     foreach ($_POST['calificaciones'] as $calificacionData) {
         if (empty($calificacionData['id']) || !isset($calificacionData['valor'])) {
             continue;
@@ -62,7 +62,7 @@ try {
         $updatesCount += $stmt->rowCount();
     }
 
-    // 2. Actualizar promedios en la tabla calificaciones
+    // Actualizar promedios en la tabla calificaciones
     $stmtUpdatePromedio = $pdo->prepare("UPDATE calificaciones c
         JOIN (
             SELECT id_estudiante, id_materia, id_profesor, id_grado, lapso_academico, 
@@ -79,7 +79,7 @@ try {
         SET c.promedio = p.nuevo_promedio");
     $stmtUpdatePromedio->execute([$estudianteId, $materiaId, $profesorId, $gradoId]);
 
-    // 3. Verificar si existe materia pendiente para este estudiante
+    // Verificar si existe materia pendiente para este estudiante
     $stmtMateriaPendiente = $pdo->prepare("SELECT id, promedio_final  FROM materias_pendientes 
                                           WHERE id_estudiante = ? 
                                           AND id_materia = ?");
@@ -87,7 +87,7 @@ try {
     $tieneMateriaPendiente = $stmtMateriaPendiente->rowCount() > 0;
     $materiaPendienteData = $tieneMateriaPendiente ? $stmtMateriaPendiente->fetch(PDO::FETCH_ASSOC) : null;
 
-    // 4. Calcular nuevo promedio general (suma de los 3 lapsos / 3)
+    // Calcular nuevo promedio general (suma de los 3 lapsos / 3)
     $stmtPromedio = $pdo->prepare("SELECT AVG(calificacion) as promedio_general
                                    FROM calificaciones
                                    WHERE id_estudiante = ?
@@ -99,7 +99,7 @@ try {
     $stmtPromedio->execute([$estudianteId, $materiaId, $profesorId, $gradoId]);
     $promedioGeneral = (float)$stmtPromedio->fetchColumn();
 
-    // 5. Manejo de materias pendientes
+    // Manejo de materias pendientes
     if ($tieneMateriaPendiente) {
         if ($promedioGeneral >= 10) {
             // Eliminar de materias pendientes si el promedio es >= 10

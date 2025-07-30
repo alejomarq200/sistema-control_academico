@@ -20,7 +20,7 @@ if (!$idEstudiante || !$idMateria || !$idGrado || !$idProfesor || $promedio === 
 try {
     $pdo->beginTransaction();
 
-    // 1. Actualizar materias_pendientes
+    //  Actualizar materias_pendientes
     $estado = ($promedio >= 10) ? 'recuperada' : 'pendiente';
 
     $sqlMateriaPendiente = "UPDATE materias_pendientes 
@@ -40,7 +40,7 @@ try {
         ':idGrado' => $idGrado
     ]);
 
-    // 2. Obtener calificaciones existentes
+    // Obtener calificaciones existentes
     $sqlSelectCalificaciones = "SELECT id, calificacion, promedio 
                                FROM calificaciones 
                                WHERE id_profesor = :idProfesor 
@@ -58,7 +58,7 @@ try {
     
     $calificacionesExistentes = $stmtSelect->fetchAll(PDO::FETCH_ASSOC);
 
-    // 3. Actualizar cada calificación existente
+    // Actualizar cada calificación existente
     $sqlUpdateCalificacion = "UPDATE calificaciones 
                              SET calificacion = :calificacion,
                                  promedio = :promedio

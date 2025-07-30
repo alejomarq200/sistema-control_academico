@@ -28,9 +28,10 @@
             include("../Layout/mensajes.php");
             /* CUERPO DEL MENÚ */
             ?>
-            <h1 class="my-3" id="titulo">Módulo de Estudiantes</h1>
             <!-- CONTENEDOR CENTRADO CON ESTILOS MEJORADOS -->
             <div class="filters-container">
+            <h1 class="my-3" id="titulo">Módulo de Estudiantes</h1>
+
                 <!-- FILTROS CON DISEÑO MODERNO -->
                 <div class="filters-wrapper">
                     <div class="filtro-container d-flex align-items-center">

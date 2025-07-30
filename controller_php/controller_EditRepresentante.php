@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
-    // Si pasa validación, puedes continuar con la lógica de guardado
+    // Si pasa validación continuar con la lógica de guardado
 
     $array = array(
         $_POST['id'],

@@ -1,4 +1,4 @@
-  document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
             var modal = document.getElementById("ModalFormEditaAula");
             var originalValues = {}; // Almacenará los valores originales
             var form = document.getElementById("form-EditAula");
@@ -56,12 +56,15 @@
                     isValid = false;
                 }
                 // Validación de IDGUIA
-                if (!capacidad || isNaN(capacidad)) {
+                if (!capacidad) {
                     document.getElementById("capacidadErrorAula").textContent = "Campo capacidad de aula obligatorio";
+                    isValid = false;
+                } else if (capacidad > 30) {
+                    document.getElementById("capacidadErrorAula").textContent = "La capacidad máxima por aula son 30";
                     isValid = false;
                 }
 
-                if (!grado|| grado === "Seleccionar") {
+                if (!grado || grado === "Seleccionar") {
                     document.getElementById("gradoErrorAula").textContent = "Campo grado de materia obligatorio";
                     isValid = false;
                 }
@@ -72,10 +75,12 @@
             function hayCambiosEnCamposCriticos() {
                 // Obtener valores actuales del formulario
                 const nombreAula = document.getElementById("nombreAula").value.trim();
+                const capacidadAula = document.getElementById("capacidadAula").value.trim();
 
                 // Comparar con los valores originales
                 const cambios = {
-                    nombre: nombreAula !== originalValues.nombre
+                    nombre: nombreAula !== originalValues.nombre,
+                    capacidad: capacidadAula !== originalValues.capacidad
                 };
                 return cambios;
             }
@@ -84,32 +89,47 @@
                 event.preventDefault();
                 if (isSubmitting) return;
 
-                if (!validarCampos()) {
-                    return; // Si hay errores de validación, no continuar
-                }
+                if (!validarCampos()) return;
 
-                // Verificar si hay cambios en campos críticos
                 const cambios = hayCambiosEnCamposCriticos();
-                const hayCambiosCriticos = cambios.nombre;
+                const hayCambiosCriticos = cambios.nombre || cambios.capacidad;
 
                 if (!hayCambiosCriticos) {
-                    // No hay cambios en campos críticos - mostrar confirmación directamente
                     mostrarConfirmacion();
                 } else {
-                    // Hay cambios en campos críticos - validar con AJAX
                     isSubmitting = true;
+
+                    // Serializamos el formulario y agregamos los valores originales al final
+                    let formData = $(form).serializeArray();
+                    formData.push({
+                        name: "original_nombre",
+                        value: originalValues.nombre
+                    }, {
+                        name: "original_capacidad",
+                        value: originalValues.capacidad
+                    });
 
                     $.ajax({
                         url: "../AJAX/AJAX_Aulas/searchNombreEditAula.php",
                         type: "POST",
-                        dataType: 'json', // Esperamos una respuesta JSON
-                        data: $(form).serialize(),
+                        dataType: 'json',
+                        data: $.param(formData), // Convertimos a formato query string
                         success: function(response) {
                             if (response.valido) {
                                 mostrarConfirmacion();
                             } else {
-                                // Mostrar el error al usuario
-                                $("#nombreErrorAula").text(response.error);
+                                if (response.errores.nombre) {
+                                    $("#nombreErrorAula").text(response.errores.nombre);
+                                }
+                                if (response.errores.capacidad) {
+                                    $("#capacidadErrorAula").text(response.errores.capacidad);
+                                }
+                                if (response.errores.grado) {
+                                    console.log(response.errores.grado);
+                                }
+                                if (response.error) {
+                                    console.error(response.error);
+                                }
                                 isSubmitting = false;
                             }
                         },
@@ -121,6 +141,7 @@
                     });
                 }
             });
+
 
             function mostrarConfirmacion() {
                 let titulo = "¿Desea la información del aula seleccionada?";

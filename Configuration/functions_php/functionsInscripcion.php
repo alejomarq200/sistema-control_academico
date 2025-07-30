@@ -1,6 +1,6 @@
 <?php
 include("../Configuration/Configuration.php");
-function insertarEstudiantes($pdo, array $data)
+function insertarEstudiantes($pdo, array $data, $cedula)
 {
     try {
         $stmt = $pdo->prepare(
@@ -12,7 +12,7 @@ function insertarEstudiantes($pdo, array $data)
             :turno_est, :problem_resp_est, :alergias_est, :vacunas_est, :enfermedad_est)"
         );
 
-        $stmt->bindValue(':cedula_est', $data[0]);
+        $stmt->bindValue(':cedula_est', $cedula);
         $stmt->bindValue(':nombres_est', $data[1]);
         $stmt->bindValue(':apellidos_est', $data[2]);
         $stmt->bindValue(':sexo', $data[5]);
@@ -129,7 +129,7 @@ function insertarInscripcion($pdo, array $dataInscripcion, array $variablesInscr
         
         return $stmt->execute();
     } catch (PDOException $e) {
-        // Para depuración, puedes mostrar el error (en producción quita esto)
+        // Para depuración, puedes mostrar el error
         echo "Error: " . $e->getMessage();
         return false;
     }
@@ -144,13 +144,12 @@ function retornarIdEstudiante($pdo, array $idEstudiante)
         $stmt->bindValue(':cedula_est', $idEstudiante[0]);
         $stmt->execute();
 
-        // Obtenemos el resultado (solo la columna id_materia)
+        // Obtenemos el resultado (solo la columna id)
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Si hay resultados, devolvemos el id_materia, sino null
+        // Si hay resultados, devolvemos el id, sino null
         return $resultado ? $resultado['id'] : null;
     } catch (PDOException $e) {
-        // Manejo de errores (puedes personalizarlo)
         error_log("Error en retornarIdMateria: " . $e->getMessage());
         return null;
     }
@@ -160,18 +159,17 @@ function retornarIdRepresentante($pdo, array $idRepresentante)
 {
 
     try {
-        // Preparamos la consulta para obtener solo id_materia
+        // Preparamos la consulta para obtener solo representantes
         $stmt = $pdo->prepare("SELECT id FROM representantes WHERE cedula = :cedula");
         $stmt->bindValue(':cedula', $idRepresentante[0]);
         $stmt->execute();
 
-        // Obtenemos el resultado (solo la columna id_materia)
+        // Obtenemos el resultado (solo la columna representantes)
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Si hay resultados, devolvemos el id_materia, sino null
+        // Si hay resultados, devolvemos el representantes, sino null
         return $resultado ? $resultado['id'] : null;
     } catch (PDOException $e) {
-        // Manejo de errores (puedes personalizarlo)
         error_log("Error en retornarIdMateria: " . $e->getMessage());
         return null;
     }
@@ -181,18 +179,17 @@ function retornarIdContacto($pdo, array $idContacto)
 {
 
     try {
-        // Preparamos la consulta para obtener solo id_materia
+        // Preparamos la consulta para obtener solo contacto_pago
         $stmt = $pdo->prepare("SELECT id FROM contacto_pago WHERE cedula = :cedula");
         $stmt->bindValue(':cedula', $idContacto[0]);
         $stmt->execute();
 
-        // Obtenemos el resultado (solo la columna id_materia)
+        // Obtenemos el resultado (solo la columna contacto_pago)
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Si hay resultados, devolvemos el id_materia, sino null
+        // Si hay resultados, devolvemos el contacto_pago, sino null
         return $resultado ? $resultado['id'] : null;
     } catch (PDOException $e) {
-        // Manejo de errores (puedes personalizarlo)
         error_log("Error en retornarIdMateria: " . $e->getMessage());
         return null;
     }

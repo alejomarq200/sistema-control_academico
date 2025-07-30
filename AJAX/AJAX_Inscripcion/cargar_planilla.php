@@ -13,11 +13,11 @@ try {
         throw new Exception('No se especificó grado y/o año escolar');
     }
 
-    // Consulta con JOIN para traer datos de inscripciones con estudiante
+    // Consulta para traer datos de inscripciones con estudiante
     $sql = "SELECT DISTINCT e.id, e.cedula_est, e.nombres_est, e.apellidos_est, i.anio_escolar, i.grado
-FROM inscripciones i
-INNER JOIN estudiantes e ON i.id_estudiante = e.id
-WHERE i.grado = :grado AND i.anio_escolar = :anioEscolar";
+    FROM inscripciones i
+    INNER JOIN estudiantes e ON i.id_estudiante = e.id
+    WHERE i.grado = :grado AND i.anio_escolar = :anioEscolar";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':grado', $grado, PDO::PARAM_INT);

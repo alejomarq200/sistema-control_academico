@@ -7,7 +7,7 @@ if (isset($_POST['docente']) || isset($_POST['profesorActividad'])) {
 
     try {
         // Consulta con JOIN para obtener el nombre de la materia
-        $stmt = $pdo->prepare("SELECT pmg.id_materia, m.nombre FROM profesor_materia_grado pmg JOIN materias m ON pmg.id_materia = m.id_materia WHERE id_profesor = :id_profesor");
+        $stmt = $pdo->prepare("SELECT DISTINCT pmg.id_materia, m.nombre FROM profesor_materia_grado pmg JOIN materias m ON pmg.id_materia = m.id_materia WHERE id_profesor = :id_profesor");
         $stmt->bindValue(':id_profesor', $idProfesor);
         $stmt->execute();
 

@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo $mensaje;
 }
 
+//Funciones incorporadas para validación de materias
 function validarExisteMateriaG($pdo, $grado, $materiaDeGrado)
 {
     try {
@@ -52,6 +53,8 @@ function validarExisteMateriaG($pdo, $grado, $materiaDeGrado)
         echo $e->getMessage();
     }
 }
+
+//Retornar id directo
 function retornarMateria($pdo, $materiaDeGrado) {
     try {
         // Preparamos la consulta para obtener solo id_materia
