@@ -423,7 +423,7 @@
             });
         });
 
-         //CARGAMOS MODAL CONSTANCIAS PROSECUSIÓN
+        //CARGAMOS MODAL CONSTANCIAS PROSECUSIÓN
         $(document).ready(function() {
             // Cargar estudiantes cuando cambien los selects
             $('#selectGradoProsecusion, #selectAnioProsecucion').change(function() {

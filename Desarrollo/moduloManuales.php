@@ -18,7 +18,8 @@
         ?>
         <div class="main p-3">
             <div class="text-center">
-                <?php include("../Layout/mensajes.php");
+                <?php 
+                include("../Layout/mensajes.php");
                 include("../Configuration/Configuration.php");
                 include("../Configuration/functions_php/functionMantenimiento.php");
                 ?>
@@ -34,9 +35,9 @@
                 <div class="d-flex justify-content-center align-items-start gap-4 flex-wrap" style="max-width: 900px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
 
                     <!-- Manual de Administrador -->
-                    <form action="#" method="post" id="backup-form">
+                    <form action="manuales.php?ref=ManualAdmin" method="get" id="backup-form">
                         <div class="admin-card" style="background-color: #FFF4A3;">
-                            <button type="submit" id="backup_btn" name="backup_btn" class="card-btn">
+                            <button type="button" id="btnAdmin" class="card-btn">
                                 <i class="fi fi-br-file-pdf" style="font-size: 80px; color: #5a4a00;"></i>
                             </button>
                             <p class="card-label">Manual del Administrador</p>
@@ -46,17 +47,21 @@
                     <!-- Manual de Usuario -->
                     <form method="post" action="#">
                         <div class="admin-card" style="background-color: #a2bee2ff;">
-                            <div class="card-btn">
+                           
+                           <button type="button" id="btnUser" class="card-btn">
                                 <i class="fi fi-rr-file-pdf" style="font-size: 80px; color: #ffffffff;"></i>
-                            </div>
-                            <div class="mt-3">
-                                <input type="submit" name="restore" value="Restaurar" class="btn btn-primary w-100" />
-                            </div>
-                        </div>
+
+                            </button>
+                            <p class="card-label">Manual del Usuario</p>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </body>
+<script>
+    document.getElementById('btnAdmin').addEventListener('click',  function() {
+        window.location.href = 'manuales.php?ref=ManualAdmin';
+    });
+</script>
 </html>

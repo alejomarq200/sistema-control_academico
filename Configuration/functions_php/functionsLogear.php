@@ -15,10 +15,17 @@ function validar_InicioSesion($pdo, $variablesFormLogin)
 
         if ($result['id_rol'] == 1 && $result['id_estado'] == 2) {
             $_SESSION['id'] = $result['cedula'];
+            $_SESSION['nombres'] = $result['nombres'];
+            $_SESSION['correo'] = $result['correo'];
             header("Location: ../Desarrollo/menu.php");
             exit();
         } elseif ($result['id_rol'] == 2 && $result['id_estado'] == 2) {
             echo "BIENVENIDO USUARIO";
+            $_SESSION['id'] = $result['cedula'];
+            $_SESSION['nombres'] = $result['nombres'];
+            $_SESSION['correo'] = $result['correo'];
+            header("Location: ../Desarrollo/menu.php");
+            exit();
         } else {
             $_SESSION['mensaje'] = 'El usuario se encuentra inactivo.';
             $_SESSION['icono'] = 'error';
