@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 
 //Validamos si la sesión errónea existe par así lanzar su respectivo mensaje
 if (isset($_SESSION['mensaje']) && isset($_SESSION['icono'])) {

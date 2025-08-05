@@ -1,5 +1,6 @@
 <?php 
 session_start();
-session_destroy();
-header("Location: ../Inicio/Logear.php");
+include("../Configuration/Configuration.php");
+include("../Configuration/functions_php/functionsLogear.php");
+cerrarSesion($pdo, '../Inicio/Logear.php', $_SESSION['correo']);
 ?>

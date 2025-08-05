@@ -1,3 +1,11 @@
+<?php
+session_start();
+error_reporting(0);
+
+
+include("../Configuration/functions_php/functionsCRUDUser.php");
+validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -371,8 +379,6 @@
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
         <?php
-        error_reporting(0);
-        session_start();
         include("menu.php");
         include("../Configuration/Configuration.php");
         include("../Configuration/functions_php/functionsCRUDEstudiantes.php");
@@ -388,7 +394,7 @@
                 <main class="student-module">
                     <!-- Sección de Información de la Institución -->
                     <section class="institution-info">
-                        <h2><i class="fas fa-school"></i>UNIDAD EDUCATIVA COLEGIO “PRADO DEL NORTE”	</h2>
+                        <h2><i class="fas fa-school"></i>UNIDAD EDUCATIVA COLEGIO “PRADO DEL NORTE” </h2>
                         <div class="info-grid">
                             <div class="info-item">
                                 <i class="fas fa-id-card"></i>
@@ -398,7 +404,7 @@
                                 <i class="fas fa-map-marker-alt"></i>
                                 <span>AV. INTERCOMUNAL TAMACA EL CUJI KM. 08 VÍA DUACA</span>
                             </div>
-                          
+
                             <div class="info-item">
                                 <i class="fas fa-phone"></i>
                                 <span>0251-8145640</span>
@@ -475,7 +481,7 @@
                                 // Extraer solo la parte antes del guión (si existe)
                                 $partes = explode('-', $busquedaEstudiante);
                                 $valorFiltrado = trim($partes[0]); // trim() elimina espacios alrededor
-                        
+
                                 // Determinar si es cédula (empieza con V/E/J/P) o nombre
                                 if (preg_match('/^[VEJP]\d/', $valorFiltrado)) {
                                     // Búsqueda por cédula exacta o parcial
@@ -552,7 +558,7 @@
                             $nombreMateria = obtenerValorUnico($pdo, 'materias', 'nombre', 'id_materia', $idMateria);
                             $nombreEstudiante = obtenerValorUnico($pdo, 'estudiantes', 'nombres_est', 'cedula_est', $busquedaEstudiante);
                             $idEstudianteSearch = obtenerValorUnico($pdo, 'estudiantes', 'cedula_est', 'nombre_est', $busquedaEstudiante);
-                            ?>
+                        ?>
 
                             <!-- Mostrar filtros aplicados -->
                             <div class="filtros-aplicados-inline">
@@ -619,7 +625,7 @@
                                             // Mostrar los resultados
                                             if (!empty($estudiantesConCalificaciones)) {
                                                 foreach ($estudiantesConCalificaciones as $estudiante) {
-                                                    ?>
+                                            ?>
                                                     <tr data-estudiante-id="<?= htmlspecialchars($estudiante['id']) ?>"
                                                         data-grado-id="<?= htmlspecialchars($idGrado) ?>"
                                                         data-materia-id="<?= htmlspecialchars($idMateria) ?>"
@@ -648,19 +654,19 @@
                                                             </button>
                                                         </td>
                                                     </tr>
-                                                    <?php
+                                        <?php
                                                 }
                                             } else {
                                                 echo "<tr><td colspan='" . ($maxCalifs + 3) . "'>No se encontraron estudiantes con calificaciones para los filtros seleccionados.</td></tr>";
                                             }
-                        } else {
-                            echo "<tr><td colspan='4'>Por favor, selecciona profesor, materia y grado o ingresa un nombre para buscar.</td></tr>";
-                        }
-                        ?>
-                                    </tbody>
-                                </table>
+                                        } else {
+                                            echo "<tr><td colspan='4'>Por favor, selecciona profesor, materia y grado o ingresa un nombre para buscar.</td></tr>";
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
                     </section>
                 </main>
             </div>
@@ -669,13 +675,15 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
-    $(document).ready(function () {
-        $('.search-box input[type="text"]').on("keyup input", function () {
+    $(document).ready(function() {
+        $('.search-box input[type="text"]').on("keyup input", function() {
             /* Get input value on change */
             var inputVal = $(this).val();
             var resultDropdown = $(this).siblings(".result");
             if (inputVal.length) {
-                $.get("backend-search.php", { term: inputVal }).done(function (data) {
+                $.get("backend-search.php", {
+                    term: inputVal
+                }).done(function(data) {
                     // Display the returned data in browser
                     resultDropdown.html(data);
                 });
@@ -685,16 +693,15 @@
         });
 
         // Set search input value on click of result item
-        $(document).on("click", ".result p", function () {
+        $(document).on("click", ".result p", function() {
             $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
             $(this).parent(".result").empty();
         });
     });
-
 </script>
-   
+
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         // Calcular y asignar el año escolar
         const añoActual = new Date().getFullYear();
         $('#anio_escolar').val(`${añoActual}-${añoActual + 1}`);
@@ -713,7 +720,7 @@
         ];
 
         // Controlar campos requeridos según búsqueda
-        searchInput.addEventListener('input', function () {
+        searchInput.addEventListener('input', function() {
             const hasSearch = this.value.trim() !== '';
             requiredSelects.forEach(select => {
                 select.required = hasSearch;
@@ -721,7 +728,7 @@
         });
 
         // Validar envío del formulario
-        form.addEventListener('submit', function (e) {
+        form.addEventListener('submit', function(e) {
             const hasSearch = searchInput.value.trim() !== '';
             const missingRequired = requiredSelects.some(select => !select.value);
 
@@ -747,6 +754,7 @@
 
         const total = document.getElementById('total').value = totalMaterias * 3;
     }
+
     function contarFilasTbody() {
         const tabla = document.getElementById('calificaciones-table');
         const tbody = tabla.getElementsByTagName('tbody')[0];
@@ -764,10 +772,10 @@
             url: "../AJAX/AJAX_Grados/searchGradoxMateria.php",
             type: "POST",
             data: $("#infoEstudiante").serialize(),
-            success: function (resultado) {
+            success: function(resultado) {
                 $("#nombreGrado").html(resultado);
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error("Error en la solicitud AJAX:", error);
             }
         });
@@ -778,11 +786,11 @@
             type: "POST",
             url: "../AJAX/AJAX_Calificaciones/consultarPrCalificacion.php",
             data: $("#infoEstudiante").serialize(),
-            success: function (resultado) {
+            success: function(resultado) {
                 $("#docente").html(resultado);
                 cargarProfesorxGrado();
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error("Error en la solicitud AJAX:", error);
             }
         });
@@ -793,10 +801,10 @@
             type: "POST",
             url: "../AJAX/AJAX_Calificaciones/consultarPrDocente.php",
             data: $("#infoEstudiante").serialize(),
-            success: function (resultado) {
+            success: function(resultado) {
                 $("#materias").html(resultado);
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error("Error en la solicitud AJAX:", error);
             }
         });

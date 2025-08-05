@@ -1,5 +1,13 @@
+<?php
+session_start();
+error_reporting(0);
+
+include("../Configuration/functions_php/functionsCRUDUser.php");
+validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,8 +25,6 @@
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
         <?php
-        error_reporting(0);
-        session_start();
         include("menu.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
@@ -29,7 +35,7 @@
                 /* CUERPO DEL MENÚ */
                 ?>
                 <div class="filters-container">
-                <h1 class="my-3" id="titulo">Módulo de Asignaturas</h1>
+                    <h1 class="my-3" id="titulo">Módulo de Asignaturas</h1>
 
                     <!-- FILTROS CON DISEÑO MODERNO -->
                     <div class="filters-wrapper">
@@ -169,4 +175,5 @@
     });
 </script>
 <script src="../js/validarDeleteAsignatura.js"></script>
+
 </html>

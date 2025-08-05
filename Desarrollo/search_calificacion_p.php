@@ -1,5 +1,13 @@
+<?php
+session_start();
+error_reporting(0);
+
+include("../Configuration/functions_php/functionsCRUDUser.php");
+validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,12 +24,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../css/moduloCalificacion_p.css">
 </head>
+
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
         <?php
-        error_reporting(0);
-        session_start();
         include("menu.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
@@ -440,7 +447,7 @@
         // Calcular y asignar el año escolar
         const añoActual = new Date().getFullYear();
         $('#anio_escolar').val(`${añoActual}-${añoActual + 1}`);
-        
+
 
         $(document).on('click', '.btn-guardar', function() {
             const $tr = $(this).closest('tr');

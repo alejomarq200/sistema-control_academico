@@ -1,3 +1,11 @@
+<?php
+session_start();
+error_reporting(0);
+
+
+include("../Configuration/functions_php/functionsCRUDUser.php");
+validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -17,8 +25,6 @@
 <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
 <div class="wrapper">
     <?php
-    error_reporting(0);
-    session_start();
     include("menu.php");
     ?>
     <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
@@ -30,7 +36,7 @@
             ?>
             <!-- CONTENEDOR CENTRADO CON ESTILOS MEJORADOS -->
             <div class="filters-container">
-            <h1 class="my-3" id="titulo">Módulo de Estudiantes</h1>
+                <h1 class="my-3" id="titulo">Módulo de Estudiantes</h1>
 
                 <!-- FILTROS CON DISEÑO MODERNO -->
                 <div class="filters-wrapper">
@@ -91,10 +97,10 @@
                         include("../Layout/modalesEstudiantes/modalVerEst.php");
 
                         $estudiantes = consultarEstudiantes($pdo); // Obtener los representantes
-                        
+
                         if (!empty($estudiantes)) {
                             foreach ($estudiantes as $estudiante) { // Iterar sobre cada usuario
-                                ?>
+                        ?>
                                 <tr>
                                     <td><?php echo ($estudiante['cedula_est'] == null ? "No aplica" : $estudiante['cedula_est']); ?>
                                     </td>
@@ -135,7 +141,7 @@
                                         </button>
                                     </td>
                                 </tr>
-                                <?php
+                        <?php
                             }
                         } else {
                             echo "<tr><td colspan='8'>No se encontraron estudiantes.</td></tr>";
@@ -148,7 +154,7 @@
         </div>
     </div>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const filtroGrado = document.getElementById('filtroGrado');
             const filtroGenero = document.getElementById('filtroGenero');
             const filas = document.querySelectorAll('#tablaEstudiantes tr');
@@ -219,7 +225,7 @@
         });
 
 
-        document.getElementById('txtFiltarr').addEventListener('input', function () {
+        document.getElementById('txtFiltarr').addEventListener('input', function() {
             const filtro = this.value.toLowerCase(); // Texto del filtro en minúsculas
             const filas = document.querySelectorAll('tbody tr'); // Todas las filas de la tabla
 

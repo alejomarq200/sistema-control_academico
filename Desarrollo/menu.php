@@ -287,94 +287,98 @@
                 </li>
 
                 <!-- Menú de Gestión con submenú -->
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#gestion"
-                        aria-expanded="false" aria-controls="gestion">
-                        <i class="bi bi-clipboard2-data-fill"></i>
-                        <span>Gestión</span>
-                    </a>
-                    <ul id="gestion" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="search_inscripcion.php" class="sidebar-link">
-                                <i class="fi fi-br-file-spreadsheet"></i>
-                                <span>Inscripciones</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="search_aula.php" class="sidebar-link">
-                                <i class="fi fi-tr-security-gate"></i>
-                                <span>Aulas</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="search_estudiantes.php" class="sidebar-link">
-                                <i class="fas fa-user-graduate"></i>
-                                <span>Estudiantes</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="search_profesor.php" class="sidebar-link">
-                                <i class="bi bi-person-square"></i>
-                                <span>Profesores</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
-                                data-bs-target="#materias-submenu" aria-expanded="false"
-                                aria-controls="materias-submenu">
-                                <i class="fas fa-book"></i>
-                                <span>Materias</span>
-                            </a>
-                            <ul id="materias-submenu" class="sidebar-dropdown list-unstyled collapse">
-                                <li class="sidebar-item">
-                                    <a href="search_materia.php" class="sidebar-link">
-                                        <i class="bi bi-search"></i>
-                                        <span>Buscar Materias</span>
-                                    </a>
-                                </li>
-                                <!-- Aquí agregamos el sub-submenú -->
-                                <li class="sidebar-item">
-                                    <a href="materia_pendiente.php" class="sidebar-link">
-                                        <img src="hora.png" alt="Icono hora">
-                                        <span>Materias Pendientes</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="search_grado.php" class="sidebar-link">
-                                <i class="fi fi-rr-degree-credential"></i>
-                                <span>Grados</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="search_calificacion.php" class="sidebar-link">
-                                <i class="fas fa-spell-check"></i>
-                                <span>Calificaciones</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="search_actividad.php" class="sidebar-link">
-                                <i class="fi fi-sr-list-check"></i>
-                                <span>Actividades</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="search_representantes.php" class="sidebar-link">
-                                <i class="bi bi-person-raised-hand"></i>
-                                <span>Representantes</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="search_c_pago.php" class="sidebar-link">
-                                <i class="bi bi-person-rolodex"></i>
-                                <span>Contactos de Pago</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                <?php
+                if ($_SESSION['rol'] == 1 && $_SESSION['estado'] == 2) {
 
-                <!-- Menú de Reportes con submenú -->
+                ?>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#gestion"
+                            aria-expanded="false" aria-controls="gestion">
+                            <i class="bi bi-clipboard2-data-fill"></i>
+                            <span>Gestión</span>
+                        </a>
+                        <ul id="gestion" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="search_inscripcion.php" class="sidebar-link">
+                                    <i class="fi fi-br-file-spreadsheet"></i>
+                                    <span>Inscripciones</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="search_aula.php" class="sidebar-link">
+                                    <i class="fi fi-tr-security-gate"></i>
+                                    <span>Aulas</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="search_estudiantes.php" class="sidebar-link">
+                                    <i class="fas fa-user-graduate"></i>
+                                    <span>Estudiantes</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="search_profesor.php" class="sidebar-link">
+                                    <i class="bi bi-person-square"></i>
+                                    <span>Profesores</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+                                    data-bs-target="#materias-submenu" aria-expanded="false"
+                                    aria-controls="materias-submenu">
+                                    <i class="fas fa-book"></i>
+                                    <span>Materias</span>
+                                </a>
+                                <ul id="materias-submenu" class="sidebar-dropdown list-unstyled collapse">
+                                    <li class="sidebar-item">
+                                        <a href="search_materia.php" class="sidebar-link">
+                                            <i class="bi bi-search"></i>
+                                            <span>Buscar Materias</span>
+                                        </a>
+                                    </li>
+                                    <!-- Aquí agregamos el sub-submenú -->
+                                    <li class="sidebar-item">
+                                        <a href="materia_pendiente.php" class="sidebar-link">
+                                            <img src="hora.png" alt="Icono hora">
+                                            <span>Materias Pendientes</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="search_grado.php" class="sidebar-link">
+                                    <i class="fi fi-rr-degree-credential"></i>
+                                    <span>Grados</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="search_calificacion.php" class="sidebar-link">
+                                    <i class="fas fa-spell-check"></i>
+                                    <span>Calificaciones</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="search_actividad.php" class="sidebar-link">
+                                    <i class="fi fi-sr-list-check"></i>
+                                    <span>Actividades</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="search_representantes.php" class="sidebar-link">
+                                    <i class="bi bi-person-raised-hand"></i>
+                                    <span>Representantes</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="search_c_pago.php" class="sidebar-link">
+                                    <i class="bi bi-person-rolodex"></i>
+                                    <span>Contactos de Pago</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php  } ?>
+
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#reportes"
                         aria-expanded="false" aria-controls="reportes">
@@ -382,12 +386,6 @@
                         <span>Reportes</span>
                     </a>
                     <ul id="reportes" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
-                                <i class="bi bi-file-earmark-bar-graph"></i>
-                                <span>Reporte de Estudiantes</span>
-                            </a>
-                        </li>
                         <li class="sidebar-item">
                             <a href="descargarCalificaciones.php" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
@@ -412,56 +410,48 @@
                                 <span>Reporte de Inscripciones</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                         <li class="sidebar-item">
+                            <a href="reportesSistema.php" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
-                                <span>Reporte de Profesores</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
-                                <i class="bi bi-file-earmark-bar-graph"></i>
-                                <span>Reporte de Materias</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
-                                <i class="bi bi-file-earmark-bar-graph"></i>
-                                <span>Reporte de Usuarios</span>
+                                <span>Reportes del Sistema</span>
                             </a>
                         </li>
                     </ul>
                 </li>
 
                 <!-- Menú de Mantenimiento con submenú -->
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#mantenimiento"
-                        aria-expanded="false" aria-controls="mantenimiento">
-                        <i class="bi bi-gear-fill"></i>
-                        <span>Mantenimiento</span>
-                    </a>
-                    <ul id="mantenimiento" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="search_user.php" class="sidebar-link">
-                                <i class="bi bi-people-fill"></i>
-                                <span>Usuarios</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="auditoria.php" class="sidebar-link">
-                                <i class="bi bi-shield-check"></i>
-                                <span>Auditoría</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="mantenimiento.php" class="sidebar-link">
-                                <i class="bi bi-database-check"></i>
-                                <span>Base de Datos</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                <?php
+                if ($_SESSION['rol'] == 1 && $_SESSION['estado'] == 2) {
 
+                ?>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#mantenimiento"
+                            aria-expanded="false" aria-controls="mantenimiento">
+                            <i class="bi bi-gear-fill"></i>
+                            <span>Mantenimiento</span>
+                        </a>
+                        <ul id="mantenimiento" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="search_user.php" class="sidebar-link">
+                                    <i class="bi bi-people-fill"></i>
+                                    <span>Usuarios</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="auditoria.php" class="sidebar-link">
+                                    <i class="bi bi-shield-check"></i>
+                                    <span>Auditoría</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="mantenimiento.php" class="sidebar-link">
+                                    <i class="bi bi-database-check"></i>
+                                    <span>Base de Datos</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php  } ?>
                 <!-- Menú de Ayuda con submenú -->
                 <li class="sidebar-item">
                     <a href="moduloManuales.php" class="sidebar-link">
@@ -470,8 +460,6 @@
                     </a>
                 </li>
             </ul>
-
-
             <div class="sidebar-footer">
                 <a href="../Configuration/Logout.php" class="sidebar-link">
                     <i class="bi bi-box-arrow-left"></i>

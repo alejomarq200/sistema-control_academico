@@ -1,3 +1,11 @@
+<?php
+session_start();
+error_reporting(0);
+
+
+include("../Configuration/functions_php/functionsCRUDUser.php");
+validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php'); 
+?>
 <!DOCTYPE html>
 <html lang="es">
 

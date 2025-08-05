@@ -1,3 +1,11 @@
+<?php
+session_start();
+error_reporting(0);
+
+
+include("../Configuration/functions_php/functionsCRUDUser.php");
+validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -95,8 +103,6 @@
 <body>
     <div class="wrapper">
         <?php
-        error_reporting(0);
-        session_start();
         include("menu.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
@@ -111,12 +117,12 @@
 
                     <div class="buttons-container">
                         <a href="../Desarrollo/search_calificacion_p.php" class="action-button primary-button">
-                           <i class='bx  bx-user-search button-icon' ></i> 
+                            <i class='bx  bx-user-search button-icon'></i>
                             Consultar calificación primaria
                         </a>
 
                         <a href="../Desarrollo/search_calificacion_s.php" class="action-button secondary-button">
-                           <i class='bx  bx-user-search button-icon' ></i> 
+                            <i class='bx  bx-user-search button-icon'></i>
                             Consultar calificación secundaria
                         </a>
                     </div>

@@ -100,8 +100,10 @@ $pdf->AddPage();
 
 $header = array('Cédula', 'Nombres', 'Correo', 'Teléfono', 'Contraseña', 'Rol', 'Estado');
 
+$estado = $_POST['estadoU'];
+$rol = $_POST['RolU'];
 // Obtener datos
-$usuarios = reporteUsuarios($pdo, 1, 2);
+$usuarios = reporteUsuarios($pdo, $estado, $rol);
 
 if (empty($usuarios)) {
     $pdf->SetFont('Arial', '', 12);
@@ -113,4 +115,3 @@ if (empty($usuarios)) {
 $pdo = null;
 
 $pdf->Output();
-?>

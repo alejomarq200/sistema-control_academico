@@ -144,7 +144,7 @@ function reporteUsuarios($pdo, $estado, $rol)
     try {
         $stmt = $pdo->prepare("SELECT cedula, nombres, correo, telefono, contrasena, id_rol, id_estado 
         FROM users WHERE id_estado = :estado AND id_rol = :rol");
-        
+
         $stmt->bindValue(':estado', $estado, PDO::PARAM_INT);
         $stmt->bindValue(':rol', $rol, PDO::PARAM_INT);
         $stmt->execute();
@@ -152,7 +152,7 @@ function reporteUsuarios($pdo, $estado, $rol)
         $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $usuarios ?: []; // Devuelve usuarios o array vacío
-        
+
     } catch (PDOException $e) {
         // Mejor práctica: Loguear el error y/o lanzar excepción
         error_log("Error en reporteUsuarios: " . $e->getMessage());
@@ -180,6 +180,26 @@ function recoveryPass($pdo, array $variablesFormRecovery)
         $_SESSION['titulo'] = 'Error';
 
         header("Location: ../Inicio/Logear.php");
+        exit();
+    }
+}
+
+function validarRolyAccesoAdmin($rol, $estado, $redireccion)
+{
+
+    // Validar que la redirección sea una URL relativa segura
+    if (!preg_match('/^[a-zA-Z0-9_\-\.\/]+$/', $redireccion)) {
+        die("Error: Invalid redirect URL");
+    }
+
+    // Si NO es admin O NO está activo, redirige
+    if ($rol != 1 || $estado != 2) {
+        $_SESSION['mensaje'] = 'Atención. No tiene permisos para acceder a este módulo';
+        $_SESSION['icono'] = 'warning';
+        $_SESSION['titulo'] = 'Atención';
+        
+        // Usar URL absoluta si es necesario
+        header("Location: ../".$redireccion);
         exit();
     }
 }

@@ -1,3 +1,11 @@
+<?php
+session_start();
+error_reporting(0);
+
+
+include("../Configuration/functions_php/functionsCRUDUser.php");
+validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -122,8 +130,6 @@
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
         <?php
-        error_reporting(0);
-        session_start();
         include("menu.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
@@ -136,7 +142,7 @@
                 /* CUERPO DEL MENÚ */
                 ?>
                 <div class="filters-container">
-                <h1 class="my-3" id="titulo">Módulo de Actividades</h1>
+                    <h1 class="my-3" id="titulo">Módulo de Actividades</h1>
 
                     <!-- FILTROS CON DISEÑO MODERNO -->
                     <div class="filters-wrapper">
@@ -305,7 +311,7 @@
         });
     });
 
-     document.getElementById('filtroProfesor').addEventListener('change', function() {
+    document.getElementById('filtroProfesor').addEventListener('change', function() {
         const profesorSeleccionado = this.value.toLowerCase();
         const filas = document.querySelectorAll('table tbody tr');
 
@@ -322,7 +328,7 @@
 
     function cargarSelectMaterias() {
         const gradoSeleccionado = document.getElementById('filtroGrado').value;
- 
+
         $.ajax({
             url: "../AJAX/AJAX_Actividades/cargarMateriaxGrado.php",
             type: "POST",
@@ -340,23 +346,23 @@
         });
     }
 
-     function cargarSelectProfesores() {
-            const gradoSeleccionado = document.getElementById('filtroGrado').value;
+    function cargarSelectProfesores() {
+        const gradoSeleccionado = document.getElementById('filtroGrado').value;
 
-            $.ajax({
-                url: "../AJAX/AJAX_Actividades/cargarProfxGrado.php",
-                type: "POST",
-                data: {
-                    action: 'cargar_profesores',
-                    idgrado: gradoSeleccionado, // Envía directamente el valor, no del input,
-                    materia: $("#filtroAsignatura").val()
-                },
-                success: function(resultado) {
-                      console.log('Respuesta del servidor:', resultado);
-                    $("#filtroProfesor").html('<option value="">Seleccionar</option>' + resultado);
-                }
-            });
-        }
+        $.ajax({
+            url: "../AJAX/AJAX_Actividades/cargarProfxGrado.php",
+            type: "POST",
+            data: {
+                action: 'cargar_profesores',
+                idgrado: gradoSeleccionado, // Envía directamente el valor, no del input,
+                materia: $("#filtroAsignatura").val()
+            },
+            success: function(resultado) {
+                console.log('Respuesta del servidor:', resultado);
+                $("#filtroProfesor").html('<option value="">Seleccionar</option>' + resultado);
+            }
+        });
+    }
 
     document.getElementById('filtroGrado').addEventListener('change', function() {
         const gradoSeleccionado = this.value;

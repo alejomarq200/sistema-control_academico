@@ -1,3 +1,11 @@
+<?php
+session_start();
+error_reporting(0);
+
+
+include("../Configuration/functions_php/functionsCRUDUser.php");
+validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -15,8 +23,6 @@
 <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
 <div class="wrapper">
     <?php
-    error_reporting(0);
-    session_start();
     include("menu.php");
     ?>
     <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
@@ -28,7 +34,7 @@
             ?>
 
             <div class="filters-container">
-            <h1 class="my-3" id="titulo">Módulo de Grados</h1>
+                <h1 class="my-3" id="titulo">Módulo de Grados</h1>
 
                 <!-- FILTROS CON DISEÑO MODERNO -->
                 <div class="filters-wrapper">
@@ -106,7 +112,7 @@
                 <input type="checkbox" id="btn-modal-gradosP">
                 <div class="container-modal-gradosP">
                     <div class="content-modal-gradosP">
-                         <h2>Asignar Profesores a Grados</h2>
+                        <h2>Asignar Profesores a Grados</h2>
                         <div class="container">
                             <form id="form1-gradosP">
                                 <table id="tabla-general-gradosP">
