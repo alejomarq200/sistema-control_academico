@@ -13,7 +13,7 @@ class PDF extends FPDF
         $this->Cell(50, 5, iconv('UTF-8', 'windows-1252', 'Fecha de emisión: ' . date('d/m/Y')), 0, 1, 'R');
         $this->Image('LOGO.jpg', 10, 8, 25);
         $this->SetFont('Arial', 'B', 14);
-        $this->SetX(40);
+        $this->SetX(20);
         $this->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'UNIDAD EDUCATIVA COLEGIO PRADO DEL NORTE'), 0, 1, 'C');
         $this->Ln(5);
         $this->SetFont('Arial', 'B', 16);
@@ -38,13 +38,15 @@ class PDF extends FPDF
         // Mostrar filtros aplicados
         $this->SetFont('Arial', 'B', 10);
         $this->Cell(0, 6, iconv('UTF-8', 'windows-1252', 'Filtros aplicados:'), 0, 1);
-        
+
         $this->SetFont('Arial', '', 10);
-        $this->Cell(0, 6, iconv('UTF-8', 'windows-1252', 
-            'Nivel: ' . ($filtros['nivel'] ?? 'Todos') . 
-            ' | Grado: ' . ($filtros['grado'] ?? 'Todos') . 
-            ' | Género: ' . ($filtros['genero'] ?? 'Todos') .
-            ' | Año escolar: ' . ($filtros['anio'] ?? 'Todos')
+        $this->Cell(0, 6, iconv(
+            'UTF-8',
+            'windows-1252',
+            'Nivel: ' . ($filtros['nivel'] ?? 'Todos') .
+                ' | Grado: ' . ($filtros['grado'] ?? 'Todos') .
+                ' | Género: ' . ($filtros['genero'] ?? 'Todos') .
+                ' | Año escolar: ' . ($filtros['anio'] ?? 'Todos')
         ), 0, 1);
         $this->Ln(5);
 
@@ -92,9 +94,10 @@ class PDF extends FPDF
         $this->SetX($marginLeft);
         $this->Cell($totalWidth, 0, '', 'T');
     }
-    
+
     // Función para obtener nombre del grado
-    function getNombreGrado($id_grado) {
+    function getNombreGrado($id_grado)
+    {
         $grados = [
             1 => '1er Grado',
             2 => '2do Grado',
@@ -155,9 +158,9 @@ function reporteEstudiantes($pdo, $nivel, $grado, $genero, $anio)
                 FROM estudiantes e
                 INNER JOIN inscripciones i ON e.id = i.id_estudiante
                 WHERE 1=1";
-        
+
         $params = [];
-        
+
         // Aplicar filtros si existen
         if (!empty($nivel)) {
             // Asume que el nivel está relacionado con el grado (1-6 Primaria, 7-11 Secundaria)
@@ -167,35 +170,34 @@ function reporteEstudiantes($pdo, $nivel, $grado, $genero, $anio)
                 $sql .= " AND e.grado_est BETWEEN 7 AND 11";
             }
         }
-        
+
         if (!empty($grado)) {
             $sql .= " AND e.grado_est = :grado";
             $params[':grado'] = $grado;
         }
-        
+
         if (!empty($genero)) {
             $sql .= " AND e.sexo = :genero";
             $params[':genero'] = $genero;
         }
-        
+
         if (!empty($anio)) {
             $sql .= " AND i.anio_escolar = :anio";
             $params[':anio'] = $anio;
         }
-        
+
         $sql .= " ORDER BY e.grado_est, e.apellidos_est, e.nombres_est";
-        
+
         $stmt = $pdo->prepare($sql);
-        
+
         // Bind de parámetros
         foreach ($params as $key => $value) {
             $stmt->bindValue($key, $value);
         }
-        
-        $stmt->execute();
-        
-        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     } catch (PDOException $e) {
         error_log("Error en reporteEstudiantes: " . $e->getMessage());
         return [];
@@ -204,4 +206,3 @@ function reporteEstudiantes($pdo, $nivel, $grado, $genero, $anio)
 
 $pdo = null;
 $pdf->Output('D', 'Reporte_Estudiantes_' . date('Y-m-d') . '.pdf'); // Forzar descarga
-?>

@@ -13,15 +13,15 @@ class PDF extends FPDF
         $this->Cell(50, 5, iconv('UTF-8', 'windows-1252', 'Fecha de emisión: ' . date('d/m/Y')), 0, 1, 'R');
         $this->Image('LOGO.jpg', 10, 8, 25);
         $this->SetFont('Arial', 'B', 14);
-        $this->SetX(20);
+        $this->SetX(40);
         $this->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'UNIDAD EDUCATIVA COLEGIO PRADO DEL NORTE'), 0, 1, 'C');
         $this->Ln(5);
         $this->SetFont('Arial', 'B', 16);
-        $this->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'REPORTE DE PROFESORES'), 0, 1, 'C');
+        $this->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'REPORTE DE ASIGNATURAS'), 0, 1, 'C');
         $this->SetLineWidth(0.5);
         $this->Line(10, 40, 200, 40);
         $this->SetLineWidth(0.2);
-        $this->Ln(10);
+        $this->Ln(15);
     }
 
     // Pie de página
@@ -33,7 +33,7 @@ class PDF extends FPDF
     }
 
     // Crear tabla centrada
-    function crearTablaProfesores($header, $data, $filtros)
+    function crearTablaAsignaturas($header, $data, $filtros)
     {
         // Mostrar filtros aplicados
         $this->SetFont('Arial', 'B', 10);
@@ -44,7 +44,6 @@ class PDF extends FPDF
             'UTF-8',
             'windows-1252',
             'Nivel: ' . ($filtros['nivel'] ?? 'Todos') .
-                ' | Grado: ' . ($filtros['grado'] ?? 'Todos') .
                 ' | Estado: ' . ($filtros['estado'] ?? 'Todos')
         ), 0, 1);
         $this->Ln(5);
@@ -56,7 +55,7 @@ class PDF extends FPDF
         $this->SetFont('Arial', 'B', 10);
 
         // Anchuras de las columnas
-        $w = array(15, 25, 60, 40, 25, 25);
+        $w = array(15, 90, 40, 50);
         $totalWidth = array_sum($w);
 
         // Centrar la tabla
@@ -77,15 +76,13 @@ class PDF extends FPDF
         $fill = false;
         foreach ($data as $row) {
             // Mapear estado a texto
-            $estado = ($row['estado'] == 1) ? 'Inactivo' : 'Activo';
+            $estado = ($row['id_estado'] == 1) ? 'Inactivo' : 'Activo';
 
             $this->SetX($marginLeft);
-            $this->Cell($w[0], 6, $row['id_profesor'] ?? '', 'LR', 0, 'C', $fill);
-            $this->Cell($w[1], 6, $row['cedula'] ?? '', 'LR', 0, 'C', $fill);
-            $this->Cell($w[2], 6, iconv('UTF-8', 'windows-1252', $row['nombre'] ?? ''), 'LR', 0, 'L', $fill);
-            $this->Cell($w[3], 6, iconv('UTF-8', 'windows-1252', $row['nivel_grado'] ?? ''), 'LR', 0, 'L', $fill);
-            $this->Cell($w[4], 6, $row['telefono'] ?? '', 'LR', 0, 'C', $fill);
-            $this->Cell($w[5], 6, $estado, 'LR', 0, 'C', $fill);
+            $this->Cell($w[0], 6, $row['id_materia'] ?? '', 'LR', 0, 'C', $fill);
+            $this->Cell($w[1], 6, iconv('UTF-8', 'windows-1252', $row['nombre'] ?? ''), 'LR', 0, 'L', $fill);
+            $this->Cell($w[2], 6, iconv('UTF-8', 'windows-1252', $row['nivel_materia'] ?? ''), 'LR', 0, 'L', $fill);
+            $this->Cell($w[3], 6, $estado, 'LR', 0, 'C', $fill);
             $this->Ln();
             $fill = !$fill;
         }
@@ -97,18 +94,18 @@ class PDF extends FPDF
 }
 
 // Obtener parámetros del formulario
-$nivel = $_POST['nivelEducativoPr'] ?? '';
-$estado = $_POST['estadoPr'] ?? '';
+$nivel = $_POST['nivelEducativoAsig'] ?? '';
+$estado = $_POST['estadoAsig'] ?? '';
 
 // Crear PDF
 $pdf = new PDF();
 $pdf->AliasNbPages();
 $pdf->AddPage();
 
-$header = array('ID', 'Cédula', 'Nombre', 'Nivel/Grado', 'Teléfono', 'Estado');
+$header = array('ID', 'Nombre', 'Nivel', 'Estado');
 
 // Obtener datos con los filtros
-$profesores = reporteProfesores($pdo, $nivel, $estado);
+$asignaturas = reporteAsignaturas($pdo, $nivel, $estado);
 
 // Preparar texto de filtros para mostrar en PDF
 $filtros = [
@@ -116,54 +113,43 @@ $filtros = [
     'estado' => $estado ? ($estado == 2 ? 'Activo' : 'Inactivo') : 'Todos'
 ];
 
-if (empty($profesores)) {
+if (empty($asignaturas)) {
     $pdf->SetFont('Arial', '', 12);
-    $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'No se encontraron profesores con los filtros aplicados.'), 0, 1);
+    $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'No se encontraron asignaturas con los filtros aplicados.'), 0, 1);
 } else {
-    $pdf->crearTablaProfesores($header, $profesores, $filtros);
+    $pdf->crearTablaAsignaturas($header, $asignaturas, $filtros);
 }
 
-/* FUNCIÓN PARA OBTENER PROFESORES FILTRADOS */
-function reporteProfesores($pdo, $nivel, $estado)
+/* FUNCIÓN PARA OBTENER ASIGNATURAS FILTRADAS */
+function reporteAsignaturas($pdo, $nivel, $estado)
 {
     try {
-        // Construir consulta base
-        $sql = "SELECT id_profesor, cedula, nombre, nivel_grado, telefono, estado 
-                FROM profesores 
-                WHERE 1=1";
-
+        $sql = "SELECT id_materia, nivel_materia, nombre, id_estado FROM materias WHERE 1=1";
         $params = [];
 
-        // Aplicar filtros si existen
         if (!empty($nivel)) {
-            // Filtro por nivel (Primaria/Secundaria)
-            $sql .= " AND nivel_grado = :nivel";
+            $sql .= " AND nivel_materia = :nivel";
             $params[':nivel'] = $nivel;
         }
 
         if (!empty($estado)) {
-            // Filtro exacto por estado
-            $sql .= " AND estado = :estado";
+            $sql .= " AND id_estado = :estado";
             $params[':estado'] = $estado;
         }
 
-        $sql .= " ORDER BY nombre";
-
         $stmt = $pdo->prepare($sql);
 
-        // Bind de parámetros
-        foreach ($params as $key => $value) {
-            $stmt->bindValue($key, $value);
+        foreach ($params as $param => $value) {
+            $stmt->bindValue($param, $value, PDO::PARAM_STR);
         }
 
         $stmt->execute();
-
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     } catch (PDOException $e) {
-        error_log("Error en reporteProfesores: " . $e->getMessage());
+        error_log("Error en reporteAsignaturas: " . $e->getMessage());
         return [];
     }
 }
 
 $pdo = null;
-$pdf->Output('D', 'Reporte_Profesores_' . date('Y-m-d') . '.pdf'); // Forzar descarga
+$pdf->Output('D', 'Reporte_Asignaturas_' . date('Y-m-d') . '.pdf'); // Forzar descarga

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <!-- Scripts necesarios -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
     <title>Reportes del Sistema</title>
     <style>
         /* Estilos para las tarjetas de constancias */
@@ -60,6 +61,8 @@
         include("../Layout/modalesReportes/modalReporteAulas.php");
         include("../Layout/modalesReportes/modalReporteEstudiantes.php");
         include("../Layout/modalesReportes/modalReporteProfesor.php");
+        include("../Layout/modalesReportes/modalReporteAsigantura.php");
+        include("../Layout/modalesReportes/modalReporteHorarios.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA -->
         <div class="main p-3">
@@ -68,20 +71,19 @@
                     <?php include("../Layout/mensajes.php"); ?>
                     <div class="mb-4" style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
                         <h1 class="display-5 fw-bold text-primary mb-3">Reportes del Sistema</h1>
-                        <p class="lead text-muted">Descarga y visualiza los reportes de constancias disponibles</p>
+                        <p class="lead text-muted">Descarga y visualiza los reportes del sistema disponibles</p>
                         <div class="mx-auto" style="height: 48; width: 100px; background: linear-gradient(to right, #05357cff, #6c757d, #0d6efd);"></div>
                     </div>
 
-                    <!-- Contenedor de las constancias -->
+                    <!-- Contenedor de los reportes -->
                     <div class="container">
                         <div class="row justify-content-center">
-                            <!-- Constancia de Estudio -->
+                            <!-- Reportes de Usuarios -->
                             <div class="col-md-4 mb-4">
                                 <div class="card h-100 shadow-sm border-0">
                                     <div class="card-body text-center">
                                         <i class="fi fi-tr-clipboard-user display-4 text-primary mb-3"></i>
                                         <h3 class="card-title">Reporte de Usuarios</h3>
-                                        <p class="card-text">Certifica la condición de estudiante regular</p>
                                         <button class="btn btn-primary btn-lg rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modalReporteUsuarios">
                                             <i class="bi bi-download me-2"></i>Generar
                                         </button>
@@ -89,13 +91,12 @@
                                 </div>
                             </div>
 
-                            <!-- Constancia de Retiro -->
+                            <!-- Reportes de Aulas -->
                             <div class="col-md-4 mb-4">
                                 <div class="card h-100 shadow-sm border-0">
                                     <div class="card-body text-center">
                                         <i class="fi fi-tr-workshop display-4 text-danger mb-3"></i>
                                         <h3 class="card-title">Reporte de Aulas</h3>
-                                        <p class="card-text">Documenta la salida del estudiante</p>
                                         <button class="btn btn-danger btn-lg rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modalReporteAulas">
                                             <i class="bi bi-download me-2"></i>Generar
                                         </button>
@@ -103,14 +104,13 @@
                                 </div>
                             </div>
 
-                            <!-- Constancia de Prosecución -->
+                            <!-- Reportes de Horarios -->
                             <div class="col-md-4 mb-4">
                                 <div class="card h-100 shadow-sm border-0">
                                     <div class="card-body text-center">
-                                        <i class="bi bi-file-earmark-check-fill display-4 text-success mb-3"></i>
+                                        <i class="fi fi-ss-time-quarter-past display-4 text-success mb-3"></i>
                                         <h3 class="card-title">Reporte de Horarios</h3>
-                                        <p class="card-text">Certifica la continuidad de estudios</p>
-                                        <button class="btn btn-success btn-lg rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modalConstanciaProsecusion">
+                                        <button class="btn btn-success btn-lg rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modalReporteHorarios">
                                             <i class="bi bi-download me-2"></i>Generar
                                         </button>
                                     </div>
@@ -120,39 +120,37 @@
                     </div>
                     <div class="container">
                         <div class="row justify-content-center">
-                         <!-- Constancia de Retiro -->
+
+                         <!-- Reportes de Profesores -->
                             <div class="col-md-4 mb-4">
                                 <div class="card h-100 shadow-sm border-0">
                                     <div class="card-body text-center">
-                                        <i class="bi bi-file-earmark-excel-fill display-4 text-danger mb-3"></i>
+                                        <i class="fi fi-ss-lesson-class display-4 text-danger mb-3"></i>
                                         <h3 class="card-title">Reporte de Profesores</h3>
-                                        <p class="card-text">Documenta la salida del estudiante</p>
                                         <button class="btn btn-danger btn-lg rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modalReporteProfesores">
                                             <i class="bi bi-download me-2"></i>Generar
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Constancia de Prosecución -->
+                            <!-- Reportes de Asignaturas -->
                             <div class="col-md-4 mb-4">
                                 <div class="card h-100 shadow-sm border-0">
                                     <div class="card-body text-center">
-                                        <i class="bi bi-file-earmark-check-fill display-4 text-success mb-3"></i>
+                                        <i class="fi fi-tr-book-open-cover display-4 text-success mb-3"></i>
                                         <h3 class="card-title">Reporte de Asignaturas</h3>
-                                        <p class="card-text">Certifica la continuidad de estudios</p>
-                                        <button class="btn btn-success btn-lg rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modalConstanciaProsecusion">
+                                        <button class="btn btn-success btn-lg rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modalReporteAsignaturas">
                                             <i class="bi bi-download me-2"></i>Generar
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Constancia de Estudio -->
+                            <!-- Reportes de Estudiantes -->
                             <div class="col-md-4 mb-4">
                                 <div class="card h-100 shadow-sm border-0">
                                     <div class="card-body text-center">
                                         <i class="fi fi-rr-user-graduate display-4 text-primary mb-3"></i>
                                         <h3 class="card-title">Reporte de Estudiantes</h3>
-                                        <p class="card-text">Certifica la condición de estudiante regular</p>
                                         <button class="btn btn-primary btn-lg rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modalReporteEst">
                                             <i class="bi bi-download me-2"></i>Generar
                                         </button>
@@ -166,8 +164,6 @@
         </div>
     </div>
 </body>
-
-
 <script>
     function cargarGrados(nivel, select) {
         $.ajax({

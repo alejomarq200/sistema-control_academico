@@ -14,7 +14,7 @@ class PDF extends FPDF
         $this->Cell(50, 5, iconv('UTF-8', 'windows-1252', 'Fecha de emisión: ' . date('d/m/Y')), 0, 1, 'R');
         $this->Image('LOGO.jpg', 10, 8, 25);
         $this->SetFont('Arial', 'B', 14);
-        $this->SetX(40);
+     $this->SetX(20);
         $this->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'UNIDAD EDUCATIVA COLEGIO PRADO DEL NORTE'), 0, 1, 'C');
         $this->Ln(5);
         $this->SetFont('Arial', 'B', 16);
