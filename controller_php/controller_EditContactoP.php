@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $errores[$campo] = 'Debe ser "M" o "F".';
                 }
 
-                 if ($regla === 'regexCedula' && !preg_match('/^[V|E][0-9]{7,9}$/', $valor)) {
+                if ($regla === 'regexCedula' && !preg_match('/^[V|E][0-9]{7,9}$/', $valor)) {
                     $errores[$campo] = 'Error en el formato de la cédula. Ej: (V o E V12345678)';
                 }
             }
@@ -91,8 +91,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_POST['direccion_emprContacto']
     );
 
-    if(editarContacto($pdo , $array)) {
+    if (editarContacto($pdo, $array)) {
+        $_SESSION['mensaje'] = 'La información del contacto de pago se editó correctamente.';
+        $_SESSION['icono'] = 'success';
+        $_SESSION['titulo'] = 'Success';
         header("Location: ../Desarrollo/search_c_pago.php");
         exit();
-    } 
+    } else {
+        $_SESSION['mensaje'] = 'La información del contacto de pago no se editó.';
+        $_SESSION['icono'] = 'error';
+        $_SESSION['titulo'] = 'Error';
+        header("Location: ../Desarrollo/search_c_pago.php");
+    }
 }

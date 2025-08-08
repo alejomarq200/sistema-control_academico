@@ -54,7 +54,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($validar) {
         editarMaterias($pdo, $modalMateriaEdit); // La función ya maneja redirección
-    } else {
-        
     }
 }

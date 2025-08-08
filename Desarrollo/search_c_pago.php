@@ -3,7 +3,7 @@ session_start();
 error_reporting(0);
 
 include("../Configuration/functions_php/functionsCRUDUser.php");
-validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php'); 
+validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -11,23 +11,22 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="../css/moduloCPago.css">
-
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- DATATABLES -->
+    <!--  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"> -->
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <title>Consultar Contacto de Pago</title>
+    <link rel="stylesheet" href="../css/modulos/moduloCPago.css">
 </head>
 
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
         <?php
+        error_reporting(0);
+        session_start();
+
         include("menu.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
@@ -37,22 +36,13 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                 include("../Layout/mensajes.php");
                 /* CUERPO DEL MENÚ */
                 ?>
-                 <div class="mb-4" style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
-                <h1 class="my-3" id="titulo">Módulo de Contacto de Pago</h1>
-    
-                    <div class="mx-auto" style="height: 48; width: 100px; background: linear-gradient(to right, #05357cff, #6c757d, #0d6efd);"></div>
+                <!-- Título principal con estilo mejorado -->
+                <div class="mb-4" style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
+                    <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Módulo de Contacto de Pago</h1>
+                    <p class="lead text-muted">Gestione y administre la información del contacto de pago</p>
                 </div>
-
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <!-- Filtro con lupa (a la derecha) -->
-                    <div class="filtro-container d-flex align-items-center">
-                        <input type="text" id="txtFiltarr" class="filtro-input form-control" placeholder="Buscar...">
-                        <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
-                    </div>
-                    <!--Fin de Boton-->
-                </div>
-                <div class="custom-table">
-                    <table class="table table-hover">
+                <div class="container-table">
+                    <table id="tablaxCPago" class="display" style="width:100%">
                         <thead>
                             <tr>
                                 <th scope="col">Cédula</th>
@@ -82,7 +72,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                         <td><?php echo ($cPago['telefono']); ?></td>
                                         <td><?php echo ($cPago['correo']); ?></td>
                                         <td>
-                                            <a href="#formModalContactoP" class="btn btn-dark" data-bs-toggle="modal"
+                                            <a href="#formModalContactoP" class="btn btn-dark" data-bs-toggle="modal" style="font-size: 15px;"
                                                 data-bs-target="#formModalContactoP"
                                                 data-id="<?php echo $cPago['id']; ?>"
                                                 data-cedula="<?php echo $cPago['cedula']; ?>"
@@ -99,7 +89,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                                 data-direccion_empresa="<?php echo $cPago['direccion_empresa'] ?>">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <button type="button" class="btn btn-danger">
+                                            <button type="button" class="btn btn-danger" style="font-size: 15px;">
                                                 <i class="bi bi-download"></i>
                                             </button>
                                         </td>
@@ -113,10 +103,60 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                         </tbody>
                     </table>
                 </div>
-                </main>
-                <script src="../js/filtrarLupa.js"></script>
+            </div>
+        </div>
+    </div>
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous">
+    </script>
+    <!-- DATATABLES -->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
+    </script>
+    <!-- BOOTSTRAP -->
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js">
+    </script>
+    <script src="../js/validarDeleteUsuarios.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#tablaxCPago').DataTable({
+                "dom": '<"top"<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>>rt<"bottom"<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>><"clear">',
+                "language": {
+                    "decimal": "",
+                    "emptyTable": "No hay datos disponibles en la tabla",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron registros coincidentes",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending": ": activar para ordenar columna ascendente",
+                        "sortDescending": ": activar para ordenar columna descendente"
+                    }
+                },
+
+                "initComplete": function(settings, json) {
+                    // Añadir icono de lupa al buscador
+                    $('.dataTables_filter label').prepend('<i class="bi bi-search" style="margin-right: 8px;"></i>');
+
+                    // Añadir icono al select de registros por página
+                    $('.dataTables_length label').append('<i class="bi bi-list-ol" style="margin-left: 8px;"></i>');
+                }
+            });
+        });
+    </script>
 </body>
-</div>
-</main>
 
 </html>

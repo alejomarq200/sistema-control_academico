@@ -4,131 +4,29 @@ error_reporting(0);
 
 
 include("../Configuration/functions_php/functionsCRUDUser.php");
-validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php'); 
+validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css">
-    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-straight/css/uicons-bold-straight.css'>
-    <link rel="stylesheet" href="../css/tableUser.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- DATATABLES -->
+    <!--  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"> -->
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../css/modulos/moduloUsuarios.css">
     <title>Consultar Usuarios</title>
-    <style>
-        .filtro-container {
-            background-color: #fff;
-            border-radius: 6px;
-            padding: 5px 10px;
-            border: 1px solid #ddd;
-            transition: all 0.3s;
-        }
-
-        .filtro-container:hover {
-            border-color: #aaa;
-        }
-
-        .filtro-input {
-            border: none;
-            box-shadow: none;
-            padding: 5px;
-        }
-
-        .filtro-input:focus {
-            outline: none;
-        }
-
-        .lupa-icon {
-            cursor: pointer;
-            color: #666;
-            font-size: 16px;
-        }
-
-        .filter-group {
-            margin-bottom: 0;
-            /* Elimina el margen inferior para alinear mejor */
-        }
-
-        .filter-label {
-            font-size: 0.85rem;
-            color: #555;
-            margin-bottom: 3px;
-            display: block;
-        }
-
-        .filter-select {
-            border-radius: 6px;
-            padding: 6px 12px;
-            border: 1px solid #ddd;
-        }
-
-        .filters-container {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            margin: 2rem auto;
-            max-width: 1200px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .filters-wrapper {
-            display: flex;
-            gap: 1.5rem;
-            align-items: flex-end;
-        }
-
-        .filter-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .filter-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #495057;
-            font-size: 0.9rem;
-        }
-
-        .filter-select {
-            border-radius: 8px;
-            border: 1px solid #ced4da;
-            padding: 0.65rem 1rem;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
-        }
-
-        .filter-select:focus {
-            border-color: #86b7fe;
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
-            outline: none;
-        }
-
-        /* Efecto hover para los selects */
-        .filter-select:hover {
-            border-color: #adb5bd;
-        }
-
-        /* Iconos */
-        .bi {
-            margin-right: 8px;
-            font-size: 1.1em;
-            vertical-align: middle;
-        }
-    </style>
 </head>
 
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
         <?php
+        error_reporting(0);
+        session_start();
+
         include("menu.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
@@ -139,56 +37,26 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                 include("../Layout/mensajes.php");
                 /* CUERPO DEL MENÚ */
                 ?>
-                <div class="filters-container">
-                    <h1 class="my-3" id="titulo">Módulo de Usuarios</h1>
-                    <!-- FILTROS CON DISEÑO MODERNO -->
-                    <!-- FILTROS CON DISEÑO MODERNO -->
-                    <div class="filters-wrapper">
-                        <div class="filtro-container d-flex align-items-center">
-                            <input type="text" id="txtFiltarr" class="filtro-input form-control"
-                                placeholder="Buscar...">
-                            <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
-                        </div>
-                        <!-- Filtro de Nivel Académico -->
-                        <div class="filter-group">
-                            <label for="filtroNivel" class="filter-label">
-                               <i class="bi fi fi-bs-users-alt"></i>Rol
-                            </label>
-                            <select id="filtroNivel" class="form-select filter-select">
-                                <option value="">Todos los Roles</option>
-                                <option value="Administrador">Administrador</option>
-                                <option value="Usuarios">Usuarios</option>
-                            </select>
-
-                        </div>
-                        <div class="filter-group">
-                            <label for="filtroEstado" class="filter-label">
-                                <i class="bi bi-check-circle"></i> Estado
-                            </label>
-                            <select id="filtroEstado" class="form-select filter-select">
-                                <option value="">Estado</option>
-                                <option value="Activo">Activo</option>
-                                <option value="Inactivo">Inactivo</option>
-                            </select>
-                        </div>
-                    </div>
+                <!-- Título principal con estilo mejorado -->
+                <div class="mb-4" style="max-width: 500px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
+                    <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Módulo de Usuarios</h1>
+                    <p class="lead text-muted">Gestione y administre la información de los usuarios</p>
                 </div>
-                <div class="custom-table">
-                    <table class="table table-hover">
+                <div class="container-table">
+                    <table id="tablax" class="display" style="width:100%">
                         <thead>
                             <tr>
-                                <th scope="col">Cédula</th>
-                                <th scope="col">Nombres</th>
-                                <th scope="col">Correo</th>
-                                <th scope="col">Teléfono</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Rol</th>
-                                <th scope="col">Acciones</th>
+                                <th>Cédula</th>
+                                <th>Nombres</th>
+                                <th>Correo</th>
+                                <th>Teléfono</th>
+                                <th>Estado</th>
+                                <th>Rol</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            include("../Configuration/functions_php/functionsCRUDUser.php");
                             include("../Layout/modalesUsuarios/modalUEdit.php");
                             include("../Layout/modalesUsuarios/modalUDisable.php");
                             include("../Layout/modalesUsuarios/modalUEnable.php");
@@ -219,7 +87,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                         <td><?php echo ($usuario['id_estado']); ?></td>
                                         <td><?php echo ($usuario['id_rol']); ?></td>
                                         <td>
-                                            <a href="#ModalForm1" class="btn btn-dark" data-bs-toggle="modal"
+                                            <a href="#ModalForm1" class="btn btn-dark" data-bs-toggle="modal" style="font-size: 15px;"
                                                 data-bs-target="#ModalForm1" data-id="<?php echo $usuario['cedula']; ?>"
                                                 data-nombre="<?php echo $usuario['nombres']; ?>"
                                                 data-correo="<?php echo $usuario['correo']; ?>"
@@ -229,7 +97,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                                 data-idguia="<?php echo $usuario['id']; ?>">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" style="font-size: 15px;"
                                                 data-bs-target="#ModalForm3" data-id="<?php echo $usuario['cedula']; ?>"
                                                 data-nombre="<?php echo $usuario['nombres']; ?>"
                                                 data-correo="<?php echo $usuario['correo']; ?>"
@@ -240,7 +108,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                                 data-idguia="<?php echo $usuario['id']; ?>">
                                                 <i class="bi bi-person-fill-check"></i>
                                             </button>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" style="font-size: 15px;"
                                                 data-bs-target="#ModalForm2" data-id="<?php echo $usuario['cedula']; ?>"
                                                 data-nombre="<?php echo $usuario['nombres']; ?>"
                                                 data-correo="<?php echo $usuario['correo']; ?>"
@@ -251,7 +119,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                                 data-idguia="<?php echo $usuario['id']; ?>">
                                                 <i class="bi bi-person-fill-lock"></i>
                                             </button>
-                                            <button type="button" class="btn btn-secondary"
+                                            <button type="button" class="btn btn-secondary" style="font-size: 15px;"
                                                 data-id="<?php echo $usuario['id']; ?>" onclick="eliminarUsuarios(this)">
                                                 <i class="bi bi-trash"></i>
                                             </button>
@@ -266,25 +134,60 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                         </tbody>
                     </table>
                 </div>
-                </main>
-                <script src="../js/validarDeleteUsuarios.js"></script>
-                <script>
-                    document.getElementById('txtFiltarr').addEventListener('input', function() {
-                        const filtro = this.value.toLowerCase(); // Texto del filtro en minúsculas
-                        const filas = document.querySelectorAll('tbody tr'); // Todas las filas de la tabla
+            </div>
+        </div>
+    </div>
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous">
+    </script>
+    <!-- DATATABLES -->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
+    </script>
+    <!-- BOOTSTRAP -->
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js">
+    </script>
+    <script src="../js/validarDeleteUsuarios.js"></script>
 
-                        filas.forEach(fila => {
-                            const textoFila = fila.textContent.toLowerCase(); // Texto de la fila en minúsculas
-                            if (textoFila.includes(filtro)) {
-                                fila.style.display = ''; // Muestra la fila si coincide
-                            } else {
-                                fila.style.display = 'none'; // Oculta la fila si no coincide
-                            }
-                        });
-                    });
-                </script>
+    <script>
+        $(document).ready(function() {
+            $('#tablax').DataTable({
+                "dom": '<"top"<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>>rt<"bottom"<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>><"clear">',
+                "language": {
+                    "decimal": "",
+                    "emptyTable": "No hay datos disponibles en la tabla",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron registros coincidentes",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending": ": activar para ordenar columna ascendente",
+                        "sortDescending": ": activar para ordenar columna descendente"
+                    }
+                },
+
+                "initComplete": function(settings, json) {
+                    // Añadir icono de lupa al buscador
+                    $('.dataTables_filter label').prepend('<i class="bi bi-search" style="margin-right: 8px;"></i>');
+
+                    // Añadir icono al select de registros por página
+                    $('.dataTables_length label').append('<i class="bi bi-list-ol" style="margin-left: 8px;"></i>');
+                }
+            });
+        });
+    </script>
 </body>
-</div>
-</main>
 
 </html>

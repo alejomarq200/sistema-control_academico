@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($regla === 'fecha' && !preg_match('/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/', $valor)) {
                     $errores[$campo] = 'Formato de fecha inválido. (Ej: 2024-06-12)';
                 }
-                
+
                 if ($regla === 'regexCedula' && !preg_match('/^[V|E][0-9]{7,9}$/', $valor)) {
                     $errores[$campo] = 'Error en el formato de la cédula. Ej: (V o E V12345678)';
                 }
@@ -46,6 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if ($regla === 'telefono' && !preg_match('/^(0414|0424|0412|0416|0426)[0-9]{7}$/', $valor)) {
                     $errores[$campo] = 'Error en el formato del teléfono';
+                }
+
+                if ($regla === 'direccion' && !preg_match('/^.{10,}$/', $valor)) {
+                    $errores[$campo] = 'Admite un mínimo de 10 digitos';
                 }
             }
         }
@@ -61,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'nombres' => ['requerido', 'texto'],
         'fecha_nac' => ['requerido', 'fecha'],
         'correo' => ['requerido', 'correo'],
-        'direccion' => ['requerido', 'texto'],
+        'direccion' => ['requerido', 'direccion'],
         'nro_telefono' => ['requerido', 'telefono'],
         'grado_inst' => ['requerido'],
         'profesion' => ['requerido'],

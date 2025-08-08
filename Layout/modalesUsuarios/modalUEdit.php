@@ -1,28 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/modales/modal1.css">
-    <style>
-        /* Estilos para los mensajes de error */
-        #ModalForm1 .erroresEdit {
-            text-align: left;
-            /* Alinear el texto a la izquierda */
-            padding-left: 0;
-            /* Asegurar que no haya padding a la izquierda */
-            color: red;
-            font-size: 0.85rem;
-            /* Tamaño de fuente más pequeño */
-            margin-top: 0.1rem;
-            /* Reducir el margen superior */
-            margin-bottom: 0.5rem;
-            /* Reducir el margen inferior */
-        }
-    </style>
+    <link rel="stylesheet" href="../css/modalesUsuarios//modalUEdit.css">
 </head>
-
 <body>
     <div class="modal fade" id="ModalForm1" tabindex="-1" aria-labelledby="ModalFormLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

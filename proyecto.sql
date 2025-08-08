@@ -1119,7 +1119,7 @@ CREATE TABLE `materias_pendientes` (
   `anio_escolar` varchar(20) NOT NULL,
   `promedio_final` decimal(5,2) NOT NULL,
   `estado` enum('pendiente','recuperada','repetida') NOT NULL DEFAULT 'pendiente',
-  `fecha_registro` varchar(15) NOT NULL DEFAULT current_timestamp(),
+  `fecha_registro` varchar(15) NOT NULL,
   `fecha_actualizacion` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

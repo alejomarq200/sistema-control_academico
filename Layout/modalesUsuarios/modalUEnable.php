@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/modales/modal3.css">
+    <link rel="stylesheet" href="../css/modalesUsuarios/modalUEnable.css">
 </head>
 <body>
     <div class="modal fade" id="ModalForm3" tabindex="-1" aria-labelledby="ModalFormLabel" aria-hidden="true">
@@ -65,5 +65,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js"></script>
 </body>
-
 </html>
