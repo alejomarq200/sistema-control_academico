@@ -87,10 +87,13 @@ function inhabilitarProfesor($pdo, $idGuia)
 
     // Verificar si se encontró algún registro
     if ($stmt->rowCount() > 0) {
+        $_SESSION['mensaje'] = 'Profesor inhabilitado con éxito.';
+        $_SESSION['icono'] = 'success';
+        $_SESSION['titulo'] = 'Éxito';
         header("Location: ../Desarrollo/search_profesor.php");
         exit();
     } else {
-        $_SESSION['mensaje'] = 'La acción no se proceso porque el usuario ya estaba inhhabilitado.';
+        $_SESSION['mensaje'] = 'La acción no se proceso porque el profesor ya estaba inhhabilitado.';
         $_SESSION['icono'] = 'error';
         $_SESSION['titulo'] = 'Error';
         header("Location: ../Desarrollo/search_profesor.php");
@@ -108,10 +111,13 @@ function habilitarProfesor($pdo, $idGuia)
 
         // Verificar si se encontró algún registro
         if ($stmt->rowCount() > 0) {
+            $_SESSION['mensaje'] = 'Profesor habilitado con éxito.';
+            $_SESSION['icono'] = 'success';
+            $_SESSION['titulo'] = 'Éxito';
             header("Location: ../Desarrollo/search_profesor.php");
             exit();
         } else {
-            $_SESSION['mensaje'] = 'La acción no se proceso porque el usuario ya estaba habilitado.';
+            $_SESSION['mensaje'] = 'La acción no se proceso porque el profesor ya estaba habilitado.';
             $_SESSION['icono'] = 'error';
             $_SESSION['titulo'] = 'Error';
             header("Location: ../Desarrollo/search_profesor.php");

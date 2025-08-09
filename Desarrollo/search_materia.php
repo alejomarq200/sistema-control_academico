@@ -2,29 +2,34 @@
 session_start();
 error_reporting(0);
 
+
 include("../Configuration/functions_php/functionsCRUDUser.php");
 validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css">
-    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- DATATABLES -->
+    <!--  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"> -->
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="../css/moduloMaterias.css">
-    <title>Consultar Materias</title>
+    <link rel="stylesheet" href="../css/modulos/moduloAsignaturas.css">
+    <title>Consultar Asignaturas</title>
 </head>
 
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
         <?php
+        error_reporting(0);
+        session_start();
+
         include("menu.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
@@ -34,42 +39,13 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                 include("../Layout/mensajes.php");
                 /* CUERPO DEL MENÚ */
                 ?>
-                <div class="filters-container">
-                    <h1 class="my-3" id="titulo">Módulo de Asignaturas</h1>
-
-                    <!-- FILTROS CON DISEÑO MODERNO -->
-                    <div class="filters-wrapper">
-                        <div class="filtro-container d-flex align-items-center">
-                            <input type="text" id="txtFiltarr" class="filtro-input form-control"
-                                placeholder="Buscar...">
-                            <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
-                        </div>
-                        <!-- Filtro de Nivel Académico -->
-                        <div class="filter-group">
-                            <label for="filtroNivel" class="filter-label">
-                                <i class="bi bi-book-half"></i> Nivel Académico
-                            </label>
-                            <select id="filtroNivel" class="form-select filter-select">
-                                <option value="">Todos los niveles</option>
-                                <option value="Primaria">Primaria</option>
-                                <option value="Secundaria">Secundaria</option>
-                            </select>
-
-                        </div>
-                        <div class="filter-group">
-                            <label for="filtroEstado" class="filter-label">
-                                <i class="bi bi-check-circle"></i> Estado
-                            </label>
-                            <select id="filtroEstado" class="form-select filter-select">
-                                <option value="">Estado</option>
-                                <option value="Activo">Activo</option>
-                                <option value="Inactivo">Inactivo</option>
-                            </select>
-                        </div>
-                    </div>
+                <!-- Título principal con estilo mejorado -->
+                <div class="mb-4" style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
+                    <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Módulo de Asignaturas</h1>
+                    <p class="lead text-muted">Gestione y administre la información de las Asignaturas</p>
                 </div>
-                <div class="custom-table">
-                    <table class="table table-hover">
+                <div class="container-table">
+                    <table id="tablaxMaterias" class="display" style="width:100%">
                         <thead>
                             <tr>
                                 <th scope="col">Nombre de la asignatura</th>
@@ -100,27 +76,27 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                         <td style="display: none;"><?php echo ($materia['id_estado']); ?></td>
 
                                         <td>
-                                            <a href="#ModalFormMEdit" class="btn btn-dark" data-bs-toggle="modal"
+                                            <a href="#ModalFormMEdit" class="btn btn-dark" data-bs-toggle="modal" style="font-size: 15px;"
                                                 data-bs-target="#ModalFormMEdit" data-id="<?php echo $materia['id_materia']; ?>"
                                                 data-nombre="<?php echo $materia['nombre']; ?>"
                                                 data-nivel="<?php echo $materia['nivel_materia']; ?>">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" style="font-size: 15px;"
                                                 data-bs-target="#ModalFormEnableM"
                                                 data-id="<?php echo $materia['id_materia']; ?>"
                                                 data-nombre="<?php echo $materia['nombre']; ?>"
                                                 data-nivel="<?php echo $materia['nivel_materia']; ?>">
                                                 <i class='bx  bx-check-circle'></i>
                                             </button>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" style="font-size: 15px;"
                                                 data-bs-target="#ModalFormDisableM"
                                                 data-id="<?php echo $materia['id_materia']; ?>"
                                                 data-nombre="<?php echo $materia['nombre']; ?>"
                                                 data-nivel="<?php echo $materia['nivel_materia']; ?>">
                                                 <i class="bi bi-x-circle"></i>
                                             </button>
-                                            <button type="button" class="btn btn-secondary"
+                                            <button type="button" class="btn btn-secondary" style="font-size: 15px;"
                                                 data-id="<?php echo $materia['id_materia']; ?>" onclick="confirmDeleteMateria(this)">
                                                 <i class="bi bi-trash"></i>
                                             </button>
@@ -135,45 +111,58 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                         </tbody>
                     </table>
                 </div>
-                </main>
-                <!--  <script src="../js/validarDeleteMaterias.js"></script>-->
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
             </div>
         </div>
     </div>
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous">
+    </script>
+    <!-- DATATABLES -->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
+    </script>
+    <!-- BOOTSTRAP -->
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js">
+    </script>
+    <script src="../js/validarDeleteAsignatura.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#tablaxMaterias').DataTable({
+                "dom": '<"top"<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>>rt<"bottom"<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>><"clear">',
+                "language": {
+                    "decimal": "",
+                    "emptyTable": "No hay datos disponibles en la tabla",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron registros coincidentes",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending": ": activar para ordenar columna ascendente",
+                        "sortDescending": ": activar para ordenar columna descendente"
+                    }
+                },
+
+                "initComplete": function(settings, json) {
+                    // Añadir icono de lupa al buscador
+                    $('.dataTables_filter label').prepend('<i class="bi bi-search" style="margin-right: 8px;"></i>');
+
+                    // Añadir icono al select de registros por página
+                    $('.dataTables_length label').append('<i class="bi bi-list-ol" style="margin-left: 8px;"></i>');
+                }
+            });
+        });
+    </script>
 </body>
-<script src="../js/filtrarLupa.js"></script>
-<script>
-    document.getElementById('filtroNivel').addEventListener('change', function() {
-        const nivelSeleccionado = this.value.toLowerCase();
-        const filas = document.querySelectorAll('table tbody tr');
-
-        filas.forEach(fila => {
-            const nivelGrado = fila.querySelector('td:nth-child(2)').textContent.toLowerCase();
-
-            if (nivelSeleccionado === '' || nivelGrado === nivelSeleccionado) {
-                fila.style.display = '';
-            } else {
-                fila.style.display = 'none';
-            }
-        });
-    });
-
-    document.getElementById('filtroEstado').addEventListener('change', function() {
-        const nivelSeleccionado = this.value.toLowerCase();
-        const filas = document.querySelectorAll('table tbody tr');
-
-        filas.forEach(fila => {
-            const nivelEstado = fila.querySelector('td:nth-child(3)').textContent.toLowerCase();
-
-            if (nivelSeleccionado === '' || nivelEstado === nivelSeleccionado) {
-                fila.style.display = '';
-            } else {
-                fila.style.display = 'none';
-            }
-        });
-    });
-</script>
-<script src="../js/validarDeleteAsignatura.js"></script>
-
 </html>
