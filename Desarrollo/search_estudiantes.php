@@ -8,7 +8,6 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 ?>
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +18,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../css/moduloEstudiantes.css">
+    <link rel="stylesheet" href="../css/modulos/moduloEstud.css">
     <title>Consultar Estudiantes</title>
 </head>
 
@@ -35,140 +34,98 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
             include("../Layout/mensajes.php");
             /* CUERPO DEL MENÚ */
             ?>
-            <!-- CONTENEDOR CENTRADO CON ESTILOS MEJORADOS -->
-            <div class="filters-container">
-                <h1 class="my-3" id="titulo">Módulo de Estudiantes</h1>
-
-                <!-- FILTROS CON DISEÑO MODERNO -->
-                <div class="filters-wrapper">
-                    <div class="filtro-container d-flex align-items-center">
-                        <input type="text" id="txtFiltarr" class="filtro-input form-control" placeholder="Buscar...">
-                        <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
-                    </div>
-                    <!-- Filtro de Grado con estilo mejorado -->
-                    <div class="filter-group">
-                        <label for="filtroGrado" class="filter-label">
-                            <i class="bi bi-book-half"></i> Grado Académico
-                        </label>
-                        <select id="filtroGrado" class="form-select filter-select">
-                            <option value="">Todos los grados</option>
-                            <option value="1">1er grado</option>
-                            <option value="2">2do grado</option>
-                            <option value="3">3er grado</option>
-                            <option value="4">4to grado</option>
-                            <option value="5">5to grado</option>
-                            <option value="6">6to grado</option>
-                            <option value="7">1er año</option>
-                            <option value="8">2do año</option>
-                            <option value="9">3er año</option>
-                            <option value="10">4to año</option>
-                            <option value="11">5to año</option>
-                        </select>
-                    </div>
-
-                    <!-- Filtro de Género con estilo mejorado -->
-                    <div class="filter-group">
-                        <label for="filtroGenero" class="filter-label">
-                            <i class="bi bi-gender-ambiguous"></i> Género
-                        </label>
-                        <select id="filtroGenero" class="form-select filter-select">
-                            <option value="">Todos los géneros</option>
-                            <option value="F">Femenino</option>
-                            <option value="M">Masculino</option>
-                        </select>
-                    </div>
-                </div>
+            <!-- Título principal con estilo mejorado -->
+            <div class="mb-4" style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
+                <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Módulo de Estudiantes</h1>
+                <p class="lead text-muted">Gestione y administre la información y prosecución de los estudiantes</p>
             </div>
-            <div class="custom-table-Estudiantes">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Cédula</th>
-                            <th scope="col">Nombres</th>
-                            <th scope="col">Apellidos</th>
-                            <th scope="col">Edad</th>
-                            <th scope="col" class="grado" style="display:block">Grado</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tablaEstudiantes">
-                        <?php
-                        include("../Configuration/functions_php/functionsCRUDEstudiantes.php");
-                        include("../Layout/modalesEstudiantes/modalEditEstudiante.php");
-                        include("../Layout/modalesEstudiantes/modalVerEst.php");
+            <!-- CONTENEDOR CENTRADO CON ESTILOS MEJORADOS -->
+            <div class="container-table">
+                <div class="custom-table-Estudiantes">
+                    <table class="table table-hover" id="tablaxEstudiante">
+                        <thead>
+                            <tr>
+                                <th scope="col">Cédula</th>
+                                <th scope="col">Nombres</th>
+                                <th scope="col">Apellidos</th>
+                                <th scope="col">Edad</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaEstudiantes">
+                            <?php
+                            include("../Configuration/functions_php/functionsCRUDEstudiantes.php");
+                            include("../Layout/modalesEstudiantes/modalEditEstudiante.php");
+                            include("../Layout/modalesEstudiantes/modalVerEst.php");
 
-                        $estudiantes = consultarEstudiantes($pdo); // Obtener los representantes
+                            $estudiantes = consultarEstudiantes($pdo); // Obtener los representantes
 
-                        if (!empty($estudiantes)) {
-                            foreach ($estudiantes as $estudiante) { // Iterar sobre cada usuario
-                        ?>
-                                <tr>
-                                    <td><?php echo ($estudiante['cedula_est'] == null ? "No aplica" : $estudiante['cedula_est']); ?>
-                                    </td>
-                                    <td><?php echo ($estudiante['nombres_est']); ?>
-                                    <td><?php echo ($estudiante['apellidos_est']); ?></td>
-                                    <td><?php echo ($estudiante['edad_est']); ?>
-                                    <td class="grado1" style="display: block;"
-                                        data-grado-id="<?php echo $estudiante['grado_est']; ?>">
-                                        <?php echo ($estudiante['id_grado']); ?>
-                                    </td>
-                                    <td class="genero" style="display:none;"><?php echo $estudiante['sexo']; ?></td>
-                                    <!-- Género oculto para filtro -->
-                                    <td>
-                                        <a href="#formModalEditEst" class="btn btn-dark" data-bs-toggle="modal"
-                                            data-bs-target="#formModalEditEst" data-id="<?php echo $estudiante['id']; ?>"
-                                            data-cedula_est="<?php echo $estudiante['cedula_est']; ?>"
-                                            data-nombres_est="<?php echo $estudiante['nombres_est'] ?>"
-                                            data-apellidos_est="<?php echo $estudiante['apellidos_est']; ?>"
-                                            data-sexo="<?php echo $estudiante['sexo']; ?>"
-                                            data-f_nacimiento_est="<?php echo $estudiante['f_nacimiento_est']; ?>"
-                                            data-edad_est="<?php echo $estudiante['edad_est']; ?>"
-                                            data-direccion_est="<?php echo $estudiante['direccion_est']; ?>"
-                                            data-lugar_nac_est="<?php echo $estudiante['lugar_nac_est']; ?>"
-                                            data-colegio_ant_est="<?php echo $estudiante['colegio_ant_est']; ?>"
-                                            data-motivo_ret_est="<?php echo $estudiante['motivo_ret_est'] ?>"
-                                            data-nivelacion_est="<?php echo $estudiante['nivelacion_est']; ?>"
-                                            data-explicacion_est="<?php echo $estudiante['explicacion_est']; ?>"
-                                            data-grado_est="<?php echo $estudiante['id_grado']; ?>"
-                                            data-turno_est="<?php echo $estudiante['turno_est']; ?>"
-                                            data-problem_resp_est="<?php echo $estudiante['problem_resp_est']; ?>"
-                                            data-alergias_est="<?php echo $estudiante['alergias_est']; ?>"
-                                            data-vacunas_est="<?php echo $estudiante['vacunas_est']; ?>"
-                                            data-enfermedad_est="<?php echo $estudiante['enfermedad_est']; ?>">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                        <button type="button" class="btn btn-primary btn-promocion"
-                                            data-id="<?php echo $estudiante['id']; ?>"
-                                            data-grado_est="<?php echo $estudiante['id_grado']; ?>">
-                                            <i class="fi fi-tr-thumbs-up-trust"></i>
-                                        </button>
-                                        <?php
-                                        // Verificar si el grado está entre 1er y 5to año
-                                        $mostrarBoton = false;
-                                        $grado = $estudiante['id_grado'];
+                            if (!empty($estudiantes)) {
+                                foreach ($estudiantes as $estudiante) { // Iterar sobre cada usuario
+                            ?>
+                                    <tr>
+                                        <td><?php echo ($estudiante['cedula_est'] == null ? "No aplica" : $estudiante['cedula_est']); ?>
+                                        </td>
+                                        <td><?php echo ($estudiante['nombres_est']); ?>
+                                        <td><?php echo ($estudiante['apellidos_est']); ?></td>
+                                        <td><?php echo ($estudiante['edad_est']); ?>
 
-                                        if (in_array($grado, ['1er año', '2do año', '3er año', '4to año', '5to año'])) {
-                                            $mostrarBoton = true;
-                                        }
-                                        ?>
-
-                                        <?php if ($mostrarBoton): ?>
-                                            <button type="button" class="btn btn-success btn-promocion-secundaria"
+                                        <td>
+                                            <a href="#formModalEditEst" class="btn btn-dark" data-bs-toggle="modal"
+                                                data-bs-target="#formModalEditEst" data-id="<?php echo $estudiante['id']; ?>"
+                                                data-cedula_est="<?php echo $estudiante['cedula_est']; ?>"
+                                                data-nombres_est="<?php echo $estudiante['nombres_est'] ?>"
+                                                data-apellidos_est="<?php echo $estudiante['apellidos_est']; ?>"
+                                                data-sexo="<?php echo $estudiante['sexo']; ?>"
+                                                data-f_nacimiento_est="<?php echo $estudiante['f_nacimiento_est']; ?>"
+                                                data-edad_est="<?php echo $estudiante['edad_est']; ?>"
+                                                data-direccion_est="<?php echo $estudiante['direccion_est']; ?>"
+                                                data-lugar_nac_est="<?php echo $estudiante['lugar_nac_est']; ?>"
+                                                data-colegio_ant_est="<?php echo $estudiante['colegio_ant_est']; ?>"
+                                                data-motivo_ret_est="<?php echo $estudiante['motivo_ret_est'] ?>"
+                                                data-nivelacion_est="<?php echo $estudiante['nivelacion_est']; ?>"
+                                                data-explicacion_est="<?php echo $estudiante['explicacion_est']; ?>"
+                                                data-grado_est="<?php echo $estudiante['id_grado']; ?>"
+                                                data-turno_est="<?php echo $estudiante['turno_est']; ?>"
+                                                data-problem_resp_est="<?php echo $estudiante['problem_resp_est']; ?>"
+                                                data-alergias_est="<?php echo $estudiante['alergias_est']; ?>"
+                                                data-vacunas_est="<?php echo $estudiante['vacunas_est']; ?>"
+                                                data-enfermedad_est="<?php echo $estudiante['enfermedad_est']; ?>">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-primary btn-promocion"
                                                 data-id="<?php echo $estudiante['id']; ?>"
-                                                data-grado_est="<?php echo htmlspecialchars($estudiante['id_grado'], ENT_QUOTES); ?>">
+                                                data-grado_est="<?php echo $estudiante['id_grado']; ?>">
                                                 <i class="fi fi-tr-thumbs-up-trust"></i>
                                             </button>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                        <?php
+                                            <?php
+                                            // Verificar si el grado está entre 1er y 5to año
+                                            $mostrarBoton = false;
+                                            $grado = $estudiante['id_grado'];
+
+                                            if (in_array($grado, ['1er año', '2do año', '3er año', '4to año', '5to año'])) {
+                                                $mostrarBoton = true;
+                                            }
+                                            ?>
+
+                                            <?php if ($mostrarBoton): ?>
+                                                <button type="button" class="btn btn-success btn-promocion-secundaria"
+                                                    data-id="<?php echo $estudiante['id']; ?>"
+                                                    data-grado_est="<?php echo htmlspecialchars($estudiante['id_grado'], ENT_QUOTES); ?>">
+                                                    <i class="fi fi-tr-thumbs-up-trust"></i>
+                                                </button>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo "<tr><td colspan='8'>No se encontraron estudiantes.</td></tr>";
                             }
-                        } else {
-                            echo "<tr><td colspan='8'>No se encontraron estudiantes.</td></tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             </main>
         </div>
@@ -209,75 +166,55 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                 </div>
             </div>
         </div>
+        <!--  !-- JQUERY -->
+        <script src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous">
+        </script>
+        <!-- DATATABLES -->
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
+        </script>
+        <!-- BOOTSTRAP -->
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js">
+        </script>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
+                $(document).ready(function() {
+                    $('#tablaxEstudiante').DataTable({
+                        "dom": '<"top"<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>>rt<"bottom"<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>><"clear">',
+                        "language": {
+                            "decimal": "",
+                            "emptyTable": "No hay datos disponibles en la tabla",
+                            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                            "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                            "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                            "infoPostFix": "",
+                            "thousands": ",",
+                            "lengthMenu": "Mostrar _MENU_ registros por página",
+                            "loadingRecords": "Cargando...",
+                            "processing": "Procesando...",
+                            "search": "Buscar:",
+                            "zeroRecords": "No se encontraron registros coincidentes",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Último",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            },
+                            "aria": {
+                                "sortAscending": ": activar para ordenar columna ascendente",
+                                "sortDescending": ": activar para ordenar columna descendente"
+                            }
+                        },
 
-                const filtroGrado = document.getElementById('filtroGrado');
-                const filtroGenero = document.getElementById('filtroGenero');
-                const filas = document.querySelectorAll('#tablaEstudiantes tr');
-                const columnaGradoHeader = document.querySelector('th.grado');
-                const columnasGrado = document.querySelectorAll('td.grado1');
+                        "initComplete": function(settings, json) {
+                            // Añadir icono de lupa al buscador
+                            $('.dataTables_filter label').prepend('<i class="bi bi-search" style="margin-right: 8px;"></i>');
 
-                function aplicarFiltros() {
-                    const gradoSeleccionado = filtroGrado.value;
-                    const generoSeleccionado = filtroGenero.value.toLowerCase();
-
-                    // Solo recargar si ambos filtros están vacíos
-                    if (gradoSeleccionado === "" && generoSeleccionado === "") {
-                        window.location.href = "search_estudiantes.php";
-                        return;
-                    }
-
-                    // Control de visibilidad de columna grado
-                    if (gradoSeleccionado === "") {
-                        // Mostrar columna grado si no hay filtro de grado
-                        columnaGradoHeader.style.display = '';
-                        columnasGrado.forEach(col => col.style.display = '');
-                    } else {
-                        // Ocultar columna grado si hay filtro de grado
-                        columnaGradoHeader.style.display = 'none';
-                        columnasGrado.forEach(col => col.style.display = 'none');
-                    }
-
-                    // Aplicar filtros
-                    filas.forEach(fila => {
-                        if (fila.cells.length <= 1) return; // Saltar filas especiales
-
-                        const gradoId = fila.querySelector('.grado1')?.getAttribute('data-grado-id');
-                        const genero = fila.querySelector('.genero')?.textContent.toLowerCase();
-
-                        const coincideGrado = gradoSeleccionado === "" || gradoId === gradoSeleccionado;
-                        const coincideGenero = generoSeleccionado === "" || genero === generoSeleccionado;
-
-                        fila.style.display = (coincideGrado && coincideGenero) ? '' : 'none';
+                            // Añadir icono al select de registros por página
+                            $('.dataTables_length label').append('<i class="bi bi-list-ol" style="margin-left: 8px;"></i>');
+                        }
                     });
-
-                    // Mostrar mensaje si no hay resultados
-                    const filasVisibles = Array.from(filas).some(fila =>
-                        fila.style.display !== 'none' && fila.cells.length > 1
-                    );
-
-                    if (!filasVisibles) {
-                        // Limpiar mensajes anteriores
-                        document.querySelectorAll('#tablaEstudiantes tr.mensaje-no-resultados').forEach(el => el.remove());
-
-                        const mensaje = document.createElement('tr');
-                        mensaje.className = 'mensaje-no-resultados';
-                        document.getElementById('tablaEstudiantes').appendChild(mensaje);
-                    }
-                }
-
-                // Aplicar filtros al cambiar selección
-                filtroGrado.addEventListener('change', aplicarFiltros);
-                filtroGenero.addEventListener('change', aplicarFiltros);
-
-                // Estado inicial
-                if (filtroGrado.value === "" && filtroGenero.value === "") {
-                    columnaGradoHeader.style.display = '';
-                    columnasGrado.forEach(col => col.style.display = '');
-                } else {
-                    aplicarFiltros(); // Aplicar filtros si hay valores al cargar
-                }
+                });
 
                 $(document).ready(function() {
                     $(document).on('click', '.btn-promocion', function() {
@@ -411,11 +348,11 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                         modal.show();
 
                         $('#mensajeCargaSecundaria').html(`
-            <div class="d-flex align-items-center">
-                <div class="spinner-border text-primary me-3" role="status"></div>
-                <span>Comprobando calificaciones del estudiante...</span>
-            </div>
-        `);
+                            <div class="d-flex align-items-center">
+                                <div class="spinner-border text-primary me-3" role="status"></div>
+                                <span>Comprobando calificaciones del estudiante...</span>
+                            </div>
+                        `);
 
                         $('#modalFooterSecundaria').empty();
 
@@ -447,54 +384,54 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 
                     function mostrarPromocionExitosa(response, gradoActual) {
                         let materiasAprobadasHTML = response.materias_aprobadas.map(m => `
-            <tr>
-                <td>${m.nombre_materia}</td>
-                <td class="text-center">${m.promedio_final}</td>
-                <td class="text-center"><span class="badge bg-success">Aprobada</span></td>
-            </tr>
-        `).join('');
+                        <tr>
+                            <td>${m.nombre_materia}</td>
+                            <td class="text-center">${m.promedio_final}</td>
+                            <td class="text-center"><span class="badge bg-success">Aprobada</span></td>
+                        </tr>
+                    `).join('');
 
                         $('#mensajeCargaSecundaria').html(`
-            <div class="alert alert-success">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-check-circle fa-2x me-3"></i>
-                    <div>
-                        <h4 class="alert-heading mb-1">¡Promoción Exitosa!</h4>
-                        <p class="mb-0">El estudiante ha sido promovido de <strong>${gradoActual}</strong> a <strong>${response.nuevo_grado}</strong></p>
-                    </div>
-                </div>
-            </div>
+                        <div class="alert alert-success">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle fa-2x me-3"></i>
+                                <div>
+                                    <h4 class="alert-heading mb-1">¡Promoción Exitosa!</h4>
+                                    <p class="mb-0">El estudiante ha sido promovido de <strong>${gradoActual}</strong> a <strong>${response.nuevo_grado}</strong></p>
+                                </div>
+                            </div>
+                        </div>
             
-            <div class="mt-4">
-                <h5 class="mb-3">Resumen de materias:</h5>
-                
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Materia</th>
-                                <th class="text-center">Promedio</th>
-                                <th class="text-center">Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${materiasAprobadasHTML}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        `);
+                            <div class="mt-4">
+                                <h5 class="mb-3">Resumen de materias:</h5>
+                                
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Materia</th>
+                                                <th class="text-center">Promedio</th>
+                                                <th class="text-center">Estado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${materiasAprobadasHTML}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        `);
 
                         $('#modalFooterSecundaria').html(`
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                <i class="fas fa-times me-1"></i> Cerrar
-            </button>
-            <a href="../reportes/generar_constancia_secundaria.php?id=${idEstudiante}&grado=${encodeURIComponent(response.nuevo_grado)}" 
-               class="btn btn-success" 
-               target="_blank">
-                <i class="fas fa-file-pdf me-1"></i> Generar Constancia
-            </a>
-        `);
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times me-1"></i> Cerrar
+                        </button>
+                        <a href="../reportes/generar_constancia_secundaria.php?id=${idEstudiante}&grado=${encodeURIComponent(response.nuevo_grado)}" 
+                        class="btn btn-success" 
+                        target="_blank">
+                            <i class="fas fa-file-pdf me-1"></i> Generar Constancia
+                        </a>
+                    `);
                     }
 
                     function mostrarMateriasPendientes(response) {
@@ -503,145 +440,129 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                         let calificacionesPendientesHTML = '';
                         if (response.materias_con_calificaciones_pendientes.length > 0) {
                             calificacionesPendientesHTML = `
-                <div class="mt-4">
-                    <h5 class="mb-3">Materias con calificaciones pendientes (${response.materias_con_calificaciones_pendientes.length}):</h5>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Materia</th>
-                                    <th class="text-center">Motivo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${response.materias_con_calificaciones_pendientes.map(m => `
-                                    <tr>
-                                        <td>${m.nombre_materia}</td>
-                                        <td class="text-center"><span class="badge bg-warning">${m.motivo}</span></td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
+                            <div class="mt-4">
+                                <h5 class="mb-3">Materias con calificaciones pendientes (${response.materias_con_calificaciones_pendientes.length}):</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Materia</th>
+                                                <th class="text-center">Motivo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${response.materias_con_calificaciones_pendientes.map(m => `
+                                                <tr>
+                                                    <td>${m.nombre_materia}</td>
+                                                    <td class="text-center"><span class="badge bg-warning">${m.motivo}</span></td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        `;
                         }
 
                         let pendientesAcademicasHTML = '';
                         if (response.materias_pendientes_academicamente.length > 0) {
                             pendientesAcademicasHTML = `
-                <div class="mt-4">
-                    <h5 class="mb-3">Materias pendientes académicamente (${response.materias_pendientes_academicamente.length}):</h5>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Materia</th>
-                                    <th class="text-center">Promedio</th>
-                                    <th class="text-center">Motivo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${response.materias_pendientes_academicamente.map(m => `
-                                    <tr>
-                                        <td>${m.nombre_materia}</td>
-                                        <td class="text-center">${m.promedio_final}</td>
-                                        <td class="text-center"><span class="badge bg-danger">${m.motivo}</span></td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
+                                <div class="mt-4">
+                                    <h5 class="mb-3">Materias pendientes académicamente (${response.materias_pendientes_academicamente.length}):</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Materia</th>
+                                                    <th class="text-center">Promedio</th>
+                                                    <th class="text-center">Motivo</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${response.materias_pendientes_academicamente.map(m => `
+                                                    <tr>
+                                                        <td>${m.nombre_materia}</td>
+                                                        <td class="text-center">${m.promedio_final}</td>
+                                                        <td class="text-center"><span class="badge bg-danger">${m.motivo}</span></td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            `;
                         }
 
                         let pendientesRegistradasHTML = '';
                         if (response.materias_pendientes_registradas.length > 0) {
                             pendientesRegistradasHTML = `
-                <div class="mt-4">
-                    <h5 class="mb-3">Materias pendientes registradas (${response.materias_pendientes_registradas.length}):</h5>
-                    <ul class="list-group">
-                        ${response.materias_pendientes_registradas.map(m => `
-                            <li class="list-group-item">${m.nombre_materia}</li>
-                        `).join('')}
-                    </ul>
-                </div>
-            `;
+                            <div class="mt-4">
+                                <h5 class="mb-3">Materias pendientes registradas (${response.materias_pendientes_registradas.length}):</h5>
+                                <ul class="list-group">
+                                    ${response.materias_pendientes_registradas.map(m => `
+                                        <li class="list-group-item">${m.nombre_materia}</li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        `;
                         }
 
                         let materiasAprobadasHTML = '';
                         if (response.materias_aprobadas.length > 0) {
                             materiasAprobadasHTML = `
-                <div class="mt-4">
-                    <h5 class="mb-3">Materias aprobadas (${response.materias_aprobadas.length}):</h5>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Materia</th>
-                                    <th class="text-center">Promedio</th>
-                                    <th class="text-center">Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${response.materias_aprobadas.map(m => `
-                                    <tr>
-                                        <td>${m.nombre_materia}</td>
-                                        <td class="text-center">${m.promedio_final}</td>
-                                        <td class="text-center"><span class="badge bg-success">Aprobada</span></td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
+                                <div class="mt-4">
+                                    <h5 class="mb-3">Materias aprobadas (${response.materias_aprobadas.length}):</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Materia</th>
+                                                    <th class="text-center">Promedio</th>
+                                                    <th class="text-center">Estado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${response.materias_aprobadas.map(m => `
+                                                    <tr>
+                                                        <td>${m.nombre_materia}</td>
+                                                        <td class="text-center">${m.promedio_final}</td>
+                                                        <td class="text-center"><span class="badge bg-success">Aprobada</span></td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            `;
                         }
 
                         $('#mensajeCargaSecundaria').html(`
-            <div class="alert alert-danger">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
-                    <div>
-                        <h4 class="alert-heading mb-1">No se puede promover al estudiante</h4>
-                        <p>Motivos:</p>
-                        <ul>
-                            ${motivosHTML}
-                        </ul>
-                    </div>
-                </div>
-            </div>
+                            <div class="alert alert-danger">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+                                    <div>
+                                        <h4 class="alert-heading mb-1">No se puede promover al estudiante</h4>
+                                        <p>Motivos:</p>
+                                        <ul>
+                                            ${motivosHTML}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
             
-            ${calificacionesPendientesHTML}
-            ${pendientesAcademicasHTML}
-            ${pendientesRegistradasHTML}
-            ${materiasAprobadasHTML}
-        `);
+                            ${calificacionesPendientesHTML}
+                            ${pendientesAcademicasHTML}
+                            ${pendientesRegistradasHTML}
+                            ${materiasAprobadasHTML}
+                        `);
 
                         $('#modalFooterSecundaria').html(`
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                <i class="fas fa-times me-1"></i> Cerrar
-            </button>
-        `);
-                    }
-                });
-            });
-
-
-            document.getElementById('txtFiltarr').addEventListener('input', function() {
-                const filtro = this.value.toLowerCase(); // Texto del filtro en minúsculas
-                const filas = document.querySelectorAll('tbody tr'); // Todas las filas de la tabla
-
-                filas.forEach(fila => {
-                    const textoFila = fila.textContent.toLowerCase(); // Texto de la fila en minúsculas
-                    if (textoFila.includes(filtro)) {
-                        fila.style.display = ''; // Muestra la fila si coincide
-                    } else {
-                        fila.style.display = 'none'; // Oculta la fila si no coincide
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times me-1"></i> Cerrar
+                        </button>
+                    `);
                     }
                 });
             });
         </script>
-
 </html>

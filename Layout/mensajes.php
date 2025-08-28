@@ -30,13 +30,12 @@ if (isset($_SESSION['mensaje'])) {
     let timerInterval;
     Swal.fire({
       title: '<span style="font-size: 1.5em; color: #6c757d;">⏳</span>',
-      html: `
-                        <div style="font-size: 1.1em; margin: 1em 0;">
-                        La ventana de carga se cerrará en <b style="color: #ff6b6b;"></b> milliseconds
-                        </div>
-                        <div style="margin: 1em 0; font-style: italic; color: #6c757d;">
-                        ${getRandomFunMessage()}
-                        </div>
+      html: `<div style="font-size: 1.1em; margin: 1em 0;">
+             La ventana de carga se cerrará en <b style="color: #ff6b6b;"></b> milliseconds
+             </div>
+             <div style="margin: 1em 0; font-style: italic; color: #6c757d;">
+             ${getRandomFunMessage()}
+             </div>
                     `,
       timer: 2000,
       timerProgressBar: true,

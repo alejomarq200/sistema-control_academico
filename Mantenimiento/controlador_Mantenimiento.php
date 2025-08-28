@@ -2,7 +2,7 @@
 // Configuración de la base de datos
 $host = "localhost";
 $username = "root";
-$password = "";
+$password = "12345678";
 $database_name = "Proyecto";
 
 try {

@@ -7,6 +7,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -134,7 +135,6 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                         </table>
                     </div>
                 </div>
-                </main>
             </div>
         </div>
     </div>
@@ -280,5 +280,4 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 <!--Fin de Ventana Modal-->
 <script src="../js/multiStepProfMatYGrado.js"></script>
 <script src="../js/validarDeleteProfesor.js"></script>
-
 </html>

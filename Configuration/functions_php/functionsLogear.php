@@ -10,10 +10,7 @@ function validar_InicioSesion($pdo, $variablesFormLogin)
     $stmt->execute();
 
     if ($stmt->rowCount() === 0) {
-        $_SESSION['mensaje'] = 'Las credenciales no existen. Verifique.';
-        $_SESSION['icono'] = 'error';
-        $_SESSION['titulo'] = 'Error';
-        header("Location: ../Inicio/Logear.php");
+        header("Location: ../Inicio/Logear.php?ref=undefined");
         exit();
     }
 
@@ -21,20 +18,14 @@ function validar_InicioSesion($pdo, $variablesFormLogin)
 
     // Verificar estado del usuario
     if ($result['id_estado'] != 2) {
-        $_SESSION['mensaje'] = 'El usuario se encuentra inactivo.';
-        $_SESSION['icono'] = 'error';
-        $_SESSION['titulo'] = 'Error';
-        header("Location: ../Inicio/Logear.php");
+        header("Location: ../Inicio/Logear.php?ref=inactive");
         exit();
     }
 
     // Verificar si ya tiene sesión activa
     $sesionActiva = validarEstadoSesion($pdo, $variablesFormLogin[0]);
     if ($sesionActiva === 'Si') {
-        $_SESSION['mensaje'] = 'El usuario tiene una sesión activa en otro dispositivo. Verifique.';
-        $_SESSION['icono'] = 'warning';
-        $_SESSION['titulo'] = 'Atención';
-        header("Location: ../Inicio/Logear.php");
+        header("Location: ../Inicio/Logear.php?ref=active");
         exit();
     }
 

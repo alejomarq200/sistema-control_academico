@@ -89,9 +89,6 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                                 data-direccion_empresa="<?php echo $cPago['direccion_empresa'] ?>">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <button type="button" class="btn btn-danger" style="font-size: 15px;">
-                                                <i class="bi bi-download"></i>
-                                            </button>
                                         </td>
                                     </tr>
                             <?php

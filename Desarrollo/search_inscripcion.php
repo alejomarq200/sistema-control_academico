@@ -3,11 +3,10 @@ session_start();
 error_reporting(0);
 
 include("../Configuration/functions_php/functionsCRUDUser.php");
-validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php'); 
+validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,145 +16,9 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="../css/modulos/moduloInscripcion.css">
     <title>Consultar Inscripcion</title>
-    <style>
-        .custom-table {
-            margin: 0 auto;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            border: 1px solid #dee2e6;
-            width: 100%;
-        }
-
-        .custom-table thead {
-            background-color: rgb(37, 64, 90);
-            color: #fff;
-        }
-
-        .custom-table th,
-        .custom-table td {
-            padding: 2rem;
-            vertical-align: middle;
-            border-color: #dee2e6;
-        }
-
-        .custom-table tbody tr {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .custom-table tbody tr:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #f8f9fa;
-        }
-
-        .filtro-container {
-            background-color: #fff;
-            border-radius: 6px;
-            padding: 5px 10px;
-            border: 1px solid #ddd;
-            transition: all 0.3s;
-        }
-
-        .filtro-container:hover {
-            border-color: #aaa;
-        }
-
-        .filtro-input {
-            border: none;
-            box-shadow: none;
-            padding: 5px;
-        }
-
-        .filtro-input:focus {
-            outline: none;
-        }
-
-        .lupa-icon {
-            cursor: pointer;
-            color: #666;
-            font-size: 16px;
-        }
-
-        .filter-group {
-            margin-bottom: 0;
-            /* Elimina el margen inferior para alinear mejor */
-        }
-
-        .filter-label {
-            font-size: 0.85rem;
-            color: #555;
-            margin-bottom: 3px;
-            display: block;
-        }
-
-        .filter-select {
-            border-radius: 6px;
-            padding: 6px 12px;
-            border: 1px solid #ddd;
-        }
-
-        .filters-container {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            margin: 2rem auto;
-            max-width: 1200px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .filters-wrapper {
-            display: flex;
-            gap: 1.5rem;
-            align-items: flex-end;
-        }
-
-        .filter-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .filter-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #495057;
-            font-size: 0.9rem;
-        }
-
-        .filter-select {
-            border-radius: 8px;
-            border: 1px solid #ced4da;
-            padding: 0.65rem 1rem;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
-        }
-
-        .filter-select:focus {
-            border-color: #86b7fe;
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
-            outline: none;
-        }
-
-        /* Efecto hover para los selects */
-        .filter-select:hover {
-            border-color: #adb5bd;
-        }
-
-        /* Iconos */
-        .bi {
-            margin-right: 8px;
-            font-size: 1.1em;
-            vertical-align: middle;
-        }
-    </style>
 </head>
-
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
@@ -164,7 +27,6 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
         session_start();
         include("menu.php");
         include("../Configuration/Configuration.php");
-
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
         <div class="main p-3">
@@ -173,16 +35,10 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                 include("../Layout/mensajes.php");
                 /* CUERPO DEL MENÚ */
                 ?>
-               
                 <div class="filters-container">
-                     <h1 class="my-3" id="titulo">Módulo de Inscripciones</h1>
+                    <h1 class="my-3" id="titulo">Módulo de Inscripciones</h1>
                     <!-- FILTROS CON DISEÑO MODERNO -->
                     <div class="filters-wrapper">
-                        <div class="filtro-container d-flex align-items-center">
-                            <input type="text" id="txtFiltarr" class="filtro-input form-control"
-                                placeholder="Buscar...">
-                            <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
-                        </div>
                         <!-- Filtro de Nivel Académico -->
                         <div class="filter-group">
                             <label for="filtroGrado" class="filter-label">
@@ -203,7 +59,6 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                 <option value="11">5to año</option>
                             </select>
                         </div>
-
                         <!-- Filtro de Género con estilo mejorado -->
                         <div class="filter-group">
                             <label for="filtroGenero" class="filter-label">
@@ -215,13 +70,12 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                 <option value="M">Masculino</option>
                             </select>
                         </div>
-
                         <div class="filter-group">
                             <label for="filtroAnioEscolar" class="filter-label">
                                 <i class="bi bi-calendar3"></i> Año Escolar
                             </label>
                             <select id="filtroAnioEscolar" class="form-select filter-select">
-                                 <option value="">Todos los años</option>
+                                <option value="">Todos los años</option>
                                 <option value="2025-2026">2025-2026</option>
                             </select>
                         </div>
@@ -238,117 +92,120 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                         </div>
                     </div>
                 </div>
-                <div class="custom-table">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Estudiante</th>
-                                <th>Cédula</th>
-                                <th>Edad</th>
-                                <th style="display: none;">Sexo</th>
-                                <th style="display: none;">Grado</th>
-                                <th style="display: none;">Año Escolar</th>
-                                <th>Fecha Inscripción</th>
-                                <th>Representante 1</th>
-                                <th>Representante 2</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            include("../Configuration/functions_php/functionsCRUDInscripciones.php");
-                           
-                            $inscripciones = consultarInscripcionesUnificadas($pdo);
+                <div class="container-table">
+                    <div class="custom-table">
+                        <table class="table table-hover" id="tablaxInscripcion">
+                            <thead>
+                                <tr>
+                                    <th>Estudiante</th>
+                                    <th>Cédula</th>
+                                    <th>Edad</th>
+                                    <th style="display: none;">Sexo</th>
+                                    <th style="display: none;">Grado</th>
+                                    <th style="display: none;">Año Escolar</th>
+                                    <th>Fecha Inscripción</th>
+                                    <th>Representante 1</th>
+                                    <th>Representante 2</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                include("../Configuration/functions_php/functionsCRUDInscripciones.php");
 
-                            if (!empty($inscripciones)) {
-                                foreach ($inscripciones as $insc) {
-                            ?>
-                                    <tr data-grado-id="<?php echo $insc['grado_estudiante']; ?>" data-anio="<?php echo $insc['anio_escolar']; ?>" data-genero="<?php echo $insc['sexo']; ?>">
-                                        <td><?php echo $insc['nombres_est'] . ' ' . $insc['apellidos_est']; ?></td>
-                                        <td><?php echo $insc['cedula_est']; ?></td>
-                                        <td><?php echo $insc['edad_est']; ?></td>
-                                        <td style="display: none;"><?php echo $insc['sexo']; ?></td>
-                                        <td style="display: none;"><?php echo $insc['grado_estudiante']; ?></td>
-                                        <td style="display: none;"><?php echo $insc['anio_escolar']; ?></td>
-                                        <td><?php echo date('d/m/Y', strtotime($insc['fecha_inscripcion'])); ?></td>
-                                        <td><?php echo $insc['representante1']; ?></td>
-                                        <td><?php echo $insc['representante2']; ?></td>
-                                        <td>
-                                            <button class="btn btn-primary" onclick="descargarPlanillaInscripcion()" data-id-est="<?php echo $insc['id_estudiante']; ?>">
-                                                <i class="bi bi-download"></i> Descargar Planilla
-                                            </button>
+                                $inscripciones = consultarInscripcionesUnificadas($pdo);
 
-                                        </td>
-                                    </tr>
-                            <?php
+                                if (!empty($inscripciones)) {
+                                    foreach ($inscripciones as $insc) {
+                                ?>
+                                        <tr data-grado-id="<?php echo $insc['grado_estudiante']; ?>" data-anio="<?php echo $insc['anio_escolar']; ?>" data-genero="<?php echo $insc['sexo']; ?>">
+                                            <td><?php echo $insc['nombres_est'] . ' ' . $insc['apellidos_est']; ?></td>
+                                            <td><?php echo $insc['cedula_est']; ?></td>
+                                            <td><?php echo $insc['edad_est']; ?></td>
+                                            <td style="display: none;"><?php echo $insc['sexo']; ?></td>
+                                            <td style="display: none;"><?php echo $insc['grado_estudiante']; ?></td>
+                                            <td style="display: none;"><?php echo $insc['anio_escolar']; ?></td>
+                                            <td><?php echo date('d/m/Y', strtotime($insc['fecha_inscripcion'])); ?></td>
+                                            <td><?php echo $insc['representante1']; ?></td>
+                                            <td><?php echo $insc['representante2']; ?></td>
+                                            <td>
+                                                <button class="btn btn-primary" onclick="descargarPlanillaInscripcion()" data-id-est="<?php echo $insc['id_estudiante']; ?>">
+                                                    <i class="bi bi-download"></i> Descargar Planilla
+                                                </button>
+
+                                            </td>
+                                        </tr>
+                                <?php
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='10'>No se encontraron inscripciones.</td></tr>";
                                 }
-                            } else {
-                                echo "<tr><td colspan='10'>No se encontraron inscripciones.</td></tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                </main>
-                <script src="../js/validarDeleteMaterias.js"></script>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</body>
-<!-- Modal de Carga -->
-<div id="modalCarga" class="modal-carga">
-    <div class="modal-carga-content">
-        <div class="spinner"></div>
-        <p>Generando planilla de inscripción escolar, por favor espere...</p>
+                <!-- Modal de Carga -->
+                <div id="modalCarga" class="modal-carga">
+                    <div class="modal-carga-content">
+                        <div class="spinner"></div>
+                        <p>Generando planilla de inscripción escolar, por favor espere...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
-<!-- Estilos -->
-<style>
-    .modal-carga {
-        display: none;
-        position: fixed;
-        z-index: 9999;
-        background-color: rgba(0, 0, 0, 0.6);
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        justify-content: center;
-        align-items: center;
-    }
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous">
+    </script>
+    <!-- DATATABLES -->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
+    </script>
+    <!-- BOOTSTRAP -->
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js">
+    </script>
+</body>
+<script>
+    $(document).ready(function() {
+        $('#tablaxInscripcion').DataTable({
+            "dom": '<"top"<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>>rt<"bottom"<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>><"clear">',
+            "language": {
+                "decimal": "",
+                "emptyTable": "No hay datos disponibles en la tabla",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "No se encontraron registros coincidentes",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+                "aria": {
+                    "sortAscending": ": activar para ordenar columna ascendente",
+                    "sortDescending": ": activar para ordenar columna descendente"
+                }
+            },
 
-    .modal-carga-content {
-        background: #fff;
-        padding: 30px;
-        border-radius: 12px;
-        text-align: center;
-        font-family: 'Segoe UI', sans-serif;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-        max-width: 400px;
-        width: 90%;
-    }
+            "initComplete": function(settings, json) {
+                // Añadir icono de lupa al buscador
+                $('.dataTables_filter label').prepend('<i class="bi bi-search" style="margin-right: 8px;"></i>');
 
-    .spinner {
-        margin: 0 auto 15px;
-        border: 6px solid #eee;
-        border-top: 6px solid #0d6efd;
-        border-radius: 50%;
-        width: 45px;
-        height: 45px;
-        animation: girar 1s linear infinite;
-    }
-
-    @keyframes girar {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-</style>
-
-</div>
+                // Añadir icono al select de registros por página
+                $('.dataTables_length label').append('<i class="bi bi-list-ol" style="margin-left: 8px;"></i>');
+            }
+        });
+    });
+</script>
 <script>
     function mostrarModalCarga() {
         document.getElementById('modalCarga').style.display = 'flex';
