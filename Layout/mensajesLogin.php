@@ -29,5 +29,8 @@ if (isset($_GET['ref']) && $_GET['ref'] == 'error') {
     mensajeSesion('El usuario se encuentra inactivo.', 'error', 'Error', '../Inicio/Logear.php');
 } else if (isset($_GET['ref']) && $_GET['ref'] == 'active') {
     mensajeSesion('El usuario tiene una sesión activa en otro dispositivo. Verifique.', 'warning', 'Atención', '../Inicio/Logear.php');
-}
+} else  if (isset($_GET['ref']) && $_GET['ref'] == 'logout')  {
+    mensajeSesion('Su sesión se cerró con éxito', 'success', 'Éxito', '../Inicio/Logear.php');
+} 
+
 ?>

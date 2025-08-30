@@ -58,9 +58,8 @@
                 ?>
 
                 <!-- Encabezado mejorado -->
-                <div class="mb-4" style="max-width: 600px; margin: left; background-color:#F5F5F5; border-radius:15px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
+                <div class="mb-4" style="max-width: 600px; margin: left; background: linear-gradient(to right, #f0f6ffff, #e2f1ffff, #c5d9f7ff); border-radius:15px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
                     <h1><i class="fas fa-tachometer-alt"></i> Panel de Control</h1>
-                    <div class="mx-auto" style="height: 48; width: 100px; background: linear-gradient(to right, #05357cff, #6c757d, #0d6efd);"></div>
                 </div>
 
 
@@ -172,9 +171,6 @@
                 </div>
             </main>
         </div>
-
-
     </div>
 </div>
-
 </html>

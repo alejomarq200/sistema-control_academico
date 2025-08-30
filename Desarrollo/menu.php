@@ -19,6 +19,7 @@
         href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-straight/css/uicons-bold-straight.css'>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
@@ -447,6 +448,12 @@
                                 <a href="mantenimiento.php" class="sidebar-link">
                                     <i class="bi bi-database-check"></i>
                                     <span>Base de Datos</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="dispositivos.php" class="sidebar-link">
+                                    <i class="fi fi-bs-devices"></i>
+                                    <span>Dispositivos</span>
                                 </a>
                             </li>
                         </ul>
