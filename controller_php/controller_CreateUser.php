@@ -109,8 +109,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else if ($variablesModalCreate[7] == "Usuario") {
         $variablesModalCreate[7] = 2;
     }
+
+    /**
+     * Función para sanitizar datos
+     */
+    function sanitizarDatos($datos)
+    {
+        $sanitizados = [];
+
+        foreach ($datos as $clave => $valor) {
+            // Eliminar etiquetas HTML y PHP
+            $valor = strip_tags($valor);
+
+            // Eliminar espacios en blanco al inicio y final
+            $valor = trim($valor);
+
+            // Escapar caracteres especiales para HTML (para prevenir XSS si se muestran después)
+            $valor = htmlspecialchars($valor, ENT_QUOTES, 'UTF-8');
+
+            $sanitizados[$clave] = $valor;
+        }
+
+        return $sanitizados;
+    }
+
+
     if ($validar) {
-        insertar_user($pdo, $variablesModalCreate);
+        $limpiarDatos = sanitizarDatos($variablesModalCreate);
+      
+         $insert = insertar_user($pdo, $limpiarDatos);
     } else {
         /* PENDIENTE: SI VULNERAN JS IMPLEMENTAR MENSAJES CON CSS Y HTML O REDIRECCIONAR */
         foreach ($mensajes as $valores) {

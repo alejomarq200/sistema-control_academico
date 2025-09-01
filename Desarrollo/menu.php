@@ -20,6 +20,7 @@
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-straight/css/uicons-bold-straight.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
@@ -284,6 +285,12 @@
                                 <span>Nueva Actividad</span>
                             </a>
                         </li>
+                        <li class="sidebar-item">
+                            <a href="new_user.php" class="sidebar-link">
+                                <i class="fi fi-ss-user-add"></i>
+                                <span>Nuevo Usuario</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -411,7 +418,7 @@
                                 <span>Reporte de Inscripciones</span>
                             </a>
                         </li>
-                         <li class="sidebar-item">
+                        <li class="sidebar-item">
                             <a href="reportesSistema.php" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
                                 <span>Reportes del Sistema</span>
@@ -436,6 +443,12 @@
                                 <a href="search_user.php" class="sidebar-link">
                                     <i class="bi bi-people-fill"></i>
                                     <span>Usuarios</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="contrasena.php" class="sidebar-link">
+                                    <i class="fi fi-sr-user-key"></i>
+                                    <span>Contraseña</span>
                                 </a>
                             </li>
                             <li class="sidebar-item">

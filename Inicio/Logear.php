@@ -1,3 +1,8 @@
+<?php
+include("../Configuration/functions_php/functionsLogear.php");
+// $variable = obtenerAccesos($pdo);
+// echo $variable;
+?>
 <!DOCTYPE html>
 <html lang="es">
 

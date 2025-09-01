@@ -24,16 +24,18 @@ function consultarUsuariosCRUD($pdo)
 /* FUNCIÓN DE INSERTAR USUARIOS */
 function insertar_user($pdo, $variablesModalCreate)
 {
+    $nuevaPwd =  password_hash($variablesModalCreate[4], PASSWORD_DEFAULT);
+
     try {
+
         $stmt = $pdo->prepare("INSERT INTO users (cedula, nombres, correo, telefono, contrasena , id_rol, id_estado) VALUES (:cedula, :nombres, :correo, :telefono, :contrasena, :id_rol, :id_estado)");
         $stmt->bindValue('cedula', $variablesModalCreate[0] . $variablesModalCreate[1]);
         $stmt->bindValue('nombres', $variablesModalCreate[2]);
         $stmt->bindValue('correo', $variablesModalCreate[3]);
         $stmt->bindValue('telefono', $variablesModalCreate[5] . $variablesModalCreate[6]);
-        $stmt->bindValue('contrasena', $variablesModalCreate[4]);
+        $stmt->bindValue('contrasena', $nuevaPwd);
         $stmt->bindValue('id_rol', $variablesModalCreate[7]);
         $stmt->bindValue('id_estado', 2);
-
 
         $stmt->execute();
 
@@ -197,9 +199,9 @@ function validarRolyAccesoAdmin($rol, $estado, $redireccion)
         $_SESSION['mensaje'] = 'Atención. No tiene permisos para acceder a este módulo';
         $_SESSION['icono'] = 'warning';
         $_SESSION['titulo'] = 'Atención';
-        
+
         // Usar URL absoluta si es necesario
-        header("Location: ../".$redireccion);
+        header("Location: ../" . $redireccion);
         exit();
     }
 }

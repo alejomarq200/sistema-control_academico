@@ -23,7 +23,7 @@
                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                        </div>
                        <div class="modal-body" style="background-color: #f8f9fa;">
-                           <form method="POST" action="../controller_php/controller_createDispositvo.php" id="formulario-equipos">
+                           <form method="POST" action="../controller_php/controller_CreateDispositvo.php" id="formulario-equipos">
                                <div class="row">
                                    <div class="col-md-6">
                                        <div class="mb-3">
@@ -44,41 +44,11 @@
                                        <p id="error-dptoequipo" class="error"></p>
                                    </div>
                                </div>
-
-                               <div class="row">
-                                   <div class="col-md-6">
-                                       <div class="mb-3">
-                                           <label for="marcaequipo" class="form-label fw-medium" style="color: #495057;">Marca</label>
-                                           <input type="text" class="form-control" id="marcaequipo" name="marcaequipo"
-                                               style="border-radius: 8px; border: 1px solid #ced4da; padding: 10px;"
-                                               placeholder="Ej: Dell, HP, etc.">
-                                       </div>
-                                       <p id="error-marcaequipo" class="error"></p>
-                                   </div>
-                                   <div class="col-md-6">
-                                       <div class="mb-3">
-                                           <label for="macequipo" class="form-label fw-medium" style="color: #495057;">
-                                               <i class="fas fa-network-wired me-1"></i>Dirección MAC
-                                           </label>
-                                           <div class="input-group">
-                                               <input type="text" class="form-control" id="macequipo" name="macequipo"
-                                                   style="border-radius: 8px 0 0 8px; border: 1px solid #ced4da; padding: 10px;"
-                                                   placeholder="Ej: 00:1A:2B:3C:4D:5E">
-                                               <button class="btn btn-outline-secondary" type="button" id="btn"
-                                                   texContent style="border-radius: 0 8px 8px 0; background-color: #e9ecef;">
-                                                   <i class="fas fa-sync-alt"></i>
-                                               </button>
-                                               <p id="error-macequipo" class="error"></p>
-                                           </div>
-                                           <small class="form-text text-muted">Haga clic en el botón para obtener automáticamente la MAC</small>
-                                       </div>
-                                   </div>
-                               </div>
                                <div>
                                    <p id="result"></p>
                                </div>
                                <div class="d-grid gap-2 mt-4">
-                                   <button type="submit" class="btn btn-primary py-2 fw-medium"
+                                   <button type="submit" class="btn btn-primary py-2 fw-medium" id="btnRegistrar"
                                        style="border-radius: 8px; background: linear-gradient(135deg, #112355ff 0%, #2575fc 100%); color: white; border: none;">
                                        <i class="fas fa-save me-2"></i>Registrar Dispositivo
                                    </button>
@@ -91,38 +61,41 @@
 
            <!-- Incluir Font Awesome para los iconos -->
            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+           <!-- FingerprintJS -->
+           <script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
            <script>
                document.addEventListener("DOMContentLoaded", function() {
                    const formulario = document.getElementById("formulario-equipos");
 
-                   const obtenerMac = document.getElementById('btn');
+                   FingerprintJS.load().then(fp => {
+                       fp.get().then(result => {
+                           visitorId = result.visitorId;
+                           document.querySelector("#btnRegistrar").disabled = false;
+                       });
+                   });
 
-                   obtenerMac.addEventListener("click", mac);
-
-                   function mac() {
-                       const info = {
-                           mac: document.querySelector('input[name="macequipo"]').value,
+                   function registrarDispositivo() {
+                       if (!visitorId) {
+                           console.error("El visitorId aún no está listo 🚫");
+                           return;
                        }
 
-                       fetch('../AJAX/AJAX_Seguridad/obtenerMacEquipos.php', {
-                               method: 'POST',
+                       const info = {
+                           device_id: visitorId,
+                           dpto: document.querySelector('input[name="dptoequipo"]').value
+                       };
+
+                       fetch("../AJAX/AJAX_Seguridad/registrar_dispositivos.php", {
+                               method: "POST",
                                headers: {
-                                   Accept: 'application/json',
-                                   'Content-Type': 'application/json'
+                                   "Content-Type": "application/json"
                                },
                                body: JSON.stringify(info)
                            })
-                           .then(resp => resp.json())
-                           .then(data => {
-                               let campo = document.getElementById('macequipo').value;
-                               let valor = (data.succes != "") ? data.succes : data.error;
-                               document.getElementById('macequipo').value = valor;
-                               obtenerMac.disabled = true;
-                           })
-                           .catch(error => {
-                               console.log('Error! ' + error);
-                           });
+                           .then(res => res.json())
+                           .then(data => console.log(data));
                    }
+
 
                    // Agregar manejador de evento para el envío del formulario
                    formulario.addEventListener('submit', function(e) {
@@ -142,14 +115,6 @@
                            {
                                id: 'dptoequipo',
                                nombre: 'Departamento'
-                           },
-                           {
-                               id: 'marcaequipo',
-                               nombre: 'Marca'
-                           },
-                           {
-                               id: 'macequipo',
-                               nombre: 'Dirección MAC'
                            }
                        ];
 
@@ -173,8 +138,9 @@
 
                        // Si el formulario es válido, enviarlo
                        if (formularioValido) {
-                           alert('Formulario válido. Enviando datos...');
-                           formulario.submit(); // Descomenta esta línea en producción
+                           //alert('Formulario válido. Enviando datos...');
+                           //formulario.submit(); // Descomenta esta línea en producción
+                           registrarDispositivo();
                        }
                    }
 

@@ -4,50 +4,53 @@ include("../Configuration/Configuration.php");
 function validar_InicioSesion($pdo, $variablesFormLogin)
 {
     // Primero validamos las credenciales
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE correo = :correo AND contrasena = :contrasena");
-    $stmt->bindValue(':correo', $variablesFormLogin[0]);
-    $stmt->bindValue(':contrasena', $variablesFormLogin[1]);
-    $stmt->execute();
+    $stmtHash = $pdo->prepare("SELECT contrasena, cedula, nombres, correo, id_estado, id_rol FROM users WHERE correo = :correo");
+    $stmtHash->bindValue(':correo', $variablesFormLogin[0]);
+    $stmtHash->execute();
 
-    if ($stmt->rowCount() === 0) {
-        header("Location: ../Inicio/Logear.php?ref=undefined");
-        exit();
+    if ($stmtHash->rowCount() > 0) {
+        $result = $stmtHash->fetch(PDO::FETCH_ASSOC);
     }
 
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    //Comparamos hash con pwd ingresada
+    $hash = password_verify($variablesFormLogin[1], $result['contrasena']);
 
-    // Verificar estado del usuario
-    if ($result['id_estado'] != 2) {
-        header("Location: ../Inicio/Logear.php?ref=inactive");
-        exit();
-    }
+    //Asignamos unretorno
+    $isValid = ($hash) ? 1 : 0;
 
-    // Verificar si ya tiene sesión activa
-    $sesionActiva = validarEstadoSesion($pdo, $variablesFormLogin[0]);
-    if ($sesionActiva === 'Si') {
-        header("Location: ../Inicio/Logear.php?ref=active");
-        exit();
-    }
+    //Operamos obre el retorno
+        if ($isValid == 1) {
 
-    // Si pasa todas las validaciones, permitir inicio de sesión
-    if (cambiarEstado($pdo, $variablesFormLogin[0], 'Si')) {
-        $_SESSION['id'] = $result['cedula'];
-        $_SESSION['nombres'] = $result['nombres'];
-        $_SESSION['correo'] = $result['correo'];
-        $_SESSION['rol'] = $result['id_rol'];
-        $_SESSION['estado'] = $result['id_estado'];
-        $_SESSION['mensaje'] = 'Bienvenido: ' . $_SESSION['nombres'];
-        $_SESSION['icono'] = 'success';
-        $_SESSION['titulo'] = 'Éxito';
+        // Verificar estado del usuario
+        if ($result['id_estado'] != 2) {
+            header("Location: ../Inicio/Logear.php?ref=inactive");
+            exit();
+        }
 
-        // Redirigir según el rol
-        header("Location: ../Desarrollo/dashboard.php");
-        exit();
+        // Verificar si ya tiene sesión activa
+        $sesionActiva = validarEstadoSesion($pdo, $variablesFormLogin[0]);
+        if ($sesionActiva === 'Si') {
+            header("Location: ../Inicio/Logear.php?ref=active");
+            exit();
+        }
+
+        // Si pasa todas las validaciones, permitir inicio de sesión
+        if (cambiarEstado($pdo, $variablesFormLogin[0], 'Si')) {
+            $_SESSION['id'] = $result['cedula'];
+            $_SESSION['nombres'] = $result['nombres'];
+            $_SESSION['correo'] = $result['correo'];
+            $_SESSION['rol'] = $result['id_rol'];
+            $_SESSION['estado'] = $result['id_estado'];
+            $_SESSION['mensaje'] = 'Bienvenido: ' . $_SESSION['nombres'];
+            $_SESSION['icono'] = 'success';
+            $_SESSION['titulo'] = 'Éxito';
+
+            // Redirigir según el rol
+            header("Location: ../Desarrollo/dashboard.php");
+            exit();
+        }
     } else {
-        $_SESSION['mensaje'] = 'Error al iniciar sesión. Intente nuevamente.';
-        $_SESSION['icono'] = 'error';
-        $_SESSION['titulo'] = 'Error';
-        header("Location: ../Inicio/Logear.php");
+        header("Location: ../Inicio/Logear.php?ref=undefined");
         exit();
     }
 }

@@ -41,8 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($campos['mac_e'])) {
         $errores[] = "La dirección MAC es obligatoria";
-    } elseif (!validarMAC($campos['mac_e'])) {
-        $errores[] = "La dirección MAC no tiene un formato válido";
     }
 
     // Si no hay errores, proceder con la inserción
@@ -52,8 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         try {
             // Inserción en la base de datos
-            $stmt = $pdo->prepare('INSERT INTO `equipos`(`nombre_equipo`, `dpto_equipo`, `marca_equipo`, `mac_equipo`) 
-                                  VALUES (:nombre_equipo, :dpto_equipo, :marca_equipo, :mac_equipo)');
+            $stmt = $pdo->prepare('INSERT INTO `dispositivos`(`device_id`, `descripcion`, `fecha_registro`) VALUES ()');
 
             $stmt->bindValue('nombre_equipo', $camposSanitizados['nombre_e'], PDO::PARAM_STR);
             $stmt->bindValue('dpto_equipo', $camposSanitizados['dpto_e'], PDO::PARAM_STR);
@@ -91,16 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 /**
- * Función para validar formato de dirección MAC
- */
-function validarMAC($mac)
-{
-    // Patrón para dirección MAC (permite varios formatos comunes)
-    $patron = '/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/';
-    return preg_match($patron, $mac) === 1;
-}
-
-/**
  * Función para sanitizar datos
  */
 function sanitizarDatos($datos)
@@ -122,6 +109,3 @@ function sanitizarDatos($datos)
 
     return $sanitizados;
 }
-
-// Cierre de conexión (si es necesario)
-// $pdo = null;
