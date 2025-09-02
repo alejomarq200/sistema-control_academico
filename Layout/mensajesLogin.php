@@ -31,6 +31,10 @@ if (isset($_GET['ref']) && $_GET['ref'] == 'error') {
     mensajeSesion('El usuario tiene una sesión activa en otro dispositivo. Verifique.', 'warning', 'Atención', '../Inicio/Logear.php');
 } else  if (isset($_GET['ref']) && $_GET['ref'] == 'logout')  {
     mensajeSesion('Su sesión se cerró con éxito', 'success', 'Éxito', '../Inicio/Logear.php');
+} else  if (isset($_GET['ref']) && $_GET['ref'] == 'session_success')  {
+    mensajeSesion('Se recuperó con éxito su sesión', 'success', 'Sesión recuperada', '../Inicio/Logear.php');
+} else  if (isset($_GET['ref']) && $_GET['ref'] == 'session_error')  {
+    mensajeSesion('Su sesión no se recuperó porque no tiene sesión activa', 'error', 'La sesión no se recuperó', '../Inicio/Logear.php');
 } 
 
 ?>

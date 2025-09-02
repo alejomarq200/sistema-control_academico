@@ -200,7 +200,7 @@ include("../Configuration/functions_php/functionsLogear.php");
 
     .error {
       color: red;
-      font-size: 0.9em;
+      font-size: 14px;
     }
 
     .button input:hover {
@@ -251,6 +251,7 @@ include("../Configuration/functions_php/functionsLogear.php");
           </div>
           <p class="error" id="passwordError"></p>
           <div class="checkbox-text">
+            <a href="../Inicio/recovery_session.php" class="text">¿Sesión activa? Recupere aquí</a>
             <a href="../Inicio/recovery_pass.php" class="text">¿Olvidó su contraseña?</a>
           </div>
           <div class="input-field button">
@@ -261,37 +262,36 @@ include("../Configuration/functions_php/functionsLogear.php");
     </div>
   </div>
   <script>
-    document.getElementById('LoginForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevenir el envío del formulario
-    
-    // Limpiar errores previos
-    const errorElements = document.querySelectorAll('.error');
-    const formulario = document.getElementById('LoginForm');
-    errorElements.forEach(el => el.textContent = '');
-  
-    // Obtener valores
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
-    let isValid = true;
-  
-    // Validamos campos para mandar imagen receptivo
-    if (!email) {
-      document.getElementById('emailError').textContent = 'Email es obligatorio';
-      isValid = false;
-    }
-  
-    if (!password) {
-      document.getElementById('passwordError').textContent = 'Contraseña es obligatoria';
-      isValid = false;
-    }
-  
-    // Si todo es válido, enviar los datos
-    if (isValid) {
-      formulario.submit();
-    }
-  });
-  
+    document.getElementById('LoginForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevenir el envío del formulario
 
+      // Limpiar errores previos
+      const errorElements = document.querySelectorAll('.error');
+      const formulario = document.getElementById('LoginForm');
+      errorElements.forEach(el => el.textContent = '');
+
+      // Obtener valores
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      let isValid = true;
+
+      // Validamos campos para mandar imagen receptivo
+      if (!email) {
+        document.getElementById('emailError').textContent = 'Email es obligatorio';
+        isValid = false;
+      }
+
+      if (!password) {
+        document.getElementById('passwordError').textContent = 'Contraseña es obligatoria';
+        isValid = false;
+      }
+
+      // Si todo es válido, enviar los datos
+      if (isValid) {
+        formulario.submit();
+      }
+    });
   </script>
 </body>
+
 </html>
