@@ -82,18 +82,65 @@
 
                        const info = {
                            device_id: visitorId,
-                           dpto: document.querySelector('input[name="dptoequipo"]').value
                        };
 
-                       fetch("../AJAX/AJAX_Seguridad/registrar_dispositivos.php", {
-                               method: "POST",
-                               headers: {
-                                   "Content-Type": "application/json"
-                               },
-                               body: JSON.stringify(info)
-                           })
-                           .then(res => res.json())
-                           .then(data => console.log(data));
+                       // Inicializar fingerprint
+                       FingerprintJS.load().then(fp => {
+                           fp.get().then(result => {
+                               const visitorId = result.visitorId;
+                               console.log("Fingerprint:", visitorId);
+
+                               // Llamada al servidor para validar o registrar
+                               fetch("../AJAX/AJAX_Seguridad/registrar_dispositivos.php", {
+                                       method: "POST",
+                                       headers: {
+                                           "Content-Type": "application/json"
+                                       },
+                                       body: JSON.stringify({
+                                           device_id: visitorId,
+                                           user_id: 5 // el ID del usuario autenticado
+                                       })
+                                   })
+                                   .then(res => res.json())
+                                   .then(data => {
+                                       console.log(data);
+                                    //    if (data.status === "ok") {
+                                    //        if (data.source === "new_device_registered") {
+                                    //            statusMessage.textContent = "¡Nuevo dispositivo registrado! Redirigiendo...";
+                                    //        } else {
+                                    //            statusMessage.textContent = "¡Dispositivo validado con éxito! Redirigiendo...";
+                                    //        }
+                                    //        statusMessage.style.color = '#e0ffe0';
+
+                                    //        setTimeout(() => {
+                                    //            window.location.href = "Logear.php";
+                                    //        }, 1500);
+                                    //    } else {
+                                    //        spinner.style.animationPlayState = 'paused';
+                                    //        spinner.style.borderColor = '#ff6b6b';
+                                    //        statusMessage.textContent = "Acceso denegado al dispositivo. Contacte al administrador.";
+                                    //        statusMessage.style.color = '#ffebee';
+                                    //        retryBtn.style.display = 'block';
+                                    //    }
+                                   })
+
+                                   .catch(error => {
+                                       console.error("Error en la validación:", error);
+                                       spinner.style.animationPlayState = 'paused';
+                                       spinner.style.borderColor = '#ff6b6b';
+                                       statusMessage.textContent = "Error de conexión. Por favor, intente nuevamente.";
+                                       statusMessage.style.color = '#ffebee';
+                                       retryBtn.style.display = 'block';
+                                   });
+                           });
+                       }).catch(error => {
+                           console.error("Error con FingerprintJS:", error);
+                           spinner.style.animationPlayState = 'paused';
+                           spinner.style.borderColor = '#ff6b6b';
+                           statusMessage.textContent = "Error técnico. Por favor, intente nuevamente.";
+                           statusMessage.style.color = '#ffebee';
+                           retryBtn.style.display = 'block';
+                       });
                    }
 
 

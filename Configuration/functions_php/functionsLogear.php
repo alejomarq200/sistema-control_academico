@@ -4,7 +4,7 @@ include("../Configuration/Configuration.php");
 function validar_InicioSesion($pdo, $variablesFormLogin)
 {
     // Primero validamos las credenciales
-    $stmtHash = $pdo->prepare("SELECT contrasena, cedula, nombres, correo, id_estado, id_rol FROM users WHERE correo = :correo");
+    $stmtHash = $pdo->prepare("SELECT id, contrasena, cedula, nombres, correo, id_estado, id_rol FROM users WHERE correo = :correo");
     $stmtHash->bindValue(':correo', $variablesFormLogin[0]);
     $stmtHash->execute();
 
@@ -19,7 +19,7 @@ function validar_InicioSesion($pdo, $variablesFormLogin)
     $isValid = ($hash) ? 1 : 0;
 
     //Operamos obre el retorno
-        if ($isValid == 1) {
+    if ($isValid == 1) {
 
         // Verificar estado del usuario
         if ($result['id_estado'] != 2) {
@@ -41,12 +41,13 @@ function validar_InicioSesion($pdo, $variablesFormLogin)
             $_SESSION['correo'] = $result['correo'];
             $_SESSION['rol'] = $result['id_rol'];
             $_SESSION['estado'] = $result['id_estado'];
+            $_SESSION['id_user'] = $result['id'];
             $_SESSION['mensaje'] = 'Bienvenido: ' . $_SESSION['nombres'];
             $_SESSION['icono'] = 'success';
             $_SESSION['titulo'] = 'Éxito';
 
             // Redirigir según el rol
-            header("Location: ../Desarrollo/dashboard.php");
+            header("Location: ../Desarrollo/validar_dispositivoActual.php");
             exit();
         }
     } else {

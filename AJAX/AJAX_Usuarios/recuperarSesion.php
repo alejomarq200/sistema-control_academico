@@ -23,7 +23,7 @@ try {
     if ($stmtEmail->rowCount() > 0) {
         echo json_encode(["status" => ["success" => "Se encontró el correo"]]);
     } else {
-        echo json_encode(["status" => ["error" => "No encontró el correo"]]);
+       echo  json_encode(["status" => ["error" => "No encontró el correo"]]);
     }
 } catch (PDOException $e) {
     echo json_encode(["status" => ["error" => $e->getMessage()]]);

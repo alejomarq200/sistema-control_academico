@@ -62,13 +62,12 @@
                     <h1><i class="fas fa-tachometer-alt"></i> Panel de Control</h1>
                 </div>
 
-
                 <!-- Sección de resumen -->
                 <div class="dashboard-content">
                     <!-- Primaria -->
                     <section class="dashboard-section">
                         <div class="section-header">
-                            <h2><i class="fas fa-school"></i> Nivel Primario</h2>
+                            <h2><i class="fas fa-school"></i>Nivel Primario</h2>
                             <div class="section-indicator primary-bg"></div>
                         </div>
 
