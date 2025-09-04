@@ -28,7 +28,7 @@ function insertar_user($pdo, $variablesModalCreate)
 
     try {
 
-        $stmt = $pdo->prepare("INSERT INTO users (cedula, nombres, correo, telefono, contrasena , id_rol, id_estado) VALUES (:cedula, :nombres, :correo, :telefono, :contrasena, :id_rol, :id_estado)");
+        $stmt = $pdo->prepare("INSERT INTO users (cedula, nombres, correo, telefono, contrasena, id_rol, id_estado, activo) VALUES (:cedula, :nombres, :correo, :telefono, :contrasena, :id_rol, :id_estado, :activo)");
         $stmt->bindValue('cedula', $variablesModalCreate[0] . $variablesModalCreate[1]);
         $stmt->bindValue('nombres', $variablesModalCreate[2]);
         $stmt->bindValue('correo', $variablesModalCreate[3]);
@@ -36,6 +36,7 @@ function insertar_user($pdo, $variablesModalCreate)
         $stmt->bindValue('contrasena', $nuevaPwd);
         $stmt->bindValue('id_rol', $variablesModalCreate[7]);
         $stmt->bindValue('id_estado', 2);
+        $stmt->bindValue('activo', 'No');
 
         $stmt->execute();
 
@@ -195,7 +196,7 @@ function validarRolyAccesoAdmin($rol, $estado, $redireccion)
     }
 
     // Si NO es admin O NO está activo, redirige
-    if ($rol != 1 || $estado != 2) {
+    if ($rol != 1 && $estado != 2 ||  $rol != 3 && $estado != 2 ) {
         $_SESSION['mensaje'] = 'Atención. No tiene permisos para acceder a este módulo';
         $_SESSION['icono'] = 'warning';
         $_SESSION['titulo'] = 'Atención';

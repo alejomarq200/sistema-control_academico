@@ -26,7 +26,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: #4285f4;
+            background: #0e2238;
         }
 
         .spinner-container {
@@ -162,7 +162,7 @@
                                     console.log(data);
                                     if (data.status === "ok") {
                                         statusMessage.textContent = "¡Dispositivo validado con éxito! Redirigiendo...";
-                                        statusMessage.style.color = '#e0ffe0';
+                                        statusMessage.style.color = '#2fc22fff';
 
                                         // Simular un breve retraso antes de redirigir
                                         setTimeout(() => {
@@ -172,6 +172,7 @@
                                 })
                                 .catch(error => {
                                     // Acceso denegado
+                                    console.error(error);
                                     spinner.style.animationPlayState = 'paused';
                                     spinner.style.borderColor = '#ff6b6b';
                                     statusMessage.textContent = "Acceso denegado al dispositivo. Contacte al administrador.";

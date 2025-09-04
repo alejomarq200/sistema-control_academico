@@ -3,11 +3,12 @@ include("../Configuration/Configuration.php");
 
 function validar_InicioSesion($pdo, $variablesFormLogin)
 {
-    // Primero validamos las credenciales
+    // Obtenemos datos con ref. de correo
     $stmtHash = $pdo->prepare("SELECT id, contrasena, cedula, nombres, correo, id_estado, id_rol FROM users WHERE correo = :correo");
     $stmtHash->bindValue(':correo', $variablesFormLogin[0]);
     $stmtHash->execute();
 
+    //Ejecución y manipulamos los datos de vueltos
     if ($stmtHash->rowCount() > 0) {
         $result = $stmtHash->fetch(PDO::FETCH_ASSOC);
     }
@@ -15,10 +16,10 @@ function validar_InicioSesion($pdo, $variablesFormLogin)
     //Comparamos hash con pwd ingresada
     $hash = password_verify($variablesFormLogin[1], $result['contrasena']);
 
-    //Asignamos unretorno
+    //Asignamos un retorno
     $isValid = ($hash) ? 1 : 0;
 
-    //Operamos obre el retorno
+    //Operamos sobre el retorno
     if ($isValid == 1) {
 
         // Verificar estado del usuario
@@ -33,22 +34,40 @@ function validar_InicioSesion($pdo, $variablesFormLogin)
             header("Location: ../Inicio/Logear.php?ref=active");
             exit();
         }
+        // Si pasa todas las validaciones, permitir inicio de sesión de acuerdo al usuario
 
-        // Si pasa todas las validaciones, permitir inicio de sesión
-        if (cambiarEstado($pdo, $variablesFormLogin[0], 'Si')) {
-            $_SESSION['id'] = $result['cedula'];
-            $_SESSION['nombres'] = $result['nombres'];
-            $_SESSION['correo'] = $result['correo'];
-            $_SESSION['rol'] = $result['id_rol'];
-            $_SESSION['estado'] = $result['id_estado'];
-            $_SESSION['id_user'] = $result['id'];
-            $_SESSION['mensaje'] = 'Bienvenido: ' . $_SESSION['nombres'];
-            $_SESSION['icono'] = 'success';
-            $_SESSION['titulo'] = 'Éxito';
+        if ($result['id_rol'] == '3') {
+            if (cambiarEstado($pdo, $variablesFormLogin[0], 'Si')) {
+                $_SESSION['id'] = $result['cedula'];
+                $_SESSION['nombres'] = $result['nombres'];
+                $_SESSION['correo'] = $result['correo'];
+                $_SESSION['rol'] = $result['id_rol'];
+                $_SESSION['estado'] = $result['id_estado'];
+                $_SESSION['id_user'] = $result['id'];
+                $_SESSION['mensaje'] = 'Bienvenido: ' . $_SESSION['nombres'];
+                $_SESSION['icono'] = 'success';
+                $_SESSION['titulo'] = 'Éxito';
 
-            // Redirigir según el rol
-            header("Location: ../Desarrollo/validar_dispositivoActual.php");
-            exit();
+                // Redirigir según el rol
+                header("Location: ../Desarrollo/dashboard.php");
+                exit();
+            }
+        } else if ($result['id_rol'] == 1 || $result['id_rol'] == 2) {
+            if (cambiarEstado($pdo, $variablesFormLogin[0], 'Si')) {
+                $_SESSION['id'] = $result['cedula'];
+                $_SESSION['nombres'] = $result['nombres'];
+                $_SESSION['correo'] = $result['correo'];
+                $_SESSION['rol'] = $result['id_rol'];
+                $_SESSION['estado'] = $result['id_estado'];
+                $_SESSION['id_user'] = $result['id'];
+                $_SESSION['mensaje'] = 'Bienvenido: ' . $_SESSION['nombres'];
+                $_SESSION['icono'] = 'success';
+                $_SESSION['titulo'] = 'Éxito';
+
+                // Redirigir según el rol
+                header("Location: ../Desarrollo/validar_dispositivoActual.php");
+                exit();
+            }
         }
     } else {
         header("Location: ../Inicio/Logear.php?ref=undefined");

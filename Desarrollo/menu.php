@@ -296,7 +296,7 @@
 
                 <!-- Menú de Gestión con submenú -->
                 <?php
-                if ($_SESSION['rol'] == 1 && $_SESSION['estado'] == 2) {
+                if ($_SESSION['rol'] == 1 && $_SESSION['estado'] == 2 || $_SESSION['rol'] == 3 && $_SESSION['estado'] == 2) {
 
                 ?>
                     <li class="sidebar-item">
@@ -429,7 +429,7 @@
 
                 <!-- Menú de Mantenimiento con submenú -->
                 <?php
-                if ($_SESSION['rol'] == 1 && $_SESSION['estado'] == 2) {
+                if ($_SESSION['rol'] == 1 && $_SESSION['estado'] == 2 || $_SESSION['rol'] == 3 && $_SESSION['estado'] == 2) {
 
                 ?>
                     <li class="sidebar-item">
@@ -463,12 +463,19 @@
                                     <span>Base de Datos</span>
                                 </a>
                             </li>
-                            <li class="sidebar-item">
-                                <a href="dispositivos.php" class="sidebar-link">
-                                    <i class="fi fi-bs-devices"></i>
-                                    <span>Dispositivos</span>
-                                </a>
-                            </li>
+                            <?php
+                            if ($_SESSION['rol'] == 3 && $_SESSION['estado'] == 2) {
+
+                            ?>
+                                <li class="sidebar-item">
+                                    <a href="dispositivos.php" class="sidebar-link">
+                                        <i class="fi fi-bs-devices"></i>
+                                        <span>Dispositivos</span>
+                                    </a>
+                                </li>
+                            <?php
+                            }
+                            ?>
                         </ul>
                     </li>
                 <?php  } ?>

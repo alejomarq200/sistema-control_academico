@@ -26,10 +26,6 @@ $cookieSecure = $isHttps;
 $cookieName = 'device_token';
 
 try {
-    $pdo = new PDO("mysql:host=localhost;dbname=Proyecto;charset=utf8mb4", "root", "12345678", [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
 
     // 1) Intento por fingerprint actual
     $stmt = $pdo->prepare("SELECT id, token FROM dispositivos WHERE user_id = ? AND device_id = ? LIMIT 1");

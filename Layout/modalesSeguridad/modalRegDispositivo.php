@@ -23,29 +23,55 @@
                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                        </div>
                        <div class="modal-body" style="background-color: #f8f9fa;">
-                           <form method="POST" action="../controller_php/controller_CreateDispositvo.php" id="formulario-equipos">
+                           <form method="POST" action="<?php $_SERVER['PHP_SELF']; ?>" id="formulario-equipos">
                                <div class="row">
-                                   <div class="col-md-6">
-                                       <div class="mb-3">
-                                           <label for="nequipo" class="form-label fw-medium" style="color: #495057;">Nombre Equipo</label>
-                                           <input type="text" class="form-control" id="nequipo" name="nequipo"
-                                               style="border-radius: 8px; border: 1px solid #ced4da; padding: 10px;"
-                                               placeholder="Ej: Computadora Principal">
-                                       </div>
-                                       <p id="error-nequipo" class="error"></p>
+                                   <div class="mb-3">
+                                       <label for="usuario_equipo" class="form-label fw-medium" style="color: #495057;">Seleccione el usuario</label>
+                                       <select class="form-select" name="usuario_equipo" id="usuario_equipo" style="height: 40px; border-radius:8px;">
+                                           <?php
+                                            // Consulta SQL
+                                            include("../Configuration/Configuration.php");
+                                            function obtenerUsuarios($pdo)
+                                            {
+
+                                                try {
+                                                    $sql = "SELECT id, nombres FROM users WHERE id_rol = 1 OR id_rol = 2 AND id_estado = 2";
+                                                    $stmt = $pdo->prepare($sql);
+                                                    $stmt->execute();
+                                                    $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                                } catch (PDOException $e) {
+                                                    die("Error en la consulta: " . $e->getMessage());
+                                                }
+                                                if (count($resultados) > 0) {
+                                                    foreach ($resultados as $fila) {
+                                                        echo "<option value='" . $fila['id'] . "'>" . $fila['nombres'] . "</option>";
+                                                    }
+                                                } else {
+                                                    echo "<option value=''>No hay opciones disponibles</option>";
+                                                }
+                                            }
+                                            obtenerUsuarios($pdo);
+                                            ?>
+                                       </select>
                                    </div>
-                                   <div class="col-md-6">
-                                       <div class="mb-3">
-                                           <label for="dptoequipo" class="form-label fw-medium" style="color: #495057;">Departamento</label>
-                                           <input type="text" class="form-control" id="dptoequipo" name="dptoequipo"
-                                               style="border-radius: 8px; border: 1px solid #ced4da; padding: 10px;"
-                                               placeholder="Ej: Recursos Humanos">
-                                       </div>
-                                       <p id="error-dptoequipo" class="error"></p>
+                                   <p id="error-usuario_equipo" class="error"></p>
+                                   <div class="mb-3">
+                                       <label for="nequipo" class="form-label fw-medium" style="color: #495057;">Nombre Equipo</label>
+                                       <input type="text" class="form-control" id="nequipo" name="nequipo"
+                                           style="border-radius: 8px; border: 1px solid #ced4da; padding: 10px;"
+                                           placeholder="Ej: Computadora Principal">
                                    </div>
+                                   <p id="error-nequipo" class="error"></p>
+                                   <div class="mb-3">
+                                       <label for="dptoequipo" class="form-label fw-medium" style="color: #495057;">Departamento</label>
+                                       <input type="text" class="form-control" id="dptoequipo" name="dptoequipo"
+                                           style="border-radius: 8px; border: 1px solid #ced4da; padding: 10px;"
+                                           placeholder="Ej: Recursos Humanos">
+                                   </div>
+                                   <p id="error-dptoequipo" class="error"></p>
                                </div>
-                               <div>
-                                   <p id="result"></p>
+                               <div id="mensaje">
+
                                </div>
                                <div class="d-grid gap-2 mt-4">
                                    <button type="submit" class="btn btn-primary py-2 fw-medium" id="btnRegistrar"
@@ -53,10 +79,11 @@
                                        <i class="fas fa-save me-2"></i>Registrar Dispositivo
                                    </button>
                                </div>
-                           </form>
                        </div>
+                       </form>
                    </div>
                </div>
+           </div>
            </div>
 
            <!-- Incluir Font Awesome para los iconos -->
@@ -80,15 +107,18 @@
                            return;
                        }
 
-                       const info = {
-                           device_id: visitorId,
-                       };
-
                        // Inicializar fingerprint
                        FingerprintJS.load().then(fp => {
                            fp.get().then(result => {
                                const visitorId = result.visitorId;
+                               const mensaje = document.getElementById('mensaje');
+                               let usuario = document.getElementById('usuario_equipo').value;
+                               const id_token = document.getElementById('id_equipo');
+                               const nequipo  = document.getElementById('nequipo').value;
+                               const dptoequipo = document.getElementById('dptoequipo').value;
+
                                console.log("Fingerprint:", visitorId);
+
 
                                // Llamada al servidor para validar o registrar
                                fetch("../AJAX/AJAX_Seguridad/registrar_dispositivos.php", {
@@ -98,51 +128,42 @@
                                        },
                                        body: JSON.stringify({
                                            device_id: visitorId,
-                                           user_id: 5 // el ID del usuario autenticado
+                                           usuario: usuario,
+                                           nombre_equipo: nequipo,
+                                           dpto_equipo: dptoequipo
                                        })
                                    })
                                    .then(res => res.json())
                                    .then(data => {
                                        console.log(data);
-                                    //    if (data.status === "ok") {
-                                    //        if (data.source === "new_device_registered") {
-                                    //            statusMessage.textContent = "¡Nuevo dispositivo registrado! Redirigiendo...";
-                                    //        } else {
-                                    //            statusMessage.textContent = "¡Dispositivo validado con éxito! Redirigiendo...";
-                                    //        }
-                                    //        statusMessage.style.color = '#e0ffe0';
+                                       if (data.status === "ok") {
+                                           if (data.source === "exist_device") {
+                                               mensaje.style.color = '#a30b0bff';
+                                               mensaje.textContent = 'Solo puede registrar un dispositivo en este equipo. Contacte al administrador';
 
-                                    //        setTimeout(() => {
-                                    //            window.location.href = "Logear.php";
-                                    //        }, 1500);
-                                    //    } else {
-                                    //        spinner.style.animationPlayState = 'paused';
-                                    //        spinner.style.borderColor = '#ff6b6b';
-                                    //        statusMessage.textContent = "Acceso denegado al dispositivo. Contacte al administrador.";
-                                    //        statusMessage.style.color = '#ffebee';
-                                    //        retryBtn.style.display = 'block';
-                                    //    }
+                                           } else if (data.source === 'new_device_registered') {
+                                               mensaje.style.color = '#0f8f0fff';
+                                               mensaje.textContent = 'Se registró el dispositivo con éxito';
+                                               // Simular un breve retraso antes de redirigir
+                                               setTimeout(() => {
+                                                   formulario.reset();
+                                               }, 1500);
+                                           }
+                                       } else {
+                                           if (data.source === "exist_user") {
+                                               mensaje.style.color = '#a30b0bff';
+                                               mensaje.textContent = 'El usuario ya posee un equipo con acceso al sistema. Verifique';
+                                           }
+                                       }
                                    })
-
                                    .catch(error => {
                                        console.error("Error en la validación:", error);
-                                       spinner.style.animationPlayState = 'paused';
-                                       spinner.style.borderColor = '#ff6b6b';
-                                       statusMessage.textContent = "Error de conexión. Por favor, intente nuevamente.";
-                                       statusMessage.style.color = '#ffebee';
-                                       retryBtn.style.display = 'block';
                                    });
                            });
                        }).catch(error => {
                            console.error("Error con FingerprintJS:", error);
-                           spinner.style.animationPlayState = 'paused';
-                           spinner.style.borderColor = '#ff6b6b';
-                           statusMessage.textContent = "Error técnico. Por favor, intente nuevamente.";
-                           statusMessage.style.color = '#ffebee';
-                           retryBtn.style.display = 'block';
                        });
                    }
-
 
                    // Agregar manejador de evento para el envío del formulario
                    formulario.addEventListener('submit', function(e) {
@@ -156,6 +177,10 @@
 
                        // Campos a validar
                        const campos = [{
+                               id: 'usuario_equipo',
+                               nombre: 'Usuario del equipo',
+                           },
+                           {
                                id: 'nequipo',
                                nombre: 'Nombre del equipo'
                            },
@@ -185,8 +210,6 @@
 
                        // Si el formulario es válido, enviarlo
                        if (formularioValido) {
-                           //alert('Formulario válido. Enviando datos...');
-                           //formulario.submit(); // Descomenta esta línea en producción
                            registrarDispositivo();
                        }
                    }
