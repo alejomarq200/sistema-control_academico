@@ -4,20 +4,28 @@ include("../Configuration/Configuration.php");
 function consultarProfesorCRUD($pdo)
 {
     try {
-        $stmt = $pdo->prepare("SELECT * FROM profesores");
+        $stmt = $pdo->prepare("
+            SELECT 
+                p.id_profesor,
+                p.cedula,
+                p.nombre,
+                p.nivel_grado,
+                p.telefono,
+                p.estado,
+                g.categoria_grado,
+                g.id_grado
+            FROM profesores p
+            INNER JOIN profesor_grado pg ON p.id_profesor = pg.id_profesor
+            INNER JOIN grados g ON pg.id_grado = g.id
+            ORDER BY p.id_profesor
+        ");
         $stmt->execute();
 
-        // Obtener todos los registros
         $profesores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Verificar si se encontró algún registro
-        if (count($profesores) > 0) {
-            return $profesores; // Devuelve todos los usuarios
-        } else {
-            return []; // Devuelve un array vacío si no hay registros
-        }
+        return $profesores ?: [];
     } catch (PDOException $e) {
-        echo $e->getmessage();
+        echo $e->getMessage();
     }
 }
 

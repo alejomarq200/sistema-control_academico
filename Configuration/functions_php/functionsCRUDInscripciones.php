@@ -20,7 +20,7 @@ function consultarInscripcionesUnificadas($pdo)
             LEFT JOIN estudiantes e ON i.id_estudiante = e.id
             LEFT JOIN representantes r ON i.id_representante = r.id
             LEFT JOIN grados g ON i.grado = g.id
-            ORDER BY i.id_estudiante";
+            ORDER BY e.grado_est";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute();

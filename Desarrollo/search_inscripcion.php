@@ -7,6 +7,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +20,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <link rel="stylesheet" href="../css/modulos/moduloInscripcion.css">
     <title>Consultar Inscripcion</title>
 </head>
+
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
@@ -35,63 +37,43 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                 include("../Layout/mensajes.php");
                 /* CUERPO DEL MENÚ */
                 ?>
+                <div class="mb-4" style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
+                    <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Módulo de Inscripción</h1>
+                    <p class="lead text-muted">Gestione y administre la información de las inscripciones</p>
+                </div>
                 <div class="filters-container">
-                    <h1 class="my-3" id="titulo">Módulo de Inscripciones</h1>
                     <!-- FILTROS CON DISEÑO MODERNO -->
                     <div class="filters-wrapper">
                         <!-- Filtro de Nivel Académico -->
                         <div class="filter-group">
-                            <label for="filtroGrado" class="filter-label">
+                            <label for="genero" class="filter-label">
+                                <i class="fi fi-rr-venus-mars"></i>Género
+                            </label>
+                            <select name="genero" id="genero" class="form-select filter-select">
+                                <option value="Seleccionar">Seleccionar</option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                        </div>
+                        <!-- Filtro de Grado con estilo mejorado -->
+                        <div class="filter-group">
+                            <label for="grado_aulas" class="filter-label">
                                 <i class="bi bi-book-half"></i> Grado Académico
                             </label>
-                            <select id="filtroGrado" class="form-select filter-select">
-                                <option value="">Todos los grados</option>
-                                <option value="1">1er grado</option>
-                                <option value="2">2do grado</option>
-                                <option value="3">3er grado</option>
-                                <option value="4">4to grado</option>
-                                <option value="5">5to grado</option>
-                                <option value="6">6to grado</option>
-                                <option value="7">1er año</option>
-                                <option value="8">2do año</option>
-                                <option value="9">3er año</option>
-                                <option value="10">4to año</option>
-                                <option value="11">5to año</option>
-                            </select>
-                        </div>
-                        <!-- Filtro de Género con estilo mejorado -->
-                        <div class="filter-group">
-                            <label for="filtroGenero" class="filter-label">
-                                <i class="bi bi-gender-ambiguous"></i> Género
-                            </label>
-                            <select id="filtroGenero" class="form-select filter-select">
-                                <option value="">Todos los géneros</option>
-                                <option value="F">Femenino</option>
-                                <option value="M">Masculino</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="filtroAnioEscolar" class="filter-label">
-                                <i class="bi bi-calendar3"></i> Año Escolar
-                            </label>
-                            <select id="filtroAnioEscolar" class="form-select filter-select">
-                                <option value="">Todos los años</option>
-                                <option value="2025-2026">2025-2026</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="fechaInicio" class="filter-label">
-                                <i class="bi bi-calendar-range"></i> Fecha Desde:
-                            </label>
-                            <input type="date" id="fechaInicio" class="form-control">
+                            <select name="grado_aulas" id="grado_aulas" class="form-select filter-select">
 
-                            <label for="fechaFin" class="filter-label mt-2">
-                                <i class="bi bi-calendar-range"></i> Fecha Hasta:
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="recargar" class="filter-label">
+                                Limpiar
                             </label>
-                            <input type="date" id="fechaFin" class="form-control">
+                            <button style="padding: 6px 12px; border:none; background-color: #86b7fe; border-radius:12px; color:white;" id="recargar"><i class="fi fi-br-rotate-right"></i></button>
                         </div>
                     </div>
                 </div>
+
                 <div class="container-table">
                     <div class="custom-table">
                         <table class="table table-hover" id="tablaxInscripcion">
@@ -102,10 +84,8 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                     <th>Edad</th>
                                     <th style="display: none;">Sexo</th>
                                     <th style="display: none;">Grado</th>
-                                    <th style="display: none;">Año Escolar</th>
+                                    <th>Año Escolar</th>
                                     <th>Fecha Inscripción</th>
-                                    <th>Representante 1</th>
-                                    <th>Representante 2</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -123,11 +103,10 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                             <td><?php echo $insc['cedula_est']; ?></td>
                                             <td><?php echo $insc['edad_est']; ?></td>
                                             <td style="display: none;"><?php echo $insc['sexo']; ?></td>
-                                            <td style="display: none;"><?php echo $insc['grado_estudiante']; ?></td>
-                                            <td style="display: none;"><?php echo $insc['anio_escolar']; ?></td>
+                                            <td style="display: none;"><?php echo $insc['grado']; ?></td>
+                                            <td><?php echo $insc['anio_escolar']; ?></td>
                                             <td><?php echo date('d/m/Y', strtotime($insc['fecha_inscripcion'])); ?></td>
-                                            <td><?php echo $insc['representante1']; ?></td>
-                                            <td><?php echo $insc['representante2']; ?></td>
+
                                             <td>
                                                 <button class="btn btn-primary" onclick="descargarPlanillaInscripcion()" data-id-est="<?php echo $insc['id_estudiante']; ?>">
                                                     <i class="bi bi-download"></i> Descargar Planilla
@@ -169,7 +148,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 </body>
 <script>
     $(document).ready(function() {
-        $('#tablaxInscripcion').DataTable({
+        var table = $('#tablaxInscripcion').DataTable({
             "dom": '<"top"<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>>rt<"bottom"<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>><"clear">',
             "language": {
                 "decimal": "",
@@ -204,6 +183,29 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                 $('.dataTables_length label').append('<i class="bi bi-list-ol" style="margin-left: 8px;"></i>');
             }
         });
+
+        $('#genero').on('change', function() {
+            const valor = $(this).val();
+
+            if (!valor) {
+                table.column(3).search('').draw();
+                return;
+            }
+
+            table.column(3).search('^' + valor + '$', true, false).draw();
+        });
+
+        $('#grado_aulas').on('change', function() {
+            const valor = $(this).val();
+            console.log('Valor seleccionado:', valor);
+
+            if (!valor) {
+                table.column(4).search('').draw();
+                return;
+            }
+
+            table.column(4).search('^' + valor + '$', true, false).draw();
+        });
     });
 </script>
 <script>
@@ -229,85 +231,31 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
         }, 2500); // tiempo simulado en milisegundos
     }
 
+    function cargarGrados() {
+        $.ajax({
+            url: "../AJAX/AJAX_Aulas/searchGradosFiltros.php",
+            type: "POST",
+            data: {
+                action: 'cargar_grados'
+            }, // Enviamos una acción específica
+            success: function(resultado) {
+                $("#grado_aulas").html('<option value="Seleccionar" selected>Seleccionar</option>' + resultado);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error en la solicitud AJAX:", error);
+                $("#grado_aulas").html('<option value="Error">Error al cargar grados</option>');
+            }
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-        const fechaInicioInput = document.getElementById('fechaInicio');
-        const fechaFinInput = document.getElementById('fechaFin');
 
-        function parseFechaDDMMYYYY(fechaStr) {
-            const [dia, mes, anio] = fechaStr.split('/');
-            return new Date(`${anio}-${mes}-${dia}`);
-        }
+        cargarGrados();
+        let recargar = document.getElementById('recargar');
 
-        function filtrarPorFechas() {
-            const fechaInicio = new Date(fechaInicioInput.value);
-            const fechaFin = new Date(fechaFinInput.value);
-            const filas = document.querySelectorAll('table tbody tr');
-
-            filas.forEach(fila => {
-                const textoFecha = fila.querySelector('td:nth-child(7)')?.textContent.trim();
-                const fechaFila = parseFechaDDMMYYYY(textoFecha);
-
-                if (!fechaInicioInput.value && !fechaFinInput.value) {
-                    fila.style.display = '';
-                } else if (!isNaN(fechaFila)) {
-                    const enRango = (!isNaN(fechaInicio) ? fechaFila >= fechaInicio : true) &&
-                        (!isNaN(fechaFin) ? fechaFila <= fechaFin : true);
-                    fila.style.display = enRango ? '' : 'none';
-                } else {
-                    fila.style.display = 'none';
-                }
-            });
-        }
-
-        fechaInicioInput.addEventListener('change', filtrarPorFechas);
-        fechaFinInput.addEventListener('change', filtrarPorFechas);
-    });
-
-
-    document.getElementById('filtroGrado').addEventListener('change', function() {
-        const valorSeleccionado = this.value;
-        const filas = document.querySelectorAll('table tbody tr');
-
-        filas.forEach(fila => {
-            const gradoFila = fila.getAttribute('data-grado-id');
-
-            if (valorSeleccionado === '' || gradoFila === valorSeleccionado) {
-                fila.style.display = '';
-            } else {
-                fila.style.display = 'none';
-            }
-        });
-    });
-
-    document.getElementById('filtroAnioEscolar').addEventListener('change', function() {
-        const valorSeleccionado = this.value;
-        const filas = document.querySelectorAll('table tbody tr');
-
-        filas.forEach(fila => {
-            const gradoFila = fila.getAttribute('data-anio');
-
-            if (valorSeleccionado === '' || gradoFila === valorSeleccionado) {
-                fila.style.display = '';
-            } else {
-                fila.style.display = 'none';
-            }
-        });
-    });
-
-
-    document.getElementById('filtroGenero').addEventListener('change', function() {
-        const valorSeleccionado = this.value;
-        const filas = document.querySelectorAll('table tbody tr');
-
-        filas.forEach(fila => {
-            const gradoFila = fila.getAttribute('data-genero');
-
-            if (valorSeleccionado === '' || gradoFila === valorSeleccionado) {
-                fila.style.display = '';
-            } else {
-                fila.style.display = 'none';
-            }
-        });
+        recargar.addEventListener('click', function() {
+            window.location.href = "search_inscripcion.php";
+        })
     });
 </script>
 

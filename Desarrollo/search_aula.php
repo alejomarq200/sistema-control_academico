@@ -2,7 +2,6 @@
 session_start();
 error_reporting(0);
 
-
 include("../Configuration/functions_php/functionsCRUDUser.php");
 validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashboard.php');
 ?>
@@ -20,17 +19,78 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-     <title>Consultar Aulas</title>
+    <title>Consultar Aulas</title>
     <link rel="stylesheet" href="../css/modulos/moduloAulas.css">
+    <style>
+        .filter-group {
+            margin-bottom: 0;
+            /* Elimina el margen inferior para alinear mejor */
+        }
+
+        .filter-label {
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 3px;
+            display: block;
+        }
+
+        .filter-select {
+            border-radius: 6px;
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+        }
+
+        .filters-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin: 2rem auto;
+            max-width: 1200px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .filters-wrapper {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9rem;
+        }
+
+        .filter-select {
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            padding: 0.65rem 1rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+        }
+
+        .filter-select:focus {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+            outline: none;
+        }
+    </style>
 </head>
 
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
         <?php
-        error_reporting(0);
-        session_start();
-
         include("menu.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
@@ -45,14 +105,48 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                     <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Módulo de Aulas</h1>
                     <p class="lead text-muted">Gestione y administre la información de las Aulas</p>
                 </div>
+                
+                <div class="filters-container">
+                    <!-- FILTROS CON DISEÑO MODERNO -->
+                    <div class="filters-wrapper">
+                        <!-- Filtro de Nivel Académico -->
+                        <div class="filter-group">
+                            <label for="filtroGenero" class="filter-label">
+                                <i class='bx bx-check-circle'></i>Estado
+                            </label>
+                            <select name="estado_aulas" id="estado_aulas" class="form-select filter-select">
+                                <option value="Seleccionar">Seleccionar</option>
+                                <option value="Activo">Activo</option>
+                                <option value="Inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                        <!-- Filtro de Grado con estilo mejorado -->
+                        <div class="filter-group">
+                            <label for="filtroGenero" class="filter-label">
+                                <i class="bi bi-book-half"></i> Grado Académico
+                            </label>
+                            <select name="grado_aulas" id="grado_aulas" class="form-select filter-select">
+
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="recargar" class="filter-label">
+                                Limpiar
+                            </label>
+                            <button style="padding: 6px 12px; border:none; background-color: #86b7fe; border-radius:12px; color:white;" id="recargar"><i class="fi fi-br-rotate-right"></i></button>
+                        </div>
+
+                    </div>
+                </div>
+
                 <div class="container-table">
                     <table id="tablaxAulas" class="display" style="width:100%">
                         <thead>
                             <tr>
                                 <th scope="col">Nombre del Aula</th>
                                 <th scope="col">Capacidad</th>
-                                <th scope="col">Grado</th>
-                                <th scope="col">Estado</th>
+                                <th scope="col" style="display: none;">Grado</th>
+                                <th scope="col" style="display: none;">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -71,8 +165,8 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                     <tr>
                                         <td><?= htmlspecialchars($aula['nombre']); ?></td>
                                         <td><?= htmlspecialchars($aula['capacidad']); ?></td>
-                                        <td><?= htmlspecialchars($aula['nombre_grado']); ?></td>
-                                        <td><?= htmlspecialchars($aula['nombre_estado']); ?></td>
+                                        <td style="display: none;"><?= htmlspecialchars($aula['nombre_grado']); ?></td>
+                                        <td style="display: none;"><?= htmlspecialchars($aula['nombre_estado']); ?></td>
                                         <td>
                                             <!-- Botón Editar -->
                                             <a href="#ModalFormEditaAula" class="btn btn-dark" data-bs-toggle="modal"
@@ -134,7 +228,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 
     <script>
         $(document).ready(function() {
-            $('#tablaxAulas').DataTable({
+            var table = $('#tablaxAulas').DataTable({
                 "dom": '<"top"<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>>rt<"bottom"<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>><"clear">',
                 "language": {
                     "decimal": "",
@@ -160,16 +254,59 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                         "sortDescending": ": activar para ordenar columna descendente"
                     }
                 },
-
                 "initComplete": function(settings, json) {
-                    // Añadir icono de lupa al buscador
                     $('.dataTables_filter label').prepend('<i class="bi bi-search" style="margin-right: 8px;"></i>');
-
-                    // Añadir icono al select de registros por página
                     $('.dataTables_length label').append('<i class="bi bi-list-ol" style="margin-left: 8px;"></i>');
                 }
             });
+
+            $('#estado_aulas').on('change', function() {
+                const valor = $(this).val();
+
+                if (!valor) {
+                    table.column(3).search('').draw();
+                    return;
+                }
+
+                table.column(3).search('^' + valor + '$', true, false).draw();
+            });
+
+            $('#grado_aulas').on('change', function() {
+                const valor = $(this).val();
+                console.log('Valor seleccionado:', valor);
+
+                if (!valor) {
+                    table.column(2).search('').draw();
+                    return;
+                }
+
+                table.column(2).search('^' + valor + '$', true, false).draw();
+            });
         });
+
+        function cargarGrados() {
+            $.ajax({
+                url: "../AJAX/AJAX_Aulas/searchGradosFiltros.php",
+                type: "POST",
+                data: {
+                    action: 'cargar_grados'
+                }, // Enviamos una acción específica
+                success: function(resultado) {
+                    $("#grado_aulas").html('<option value="Seleccionar" selected>Seleccionar</option>' + resultado);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error en la solicitud AJAX:", error);
+                    $("#grado_aulas").html('<option value="Error">Error al cargar grados</option>');
+                }
+            });
+        }
+
+        cargarGrados();
+        let recargar = document.getElementById('recargar');
+
+        recargar.addEventListener('click', function() {
+            window.location.href = "search_aula.php";
+        })
     </script>
 </body>
 

@@ -49,68 +49,59 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                     <table id="tablaxActividad" class="display" style="width:100%">
                         <thead>
                             <tr>
-                                <th scope="col">Cédula</th>
-                                <th scope="col">Nombres</th>
-                                <th scope="col" style="display: none;">Nivel del Grado</th>
-                                <th scope="col">Número de Teléfono</th>
-                                <th scope="col" style="display: none;">Estado</th>
+                                <th scope="col">Contenido</th>
+                                <th scope="col">Nombre de la Materia</th>
+                                <th scope="col">Grado de la Materia</th>
+                                <th scope="col">Nombre Profesor</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
 
-                            include("../Configuration/functions_php/functionsCRUDProfesor.php");
-                            include("../Layout/modalesProfesores/modalPEdit.php");
-                            include("../Layout/modalesProfesores/modalPEnable.php");
-                            include("../Layout/modalesProfesores/modalPDisable.php");
+                            include("../Configuration/functions_php/functioncsCRUDActividades.php");
+                            include("../Layout/modalesActividades/modalAEdit.php");
+                            include("../Layout/modalesActividades/modalADisable.php");
+                            include("../Layout/modalesActividades/modalAEnable.php");
 
-                            $profesores = consultarProfesorCRUD($pdo); // Obtener los usuarios
+                            $actividades = consultarActividadesCRUD($pdo); // Obtener las actividades
 
-                            if (!empty($profesores)) {
-                                foreach ($profesores as $profesor) { // Iterar sobre cada usuario
-
-                                    // Mapear id_estado a su valor correspondiente
-                                    if ($profesor['estado'] == 1) {
-                                        $profesor['estado'] = 'Inactivo';
-                                    } elseif ($profesor['estado'] == 2) {
-                                        $profesor['estado'] = 'Activo';
-                                    }
+                            if (!empty($actividades)) {
+                                foreach ($actividades as $actividad) { // Iterar sobre cada actividad
                             ?>
                                     <tr>
-                                        <td><?php echo ($profesor['cedula']); ?></td>
-                                        <td><?php echo ($profesor['nombre']); ?></td>
-                                        <td style="display: none;"><?php echo ($profesor['nivel_grado']); ?></td>
-                                        <td><?php echo ($profesor['telefono']); ?></td>
-                                        <td style="display: none;"><?php echo ($profesor['estado']); ?></td>
+                                        <td style="text-align: left;">
+                                            <?= htmlspecialchars($actividad['contenido']); ?>
+                                        </td>
+                                        <td><?= htmlspecialchars($actividad['nombre_materia']); ?></td>
+                                        <td><?= htmlspecialchars($actividad['nombre_grado']); ?></td>
+                                        <td><?= htmlspecialchars($actividad['nombre_profesor']); ?></td>
                                         <td>
-                                            <a href="#ModalFormPEdit" class="btn btn-dark" data-bs-toggle="modal"
-                                                data-bs-target="#ModalFormPEdit"
-                                                data-idguia="<?php echo $profesor['id_profesor']; ?>"
-                                                data-id="<?php echo $profesor['cedula']; ?>"
-                                                data-nombre="<?php echo $profesor['nombre']; ?>"
-                                                data-telefono="<?php echo $profesor['telefono']; ?>"
-                                                data-nivelProfesor="<?php echo $profesor['nivel_grado'] ?>">
+                                            <a href="#ModalFormAEdit" class="btn btn-dark" data-bs-toggle="modal"
+                                                data-bs-target="#ModalFormAEdit"
+                                                data-id="<?= htmlspecialchars($actividad['id_actividad']) ?>"
+                                                data-nombreG="<?= htmlspecialchars($actividad['nombre_grado']) ?>"
+                                                data-nombreM="<?= htmlspecialchars($actividad['nombre_materia']) ?>"
+                                                data-nombreP="<?= htmlspecialchars($actividad['nombre_profesor']) ?>"
+                                                data-contenido="<?= htmlspecialchars($actividad['contenido']) ?>">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#ModalFormPEnable"
-                                                data-idguia="<?php echo $profesor['id_profesor']; ?>"
-                                                data-id="<?php echo $profesor['cedula']; ?>"
-                                                data-nombre="<?php echo $profesor['nombre']; ?>"
-                                                data-telefono="<?php echo $profesor['telefono']; ?>"
-                                                data-estado="<?php echo $profesor['estado']; ?>"
-                                                data-nivelProfesor="<?php echo $profesor['nivel_grado'] ?>">
+                                                data-bs-target="#ModalFormEnableA"
+                                                data-id="<?= htmlspecialchars($actividad['id_actividad']) ?>"
+                                                data-nombreG="<?= htmlspecialchars($actividad['nombre_grado']) ?>"
+                                                data-nombreM="<?= htmlspecialchars($actividad['nombre_materia']) ?>"
+                                                data-nombreP="<?= htmlspecialchars($actividad['nombre_profesor']) ?>"
+                                                data-contenido="<?= htmlspecialchars($actividad['contenido']) ?>">
                                                 <i class='bx  bx-check-circle'></i>
                                             </button>
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#ModalFormPDisable"
-                                                data-idguia="<?php echo $profesor['id_profesor']; ?>"
-                                                data-id="<?php echo $profesor['cedula']; ?>"
-                                                data-nombre="<?php echo $profesor['nombre']; ?>"
-                                                data-telefono="<?php echo $profesor['telefono']; ?>"
-                                                data-estado="<?php echo $profesor['estado']; ?>"
-                                                data-nivelProfesor="<?php echo $profesor['nivel_grado'] ?>">
+                                                data-bs-target="#ModalFormDisableA"
+                                                data-id="<?= htmlspecialchars($actividad['id_actividad']) ?>"
+                                                data-nombreG="<?= htmlspecialchars($actividad['nombre_grado']) ?>"
+                                                data-nombreM="<?= htmlspecialchars($actividad['nombre_materia']) ?>"
+                                                data-nombreP="<?= htmlspecialchars($actividad['nombre_profesor']) ?>"
+                                                data-contenido="<?= htmlspecialchars($actividad['contenido']) ?>">
                                                 <i class="bi bi-x-circle"></i>
                                             </button>
                                             <button type="button" class="btn btn-secondary"

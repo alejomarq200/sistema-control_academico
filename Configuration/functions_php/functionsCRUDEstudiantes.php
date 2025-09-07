@@ -4,11 +4,12 @@ include("../Configuration/Configuration.php");
 function consultarEstudiantes($pdo)
 {
     try {
-        $stmt = $pdo->prepare("
-            SELECT e.*, g.id_grado 
+        $stmt = $pdo->prepare
+        (
+            "SELECT e.*, g.id_grado, g.id_grado
             FROM estudiantes e
-            INNER JOIN grados g ON e.grado_est = g.id
-        ");
+            INNER JOIN grados g ON e.grado_est = g.id ORDER BY e.id" 
+        );
         $stmt->execute();
 
         $estudiantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -71,7 +72,6 @@ function editarEstudiante($pdo, array $data)
         } else {
             return false; // Si no se modificó ninguna fila
         }
-
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -142,7 +142,6 @@ function obtenerCalificacionesAgrupadas($pdo, $idEstudiante = null)
             'calificaciones' => array_values($agrupadas),
             'max_califs' => $maxCalifs
         ];
-
     } catch (PDOException $e) {
         error_log("Error al obtener calificaciones: " . $e->getMessage());
         return ['calificaciones' => [], 'max_califs' => 0];

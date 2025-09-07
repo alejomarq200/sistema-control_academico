@@ -1,7 +1,8 @@
 <?php
+error_reporting(0);
+
 include("../Configuration/Configuration.php");
 session_start();
-
 // Verifica si la sesión existe
 if (!isset($_SESSION['id'])) {
     // Redirige si no hay sesión válida

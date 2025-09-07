@@ -8,18 +8,16 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- DATATABLES -->
-    <!--  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"> -->
-    <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="../css/modulos/moduloAsignaturas.css">
+    <link rel="stylesheet" href="../css/modulos/moduloAsignatura.css">
     <title>Consultar Asignaturas</title>
 </head>
 
@@ -27,9 +25,6 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
         <?php
-        error_reporting(0);
-        session_start();
-
         include("menu.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
@@ -44,12 +39,48 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                     <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Módulo de Asignaturas</h1>
                     <p class="lead text-muted">Gestione y administre la información de las Asignaturas</p>
                 </div>
+
+                <div class="filters-container">
+                    <!-- FILTROS CON DISEÑO MODERNO -->
+                    <div class="filters-wrapper">
+                        <!-- Filtro de Nivel Académico -->
+                        <div class="filter-group">
+                            <label for="estado_aulas" class="filter-label">
+                                <i class='bx bx-check-circle'></i>Estado
+                            </label>
+                            <select name="estado_aulas" id="estado_aulas" class="form-select filter-select">
+                                <option value="Seleccionar">Seleccionar</option>
+                                <option value="Activo">Activo</option>
+                                <option value="Inactivo">Inactivo</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="nivel" class="filter-label">
+                                <i class="fi fi-ss-book-arrow-up"></i>Nivel del Grado
+                            </label>
+                            <select name="nivel" id="nivel" class="form-select filter-select">
+                                <option value="Seleccionar">Seleccionar</option>
+                                <option value="Primaria">Primaria</option>
+                                <option value="Secundaria">Secundaria</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="recargar" class="filter-label">
+                                Limpiar
+                            </label>
+                            <button style="padding: 6px 12px; border:none; background-color: #86b7fe; border-radius:12px; color:white;" id="recargar"><i class="fi fi-br-rotate-right"></i></button>
+                        </div>
+
+                    </div>
+                </div>
                 <div class="container-table">
                     <table id="tablaxMaterias" class="display" style="width:100%">
                         <thead>
                             <tr>
                                 <th scope="col">Nombre de la asignatura</th>
-                                <th scope="col" style="display:none;">Nivel de la asignatura</th>
+                                <th scope="col" style="display: none;">Nivel de la asignatura</th>
                                 <th scope="col" style="display: none;">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>
@@ -72,7 +103,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                             ?>
                                     <tr>
                                         <td><?php echo ($materia['nombre']); ?></td>
-                                        <td style="display:none;"><?php echo ($materia['nivel_materia']); ?></td>
+                                        <td style="display: none;"><?php echo ($materia['nivel_materia']); ?></td>
                                         <td style="display: none;"><?php echo ($materia['id_estado']); ?></td>
 
                                         <td>
@@ -127,7 +158,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <script src="../js/validarDeleteAsignatura.js"></script>
     <script>
         $(document).ready(function() {
-            $('#tablaxMaterias').DataTable({
+            var table = $('#tablaxMaterias').DataTable({
                 "dom": '<"top"<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>>rt<"bottom"<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>><"clear">',
                 "language": {
                     "decimal": "",
@@ -162,7 +193,34 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                     $('.dataTables_length label').append('<i class="bi bi-list-ol" style="margin-left: 8px;"></i>');
                 }
             });
+
+            $('#estado_aulas').on('change', function() {
+                const valor = $(this).val();
+
+                if (!valor) {
+                    table.column(2).search('').draw();
+                    return;
+                }
+                table.column(2).search('^' + valor + '$', true, false).draw();
+            });
+
+            $('#nivel').on('change', function() {
+                const valor = $(this).val();
+
+                if (!valor) {
+                    table.column(1).search('').draw();
+                    return;
+                }
+                table.column(1).search('^' + valor + '$', true, false).draw();
+            });
         });
+
+        let recargar = document.getElementById('recargar');
+
+        recargar.addEventListener('click', function() {
+            window.location.href = "search_materia.php";
+        })
     </script>
 </body>
+
 </html>

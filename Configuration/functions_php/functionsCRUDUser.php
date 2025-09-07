@@ -165,9 +165,9 @@ function reporteUsuarios($pdo, $estado, $rol)
 
 function recoveryPass($pdo, array $variablesFormRecovery)
 {
-
+    $hash = password_hash($variablesFormRecovery[0], PASSWORD_DEFAULT);
     $stmt = $pdo->prepare("UPDATE users SET contrasena = :contrasena WHERE cedula = :cedula");
-    $stmt->bindValue(':contrasena', $variablesFormRecovery[0]);
+    $stmt->bindValue(':contrasena', $hash);
     $stmt->bindValue(':cedula', $variablesFormRecovery[2]);
     $stmt->execute();
 

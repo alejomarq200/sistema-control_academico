@@ -33,9 +33,13 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
             /* CUERPO DEL MENÚ */
             ?>
 
-            <div class="filters-container">
-                <h1 class="my-3" id="titulo">Módulo de Grados</h1>
+            <!-- Título principal con estilo mejorado -->
+            <div class="mb-4" style="max-width: 800px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
+                <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Módulo de Grados</h1>
+                <p class="lead text-muted">Gestione y administre la información de las asignaturas y profesores de acuerdo al grado</p>
+            </div>
 
+            <div class="filters-container">
                 <!-- FILTROS CON DISEÑO MODERNO -->
                 <div class="filters-wrapper">
                     <div class="filtro-container d-flex align-items-center">
