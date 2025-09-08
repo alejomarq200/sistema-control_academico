@@ -13,8 +13,6 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- DATATABLES -->
-    <!--  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"> -->
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <title>Consultar Reresentantes</title>
@@ -59,7 +57,6 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                             <?php
                             include("../Configuration/functions_php/functionsCRUDRepresentantes.php");
                             include("../Layout/modalesRepresentantes/modalEditRepresentante.php");
-                            include("../Layout/modalesRepresentantes/modalVerRepresentante.php");
 
                             $representantes = consultarRepresentantes($pdo); // Obtener los representantes
 
@@ -67,47 +64,29 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                 foreach ($representantes as $representante) { // Iterar sobre cada usuario
                             ?>
                                     <tr>
-                                        <td><?php echo ($representante['cedula']); ?></td>
-                                        <td><?php echo ($representante['nombres']); ?>
-                                        <td><?php echo ($representante['apellidos']); ?></td>
-                                        <td><?php echo ($representante['correo']); ?>
-                                        <td><?php echo ($representante['direccion']); ?></td>
-                                        <td><?php echo ($representante['nro_telefono']); ?></td>
+                                        <td><?= htmlspecialchars($representante['cedula']); ?></td>
+                                        <td><?= htmlspecialchars($representante['nombres']); ?>
+                                        <td><?= htmlspecialchars($representante['apellidos']); ?></td>
+                                        <td><?= htmlspecialchars($representante['correo']); ?>
+                                        <td><?= htmlspecialchars($representante['direccion']); ?></td>
+                                        <td><?= htmlspecialchars($representante['nro_telefono']); ?></td>
                                         <td>
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" style="font-size: 15px;"
-                                                data-bs-target="#formModalVer"
-                                                data-id="<?php echo $representante['id']; ?>"
-                                                data-cedula="<?php echo $representante['cedula']; ?>"
-                                                data-nombres="<?php echo $representante['nombres']; ?>"
-                                                data-apellidos="<?php echo $representante['apellidos']; ?>"
-                                                data-fecha_nac="<?php echo $representante['fecha_nac']; ?>"
-                                                data-correo="<?php echo $representante['correo'] ?>"
-                                                data-direccion="<?php echo $representante['direccion']; ?>"
-                                                data-nro_telefono="<?php echo $representante['nro_telefono']; ?>"
-                                                data-grado_inst="<?php echo $representante['grado_inst']; ?>"
-                                                data-profesion="<?php echo $representante['profesion']; ?>"
-                                                data-trabaja="<?php echo $representante['trabaja']; ?>"
-                                                data-nombre_empr="<?php echo $representante['nombre_empr'] ?>"
-                                                data-telefono_empr="<?php echo $representante['telefono_empr'] ?>"
-                                                data-direccion_empr="<?php echo $representante['direccion_empr'] ?>">
-                                                <i class="bi bi-eye-fill"></i>
-                                            </button>
                                             <a href="#formModal" class="btn btn-dark" data-bs-toggle="modal" style="font-size: 15px;"
                                                 data-bs-target="#formModal"
-                                                data-id="<?php echo $representante['id']; ?>"
-                                                data-cedula="<?php echo $representante['cedula']; ?>"
-                                                data-nombres="<?php echo $representante['nombres']; ?>"
-                                                data-apellidos="<?php echo $representante['apellidos']; ?>"
-                                                data-fecha_nac="<?php echo $representante['fecha_nac']; ?>"
-                                                data-correo="<?php echo $representante['correo'] ?>"
-                                                data-direccion="<?php echo $representante['direccion']; ?>"
-                                                data-nro_telefono="<?php echo $representante['nro_telefono']; ?>"
-                                                data-grado_inst="<?php echo $representante['grado_inst']; ?>"
-                                                data-profesion="<?php echo $representante['profesion']; ?>"
-                                                data-trabaja="<?php echo $representante['trabaja']; ?>"
-                                                data-nombre_empr="<?php echo $representante['nombre_empr'] ?>"
-                                                data-telefono_empr="<?php echo $representante['telefono_empr'] ?>"
-                                                data-direccion_empr="<?php echo $representante['direccion_empr'] ?>">
+                                                data-id="<?= htmlspecialchars($representante['id']); ?>"
+                                                data-cedula="<?= htmlspecialchars($representante['cedula']); ?>"
+                                                data-nombres="<?= htmlspecialchars($representante['nombres']); ?>"
+                                                data-apellidos="<?= htmlspecialchars($representante['apellidos']); ?>"
+                                                data-fecha_nac="<?= htmlspecialchars($representante['fecha_nac']); ?>"
+                                                data-correo="<?= htmlspecialchars($representante['correo']); ?>"
+                                                data-direccion="<?= htmlspecialchars($representante['direccion']); ?>"
+                                                data-nro_telefono="<?= htmlspecialchars($representante['nro_telefono']); ?>"
+                                                data-grado_inst="<?= htmlspecialchars($representante['grado_inst']); ?>"
+                                                data-profesion="<?= htmlspecialchars($representante['profesion']); ?>"
+                                                data-trabaja="<?= htmlspecialchars($representante['trabaja']); ?>"
+                                                data-nombre_empr="<?= htmlspecialchars($representante['nombre_empr']); ?>"
+                                                data-telefono_empr="<?= htmlspecialchars($representante['telefono_empr']); ?>"
+                                                data-direccion_empr="<?= htmlspecialchars($representante['direccion_empr']); ?>">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                         </td>
@@ -134,47 +113,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <!-- BOOTSTRAP -->
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js">
     </script>
-    <script src="../js/validarDeleteUsuarios.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#tablaxRepresentante').DataTable({
-                "dom": '<"top"<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>>rt<"bottom"<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>><"clear">',
-                "language": {
-                    "decimal": "",
-                    "emptyTable": "No hay datos disponibles en la tabla",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ registros por página",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "No se encontraron registros coincidentes",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Último",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    },
-                    "aria": {
-                        "sortAscending": ": activar para ordenar columna ascendente",
-                        "sortDescending": ": activar para ordenar columna descendente"
-                    }
-                },
-
-                "initComplete": function(settings, json) {
-                    // Añadir icono de lupa al buscador
-                    $('.dataTables_filter label').prepend('<i class="bi bi-search" style="margin-right: 8px;"></i>');
-
-                    // Añadir icono al select de registros por página
-                    $('.dataTables_length label').append('<i class="bi bi-list-ol" style="margin-left: 8px;"></i>');
-                }
-            });
-        });
-    </script>
+    <script src="../js/moduloRepresentantes.js"></script>
 </body>
 
 </html>

@@ -37,7 +37,8 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                 include("../Layout/mensajes.php");
                 /* CUERPO DEL MENÚ */
                 ?>
-                <div class="mb-4" style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
+                <div class="mb-4"
+                    style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
                     <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Módulo de Inscripción</h1>
                     <p class="lead text-muted">Gestione y administre la información de las inscripciones</p>
                 </div>
@@ -69,7 +70,9 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                             <label for="recargar" class="filter-label">
                                 Limpiar
                             </label>
-                            <button style="padding: 6px 12px; border:none; background-color: #86b7fe; border-radius:12px; color:white;" id="recargar"><i class="fi fi-br-rotate-right"></i></button>
+                            <button
+                                style="padding: 6px 12px; border:none; background-color: #86b7fe; border-radius:12px; color:white;"
+                                id="recargar"><i class="fi fi-br-rotate-right"></i></button>
                         </div>
                     </div>
                 </div>
@@ -97,8 +100,10 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 
                                 if (!empty($inscripciones)) {
                                     foreach ($inscripciones as $insc) {
-                                ?>
-                                        <tr data-grado-id="<?php echo $insc['grado_estudiante']; ?>" data-anio="<?php echo $insc['anio_escolar']; ?>" data-genero="<?php echo $insc['sexo']; ?>">
+                                        ?>
+                                        <tr data-grado-id="<?php echo $insc['grado_estudiante']; ?>"
+                                            data-anio="<?php echo $insc['anio_escolar']; ?>"
+                                            data-genero="<?php echo $insc['sexo']; ?>">
                                             <td><?php echo $insc['nombres_est'] . ' ' . $insc['apellidos_est']; ?></td>
                                             <td><?php echo $insc['cedula_est']; ?></td>
                                             <td><?php echo $insc['edad_est']; ?></td>
@@ -108,13 +113,14 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                             <td><?php echo date('d/m/Y', strtotime($insc['fecha_inscripcion'])); ?></td>
 
                                             <td>
-                                                <button class="btn btn-primary" onclick="descargarPlanillaInscripcion()" data-id-est="<?php echo $insc['id_estudiante']; ?>">
+                                                <button class="btn btn-primary" onclick="descargarPlanillaInscripcion()"
+                                                    data-id-est="<?php echo $insc['id_estudiante']; ?>">
                                                     <i class="bi bi-download"></i> Descargar Planilla
                                                 </button>
 
                                             </td>
                                         </tr>
-                                <?php
+                                        <?php
                                     }
                                 } else {
                                     echo "<tr><td colspan='10'>No se encontraron inscripciones.</td></tr>";
@@ -134,11 +140,10 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
             </div>
         </div>
     </div>
-
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous">
-    </script>
+        </script>
     <!-- DATATABLES -->
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
     </script>
@@ -146,117 +151,6 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js">
     </script>
 </body>
-<script>
-    $(document).ready(function() {
-        var table = $('#tablaxInscripcion').DataTable({
-            "dom": '<"top"<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>>rt<"bottom"<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>><"clear">',
-            "language": {
-                "decimal": "",
-                "emptyTable": "No hay datos disponibles en la tabla",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "Mostrar _MENU_ registros por página",
-                "loadingRecords": "Cargando...",
-                "processing": "Procesando...",
-                "search": "Buscar:",
-                "zeroRecords": "No se encontraron registros coincidentes",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Último",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                },
-                "aria": {
-                    "sortAscending": ": activar para ordenar columna ascendente",
-                    "sortDescending": ": activar para ordenar columna descendente"
-                }
-            },
-
-            "initComplete": function(settings, json) {
-                // Añadir icono de lupa al buscador
-                $('.dataTables_filter label').prepend('<i class="bi bi-search" style="margin-right: 8px;"></i>');
-
-                // Añadir icono al select de registros por página
-                $('.dataTables_length label').append('<i class="bi bi-list-ol" style="margin-left: 8px;"></i>');
-            }
-        });
-
-        $('#genero').on('change', function() {
-            const valor = $(this).val();
-
-            if (!valor) {
-                table.column(3).search('').draw();
-                return;
-            }
-
-            table.column(3).search('^' + valor + '$', true, false).draw();
-        });
-
-        $('#grado_aulas').on('change', function() {
-            const valor = $(this).val();
-            console.log('Valor seleccionado:', valor);
-
-            if (!valor) {
-                table.column(4).search('').draw();
-                return;
-            }
-
-            table.column(4).search('^' + valor + '$', true, false).draw();
-        });
-    });
-</script>
-<script>
-    function mostrarModalCarga() {
-        document.getElementById('modalCarga').style.display = 'flex';
-    }
-
-    function ocultarModalCarga() {
-        document.getElementById('modalCarga').style.display = 'none';
-    }
-
-    function descargarPlanillaInscripcion() {
-        mostrarModalCarga();
-        const button = event.target.closest('button');
-        const id = button.getAttribute('data-id-est');
-        // Simula el tiempo de descarga real (ej: PDF generado en backend)
-        setTimeout(() => {
-            ocultarModalCarga();
-            alert("📄 La planilla de inscripción se ha descargado exitosamente.\n¡Gracias por confiar en nuestra institución educativa!");
-
-            // Aquí puedes activar la descarga real si usas un enlace
-            window.location.href = "../reportes/reportePlanillaInscripcionI.php?id=" + id;
-        }, 2500); // tiempo simulado en milisegundos
-    }
-
-    function cargarGrados() {
-        $.ajax({
-            url: "../AJAX/AJAX_Aulas/searchGradosFiltros.php",
-            type: "POST",
-            data: {
-                action: 'cargar_grados'
-            }, // Enviamos una acción específica
-            success: function(resultado) {
-                $("#grado_aulas").html('<option value="Seleccionar" selected>Seleccionar</option>' + resultado);
-            },
-            error: function(xhr, status, error) {
-                console.error("Error en la solicitud AJAX:", error);
-                $("#grado_aulas").html('<option value="Error">Error al cargar grados</option>');
-            }
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-
-        cargarGrados();
-        let recargar = document.getElementById('recargar');
-
-        recargar.addEventListener('click', function() {
-            window.location.href = "search_inscripcion.php";
-        })
-    });
-</script>
+<script src="../js/moduloInscripciones.js"></script>
 
 </html>

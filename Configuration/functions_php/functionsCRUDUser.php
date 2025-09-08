@@ -24,7 +24,7 @@ function consultarUsuariosCRUD($pdo)
 /* FUNCIÓN DE INSERTAR USUARIOS */
 function insertar_user($pdo, $variablesModalCreate)
 {
-    $nuevaPwd =  password_hash($variablesModalCreate[4], PASSWORD_DEFAULT);
+    $nuevaPwd = password_hash($variablesModalCreate[4], PASSWORD_DEFAULT);
 
     try {
 
@@ -65,13 +65,12 @@ function editarUsuario($pdo, $variablesModalEdit)
 {
     try {
 
-        $stmt = $pdo->prepare("UPDATE users SET cedula=:cedula, nombres=:nombres, correo=:correo, telefono=:telefono, contrasena=:contrasena, id_rol=:id_rol WHERE id=:id");
+        $stmt = $pdo->prepare("UPDATE users SET cedula=:cedula, nombres=:nombres, correo=:correo, telefono=:telefono, id_rol=:id_rol WHERE id=:id");
 
         $stmt->bindValue(':cedula', $variablesModalEdit[0]);
         $stmt->bindValue(':nombres', $variablesModalEdit[1]);
         $stmt->bindValue(':correo', $variablesModalEdit[2]);
         $stmt->bindValue(':telefono', $variablesModalEdit[3]);
-        $stmt->bindValue(':contrasena', $variablesModalEdit[4]);
         $stmt->bindValue(':id_rol', $variablesModalEdit[5]);
         $stmt->bindValue(':id', $variablesModalEdit[6]);
         $stmt->execute();
@@ -196,7 +195,7 @@ function validarRolyAccesoAdmin($rol, $estado, $redireccion)
     }
 
     // Si NO es admin O NO está activo, redirige
-    if ($rol != 1 && $estado != 2 ||  $rol != 3 && $estado != 2 ) {
+    if ($rol != 1 && $estado != 2 || $rol != 3 && $estado != 2) {
         $_SESSION['mensaje'] = 'Atención. No tiene permisos para acceder a este módulo';
         $_SESSION['icono'] = 'warning';
         $_SESSION['titulo'] = 'Atención';

@@ -40,8 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $patronName = "/^[A-Za-zñÑáéíóúÁÉÍÓÚ]{3,}(?: [A-Za-zñÑáéíóúÁÉÍÓÚ]{2,})?$/";
     /* Regex formato correo de mínimo 2 dígitos e incluir arroba y punto */
     $patronEmail = "/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/";
-    /* 1 dígito, 1 letra minúscula, 1 letra mayúscula, 1 caracter especial entre 6 y 20 */
-    $patronPw = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\-+.]).{6,20}$/";
     /* Formato de número telefónico */
     $patronPhone = "/^(0414|0424|0412|0416|0426)[0-9]{7}$/";
 
@@ -82,14 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else if (!preg_match($patronPhone, $variablesModalEdit[3])) {
         $validar = false;
         $mensajes[] = 'Formato inválido: Ingrese 0416-0426-0414-0424 ó 0412 y 7 números';
-    }
-
-    if (empty($variablesModalEdit[4])) {
-        $validar = false;
-        $mensajes[] = 'Campo vacio contraseña';
-    } else if (!preg_match($patronPw, $variablesModalEdit[4])) {
-        $validar = false;
-        $mensajes[] = 'Formato inválido: Ingrese de 8 a 16 digitos con minúsculas, mayúsculas, caracter especiales y números';
     }
 
     if (empty($variablesModalEdit[5])) {
