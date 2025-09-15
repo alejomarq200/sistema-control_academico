@@ -5,13 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controller PHP - REGISTER PROFESOR</title>
-    <link rel="stylesheet" href="../css/alerts.css">
+    <title>Controller PHP - REGISTER PROFESOR A GRADO</title>
 </head>
 
 <?php
 include("../Configuration/Configuration.php");
-
 include("../Layout/mensajes.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -66,27 +64,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $validar = false;
     }
 
-
-
-    function gestionarProfesor($pdo, $modalMultiStep)
+    function registrarProfesorGrado($pdo, $modalMultiStep)
     {
         try {
             $stmt = $pdo->prepare("INSERT INTO profesor_grado (id_profesor,	id_grado) VALUES (:id_profesor, :id_grado)");
-            $stmt->bindValue('id_profesor', $modalMultiStep[0]);
-            $stmt->bindValue('id_grado', $modalMultiStep[3]);
+            $stmt->bindValue(':id_profesor', $modalMultiStep[0], PDO::PARAM_STR);
+            $stmt->bindValue(':id_grado', $modalMultiStep[3], PDO::PARAM_INT);
             $stmt->execute();
 
             // Verificar si se encontró algún registro
             if ($stmt->rowCount() > 0) {
-                $_SESSION['mensaje'] = 'Profesor asignado exitosamente.';
-                $_SESSION['icono'] = 'success';
-                $_SESSION['titulo'] = 'Success';
-                header("Location: ../Desarrollo/search_grado.php");
+                return true;
+                // $_SESSION['mensaje'] = 'Profesor asignado exitosamente.';
+                // $_SESSION['icono'] = 'success';
+                // $_SESSION['titulo'] = 'Success';
+                // header("Location: ../Desarrollo/search_grado.php");
+            } else {
+                return false;
+
             }
         } catch (PDOException $e) {
             echo $e->getmessage();
         }
     }
+    
     function retornarIdProfesor($pdo, array $arreglo)
     {
         try {
@@ -108,8 +109,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($validar) {
         $modalMultiStep[0] = retornarIdProfesor($pdo, $modalMultiStep);
+        //echo $modalMultiStep[0];
+        $valor = registrarProfesorGrado($pdo, $modalMultiStep);
 
-        gestionarProfesor($pdo, $modalMultiStep);
+        var_dump($valor);
     } else {
         foreach ($mensajes as $error) {
             echo $error . "<br>";

@@ -1,6 +1,5 @@
 <?php
 include("../Configuration/Configuration.php");
-include("../Configuration/functions_php/functionsCRUDProfesor.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mensaje = null;

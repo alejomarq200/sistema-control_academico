@@ -11,15 +11,11 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css">
-    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="../css/modulos/moduloProfesorG.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../css/modulos/moduloProfesores.css">
     <title>Consultar Profesores</title>
 </head>
 
@@ -77,9 +73,9 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                     </div>
                 </div>
                 <div style="margin-bottom: 8px;">
-                    <a class="boton-modal-gestionPr">
+                    <a class="boton-modal-gestionPr" id="btn-gestionar">
                         <label for="btn-modal-gestionPr">
-                            Gestionar Profesores
+                            Consultar Profesores Asignados
                             <i class="bi bi-plus-circle-dotted"></i>
                         </label>
                     </a>
@@ -174,95 +170,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
         </div>
     </div>
 </body>
-<!--Ventana Modal-->
-<input type="checkbox" id="btn-modal-gestionPr">
-<div class="container-modal-gestionPr">
-    <div class="content-modal-gestionPr">
-        <h2> Gestionar Profesores</h2>
-        <div class="container">
-            <form id="form1-gestionPr">
-                <table id="tabla-general">
-                    <thead>
-                        <tr style="height: 60px;">
-                            <th>Cédula Profesor</th>
-                            <th>Nombre Profesor</th>
-                            <th>Nivel de Grado</th>
-                            <th>Materias(s)</th>
-                            <th>Grado(s)</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $profesoresAsignados = obtenerProfesoresAsignados($pdo);
 
-                        if (!empty($profesoresAsignados)) {
-                            foreach ($profesoresAsignados as $profesor) {
-                                //$nombreMateria = retornarMateriasEnTabla($pdo, $profesor);
-                                ?>
-                                <tr>
-                                    <td><?php echo htmlspecialchars($profesor['cedula']); ?></td>
-                                    <td><?php echo htmlspecialchars($profesor['nombre']); ?></td>
-                                    <td><?php echo htmlspecialchars($profesor['nivel_grado']); ?></td>
-                                    <td><?php echo htmlspecialchars($profesor['materias_asignados']); ?></td>
-                                    <td><?php echo htmlspecialchars($profesor['grados_asignados']); ?></td>
-                                    <td>
-                                        <button type="button" class="next1-gestionPr"
-                                            data-cedula="<?php echo htmlspecialchars($profesor['cedula']); ?>"
-                                            data-nombre="<?php echo htmlspecialchars($profesor['nombre']); ?>"
-                                            data-grado="<?php echo htmlspecialchars($profesor['grados_asignados']); ?>"
-                                            data-nivelProfesor="<?php echo htmlspecialchars($profesor['nivel_grado']); ?>">
-                                            <i class="bi bi-pencil-square"></i> Editar
-                                        </button>
-                                    </td>
-                                </tr>
-                                <?php
-                            }
-                        } else {
-                            echo "<tr><td colspan='6'>No se encontraron profesores activos.</td></tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </form>
-            <form method="POST" action="../controller_php/controller_FormMultiStepGestionPr.php" id="form2-gestionPr">
-                <h3>Información del Grado</h3>
-                <label for="cedulaProfesorG" class="labelGrados">Cédula del Profesor:</label>
-                <input type="text" name="cedulaProfesorG" id="cedulaProfesorG" style="margin-bottom: -30px;" readonly>
-                <p class="errorFormMultiPr" id="errorCedulaProfesorG"></p>
-                <label for="nombreProfesorG" class="labelGrados">Nombre del Profesor:</label>
-                <input type="text" name="nombreProfesorG" id="nombreProfesorG" style="margin-bottom: -30px;" readonly>
-                <p class="errorFormMultiPr" id="errorProfesorG"></p>
-                <label for="nivelProfesorG" class="labelGrados">Nivel del Profesor:</label>
-                <input type="text" name="nivelProfesorG" id="nivelProfesorG" style="margin-bottom: -30px;" readonly>
-                <p class="errorFormMultiPr" id="errornivelProfesorG"></p>
-                <label for="gradosG" class="labelGrados">Grado(s):</label>
-                <select name="gradosG" id="gradosG" class="selectGrados" onchange="cargarSelectMateriasxProfesor()">
-                    <option value="Seleccionar" selected>Seleccionar</option>
-                </select>
-                <p class="errorFormMultiPr" id="errorGradosG"></p>
-                <label for="materiasG" class="labelGrados">Materia(s):</label>
-                <select name="materiasG" id="materiasG" class="selectGrados">
-                    <option value="No asignado" selected>No asignado</option>
-                </select>
-                <p class="errorFormMultiPr" id="errorMateriasG"></p>
-                <div class="btn-box">
-                    <button type="button" id="back1-gestionPr">Volver</button>
-                    <button type="submit">Registrar</button>
-                </div>
-            </form>
-            <div class="step-row-gestionPr">
-                <div id="progress-gestionPr"></div>
-                <div class="step-col-gestionPr"><small>Primer paso</small></div>
-                <div class="step-col-gestionPr"><small>Segundo paso</small></div>
-            </div>
-        </div>
-        <div class="btn-cerrar-gestionPr">
-            <label for="btn-modal-gestionPr">Cerrar</label>
-        </div>
-    </div>
-    <label for="btn-modal-gestionPr" class="cerrar-modal-gestionPr"></label>
-</div>
 <!-- JQUERY -->
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
     crossorigin="anonymous">
@@ -275,6 +183,13 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 </script>
 <script src="../js/moduloProfesores.js"></script>
 <!--Fin de Ventana Modal-->
-<script src="../js/multiStepProfMatYGrado.js"></script>
+<script>
+    const btnGestion = document.getElementById('btn-gestionar');
+
+    btnGestion.addEventListener('click', function () {
+        window.location.href = "gestion_profesores.php";
+    })
+
+</script>
 
 </html>

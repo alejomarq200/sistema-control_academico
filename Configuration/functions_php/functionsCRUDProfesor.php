@@ -1,6 +1,5 @@
 <?php
 include("../Configuration/Configuration.php");
-
 function consultarProfesorCRUD($pdo)
 {
     try {
@@ -26,6 +25,31 @@ function consultarProfesorCRUD($pdo)
         return $profesores ?: [];
     } catch (PDOException $e) {
         echo $e->getMessage();
+    }
+}
+
+function enlistarProfesoresxGrado($pdo)
+{
+    try {
+        $stmt = $pdo->prepare(
+            "SELECT 
+                profesor_grado.id_profesor,
+                profesores.nombre, 
+                profesores.cedula,
+                GROUP_CONCAT(DISTINCT grados.id_grado ORDER BY grados.id_grado SEPARATOR ', ') as grados
+            FROM profesor_grado
+            INNER JOIN grados ON profesor_grado.id_grado = grados.id
+            INNER JOIN profesores ON profesor_grado.id_profesor = profesores.id_profesor
+            GROUP BY profesor_grado.id_profesor"
+        );
+        $stmt->execute();
+
+        $profesores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $profesores ?: [];
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+        return [];
     }
 }
 
@@ -194,7 +218,6 @@ function retornarIdProfesor($pdo, array $arreglo)
         return null;
     }
 }
-
 
 function gestionarProfesor($pdo, array $arregloPr)
 {
