@@ -1,0 +1,46 @@
+ h4 {
+     color: #333;
+ }
+
+ .select2-container--default .select2-selection--multiple {
+     background-color: #e4e0e0ff;
+     border: 1px solid #b8b6b6ff;
+     border-radius: 8px;
+     height: 50px;
+     overflow: hidden;
+     overflow-y: auto;
+     /* O 'scroll' para siempre ver la barra */
+ }
+
+ .select2-selection__choice {
+     background-color: #007bff;
+     border: none;
+     color: #000000ff;
+     border-radius: 20px;
+     font-size: 10px;
+     padding: 2px 8px;
+     margin: 2px;
+ }
+
+
+ .select2-selection__choice__remove {
+     color: rgb(0, 0, 0);
+     margin-right: 6px;
+ }
+
+ .select2-results__option .badge {
+     background-color: #28a745;
+     color: white;
+     border-radius: 12px;
+     padding: 2px 8px;
+     margin-left: 8px;
+     font-size: 12px;
+ }
+
+ .select2-results__option i {
+     margin-right: 8px;
+ }
+
+ .error {
+     color: red;
+ }

@@ -28,6 +28,24 @@ function consultarProfesorCRUD($pdo)
     }
 }
 
+function asignarProfesorMateriaYGrado($pdo, array $array, $key)
+{
+    try {
+        $stmt = $pdo->prepare("INSERT INTO profesor_materia_grado (id_profesor, id_materia, id_grado) VALUES (:id_profesor, :id_materia, :id_grado)");
+        $stmt->bindValue(':id_profesor', $array['idProfesor'], PDO::PARAM_INT);
+        $stmt->bindValue(':id_materia', $key, PDO::PARAM_INT);
+        $stmt->bindValue(':id_grado', $array['gradoProfesor'], PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        // Verificar si se encontró algún registro
+        return true;
+        // echo 'Se registró con éxito el profesor';
+    } catch (PDOException $e) {
+        echo $e->getmessage();
+    }
+}
+
 function enlistarProfesoresxGrado($pdo)
 {
     try {
@@ -219,29 +237,7 @@ function retornarIdProfesor($pdo, array $arreglo)
     }
 }
 
-function gestionarProfesor($pdo, array $arregloPr)
-{
-    try {
-        $stmt = $pdo->prepare("INSERT INTO profesor_materia_grado (id_profesor, id_materia, id_grado) VALUES (:id_profesor, :id_materia, :id_grado)");
-        $stmt->bindValue(':id_profesor', $arregloPr[0]);
-        $stmt->bindValue(':id_materia', $arregloPr[4]);
-        $stmt->bindValue(':id_grado', $arregloPr[3]);
 
-        $stmt->execute();
-
-        // Verificar si se encontró algún registro
-        if ($stmt->rowCount() > 0) {
-
-            $_SESSION['mensaje'] = 'Profesor registrado exitosamente.';
-            $_SESSION['icono'] = 'success';
-            $_SESSION['titulo'] = 'Success';
-            header("Location: ../Desarrollo/search_profesor.php");
-            exit();
-        }
-    } catch (PDOException $e) {
-        echo $e->getmessage();
-    }
-}
 function obtenerProfesoresAsignados($pdo)
 {
     $query =

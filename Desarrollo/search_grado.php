@@ -62,7 +62,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
             </div>
             <div style="margin-bottom: 15px;">
                 <!-- Botón de Agregar Usuarios (a la izquierda) -->
-                <a class="boton-modal-grados">
+                <a class="boton-modal-grados" id="modulo_ProfesoresDeGrados">
                     <label for="btn-modal-grados">
                         Asignar materias a grados
                         <i class="bi bi-plus-circle-dotted"></i>
@@ -299,6 +299,11 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                 <!--Fin de Ventana Modal-->
             </body>
             <script>
+                const moduloGrados = document.getElementById('modulo_ProfesoresDeGrados');
+                moduloGrados.addEventListener('click', function () {
+                    window.location.href = "consultar_materiaDeGrados.php";
+                })
+
                 document.getElementById('filtroNivel').addEventListener('change', function() {
                     const nivelSeleccionado = this.value.toLowerCase();
                     const filas = document.querySelectorAll('table tbody tr');

@@ -16,7 +16,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="../css/modulos/modulosProfesorGestion.css">
-    <title>Gestionar Profesores</title>
+    <title>Consultar Asignaturas por Grados</title>
 </head>
 
 <body>
@@ -30,25 +30,15 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
             <div class="text-center">
                 <?php
                 include("../Layout/mensajes.php");
-                include("../Layout/modalesProfesores/modalGestionProfesores.php");
-                include("../Layout/modalesProfesores/modalAsignarProfesor.php");
-                include("../Layout/modalesProfesores/modalProfesorxGradoAsign.php");
+                include("../Layout/modalesGrados/modalAsignarMateriaAGrado.php");
                 /* CUERPO DEL MENÚ */
                 ?>
                 <!-- Título principal con estilo mejorado -->
                 <div class="mb-4"
                     style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
-                    <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Gestión de Profesores</h1>
-                    <p class="lead text-muted">Gestione y administre la información de los Profesores asignados a los
+                    <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Consultar Asignaturas por Grados</h1>
+                    <p class="lead text-muted">Gestione y administre la información de los asignaturas asignadas a los
                         grados</p>
-                </div>
-                <div style="margin-bottom: 8px;">
-                    <button id="btn-gestionar"
-                        style="background-color:gray; padding: 8px 12px; border-radius: 8px; border: none;"
-                        href="#modalConsultarProfesorxGrado" data-bs-toggle="modal"
-                        data-bs-toggle="modal" data-bs-target="#modalConsultarProfesorxGrado">Consulte los
-                        grados y materias de los profesores <i class="fi fi-rr-search-alt"></i>
-                    </button>
                 </div>
                 <div class="container-table">
                     <div class="custom-table">
@@ -63,40 +53,44 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                             </thead>
                             <tbody>
                                 <?php
-                                include("../Configuration/functions_php/functionsCRUDProfesor.php");
+                                include("../Configuration/functions_php/functionsCRUDGrados.php");
 
-                                $profesores = enlistarProfesoresxGrado($pdo); // Obtener los usuarios
-                                
-                                if (!empty($profesores)) {
-                                    foreach ($profesores as $profesor) { // Iterar sobre cada usuario
+                                $materiasYGrados = consultarMateriasConGrados($pdo);
+                                if (!empty($materiasYGrados)):
+                                    foreach ($materiasYGrados as $materia):
                                         ?>
                                         <tr>
-                                            <td><?= htmlspecialchars($profesor['cedula']); ?></td>
-                                            <td><?= htmlspecialchars($profesor['nombre']); ?></td>
-                                            <td><?= htmlspecialchars($profesor['grados']); ?></td>
+                                            <td><?= htmlspecialchars($materia['nombre_materia']) ?></td>
+                                            <td><?= htmlspecialchars($materia['nivel_materia']) ?></td>
                                             <td>
-                                                <button href="#modalProfesorGradoGestion" class="btn btn-primary"
+                                                <?php
+                                                if ($materia['grados_asignados'] === 'No asignado') {
+                                                    echo '<span class="text-muted">No asignado</span>';
+                                                } else {
+                                                    echo htmlspecialchars($materia['grados_asignados']);
+                                                }
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <button href="#modalAsignarMateriaAGrado" class="btn btn-secondary"
                                                     data-bs-toggle="modal" data-bs-toggle="modal"
-                                                    data-bs-target="#modalProfesorGradoGestion"
-                                                    data-id="<?= htmlspecialchars($profesor['id_profesor']); ?>"
-                                                    data-nombre="<?= htmlspecialchars($profesor['nombre']); ?>">
-                                                    <img src="../imgs/gestion-de-proyectos.png" alt="gestion">
+                                                    data-bs-target="#modalAsignarMateriaAGrado" style="font-size: 15px;"
+                                                    data-nombre-materia="<?= htmlspecialchars($materia['nombre_materia']); ?>"
+                                                    data-nivel-materia="<?= htmlspecialchars($materia['nivel_materia']); ?>">
+                                                      <i class="bi bi-plus-circle-dotted"></i>
                                                 </button>
-                                                <button href="#modalAsignarProfesor" class="btn btn-secondary"
-                                                    data-bs-toggle="modal" data-bs-toggle="modal"
-                                                    data-bs-target="#modalAsignarProfesor"
-                                                    data-id="<?= htmlspecialchars($profesor['id_profesor']); ?>"
-                                                    data-nombre="<?= htmlspecialchars($profesor['nombre']); ?>">
-                                                    <img src="../imgs/asignar.png" alt="asignar">
-                                                </button>
+                                             
                                             </td>
                                         </tr>
                                         <?php
-                                    }
-                                } else {
-                                    echo "<tr><td colspan='8'>No se encontraron usuarios.</td></tr>";
-                                }
-                                ?>
+                                    endforeach;
+                                else:
+                                    ?>
+                                    <tr>
+                                        <td colspan="4" class="text-center">No se encontraron materias registradas.
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -117,4 +111,5 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 <!-- BOOTSTRAP -->
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script src="../js/moduloGestionProfesores.js"></script>
+
 </html>

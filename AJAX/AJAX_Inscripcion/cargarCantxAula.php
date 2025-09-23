@@ -17,9 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Obtener cantidad de inscritos
             $stmt2 = $pdo->prepare("SELECT COUNT(DISTINCT id_estudiante) 
-FROM inscripciones 
-WHERE grado = :grado 
-AND anio_escolar = :anio_escolar");
+                                    FROM inscripciones 
+                                    WHERE grado = :grado 
+                                    AND anio_escolar = :anio_escolar");
             $stmt2->bindValue(':grado', $idgrado, PDO::PARAM_STR);
             $stmt2->bindValue(':anio_escolar', $anio, PDO::PARAM_STR);
             $stmt2->execute();
