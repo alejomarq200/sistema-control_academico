@@ -16,7 +16,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/modulos/modulosProfesorGestion.css">
-    <title>Consultar Asignaturas por Grados</title>
+    <title>Consultar Profesores por Grados</title>
 </head>
 
 <body>
@@ -29,16 +29,15 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
         <div class="main p-3">
             <div class="text-center">
                 <?php
-                include("../Layout/mensajes.php");
-                include("../Layout/modalesGrados/modalAsignarMateriaAGrado.php");
-                include("../Layout/modalesGrados/modalAsignaturaxGradoDelete.php");
                 /* CUERPO DEL MENÚ */
+                include("../Layout/mensajes.php");
+                include("../Layout/modalesProfesores/modalAsignarProfesorxGrado.php");
                 ?>
                 <!-- Título principal con estilo mejorado -->
                 <div class="mb-4"
                     style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
-                    <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Consultar Asignaturas por Grados</h1>
-                    <p class="lead text-muted">Gestione y administre la información de los asignaturas asignadas a los
+                    <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Consultar Profesores por Grados</h1>
+                    <p class="lead text-muted">Gestione y administre la información de los profesores asignadas a los
                         grados</p>
                 </div>
                 <div class="container-table">
@@ -54,53 +53,43 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                             </thead>
                             <tbody>
                                 <?php
-                                include("../Configuration/functions_php/functionsCRUDGrados.php");
+                                include("../Configuration/functions_php/functionsCRUDProfesor.php");
 
-                                $materiasYGrados = consultarMateriasConGrados($pdo);
-                                if (!empty($materiasYGrados)):
-                                    foreach ($materiasYGrados as $materia):
+                                $profesores = enlistarProfesoresxGrado($pdo); // Obtener los usuarios
+                                
+                                if (!empty($profesores)) {
+                                    foreach ($profesores as $profesor) { // Iterar sobre cada usuario
                                         ?>
                                         <tr>
-                                            <td><?= htmlspecialchars($materia['nombre_materia']) ?></td>
-                                            <td><?= htmlspecialchars($materia['nivel_materia']) ?></td>
+                                            <td><?= htmlspecialchars($profesor['cedula']); ?></td>
+                                            <td><?= htmlspecialchars($profesor['nombre']); ?></td>
+                                            <td><?= htmlspecialchars($profesor['grados']); ?></td>
                                             <td>
-                                                <?php
-                                                if ($materia['grados_asignados'] === 'No asignado') {
-                                                    echo '<span class="text-muted">No asignado</span>';
-                                                } else {
-                                                    echo htmlspecialchars($materia['grados_asignados']);
-                                                }
-                                                ?>
-                                            </td>
-                                            <td>
-                                                <button href="#modalAsignarMateriaAGrado" class="btn btn-secondary"
+                                                <button href="#modalAsignarProfesorxGrado" class="btn btn-secondary"
                                                     data-bs-toggle="modal" data-bs-toggle="modal"
-                                                    data-bs-target="#modalAsignarMateriaAGrado" style="font-size: 15px;"
-                                                    data-id-materia="<?= htmlspecialchars($materia['id_materia']); ?>"
-                                                    data-nombre-materia="<?= htmlspecialchars($materia['nombre_materia']); ?>"
-                                                    data-nivel-materia="<?= htmlspecialchars($materia['nivel_materia']); ?>">
+                                                    data-bs-target="#modalAsignarProfesorxGrado" style="font-size: 15px;"
+                                                     data-id-profesor="<?= htmlspecialchars($profesor['id_profesor']); ?>"
+                                                    data-cedula-profesor="<?= htmlspecialchars($profesor['cedula']); ?>"
+                                                    data-nombre-profesor="<?= htmlspecialchars($profesor['nombre']); ?>">
                                                     <i class="bi bi-plus-circle-dotted"></i>
                                                 </button>
 
-                                                  <button href="#modalAsignaturaxGradoDelte" class="btn btn-danger"
+                                                <button href="#modalEliminarProfesoraGrado" class="btn btn-danger"
                                                     data-bs-toggle="modal" data-bs-toggle="modal"
-                                                    data-bs-target="#modalAsignaturaxGradoDelte" style="font-size: 15px;"
-                                                    data-id-materia="<?= htmlspecialchars($materia['id_materia']); ?>"
-                                                    data-nombre-materia="<?= htmlspecialchars($materia['nombre_materia']); ?>">
-                                                   <i class="bi bi-trash"></i>
+                                                    data-bs-target="#modalEliminarProfesoraGrado" style="font-size: 15px;"
+                                                    data-id-profesor="<?= htmlspecialchars($profesor['id_profesor']); ?>"
+                                                    data-cedula-profesor="<?= htmlspecialchars($profesor['cedula']); ?>"
+                                                    data-nombre-profesor="<?= htmlspecialchars($profesor['nombre']); ?>">
+                                                    <i class="bi bi-trash"></i>
                                                 </button>
-
                                             </td>
                                         </tr>
                                         <?php
-                                    endforeach;
-                                else:
-                                    ?>
-                                    <tr>
-                                        <td colspan="4" class="text-center">No se encontraron materias registradas.
-                                        </td>
-                                    </tr>
-                                <?php endif; ?>
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='8'>No se encontraron usuarios.</td></tr>";
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -120,4 +109,5 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 
 <!-- BOOTSTRAP -->
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
 </html>

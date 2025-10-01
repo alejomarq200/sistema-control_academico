@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/modalesProfesor/modalAsignarProfesor.css">
+    <link rel="stylesheet" href="../css/modalesGrados/modalAsignarMateria.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -16,13 +16,16 @@
         aria-labelledby="modalLabelmodalAsignarMateriaAGrado" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form id="form-asignarMateriaAGrado" action="../controller_php/controller_AsignarMateriaAGrado.php" method="POST">
+                <form id="form-asignarMateriaAGrado" action="../controller_php/controller_AsignarMateriaAGrado.php"
+                    method="POST">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalLabelmodalAsignarMateriaAGrado">Registrar asignatura a grado
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body">
+                        <input type="text" class="form-control" id="idMateriaxGrado" name="idMateriaxGrado" hidden>
+                        <span class="error" id="error-idMateriaxGrado"></span>
                         <div class="mb-3">
                             <label for="nivelMateriaxGrado" class="form-label">Nivel:</label>
                             <input type="text" class="form-control" id="nivelMateriaxGrado" name="nivelMateriaxGrado">
@@ -59,11 +62,13 @@
         // Al abrir la modal: setear nombre/id y limpiar selects anteriores
         modal.addEventListener("show.bs.modal", function (event) {
             const button = event.relatedTarget;
+            const id = button.getAttribute("data-id-materia");
             const nombre = button.getAttribute("data-nombre-materia");
             const nivel = button.getAttribute("data-nivel-materia");
 
             document.getElementById("nombreMateriaxGrado").value = nombre;
             document.getElementById("nivelMateriaxGrado").value = nivel;
+            document.getElementById("idMateriaxGrado").value = id;
 
             const selectGrado = document.getElementById('grado');
 
@@ -75,90 +80,102 @@
 
         formulario.addEventListener('submit', function (e) {
             e.preventDefault();
+            const idAsignatura = document.getElementById("idMateriaxGrado").value;
+            const grado = document.getElementById("grado").value;
 
             // Array principal con valores y referencias
-            // let campos = [
-            //     {
-            //         nombre: 'nombre materia',
-            //         validaciones: [
-            //             {
-            //                 // Nueva referencia para accesos específicos (tipo, valor almacenado, errores)
-            //                 tipo: 'requerido',
-            //                 valor: document.getElementById("nombreMateriaxGrado").value.trim(),
-            //                 // Uso de error para mejor manipulación (dinámica) de los campos a partir de su ID
-            //                 error: 'error-nombreMateriaGrado'
-            //             }
-            //         ]
-            //     },
-            //     {
-            //         nombre: 'nivel',
-            //         validaciones: [
-            //             {
-            //                 tipo: 'requerido',
-            //                 valor: document.getElementById("nivelMateriaxGrado").value.trim(),
-            //                 error: 'error-nivelMateriaGrado'
-            //             }
-            //         ]
-            //     },
-            //     {
-            //         nombre: 'grado',
-            //         validaciones: [
-            //             {
-            //                 tipo: 'requerido',
-            //                 valor: document.getElementById("grado").value.trim(),
-            //                 error: 'error-grado'
-            //             }
-            //         ]
-            //     }
-            // ];
+            let campos = [
+                {
+                    nombre: 'id materia',
+                    validaciones: [
+                        {
+                            // Nueva referencia para accesos específicos (tipo, valor almacenado, errores)
+                            tipo: 'requerido',
+                            valor: document.getElementById("idMateriaxGrado").value.trim(),
+                            // Uso de error para mejor manipulación (dinámica) de los campos a partir de su ID
+                            error: 'error-idMateriaxGrado'
+                        }
+                    ]
+                },
+                {
+                    nombre: 'nombre materia',
+                    validaciones: [
+                        {
+                            // Nueva referencia para accesos específicos (tipo, valor almacenado, errores)
+                            tipo: 'requerido',
+                            valor: document.getElementById("nombreMateriaxGrado").value.trim(),
+                            // Uso de error para mejor manipulación (dinámica) de los campos a partir de su ID
+                            error: 'error-nombreMateriaGrado'
+                        }
+                    ]
+                },
+                {
+                    nombre: 'nivel',
+                    validaciones: [
+                        {
+                            tipo: 'requerido',
+                            valor: document.getElementById("nivelMateriaxGrado").value.trim(),
+                            error: 'error-nivelMateriaGrado'
+                        }
+                    ]
+                },
+                {
+                    nombre: 'grado',
+                    validaciones: [
+                        {
+                            tipo: 'requerido',
+                            valor: document.getElementById("grado").value.trim(),
+                            error: 'error-grado'
+                        }
+                    ]
+                }
+            ];
 
             let validar = true;
             // Acceder a los valores del primer array
-            // campos.forEach(campo => {
-            // // Acceder a los valores del segundo array (clave)
-            //     campo.validaciones.forEach(validacion => {
-            //         // Declarción de elemento HTML para mostrar mensajes
-            //         const spanError = document.getElementById(validacion.error);
+            campos.forEach(campo => {
+                // Acceder a los valores del segundo array (clave)
+                campo.validaciones.forEach(validacion => {
+                    // Declarción de elemento HTML para mostrar mensajes
+                    const spanError = document.getElementById(validacion.error);
 
-            //         if (validacion.tipo == 'requerido' && !validacion.valor) {
-            //             spanError.innerHTML = `Atención se encuentra vacio el campo ${campo.nombre}`;
-            //             validar = false;
-            //         } else if (validacion.tipo = 'requerido' && !validacion.valor || validacion.tipo == 'requerido' && validacion.valor == 'Seleccionar') {
-            //             spanError.innerHTML = `Atención seleccione un valor correcto para ${campo.nombre}`;
-            //             validar = false;
-            //         } else {
-            //             // Limpiamos errores para envío
-            //             spanError.innerHTML = '';
-            //         }
-            //     });
-            // });
-            
+                    if (validacion.tipo == 'requerido' && !validacion.valor) {
+                        spanError.innerHTML = `Atención se encuentra vacio el campo ${campo.nombre}`;
+                        validar = false;
+                    } else if (validacion.tipo = 'requerido' && !validacion.valor || validacion.tipo == 'requerido' && validacion.valor == 'Seleccionar') {
+                        spanError.innerHTML = `Atención seleccione un valor correcto para ${campo.nombre}`;
+                        validar = false;
+                    } else {
+                        // Limpiamos errores para envío
+                        spanError.innerHTML = '';
+                    }
+                });
+            });
+
             // Envío posterior a validación de campos y cambio de estado
             if (validar) {
-                formulario.submit();
+                // formulario.submit();
+                poseeAsignaturasxGrado(idAsignatura, grado);
             }
-
         });
 
         // Validación (si la asignatura se asignó al grado previamente) **PENDIENTE**
-        function poseeAsignaturas(idProfesor, grado) {
-            const selectElement = document.getElementById("asignatura[]");
-            const selectedValues = Array.from(selectElement.selectedOptions).map(option => option.value);
-            const errorAsignatura = document.getElementById('error-asignatura');
-            const formulario = document.getElementById('form-asignarProfesorGrado');
+        function poseeAsignaturasxGrado(idAsignatura, grado) {
+            const formulario = document.getElementById('form-asignarMateriaAGrado');
+            const errorGrado = document.getElementById('error-grado');
 
-            fetch("../AJAX/AJAX_Profesores/profesorPoseeAsignaturas.php", {
+            fetch("../AJAX/AJAX_Grados/existeMateriaxGrado.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ idProfesor: idProfesor, idMateria: selectedValues, idGrado: grado })
+                body: JSON.stringify({ idAsignatura: idAsignatura, grado: grado })
             })
                 .then(response => response.json()) // leer como texto para poder inspeccionar errores HTML
                 .then(data => {
-
-                    if (data.status === "error") {
-                        errorAsignatura.textContent = data.mensaje + ' ' + data.nombre.join(', ') + '. Verifique.';
+                    console.log(data); // para verificar la estructura
+                    if (data.status === 'success') {
+                        errorGrado.textContent = data.message;
                     } else {
-                        //Enviar en caso de no haber error
+                        // errorGrado.textContent = data.message;
                         formulario.submit();
                     }
                 })
@@ -169,12 +186,14 @@
 
         function cargarGradosProfesor() {
             $.ajax({
-                url: "../AJAX/AJAX_Inscripcion/searchGradosInscr.php",
+                url: "../AJAX/AJAX_Horarios/cargarHorarios.php",
                 type: "POST",
                 data: {
-                    action: 'cargar_grados'
-                }, // Enviamos una acción específica
+                    action: 'cargar_grados',
+                    nivelEducativo: $("#nivelMateriaxGrado").val()
+                },
                 success: function (resultado) {
+                    console.log("Respuesta del servidor:", resultado); // Para depuración
                     $("#grado").html('<option value="Seleccionar" selected>Seleccionar</option>' + resultado);
                 },
                 error: function (xhr, status, error) {
@@ -188,7 +207,8 @@
             // Resetear el select de grado
             document.getElementById('grado').innerHTML = "";
 
-            // Resetear el select múltiple con Select2
+            // Resetear los campos
+            document.getElementById('error-idMateriaxGrado').textContent = "";
             document.getElementById('error-nombreMateriaGrado').textContent = "";
             document.getElementById('error-nivelMateriaGrado').textContent = "";
             document.getElementById('error-grado').textContent = "";

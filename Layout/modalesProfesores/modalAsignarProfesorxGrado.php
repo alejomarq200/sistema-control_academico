@@ -12,37 +12,36 @@
 </head>
 
 <body>
-    <div class="modal fade" id="modalAsignarProfesor" tabindex="-1" aria-labelledby="modalLabelmodalAsignarProfesor"
-        aria-hidden="true">
+    <div class="modal fade" id="modalAsignarProfesorxGrado" tabindex="-1"
+        aria-labelledby="modalLablemodalAsignarProfesorxGrado" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form id="form-asignarProfesorGrado" action="../controller_php/controller_AsignarProfesorAGrado.php"
-                    method="POST">
+                <form id="form-asignarProfesorxGrado"
+                    action="../controller_php/controller_AsignarProfesorAGradoyAsignatura.php" method="POST">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabelmodalAsignarProfesor">Registrar profesor a grado y asignatura</h5>
+                        <h5 class="modal-title" id="modalLablemodalAsignarProfesorxGrado">Registrar profesor a grado
+                        </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="idProfesorAsig" name="idProfesorAsig" hidden>
+                            <input type="text" class="form-control" id="idProfesorxGrado" name="idProfesorxGrado">
                         </div>
                         <div class="mb-3">
-                            <label for="nombreProfesorAsig" class="form-label">Nombre:</label>
-                            <input type="text" class="form-control" id="nombreProfesorAsig" name="nombreProfesorAsig"
-                                disabled>
+                            <label for="cedulaProfesorxGrado" class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" id="cedulaProfesorxGrado"
+                                name="cedulaProfesorxGrado" disabled>
                         </div>
                         <div class="mb-3">
-                            <label for="grado" class="form-label">Grado:</label>
-                            <select name="grado" id="grado" class="form-select">
-                                <option value>Seleccionar</option>
+                            <label for="nombreProfesorxGrado" class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" id="nombreProfesorxGrado"
+                                name="nombreProfesorxGrado" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gradosxProfesor" class="form-label">Grados:</label>
+                            <select name="gradosxProfesor" id="gradosxProfesor">
+                                <option value="Seleccionar">Seleccionar</option>
                             </select>
-                            <span class="error" id="error-grado"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label for="asignatura[]" class="form-label">Seleccione la asignatura:</label>
-                            <select class="js-select2" multiple="multiple" id="asignatura[]" name="asignatura[]">
-                            </select>
-                            <span class="error" id="error-asignatura"></span>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -56,43 +55,23 @@
     </div>
 </body>
 <script>
-    function formatOption(option) {
-        if (!option.id) return option.text;
-        const icon = $(option.element).data('icon');
-        const badge = $(option.element).data('badge');
-        return $(`<span><i class="fa ${icon}"></i> ${option.text} </span>`);
-    }
-
-    // Inicializa Select2 UNA sola vez (si no lo has inicializado antes)
-    $(".js-select2").select2({
-        closeOnSelect: false,
-        placeholder: "Selecciona opciones...",
-        allowClear: true,
-        templateResult: formatOption,
-        templateSelection: formatOption,
-        width: '100%',
-        dropdownParent: $('#modalAsignarProfesor') // 👈 Esto es clave
-    });
 
     document.addEventListener("DOMContentLoaded", function () {
-        const modal = document.getElementById("modalAsignarProfesor");
-        const formulario = document.getElementById('form-asignarProfesorGrado');
+        const modal = document.getElementById("modalAsignarProfesorxGrado");
+        const formulario = document.getElementById('form-asignarProfesorxGrado');
         const selectGrado = document.getElementById('grado');
-        const selectAsignatura = document.querySelector('[name="asignatura[]"]');
-
 
         // Al abrir la modal: setear nombre/id y limpiar selects anteriores
         modal.addEventListener("show.bs.modal", function (event) {
             const button = event.relatedTarget;
-            const id = button.getAttribute("data-id");
-            const nombre = button.getAttribute("data-nombre");
 
-            document.getElementById("nombreProfesorAsig").value = nombre;
-            document.getElementById("idProfesorAsig").value = id;
+            const id = button.getAttribute("data-id-profesor");
+            const cedula = button.getAttribute("data-cedula-profesor");
+            const nombre = button.getAttribute("data-nombre-profesor");
 
-            // Limpiar grado y asignaturas (UI + Select2)
-            selectGrado.innerHTML = "";
-            $(selectAsignatura).empty().val(null).trigger('change');
+            document.getElementById("idProfesorxGrado").value = id;
+            document.getElementById("cedulaProfesorxGrado").value = cedula;
+            document.getElementById("nombreProfesorxGrado").value = nombre;
 
             // Limpiar errores
             document.getElementById('error-grado').textContent = "";

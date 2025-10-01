@@ -21,7 +21,35 @@ function consultarGradosCRUD($pdo)
     }
 }
 
-function consultarGradosConMaterias($pdo) {
+function existeProfesorGrado($pdo, $idMateria, $idGrado)
+{
+    try {
+        $stmtExiste = $pdo->prepare("SELECT COUNT(*) FROM grado_materia WHERE id_materia = ? AND id_grado = ?");
+        $stmtExiste->execute([$idMateria, $idGrado]);
+        $count = $stmtExiste->fetchColumn();
+        return $count > 0;
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+}
+
+function registrarAsignaturaGrado($pdo, $grado, $idMateria)
+{
+    try {
+        $stmt = $pdo->prepare("INSERT INTO grado_materia (id_grado, id_materia) VALUES (:id_grado, :id_materia)");
+        $stmt->bindValue(':id_grado', $grado, PDO::PARAM_INT);
+        $stmt->bindValue(':id_materia', $idMateria, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Verificar si se encontró algún registro
+        return $stmt->rowCount() > 0;
+    } catch (PDOException $e) {
+        echo $e->getmessage();
+    }
+}
+
+function consultarGradosConMaterias($pdo)
+{
     $sql = "SELECT 
                 g.id,
                 g.id_grado AS nombre_grado,
@@ -37,41 +65,11 @@ function consultarGradosConMaterias($pdo) {
                 g.id, g.id_grado, g.categoria_grado
             ORDER BY 
                 g.categoria_grado, g.id_grado";
-    
+
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
-function listarProfesoresConGrados($pdo) {
-    $sql = "SELECT 
-                p.id_profesor,
-                p.cedula,
-                p.nombre,
-                p.nivel_grado,
-                p.telefono,
-                p.estado,
-                COALESCE(GROUP_CONCAT(DISTINCT g.id_grado ORDER BY g.id SEPARATOR ', '), 'No asignado') AS nombre_grados
-            FROM 
-                profesores p
-            LEFT JOIN 
-                profesor_grado pg ON p.id_profesor = pg.id_profesor
-            LEFT JOIN 
-                grados g ON pg.id_grado = g.id
-            WHERE 
-                p.estado = 2
-            GROUP BY 
-                p.id_profesor, p.cedula, p.nombre, p.nivel_grado, p.telefono, p.estado
-            ORDER BY 
-                p.nivel_grado, p.nombre";
-    
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
-
 
 function validarExisteMateriaG($pdo, $gradoMateria, $nombreMateria)
 {
@@ -110,7 +108,8 @@ function retornarIdGrado($pdo, $gradoMateria)
     }
 }
 
-function consultarMateriasConGrados($pdo) {
+function consultarMateriasConGrados($pdo)
+{
     $query = "SELECT 
         m.id_materia, 
         m.nombre AS nombre_materia, 
@@ -130,10 +129,10 @@ function consultarMateriasConGrados($pdo) {
     ORDER BY 
         m.nivel_materia, m.nombre
     ";
-    
+
     $stmt = $pdo->prepare($query);
     $stmt->execute();
-    
+
     $resultados = [];
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $grados = $row['total_asignaciones'] > 0 ? $row['grados_asignados'] : 'No asignado';
