@@ -28,6 +28,20 @@ function consultarProfesorCRUD($pdo)
     }
 }
 
+function registrarProfesorxGrado($pdo, array $array)
+{
+    try {
+        $stmt = $pdo->prepare('INSERT INTO profesor_grado (id_profesor, id_grado) VALUES (:id_profesor, :id_grado)');
+        $stmt->bindValue(':id_profesor', $array['idProfesor'], PDO::PARAM_INT);
+        $stmt->bindValue(':id_grado', $array['gradoProfesor'], PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->rowCount() > 0;
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+}
+
 function asignarProfesorMateriaYGrado($pdo, array $array, $key)
 {
     try {
@@ -54,6 +68,7 @@ function enlistarProfesoresxGrado($pdo)
                 profesor_grado.id_profesor,
                 profesores.nombre, 
                 profesores.cedula,
+                profesores.nivel_grado,
                 GROUP_CONCAT(DISTINCT grados.id_grado ORDER BY grados.id_grado SEPARATOR ', ') as grados
             FROM profesor_grado
             INNER JOIN grados ON profesor_grado.id_grado = grados.id

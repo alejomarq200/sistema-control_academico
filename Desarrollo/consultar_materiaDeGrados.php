@@ -17,6 +17,59 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/modulos/modulosProfesorGestion.css">
     <title>Consultar Asignaturas por Grados</title>
+    <style>
+        .container {
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            margin-top: 80px;
+        }
+
+        .back-button-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            margin-right: 80px;
+        }
+
+        .back-button i {
+            margin-right: 8px;
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+            background: linear-gradient(135deg, #ff5252, #ff7b7b);
+        }
+
+        .back-button:active {
+            transform: translateY(1px);
+        }
+
+        .back-button:hover i {
+            transform: translateX(-3px);
+        }
+    </style>
 </head>
 
 <body>
@@ -40,6 +93,13 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                     <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Consultar Asignaturas por Grados</h1>
                     <p class="lead text-muted">Gestione y administre la información de los asignaturas asignadas a los
                         grados</p>
+                </div>
+                <div class="container">
+                    <div class="back-button-container">
+                        <button class="back-button" id="btn-volver">
+                            <i class="fas fa-arrow-left"></i> VOLVER
+                        </button>
+                    </div>
                 </div>
                 <div class="container-table">
                     <div class="custom-table">
@@ -82,12 +142,12 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                                     <i class="bi bi-plus-circle-dotted"></i>
                                                 </button>
 
-                                                  <button href="#modalAsignaturaxGradoDelte" class="btn btn-danger"
+                                                <button href="#modalAsignaturaxGradoDelte" class="btn btn-danger"
                                                     data-bs-toggle="modal" data-bs-toggle="modal"
                                                     data-bs-target="#modalAsignaturaxGradoDelte" style="font-size: 15px;"
                                                     data-id-materia="<?= htmlspecialchars($materia['id_materia']); ?>"
                                                     data-nombre-materia="<?= htmlspecialchars($materia['nombre_materia']); ?>">
-                                                   <i class="bi bi-trash"></i>
+                                                    <i class="bi bi-trash"></i>
                                                 </button>
 
                                             </td>
@@ -111,6 +171,12 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 
 </body>
 
+<script>
+    const btn = document.getElementById('btn-volver');
+    btn.addEventListener('click', function () {
+        window.location.href = "search_grado.php"
+    });
+</script>
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
     crossorigin="anonymous">
     </script>
@@ -120,4 +186,5 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 
 <!-- BOOTSTRAP -->
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
 </html>

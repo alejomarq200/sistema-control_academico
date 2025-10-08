@@ -15,7 +15,6 @@ try {
 
     $id_grado = trim($_POST['idgrado']);
     
-    
     if ($id_grado === '') {
         throw new Exception('El ID de grado está vacío');
     }

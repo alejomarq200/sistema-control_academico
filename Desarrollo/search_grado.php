@@ -62,14 +62,14 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
             </div>
             <div style="margin-bottom: 15px;">
                 <!-- Botón de Agregar Usuarios (a la izquierda) -->
-                <a class="boton-modal-grados" id="modulo_ProfesoresDeGrados">
+                <a class="boton-modal-grados" id="modulo_AsignaturaDeGrados">
                     <label for="btn-modal-grados">
                         Asignar materias a grados
                         <i class="bi bi-plus-circle-dotted"></i>
                     </label>
                 </a>
                 <!-- Botón de Agregar Usuarios (a la izquierda) -->
-                <a class="boton-modal-gradosP">
+                <a class="boton-modal-gradosP" id="modulo_ProfesoresDeGrados">
                     <label for="btn-modal-gradosP">
                         Asignar profesor a grados
                         <i class="bi bi-plus-circle-dotted"></i>
@@ -111,12 +111,16 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
             </main>
 
             <script>
-                const moduloGrados = document.getElementById('modulo_ProfesoresDeGrados');
+                const moduloGrados = document.getElementById('modulo_AsignaturaDeGrados');
                 moduloGrados.addEventListener('click', function () {
                     window.location.href = "consultar_materiaDeGrados.php";
                 })
+
+                const moduloProfesor = document.getElementById('modulo_ProfesoresDeGrados');
+                moduloProfesor.addEventListener('click', function () {
+                    window.location.href = "consultar_profesorDeGrados.php";
+                })
             </script>
-            <script src="../js/validarMultiStepGradoProfesor.js"></script>
         </div>
         </main>
 
