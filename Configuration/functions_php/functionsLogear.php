@@ -65,7 +65,9 @@ function validar_InicioSesion($pdo, $variablesFormLogin)
                 $_SESSION['titulo'] = 'Éxito';
 
                 // Redirigir según el rol
-                header("Location: ../Desarrollo/validar_dispositivoActual.php");
+                // header("Location: ../Desarrollo/validar_dispositivoActual.php");
+                header("Location: ../Desarrollo/dashboard.php");
+
                 exit();
             }
         }

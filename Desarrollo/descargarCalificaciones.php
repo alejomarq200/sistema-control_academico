@@ -21,7 +21,7 @@
         <?php
         error_reporting(0);
         session_start();
-        include("../Desarrollo/menu.php");
+        include("../Desarrollo/menu_1.php");
         include("../Layout/modalesCalificaciones/modalCalifReportePrimaria.php");
         include("../Layout/modalesCalificaciones/modalCalifReporteSecundaria.php");
         ?>

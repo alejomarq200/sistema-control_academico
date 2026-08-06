@@ -28,8 +28,8 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Grado</th>
-                                    <th>Acciones</th>
+                                    <th style="color: white; text-align: center;">Grado</th>
+                                    <th style="color: white; text-align: center;">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody id="data">

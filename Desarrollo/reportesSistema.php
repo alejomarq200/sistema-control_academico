@@ -56,7 +56,7 @@
         <?php
         error_reporting(0);
         session_start();
-        include("../Desarrollo/menu.php");
+        include("../Desarrollo/menu_1.php");
         include("../Layout/modalesReportes/modalReporteUsuarios.php");
         include("../Layout/modalesReportes/modalReporteAulas.php");
         include("../Layout/modalesReportes/modalReporteEstudiantes.php");

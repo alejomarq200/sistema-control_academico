@@ -379,7 +379,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
         <?php
-        include("menu.php");
+        include("menu_1.php");
         include("../Configuration/Configuration.php");
         include("../Configuration/functions_php/functionsCRUDEstudiantes.php");
         include("../Layout/modalesCalificaciones/modalEditarC.php");

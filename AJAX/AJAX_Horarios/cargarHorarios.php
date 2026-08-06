@@ -5,8 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verificar métdo para diferenciar acciones
     if (isset($_POST['action']) && $_POST['action'] === 'cargar_grados') {
         try {
-            $stmt = $pdo->prepare("SELECT id, id_grado FROM grados WHERE categoria_grado = :categoria_grado");
-            $stmt->bindParam(':categoria_grado', $_POST['nivelEducativo'], PDO::PARAM_STR);
+            $stmt = $pdo->prepare("SELECT id, id_grado FROM grados");
             $stmt->execute();
 
             $options = '';

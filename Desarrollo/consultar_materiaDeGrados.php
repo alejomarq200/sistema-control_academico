@@ -76,7 +76,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
         <?php
-        include("menu.php");
+        include("menu_1.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
         <div class="main p-3">
@@ -119,7 +119,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                 $materiasYGrados = consultarMateriasConGrados($pdo);
                                 if (!empty($materiasYGrados)):
                                     foreach ($materiasYGrados as $materia):
-                                        ?>
+                                ?>
                                         <tr>
                                             <td><?= htmlspecialchars($materia['nombre_materia']) ?></td>
                                             <td><?= htmlspecialchars($materia['nivel_materia']) ?></td>
@@ -152,7 +152,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 
                                             </td>
                                         </tr>
-                                        <?php
+                                    <?php
                                     endforeach;
                                 else:
                                     ?>
@@ -173,13 +173,13 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 
 <script>
     const btn = document.getElementById('btn-volver');
-    btn.addEventListener('click', function () {
+    btn.addEventListener('click', function() {
         window.location.href = "search_grado.php"
     });
 </script>
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
     crossorigin="anonymous">
-    </script>
+</script>
 
 <!-- DATATABLES -->
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>

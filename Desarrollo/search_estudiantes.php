@@ -91,7 +91,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
 <div class="wrapper">
     <?php
-    include("menu.php");
+    include("menmenu_1u.php");
     ?>
     <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
     <div class="main p-3">

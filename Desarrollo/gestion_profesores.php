@@ -23,7 +23,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
         <?php
-        include("menu.php");
+        include("menu_1.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
         <div class="main p-3">
@@ -44,7 +44,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                 </div>
                 <div style="margin-bottom: 8px;">
                     <button id="btn-gestionar"
-                        style="background-color:gray; padding: 8px 12px; border-radius: 8px; border: none;"
+                        style="background-color:#5488a3; padding: 8px 12px; border-radius: 8px; border: none; color:white"
                         href="#modalConsultarProfesorxGrado" data-bs-toggle="modal"
                         data-bs-toggle="modal" data-bs-target="#modalConsultarProfesorxGrado">Consulte los
                         grados y materias de los profesores <i class="fi fi-rr-search-alt"></i>

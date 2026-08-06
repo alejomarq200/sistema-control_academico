@@ -397,31 +397,31 @@
                         <li class="sidebar-item">
                             <a href="descargarCalificaciones.php" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
-                                <span>Reporte de Calificaciones</span>
+                                <span>R. de Calificaciones</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="descargarConstancias.php" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
-                                <span>Reporte de Constancias</span>
+                                <span>R. de Constancias</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="#" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
-                                <span>Reporte Notas Certificadas</span>
+                                <span>R. Notas Certificadas</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="descargarPlanillaInscr.php" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
-                                <span>Reporte de Inscripciones</span>
+                                <span>R. de Inscripciones</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="reportesSistema.php" class="sidebar-link">
                                 <i class="bi bi-file-earmark-bar-graph"></i>
-                                <span>Reportes del Sistema</span>
+                                <span>R. del Sistema</span>
                             </a>
                         </li>
                     </ul>

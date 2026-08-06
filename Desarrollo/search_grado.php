@@ -17,13 +17,17 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../css/moduloGGrados.css">
+    <link rel="stylesheet" href="../css/modulos/moduloGrados.css">
+     
+    <style>
+      
+    </style>
     <title>Consultar Grados</title>
 </head>
 <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
 <div class="wrapper">
     <?php
-    include("menu.php");
+    include("menu_1.php");
     ?>
     <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
     <div class="main p-3">
@@ -39,30 +43,10 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                 <p class="lead text-muted">Gestione y administre la información de las asignaturas y profesores de acuerdo al grado</p>
             </div>
 
-            <div class="filters-container">
-                <!-- FILTROS CON DISEÑO MODERNO -->
-                <div class="filters-wrapper">
-                    <div class="filtro-container d-flex align-items-center">
-                        <input type="text" id="txtFiltarr" class="filtro-input form-control" placeholder="Buscar...">
-                        <span class="lupa-icon ms-2">&#128269;</span> <!-- Icono de lupa -->
-                    </div>
-                    <!-- Filtro de Nivel Académico -->
-                    <div class="filter-group">
-                        <label for="filtroNivel" class="filter-label">
-                            <i class="bi bi-book-half"></i> Nivel Académico
-                        </label>
-                        <select id="filtroNivel" class="form-select filter-select">
-                            <option value="">Todos los niveles</option>
-                            <option value="Primaria">Primaria</option>
-                            <option value="Secundaria">Secundaria</option>
-                        </select>
 
-                    </div>
-                </div>
-            </div>
             <div style="margin-bottom: 15px;">
                 <!-- Botón de Agregar Usuarios (a la izquierda) -->
-                <a class="boton-modal-grados" id="modulo_AsignaturaDeGrados">
+                <a class="boton-modal-gradosP" id="modulo_AsignaturaDeGrados">
                     <label for="btn-modal-grados">
                         Asignar materias a grados
                         <i class="bi bi-plus-circle-dotted"></i>
@@ -81,8 +65,8 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Nombre del grado</th>
-                            <th scope="col">Nivel del grado</th>
+                            <th scope="col" style="color:white;">Nombre del grado</th>
+                            <th scope="col" style="color:white;">Nivel del grado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -112,12 +96,12 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 
             <script>
                 const moduloGrados = document.getElementById('modulo_AsignaturaDeGrados');
-                moduloGrados.addEventListener('click', function () {
+                moduloGrados.addEventListener('click', function() {
                     window.location.href = "consultar_materiaDeGrados.php";
                 })
 
                 const moduloProfesor = document.getElementById('modulo_ProfesoresDeGrados');
-                moduloProfesor.addEventListener('click', function () {
+                moduloProfesor.addEventListener('click', function() {
                     window.location.href = "consultar_profesorDeGrados.php";
                 })
             </script>

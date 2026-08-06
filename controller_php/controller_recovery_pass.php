@@ -1,13 +1,16 @@
 <?php
-//error_reporting(0);
-session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+require_once("../Configuration/Configuration.php"); // Este archivo ya maneja session_start()
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-include("../Configuration/Configuration.php");
 require '../Phpmailer/Exception.php';
 require '../Phpmailer/PHPMailer.php';
 require '../Phpmailer/SMTP.php';
+
 function enviarEmailConfirm($pdo, array $variablesFormEmail)
 {
     try {
@@ -16,88 +19,98 @@ function enviarEmailConfirm($pdo, array $variablesFormEmail)
         $stmt->execute();
         
         if ($stmt->rowCount() > 0) {
-            $result = $stmt->fetch(PDO::FETCH_ASSOC); 
+            $result = $stmt->fetch(PDO::FETCH_ASSOC); // Usar fetch() en lugar de fetchAll()
+            
             $mail = new PHPMailer(true);
 
-            //Server settings
-            $mail->SMTPDebug = 0;                      //Enable verbose debug output
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'davidbrr18@gmail.com';                     //SMTP username
-            $mail->Password   = 'gmwdorvqpsmamllk';                               //SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            // Configuración del servidor
+            $mail->SMTPDebug = 0;  // Cambia a 2 para ver detalles
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'intt8379m@gmail.com';
+            // ¡IMPORTANTE! Usar contraseña de aplicación de Gmail
+            $mail->Password   = 'lckq mdjg doqv gahi';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 587;
 
-            //Recipients
-            $mail->setFrom('davidbrr18@gmail.com', 'Colegio Prados del Norte');
-            $mail->addAddress($variablesFormEmail[0], $result['nombre'] . " " . $result['apellido']);     //Add a recipient
+            // Destinatarios
+            $mail->setFrom('intt8379m@gmail.com', 'Colegio Prados del Norte');
+            $mail->addAddress($variablesFormEmail[1], $result['nombres']);
 
-            //Content
-            $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Recuperar contraseña';
-            $mail->Body    = 'Hola, este es un correo generado para solicitar tu recuperación de contraseña, por favor, visita la página de <a href="localhost/Desarrollo_tesis/Inicio/new_password.php">Recuperación de contraseña</a>';
+            // Contenido
+            $mail->isHTML(true);
+            $mail->Subject = 'Recuperación de Contraseña - Colegio Prados del Norte';
+            $mail->Body    = '
+                <html>
+                <body>
+                    <h2>Recuperación de Contraseña</h2>
+                    <p>Hola ' . htmlspecialchars($result['nombres']) . ',</p>
+                    <p>Hemos recibido una solicitud para recuperar tu contraseña.</p>
+                    <p>Por favor, haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+                    <p><a href="http://localhost/Desarrollo_tesis/Inicio/new_password.php">Restablecer Contraseña</a></p>
+                    <p>Si no solicitaste este cambio, ignora este mensaje.</p>
+                    <br>
+                    <p>Saludos,<br>Colegio Prados del Norte</p>
+                </body>
+                </html>
+            ';
+            
+            $mail->AltBody = "Recuperación de Contraseña\n\nHola {$result['nombres']},\n\nHemos recibido una solicitud para recuperar tu contraseña.\n\nPara restablecer tu contraseña, visita: http://localhost/Desarrollo_tesis/Inicio/new_password.php?email={$variablesFormEmail[1]}\n\nSi no solicitaste este cambio, ignora este mensaje.\n\nSaludos,\nColegio Prados del Norte";
 
             $mail->send();
 
-            /* Creamos una variable de sesión para manipularla */
+            $_SESSION['user_email'] = $variablesFormEmail[1];
             $_SESSION['id'] = $result['cedula'];
-            $_SESSION['user_email'] = $result['correo'];
-            $_SESSION['user_name'] = $result['nombre'] . " " . $result['apellido'];
+            $_SESSION['user_name'] = $result['nombres'];
             
             return true;
         } else {
             return false;
         }
-    } catch (PDOException $e) {
-        error_log($e->getMessage());
+    } catch (Exception $e) {
+        error_log("Error en envío de email: " . $e->getMessage());
         return false;
     }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-    // Procesar los errores del formulario
     $mensajes = [];
     $validar = true;
     $patronEmail = "/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/";
 
-    /* Validación de campos vacios o formato erróneo */
+    $email = trim($_POST['email_recovery']);
+    $confirmEmail = trim($_POST['email_recovery']);
 
-    $variablesFormEmail = array(trim($_POST['email_recovery']), trim($_POST['email_recovery']));
-
-    if (empty($variablesFormEmail[0])) {
+    // Validaciones
+    if (empty($email)) {
         $validar = false;
-        $mensajes[] = 'Campo vacio email';
-    } else if (!preg_match($patronEmail, $variablesFormEmail[0])) {
-        $validar = false;
-        $mensajes[] = 'Formato de email incorrecto';
-    }
-
-    if (empty($variablesFormEmail[1])) {
-        $validar = false;
-        $mensajes[] = 'Campo vacio confirm email';
-    } else if (!preg_match($patronEmail, $variablesFormEmail[1])) {
+        $mensajes[] = 'Campo email vacío';
+    } elseif (!preg_match($patronEmail, $email)) {
         $validar = false;
         $mensajes[] = 'Formato de email incorrecto';
     }
 
-    /* Si validar es verdadero se procesa el envío del código al correo */
-   if ($validar) {
-    if ($variablesFormEmail[0] == $variablesFormEmail[1]) {
-        if (enviarEmailConfirm($pdo, $variablesFormEmail)) {
-            // Asegurarse que las variables de sesión estén establecidas
-            session_write_close(); // Guarda los datos de sesión antes de redirigir
+    if ($validar && $email == $confirmEmail) {
+        if (enviarEmailConfirm($pdo, [$email, $confirmEmail])) {
+            $_SESSION['mensaje'] = 'Correo de recuperación enviado exitosamente';
+            $_SESSION['icono'] = 'success';
+            $_SESSION['titulo'] = 'Éxito';
             header("Location: ../Inicio/Logear.php");
             exit();
         } else {
             $_SESSION['mensaje'] = 'El correo registrado no existe y/o está inactivo';
             $_SESSION['icono'] = 'error';
             $_SESSION['titulo'] = 'Error';
-            session_write_close();
             header("Location: ../Inicio/recovery_pass.php");
             exit();
         }
+    } else {
+        $_SESSION['mensaje'] = 'Los correos no coinciden o son inválidos';
+        $_SESSION['icono'] = 'error';
+        $_SESSION['titulo'] = 'Error';
+        header("Location: ../Inicio/recovery_pass.php");
+        exit();
     }
 }
-}
+?>

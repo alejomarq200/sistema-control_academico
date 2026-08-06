@@ -13,7 +13,7 @@
         <?php
         error_reporting(0);
         session_start();
-        include("menu.php");
+        include("menu_1.php");
         ?>
         <div class="main p-3">
             <div class="text-center">

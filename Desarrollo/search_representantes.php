@@ -17,6 +17,16 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <title>Consultar Reresentantes</title>
     <link rel="stylesheet" href="../css/modulos/moduloRepresentantes.css">
+    <style>
+    .error {
+        text-align: left;
+        padding-left: 0;
+        color: red;
+        font-size: 0.85rem;
+        margin-top: 0.1rem;
+        margin-bottom: 0.5rem;
+    }
+</style>
 </head>
 
 <body>
@@ -26,7 +36,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
         error_reporting(0);
         session_start();
 
-        include("menu.php");
+        include("menu_1.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
         <div class="main p-3">

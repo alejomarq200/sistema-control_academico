@@ -25,9 +25,9 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
-                                    <th>Grado</th>
-                                    <th>Asignaturas</th>
+                                    <th style="color:white;">Nombre</th>
+                                    <th style="color:white;">Grado</th>
+                                    <th style="color:white; text-align: center;">Asignaturas</th>
                                 </tr>
                             </thead>
                             <tbody id="data_consulta">

@@ -55,7 +55,7 @@
         <?php
         error_reporting(0);
         session_start();
-        include("../Desarrollo/menu.php");
+        include("../Desarrollo/menu_1.php");
         ?>
         <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA -->
         <div class="main p-3">
