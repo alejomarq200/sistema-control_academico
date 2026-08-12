@@ -118,10 +118,10 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                 include("../Configuration/functions_php/functionsCRUDProfesor.php");
 
                                 $profesores = enlistarProfesoresxGrado($pdo); // Obtener los usuarios
-                                
+
                                 if (!empty($profesores)) {
                                     foreach ($profesores as $profesor) { // Iterar sobre cada usuario
-                                        ?>
+                                ?>
                                         <tr>
                                             <td><?= htmlspecialchars($profesor['cedula']); ?></td>
                                             <td><?= htmlspecialchars($profesor['nombre']); ?></td>
@@ -149,7 +149,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                                 </button>
                                             </td>
                                         </tr>
-                                        <?php
+                                <?php
                                     }
                                 } else {
                                     echo "<tr><td colspan='8'>No se encontraron usuarios.</td></tr>";
@@ -167,14 +167,14 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 
 <script>
     const btn = document.getElementById('btn-volver');
-    btn.addEventListener('click', function () {
+    btn.addEventListener('click', function() {
         window.location.href = "search_grado.php"
     });
 </script>
 
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
     crossorigin="anonymous">
-    </script>
+</script>
 
 <!-- DATATABLES -->
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>

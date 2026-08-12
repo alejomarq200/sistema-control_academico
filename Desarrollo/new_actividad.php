@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,99 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-straight/css/uicons-bold-straight.css'>
     <link rel="stylesheet" href="../css/modalesActividades/regActividad.css">
+    <style>
+        :root {
+            --color-primario: #2c3e50;
+            --color-secundario: rgb(30, 93, 134);
+            --color-accento: rgb(247, 252, 0);
+            --color-fondo: #ecf0f1;
+            --color-texto: #2c3e50;
+            --color-borde: #bdc3c7;
+            --color-btn: rgb(122, 156, 179);
+            --color-btn-blue: #00ABE1;
+            --color-bordes: #aedfe4;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            /* aedfe4 */
+            border-left: 5px solid var(--color-bordes);
+            border-right: 5px solid var(--color-bordes);
+            border-right: 5px solid var(--color-bordes);
+            border-bottom: 5px solid var(--color-bordes);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--color-bordes), var(--color-bordes));
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            font-weight: 600;
+            background: linear-gradient(135deg,
+                    var(--color-btn-blue),
+                    var(--color-btn-blue));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            /* aedfe4 */
+            border-left: 5px solid var(--color-bordes);
+            border-right: 5px solid var(--color-bordes);
+            border-right: 5px solid var(--color-bordes);
+            border-bottom: 5px solid var(--color-bordes);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--color-bordes), var(--color-bordes));
+        }
+    </style>
 </head>
+
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
@@ -30,9 +123,9 @@
                         <div class="education-icon">
                             <i class="fas fa-book-open"></i>
                         </div>
-                         <div class="mb-3">
-                                <input type="hidden" class="form-control" id="anioEscolar" name="anioEscolar" readonly>
-                            </div>
+                        <div class="mb-3">
+                            <input type="hidden" class="form-control" id="anioEscolar" name="anioEscolar" readonly>
+                        </div>
                         <h1 class="form-title">Registro de Actividades</h1>
                         <form action="../controller_php/controller_CreateActividad.php" method="POST"
                             id="form-RegisterActividad">
@@ -67,10 +160,10 @@
                                 </select>
                                 <p class="error1" id="ErrorAsignatura"></p>
                             </div>
-                             <div class="mb-4">
+                            <div class="mb-4">
                                 <label for="tipoContenido" class="form-label"><i class="fi fi-bs-overview"></i>
                                     Tipo de Contenido</label>
-                               <input type="text" name="tipoContenido" id="tipoContenido" class="form-control" placeholder="Describa el tipo de contenido">
+                                <input type="text" name="tipoContenido" id="tipoContenido" class="form-control" placeholder="Describa el tipo de contenido">
                                 <p class="error1" id="ErrortipoContenido"></p>
                             </div>
                             <div class="textarea-container">
@@ -82,8 +175,8 @@
                                     <span class="char-counter"><span id="contador">0</span>/200</span>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-submit">
-                                <i class="fas fa-plus-circle"></i> Registrar Activdad
+                            <button type="submit" class="btn btn-submit" style="color:black;">
+                                <i class="fas fa-plus-circle" style="color:black;"></i> Registrar Activdad
                             </button>
                         </form>
                     </div>
@@ -92,165 +185,7 @@
         </div>
     </div>
     <!-- SCRIPT -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Obtener el año actual
-            const añoActual = new Date().getFullYear();
-            // Calcular el año siguiente
-            const añoSiguiente = añoActual + 1;
-            // Formatear como "2024-2025"
-            const añoEscolar = `${añoActual}-${añoSiguiente}`;
-
-            // Asignar el valor al input
-            document.getElementById('anioEscolar').value = añoEscolar;
-            buscarGradoxNivel();
-            document.getElementById("form-RegisterActividad").addEventListener("submit", function (event) {
-                event.preventDefault(); // Prevenir el envío del formulario
-
-                let isSubmitting = true;
-                var gradoActividad = document.getElementById("gradoActividad").value.trim();
-                var profesorActividad = document.getElementById("profesorActividad").value.trim();
-                var asignatura = document.getElementById("asignatura").value.trim();
-                var actividad = document.getElementById("actividad").value.trim();
-                var tipoContenido = document.getElementById("tipoContenido").value.trim();
-
-                const regexName = /^[A-Za-zÑñÁÉÍÓÚÜáéíóúü\s\.,'-]+$/;
-
-                if (!gradoActividad || gradoActividad == "Seleccionar") {
-                    document.getElementById("ErrorGradoActividad").textContent = "El grado de la actividad es obligatorio";
-                    isSubmitting = false;
-                } else {
-                    document.getElementById("ErrorGradoActividad").textContent = "";
-                }
-
-                if (!asignatura || asignatura == "Seleccionar") {
-                    document.getElementById("ErrorAsignatura").textContent = "Seleccione una asignatura correcta";
-                    isSubmitting = false;
-                } else {
-                    document.getElementById("ErrorAsignatura").textContent = "";
-                }
-
-                if (!actividad) {
-                    document.getElementById("ErrorActividad").textContent = "La actividad se encuentra es obligatoria";
-                    isSubmitting = false;
-                } else {
-                    document.getElementById("ErrorActividad").textContent = "";
-                }
-
-                if (!profesorActividad || profesorActividad == "Seleccionar") {
-                    document.getElementById("ErrorProfesorActividad").textContent = "La información del profesor es obligatoria";
-                    isSubmitting = false;
-                } else {
-                    document.getElementById("ErrorProfesorActividad").textContent = "";
-                }
-
-                if(!tipoContenido || !regexName.test(tipoContenido)) {
-                    document.getElementById('ErrortipoContenido').textContent = "El tipo de cntenidoes obligatorio";
-                    isSubmitting = false;
-                } else {
-                    document.getElementById('ErrortipoContenido').textContent = "";
-                }
-
-
-                if (isSubmitting) {
-                    var anio = document.getElementById('añoEscolar').value =  añoEscolar;
-                    $.ajax({
-                        url: "../AJAX/AJAX_Calificaciones/existeActividad.php",
-                        type: "POST",
-                        data: $("#form-RegisterActividad").serialize(),
-                        success: function (resultado) {
-                            //Mostramos mensajesde AJAX devueltos
-                            $("#ErrorActividad").html(resultado);
-
-                            var errores = document.getElementById("ErrorActividad").textContent;
-
-                           if (errores.trim() === "") {
-                                $("#form-RegisterActividad").submit();
-                            } else {
-                                console.log("Error en la validación: ", errores);
-                                isSubmitting = false; // Restablecer bandera
-                            }   
-                        },
-                        //Controlamos error de AJAX
-                        error: function (xhr, status, error) {
-                            console.error("Error en la solicitud AJAX:", status, error);
-                            isSubmitting = false;
-                        }
-                    });
-                }
-            });
-
-            // Función para limpiar el formulario
-            function limpiarFormulario() {
-                document.getElementById("form-RegisterActividad").reset();
-            }
-
-            // Limpiar al cargar la página
-            limpiarFormulario();
-        });
-
-        function contarCaracteres() {
-            const textarea = document.getElementById('actividad');
-            const contador = document.getElementById('contador');
-            const charCounter = contador.parentElement;
-            const caracteres = textarea.value.length;
-
-            contador.textContent = caracteres;
-
-            // Cambiar colores según se acerca al límite
-            charCounter.classList.remove('warning', 'error');
-
-            if (caracteres > 180) {
-                charCounter.classList.add('warning');
-            }
-
-            if (caracteres >= 200) {
-                charCounter.classList.add('error');
-            }
-        }
-
-        function buscarGradoxNivel() {
-            $.ajax({
-                url: "../AJAX/AJAX_Grados/searchGradoxMateria.php",
-                type: "POST",
-                data: $("#form-RegisterActividad").serialize(),
-                success: function (resultado) {
-                    $("#gradoActividad").html(resultado);
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error en la solicitud AJAX:", error);
-                }
-            });
-        }
-
-        function cargarSelectMateriasxProfesor() {
-            $.ajax({
-                type: "POST",
-                url: "../AJAX/AJAX_Calificaciones/consultarPrCalificacion.php",
-                data: $("#form-RegisterActividad").serialize(),
-                success: function (resultado) {
-                    $("#profesorActividad").html(resultado);
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error en la solicitud AJAX:", error);
-                }
-            });
-        }
-
-        function cargarProfesorxGrado() {
-            $.ajax({
-                type: "POST",
-                url: "../AJAX/AJAX_Calificaciones/consultarPrDocente.php",
-                data: $("#form-RegisterActividad").serialize(),
-                success: function (resultado) {
-                    $("#asignatura").html(resultado);
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error en la solicitud AJAX:", error);
-                }
-            });
-        }
-    </script>
+    <script src="../js/crearActividad.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

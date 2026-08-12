@@ -38,7 +38,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                 /* CUERPO DEL MENÚ */
                 ?>
                 <div class="mb-4"
-                    style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
+                    style="max-width: 600px; margin: 0 auto; background-color: #CBC6E0; border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
                     <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Módulo de Inscripción</h1>
                     <p class="lead text-muted">Gestione y administre la información de las inscripciones</p>
                 </div>
@@ -82,14 +82,14 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                         <table class="table table-hover" id="tablaxInscripcion">
                             <thead>
                                 <tr>
-                                    <th>Estudiante</th>
-                                    <th>Cédula</th>
-                                    <th>Edad</th>
+                                    <th style="color:white;">Estudiante</th>
+                                    <th style="color:white;">Cédula</th>
+                                    <th style="color:white;">Edad</th>
                                     <th style="display: none;">Sexo</th>
                                     <th style="display: none;">Grado</th>
-                                    <th>Año Escolar</th>
-                                    <th>Fecha Inscripción</th>
-                                    <th>Acciones</th>
+                                    <th style="color:white;">Año Escolar</th>
+                                    <th style="color:white;">Fecha Inscripción</th>
+                                    <th style="color:white;">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -113,7 +113,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                                             <td><?php echo date('d/m/Y', strtotime($insc['fecha_inscripcion'])); ?></td>
 
                                             <td>
-                                                <button class="btn btn-primary" onclick="descargarPlanillaInscripcion()"
+                                                <button class="btn btn-primary" onclick="descargarPlanillaInscripcion()" style="background-color: #A4C569; color: black; font-weight: bold;"
                                                     data-id-est="<?php echo $insc['id_estudiante']; ?>">
                                                     <i class="bi bi-download"></i> Descargar Planilla
                                                 </button>

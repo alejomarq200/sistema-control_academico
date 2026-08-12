@@ -46,8 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } catch (PDOException $e) {
         echo '<option value="">Error al cargar las tablas</option>';
-        // Para depuración (quitar en producción):
-        error_log("Error al cargar tablas: " . $e->getMessage());
     }
     exit; // Importante para evitar que se envíe más contenido
 }

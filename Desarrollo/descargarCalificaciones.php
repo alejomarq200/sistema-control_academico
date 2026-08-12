@@ -30,7 +30,7 @@
             <div class="text-center">
                 <main>
                     <?php include("../Layout/mensajes.php"); ?>
-                     <div class="mb-4" style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
+                     <div class="mb-4" style="max-width: 600px; margin: 0 auto; background-color: #CBC6E0; border-radius:15px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
                         <h1 class="display-5 fw-bold text-primary mb-3">Reporte de Calificaciones</h1>
                         <p class="lead text-muted">Descarga y visualiza los reportes de calificacionesde disponibles</p>
                         <div class="mx-auto" style="height: 48; width: 100px; background: linear-gradient(to right, #05357cff, #6c757d, #0d6efd);"></div>

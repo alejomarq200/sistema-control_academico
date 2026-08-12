@@ -38,7 +38,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
             ?>
 
             <!-- Título principal con estilo mejorado -->
-            <div class="mb-4" style="max-width: 800px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
+            <div class="mb-4" style="max-width: 800px; margin: 0 auto; background-color: #CBC6E0;  border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
                 <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Módulo de Grados</h1>
                 <p class="lead text-muted">Gestione y administre la información de las asignaturas y profesores de acuerdo al grado</p>
             </div>
@@ -53,7 +53,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                     </label>
                 </a>
                 <!-- Botón de Agregar Usuarios (a la izquierda) -->
-                <a class="boton-modal-gradosP" id="modulo_ProfesoresDeGrados">
+                <a class="boton-modal-gradosP" id="modulo_ProfesoresDeGrados"  style="background-color: #00ABE1 ;">
                     <label for="btn-modal-gradosP">
                         Asignar profesor a grados
                         <i class="bi bi-plus-circle-dotted"></i>

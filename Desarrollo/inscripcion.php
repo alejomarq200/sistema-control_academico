@@ -605,4 +605,5 @@
 
 </html>
 <script src="../js/validarInscripcion.js"></script>
+
 </html>

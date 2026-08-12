@@ -91,7 +91,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
 <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
 <div class="wrapper">
     <?php
-    include("menmenu_1u.php");
+    include("menu_1.php");
     ?>
     <!-- CUERPO DEL HTML ESPACIO PARA TRABAJAR YA INCLUIDA LA BARRA  -->
     <div class="main p-3">
@@ -102,7 +102,7 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
             ?>
             <!-- Título principal con estilo mejorado -->
             <div class="mb-4"
-                style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
+                style="max-width: 600px; margin: 0 auto;background-color: #CBC6E0;  border-radius:15px; padding: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
                 <h1 class="display-5 fw-bold" style='color: rgb(37, 64, 90);'>Módulo de Estudiantes</h1>
                 <p class="lead text-muted">Gestione y administre la información y prosecución de los estudiantes</p>
             </div>
@@ -135,12 +135,12 @@ validarRolyAccesoAdmin($_SESSION['rol'], $_SESSION['estado'], 'Desarrollo/dashbo
                     <table class="table table-hover" id="tablaxEstudiante">
                         <thead>
                             <tr>
-                                <th scope="col">Cédula</th>
-                                <th scope="col">Nombres</th>
-                                <th scope="col">Apellidos</th>
-                                <th scope="col">Edad</th>
-                                <th scope="col">Grado</th>
-                                <th scope="col">Acciones</th>
+                                <th scope="col" style="color:white;">Cédula</th>
+                                <th scope="col" style="color:white;">Nombres</th>
+                                <th scope="col" style="color:white;">Apellidos</th>
+                                <th scope="col" style="color:white;">Edad</th>
+                                <th scope="col" style="color:white;">Grado</th>
+                                <th scope="col" style="color:white;">Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="tablaEstudiantes">

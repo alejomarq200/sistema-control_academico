@@ -110,16 +110,16 @@
                 /* CUERPO DEL MENÚ */
                 ?>
                 <div class="container-fluid py-4">
-                     <!-- Encabezado mejorado -->
-                <div class="mb-4" style="max-width: 600px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
-                                        <h1 class="mb-4">Gestor de Horarios Escolares</h1>
+                    <!-- Encabezado mejorado -->
+                    <div class="mb-4" style="max-width: 600px; margin: 0 auto; background-color: #CBC6E0; border-radius:15px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); ">
+                        <h1 class="mb-4">Gestor de Horarios Escolares</h1>
 
-                    <div class="mx-auto" style="height: 48; width: 100px; background: linear-gradient(to right, #05357cff, #6c757d, #0d6efd);"></div>
-                </div>
+                        <div class="mx-auto" style="height: 48; width: 100px; background: linear-gradient(to right, #05357cff, #6c757d, #0d6efd);"></div>
+                    </div>
 
                     <!-- Filtros y selección inicial - Versión estilizada -->
                     <div class="card mb-4 border-0 shadow-sm" style="background-color: #f8f9fa; border-radius: 10px;">
-                        <div class="card-header py-3" style="background: linear-gradient(135deg, #3f51b5, #2196f3); border-radius: 10px 10px 0 0 !important;">
+                        <div class="card-header py-3" style="background: linear-gradient(135deg, #062659, #062659); border-radius: 10px 10px 0 0 !important;">
                             <h5 class="mb-0 text-white"><i class="fas fa-calendar-alt me-2"></i> Configuración del Horario</h5>
                         </div>
                         <div class="card-body py-4" style="background-color: #ffffff; border-radius: 0 0 10px 10px;">
@@ -128,8 +128,8 @@
                                     <label for="anioEscolar" class="form-label fw-bold text-primary"><i class="fas fa-calendar me-2"></i>Año Escolar</label>
                                     <select class="form-select shadow-sm" id="anioEscolar" style="border-radius: 10px; border: 2px solid #e0e0e0; padding: 10px;">
                                         <option value="2024-2025">2024-2025</option>
-                                        <option value="2025-2026" selected>2025-2026</option>
-                                        <option value="2026-2027">2026-2027</option>
+                                        <option value="2025-2026">2025-2026</option>
+                                        <option value="2026-2027" selected>2026-2027</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -141,7 +141,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="grado" class="form-label fw-bold text-primary"><i class="fas fa-user-graduate me-2"></i>Grado</label>
+                                    <label for="grado" class="form-label fw-bold text-primary"><i class="fas fa-user-graduate me-2" style="color:linear-gradient(135deg, #062659, #062659);"></i>Grado</label>
                                     <select class="form-select shadow-sm" id="grado" style="border-radius: 10px; border: 2px solid #e0e0e0; padding: 10px;">
                                         <option value="">Seleccionar nivel primero</option>
                                     </select>
@@ -160,7 +160,7 @@
 
                     <!-- Horario visual - Versión estilizada -->
                     <div class="card border-0 shadow" style="border-radius: 15px; overflow: hidden;">
-                        <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #3f51b5, #2196f3);">
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #062659, #062659);">
                             <h5 class="mb-0 text-white"><i class="fas fa-table me-2"></i> Horario Semanal</h5>
                             <div>
                                 <button id="limpiarHorario" class="btn btn-danger me-2 shadow-sm" style="border-radius: 10px; border: none;">

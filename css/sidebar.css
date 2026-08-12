@@ -1,0 +1,380 @@
+        :root {
+            /* Colores para cada sección principal */
+            --color-dashboard: #4F46E5;
+            --color-registro: #062659;
+            --color-gestion: #a99fd1;
+            --color-reportes: #EF85C5;
+            --color-mantenimiento: #DC2626;
+            --color-ayuda: #0891B2;
+            --color-footer: #6B7280;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.12)), url('../imgs/FONDO_2.jpeg');
+            background-size: cover;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ========== SIDEBAR ========== */
+        #sidebar {
+            min-width: 280px;
+            max-width: 280px;
+            background: #ffffff;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            border-right: 1px solid #f0f0f0;
+        }
+
+        /* Sidebar colapsado usando tu clase "expand" */
+        #sidebar:not(.expand) {
+            min-width: 70px;
+            max-width: 70px;
+        }
+
+        #sidebar:not(.expand) .sidebar-logo img {
+            max-height: 45px;
+        }
+
+        #sidebar:not(.expand) .sidebar-link span {
+            display: none;
+        }
+
+        #sidebar:not(.expand) .sidebar-dropdown {
+            display: none !important;
+        }
+
+        #sidebar:not(.expand) .sidebar-item .sidebar-link {
+            justify-content: center;
+            padding: 0.7rem 0.5rem;
+        }
+
+        #sidebar:not(.expand) .sidebar-link i,
+        #sidebar:not(.expand) .sidebar-link .fi {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        #sidebar:not(.expand) .sidebar-footer .sidebar-link span {
+            display: none;
+        }
+
+        /* Toggle button cuando está colapsado */
+        #sidebar:not(.expand) .toggle-btn i {
+            transform: rotate(180deg);
+        }
+
+        #sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #sidebar::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+        }
+
+        /* ========== TOGGLE BUTTON ========== */
+        .d-flex {
+            display: flex;
+            justify-content: flex-end;
+            padding: 0.75rem 1.25rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .toggle-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.2rem;
+            color: #6b7280;
+            transition: 0.3s ease;
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .toggle-btn:hover {
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+
+        #sidebar:not(.expand) .toggle-btn {
+            transform: rotate(180deg);
+        }
+
+        .sidebar-logo {
+            padding: 0.5rem 1.5rem 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-logo img {
+            max-height: 80px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+
+        /* ========== LINKS DEL SIDEBAR ========== */
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.7rem 1.25rem;
+            color: #4b5563;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+            background: transparent;
+            border-radius: 0;
+            white-space: nowrap;
+        }
+
+        .sidebar-link i,
+        .sidebar-link .fi {
+            font-size: 1.15rem;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-link:hover {
+            background: #f9fafb;
+            color: #1f2937;
+        }
+
+        .sidebar-link.active {
+            background: #f3f4f6;
+            color: #1f2937;
+            border-left-color: #4F46E5;
+        }
+
+        /* ========== ESTILOS POR SECCIÓN (PADRES) ========== */
+        /* Dashboard */
+        .sidebar-item.dashboard-parent>.sidebar-link {
+            color: var(--color-dashboard);
+            font-weight: 600;
+        }
+
+        .sidebar-item.dashboard-parent>.sidebar-link:hover {
+            background: #EEF2FF;
+        }
+
+        .sidebar-item.dashboard-parent>.sidebar-link.active {
+            border-left-color: var(--color-dashboard);
+            background: #EEF2FF;
+        }
+
+        /* Registro */
+        .sidebar-item.registro-parent>.sidebar-link {
+            color: var(--color-registro);
+            font-weight: 600;
+        }
+
+        .sidebar-item.registro-parent>.sidebar-link:hover {
+            background: #ECFDF5;
+        }
+
+        .sidebar-item.registro-parent>.sidebar-link.active {
+            border-left-color: var(--color-registro);
+            background: #ECFDF5;
+        }
+
+        .sidebar-item.registro-parent .sidebar-dropdown .sidebar-link {
+            color: var(--color-registro);
+        }
+
+        .sidebar-item.registro-parent .sidebar-dropdown .sidebar-link:hover {
+            background: #D1FAE5;
+        }
+
+        /* Gestión */
+        .sidebar-item.gestion-parent>.sidebar-link {
+            color: var(--color-gestion);
+            font-weight: 600;
+        }
+
+        .sidebar-item.gestion-parent>.sidebar-link:hover {
+            background: #FFFBEB;
+        }
+
+        .sidebar-item.gestion-parent>.sidebar-link.active {
+            border-left-color: var(--color-gestion);
+            background: #FFFBEB;
+        }
+
+        .sidebar-item.gestion-parent .sidebar-dropdown .sidebar-link {
+            color: var(--color-gestion);
+        }
+
+        .sidebar-item.gestion-parent .sidebar-dropdown .sidebar-link:hover {
+            background: #FEF3C7;
+        }
+
+        /* Reportes */
+        .sidebar-item.reportes-parent>.sidebar-link {
+            color: var(--color-reportes);
+            font-weight: 600;
+        }
+
+        .sidebar-item.reportes-parent>.sidebar-link:hover {
+            background: #F5F3FF;
+        }
+
+        .sidebar-item.reportes-parent>.sidebar-link.active {
+            border-left-color: var(--color-reportes);
+            background: #F5F3FF;
+        }
+
+        .sidebar-item.reportes-parent .sidebar-dropdown .sidebar-link {
+            color: var(--color-reportes);
+        }
+
+        .sidebar-item.reportes-parent .sidebar-dropdown .sidebar-link:hover {
+            background: #EDE9FE;
+        }
+
+        /* Mantenimiento */
+        .sidebar-item.mantenimiento-parent>.sidebar-link {
+            color: var(--color-mantenimiento);
+            font-weight: 600;
+        }
+
+        .sidebar-item.mantenimiento-parent>.sidebar-link:hover {
+            background: #FEF2F2;
+        }
+
+        .sidebar-item.mantenimiento-parent>.sidebar-link.active {
+            border-left-color: var(--color-mantenimiento);
+            background: #FEF2F2;
+        }
+
+        .sidebar-item.mantenimiento-parent .sidebar-dropdown .sidebar-link {
+            color: #991B1B;
+        }
+
+        .sidebar-item.mantenimiento-parent .sidebar-dropdown .sidebar-link:hover {
+            background: #FEE2E2;
+        }
+
+        /* Ayuda */
+        .sidebar-item.ayuda-parent>.sidebar-link {
+            color: var(--color-ayuda);
+            font-weight: 600;
+        }
+
+        .sidebar-item.ayuda-parent>.sidebar-link:hover {
+            background: #ECFEFF;
+        }
+
+        .sidebar-item.ayuda-parent>.sidebar-link.active {
+            border-left-color: var(--color-ayuda);
+            background: #ECFEFF;
+        }
+
+        /* ========== SUBMENÚS ========== */
+        .sidebar-dropdown {
+            padding-left: 1.5rem;
+            background: transparent;
+        }
+
+        .sidebar-dropdown .sidebar-link {
+            font-weight: 400;
+            font-size: 0.85rem;
+            padding: 0.45rem 1rem;
+            border-left: 2px solid transparent;
+            color: #6b7280;
+        }
+
+        .sidebar-dropdown .sidebar-link:hover {
+            border-left-color: #d1d5db;
+        }
+
+        .sidebar-dropdown .sidebar-link i,
+        .sidebar-dropdown .sidebar-link .fi {
+            font-size: 0.9rem;
+            min-width: 20px;
+        }
+
+        .sidebar-dropdown .sidebar-dropdown {
+            padding-left: 1.5rem;
+        }
+
+        .sidebar-dropdown .sidebar-dropdown .sidebar-link {
+            font-size: 0.8rem;
+            padding: 0.35rem 1rem;
+        }
+
+        /* ========== FOOTER ========== */
+        .sidebar-footer {
+            margin-top: auto;
+            border-top: 1px solid #f3f4f6;
+            padding: 0.5rem 0;
+        }
+
+        .sidebar-footer .sidebar-link {
+            color: var(--color-footer);
+        }
+
+        .sidebar-footer .sidebar-link:hover {
+            background: #F3F4F6;
+            color: #374151;
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main {
+            flex: 1;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            #sidebar {
+                min-width: 240px;
+                max-width: 240px;
+            }
+
+            #sidebar:not(.expand) {
+                min-width: 60px;
+                max-width: 60px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            #sidebar {
+                min-width: 100%;
+                max-width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            #sidebar:not(.expand) {
+                min-width: 100%;
+                max-width: 100%;
+            }
+
+            .wrapper {
+                flex-direction: column;
+            }
+        }

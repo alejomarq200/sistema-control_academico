@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,7 +37,7 @@
                 <main class="student-module">
                     <!-- Sección de Información de la Institución -->
                     <section class="institution-info">
-                        <h2><i class="fas fa-school"></i>UNIDAD EDUCATIVA COLEGIO “PRADO DEL NORTE”	</h2>
+                        <h2><i class="fas fa-school"></i>UNIDAD EDUCATIVA COLEGIO “PRADO DEL NORTE” </h2>
                         <div class="info-grid">
                             <div class="info-item">
                                 <i class="fas fa-id-card"></i>
@@ -46,7 +47,7 @@
                                 <i class="fas fa-map-marker-alt"></i>
                                 <span>AV. INTERCOMUNAL TAMACA EL CUJI KM. 08 VÍA DUACA</span>
                             </div>
-                          
+
                             <div class="info-item">
                                 <i class="fas fa-phone"></i>
                                 <span>0251-8145640</span>
@@ -65,7 +66,7 @@
                                     readonly>
                                 <input type="hidden" id="selectLapso" name="selectLapso"
                                     value="<?php echo $_POST['lapso']; ?>" required>
-                                     <input type="hidden" id="tcontent" name="tcontent"
+                                <input type="hidden" id="tcontent" name="tcontent"
                                     value="<?php echo $_POST['tipocontenido']; ?>">
                             </div>
                             <div class="filter-inputs">
@@ -200,7 +201,7 @@
 
                                             if ($estudiantes) {
                                                 foreach ($estudiantes as $estudiante) {
-                                                    ?>
+                                        ?>
                                                     <tr data-estudiante-id="<?= htmlspecialchars($estudiante['id']) ?>"
                                                         data-grado-id="<?= htmlspecialchars($idGrado) ?>"
                                                         data-materia-id="<?= htmlspecialchars($idMateria) ?>"
@@ -230,12 +231,11 @@
                                                             </button>
                                                         </td>
                                                     </tr>
-                                                    <?php
+                                        <?php
                                                 }
                                             } else {
                                                 echo "<tr><td colspan='5'>No se encontraron estudiantes para los filtros seleccionados.</td></tr>";
                                             }
-
                                         } else {
                                             echo "<tr><td colspan='5'>Por favor, selecciona profesor, materia y grado.</td></tr>";
                                         }
@@ -253,4 +253,5 @@
     </div>
 </body>
 <script src="../js/creaCalificacionPrimaria.js"></script>
+
 </html>

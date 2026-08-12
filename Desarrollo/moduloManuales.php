@@ -25,32 +25,47 @@
                 ?>
 
                 <!-- Título principal -->
-                <div class="mb-4" style="max-width: 900px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <div class="mb-4" style="max-width: 900px; margin: 0 auto; background-color: #CBC6E0; border-radius:15px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                     <h1 class="display-5 fw-bold text-primary mb-3">Manuales de Uso del Sistema</h1>
                     <p class="lead text-muted">Manual para administrador y Usuario</p>
                     <div class="mx-auto" style="height: 48; width: 100px; background: linear-gradient(to right, #05357cff, #6c757d, #0d6efd);"></div>
                 </div>
 
                 <!-- Contenedor principal -->
-                <div class="d-flex justify-content-center align-items-start gap-4 flex-wrap" style="max-width: 900px; margin: 0 auto; background-color:#F5F5F5; border-radius:15px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <div style="max-width: 450px; margin: 0 auto; background-color: #F5F5F5; border-radius: 15px 10px 10px 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 50px;">
+
                     <?php if ($_SESSION['rol'] == 1 && $_SESSION['estado'] == 2): ?>
-                        <!-- Manual de Administrador -->
-                        <div class="admin-card" style="background-color: #FFF4A3;">
-                            <button onclick="window.location.href='../controller_php/controller_manuales.php?ref=ManualAdmin'" class="card-btn">
-                                <i class="fi fi-br-file-pdf" style="font-size: 80px; color: #5a4a00;"></i>
+                        <!-- Manual de Administrador - Contenedor individual -->
+                        <div style="background-color: #cbc6e1; border-radius: 12px; padding: 25px; text-align: center; transition: transform 0.3s ease;"
+                            onmouseover="this.style.transform='scale(1.02)'"
+                            onmouseout="this.style.transform='scale(1)'">
+                            <button onclick="window.location.href='../controller_php/controller_manuales.php?ref=ManualAdmin'"
+                                style="background: none; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; width: 100%;">
+                                <i class="fi fi-br-file-pdf" style="font-size: 80px; color: #000000; margin-bottom: 10px;"></i>
+                                <i class="fi fi-rr-user-crown" style="font-size: 30px; color: #000000; margin-bottom: 5px;"></i>
+                                <p style="margin: 0; font-size: 18px; font-weight: bold; color: #070707;">Manual del Administrador</p>
+                                <p style="margin: 5px 0 0 0; font-size: 14px; color: #000000;">Acceso exclusivo para administradores</p>
                             </button>
-                            <p class="card-label">Manual del Administrador</p>
                         </div>
                     <?php endif; ?>
+                </div>
+                <div style="max-width: 450px; margin: 0 auto; background-color: #F5F5F5; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
 
-                    <!-- Manual de Usuario (visible para todos los usuarios) -->
-                    <div class="admin-card" style="background-color: #a2bee2ff;">
-                        <button onclick="window.location.href='../controller_php/controller_manuales.php?ref=ManualUser'" class="card-btn">
-                            <i class="fi fi-rr-file-pdf" style="font-size: 80px; color: #ffffffff;"></i>
+                    <!-- Manual de Usuario - Contenedor individual -->
+                    <div style="background-color: #fdd965; border-radius: 12px; padding: 25px; text-align: center; transition: transform 0.3s ease;"
+                        onmouseover="this.style.transform='scale(1.02)'"
+                        onmouseout="this.style.transform='scale(1)'">
+                        <button onclick="window.location.href='../controller_php/controller_manuales.php?ref=ManualUser'"
+                            style="background: none; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; width: 100%;">
+                            <i class="fi fi-rr-file-pdf" style="font-size: 80px; color: rgb(43, 30, 30); margin-bottom: 10px;"></i>
+                            <i class="fi fi-rr-user" style="font-size: 30px; color: rgb(22, 22, 22); margin-bottom: 5px;"></i>
+                            <p style="margin: 0; font-size: 18px; font-weight: bold; color: rgb(0, 0, 0);">Manual del Usuario</p>
+                            <p style="margin: 5px 0 0 0; font-size: 14px; color: #000000;">Guía básica para todos los usuarios</p>
                         </button>
-                        <p class="card-label">Manual del Usuario</p>
                     </div>
                 </div>
+
             </div>
         </div>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,48 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../css/modalesUsuarios/regUsuario.css">
- </head>
+    <link rel="stylesheet" href="../css/modulos/moduloRegistro.css">
+    <style>
+        :root {
+            --color-primario: #2c3e50;
+            --color-secundario: rgb(30, 93, 134);
+            --color-accento: rgb(247, 252, 0);
+            --color-fondo: #ecf0f1;
+            --color-texto: #2c3e50;
+            --color-borde: #bdc3c7;
+            --color-btn: rgb(122, 156, 179);
+            --color-btn-blue: #00ABE1;
+            --color-bordes: #aedfe4;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            /* aedfe4 */
+            border-left: 5px solid var(--color-bordes);
+            border-right: 5px solid var(--color-bordes);
+            border-right: 5px solid var(--color-bordes);
+            border-bottom: 5px solid var(--color-bordes);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--color-bordes), var(--color-bordes));
+        }
+    </style>
+</head>
+
 <body>
     <!-- DIV PARA TRABAJAR CON EL MENÚ Y EL FORMULARIO RESPECTIVO  -->
     <div class="wrapper">
@@ -74,7 +115,7 @@
                                         id="contrasenaCreate" placeholder="Mínimo 8 caracteres">
                                     <i class="fas fa-eye password-toggle" id="togglePassword"></i>
                                 </div>
-                                    <p class="errores" id="contrasenaErrorCreate"></p>
+                                <p class="errores" id="contrasenaErrorCreate"></p>
                             </div>
                             <div class="mb-3">
                                 <div class="column">
@@ -109,8 +150,8 @@
                                 <p class="errores" id="rolErrorCreate"></p>
                             </div>
 
-                            <button type="submit" class="btn btn-submit">
-                                <i class="fas fa-save"></i> Registrar Usuario
+                            <button type="submit" class="btn btn-submit" style="color:black;">
+                                <i class="fas fa-save" style="color:black;"></i> Registrar Usuario
                             </button>
                         </form>
                     </div>
@@ -122,4 +163,5 @@
     <script src="../js/crearUsuario.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
